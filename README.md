@@ -5,6 +5,7 @@ A lightweight, production-ready boilerplate for React projects built on Vite. Th
 ## Features
 - **React 18** with **Vite** for fast development
 - **Axios** for easy HTTP requests
+- **CryptoJS** crypto standards
 - **i18n** with i18next for multi-language support
 - **React Router** for route management
 - **Tailwind CSS** with Tailwind Merge for custom styling
