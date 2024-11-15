@@ -15,20 +15,18 @@
   /* Default Light Theme */
   :root {
     --background-color: var(--light-color);
+    --secondary-color: rgba(0,0,0, 0.3);
     --alt-color: var(--dark-color);
-    --text-color: #1e1e1e; 
-    --secondary-color: #1d6954;
-    --card-color: #ecf2f2;
+    --text-color: #1e1e1e;
     --border-color: #e8e8e8;
   } 
   /* Dark Theme */
   [data-theme='dark'] {
     --background-color: var(--dark-color);
+    --secondary-color: rgba(0,0,0, 0.3);
     --alt-color: var(--light-color);
-    --text-color: #e0e0e0;  
-    --secondary-color: #45654a;
-    --card-color: #161c18;
-    --border-color: #313131; 
+    --text-color: #e0e0e0;
+    --border-color: #313131;
   }
 }
 
@@ -125,9 +123,6 @@
   .bg-secondary {
     background-color: var(--secondary-color) !important;  
   }
-  .bg-card {
-    background-color: var(--card-color) !important;
-  }
   .bg-muted {
     background-color: var(--muted-color) !important;
   }
@@ -174,8 +169,9 @@
     border-radius: var(--border-radius) !important; 
   }
   .card {
-    background-color: var(--card-color) !important;
-    color: var(--text-color) !important;
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    padding: 1rem;
   }
 }
 
