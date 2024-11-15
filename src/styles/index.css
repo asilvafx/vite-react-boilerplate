@@ -83,22 +83,22 @@
     color: var(--muted-color);
   }
   input, select, textarea{
-    color: var(--background-color) !important;
-    background-color: var(--alt-color) !important;
+    color: var(--background-color);
+    background-color: var(--alt-color);
   }
 
   textarea:focus, input:focus {
-    color: var(--background-color) !important;
-    background-color: var(--alt-color) !important;
+    color: var(--background-color);
+    background-color: var(--alt-color);
   } 
   button, .btn, .button { 
-    background-color: var(--alt-color); 
+    background-color: var(--alt-color);
     border-color: var(--border-color);
     color: var(--background-color);
     fill: var(--background-color);
   }
   .btn-primary {
-    background-color: var(--primary-color) !important; 
+    background-color: var(--primary-color) !important;
     color: var(--dark-color);
   }
   .btn-secondary {
@@ -138,7 +138,7 @@
     color: var(--text-color) !important;
   }
   .text-alt {
-    color: var(--alt-color) !important;
+    color: var(--background-color) !important;
   }
   .text-body {
     color: var(--background-color) !important;
