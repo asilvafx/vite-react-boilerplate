@@ -83,14 +83,14 @@
     color: var(--muted-color);
   }
   input, select, textarea{
-    color: var(--background-color);
-    background-color: var(--alt-color);
+    color: var(--text-color);
+    background-color: rgba(0,0,0, 0.3);
   }
 
   textarea:focus, input:focus {
-    color: var(--background-color);
-    background-color: var(--alt-color);
-  } 
+    color: var(--text-color);
+    background-color: rgba(0,0,0, 0.4);
+  }
   button, .btn, .button { 
     background-color: var(--alt-color);
     border-color: var(--border-color);
