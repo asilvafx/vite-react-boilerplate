@@ -16,14 +16,7 @@ module.exports = {
     fontFamily: {
       sans: ['Anton', 'sans-serif'], 
     },
-    extend: {
-      zIndex: {
-        '60': '60',
-        '70': '70',
-        '80': '80',
-        '90': '90',
-        '100': '100',
-      },
+    extend: { 
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
