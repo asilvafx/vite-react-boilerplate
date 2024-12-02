@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+
 @layer base {
   :root {
     --light-color: #FAF9F6;
@@ -21,7 +23,7 @@
     --border-color: #e8e8e8;
   } 
   /* Dark Theme */
-  [data-theme='dark'] {
+  html.dark {
     --background-color: var(--dark-color);
     --secondary-color: rgba(0,0,0, 0.3);
     --alt-color: var(--light-color);
