@@ -17,16 +17,16 @@
   /* Default Light Theme */
   :root {
     --background-color: var(--light-color);
-    --secondary-color: rgba(0,0,0, 0.3);
     --alt-color: var(--dark-color);
+    --secondary-color: #e5e5e5;
     --text-color: #1e1e1e;
     --border-color: #e8e8e8;
   } 
   /* Dark Theme */
   html.dark {
     --background-color: var(--dark-color);
-    --secondary-color: rgba(0,0,0, 0.3);
     --alt-color: var(--light-color);
+    --secondary-color: #181818;
     --text-color: #e0e0e0;
     --border-color: #313131;
   }

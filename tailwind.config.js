@@ -16,9 +16,9 @@ module.exports = {
       },
     },
     fontFamily: {
-      sans: ['Anton', 'sans-serif'], 
+      sans: ['Anton', 'sans-serif'],
     },
-    extend: { 
+    extend: {
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
