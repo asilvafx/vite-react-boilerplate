@@ -30,8 +30,8 @@ const Header = () => {
                         <button onClick={handleOpenModal}
                                 className="p-2 rounded-lg ml-2">
                             Add Product
-                        </button>
-                        <button className="p-2 rounded-lg text-primary ml-2">Get Started</button>
+                        </button> 
+
                         <button data-collapse-toggle="mobile-menu" type="button"
                                 className="inline-flex lg:hidden items-center p-2 ml-2 rounded-lg"
                                 aria-controls="mobile-menu" aria-expanded="false">
