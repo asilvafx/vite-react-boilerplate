@@ -10,7 +10,11 @@ const App = () => {
   return (
     <HelmetProvider> 
       <Suspense fallback={<div id="loading">Loading...</div>}> 
-            <Router>    
+            <Router 
+                future={{
+                v7_startTransition: true,
+                v7_relativeSplatPath: true,
+                }} >    
               <Cookies /> 
                 <div className="page-view">
                   <Routes>
