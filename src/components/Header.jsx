@@ -29,7 +29,7 @@ const Header = () => {
 
                         <button onClick={handleOpenModal}
                                 className="p-2 rounded-lg ml-2">
-                            Add Product
+                            Open Modal
                         </button> 
 
                         <button data-collapse-toggle="mobile-menu" type="button"

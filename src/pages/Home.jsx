@@ -2,10 +2,6 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import Header from '../components/Header';
-import HeroSection from "../components/HeroSection";
-import ContentSection from "../components/ContentSection";
-import FeaturesSection from "../components/FeaturesSection.jsx";
-import Categories from "../components/Categories.jsx";
 
 const Home = () => {
   const { t } = useTranslation();
@@ -18,10 +14,9 @@ const Home = () => {
         </Helmet>
 
         <Header />
-        <HeroSection />
-        <ContentSection />
-        <FeaturesSection />
-        <Categories />
+          <div className="w-full max-w-4xl mx-auto px-4">
+              <h1>Hello World</h1>
+          </div>
       </>
   );
 };
