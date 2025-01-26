@@ -1,6 +1,6 @@
 # Vite React Boilerplate
 
-A lightweight, production-ready boilerplate for React projects built on Vite. This setup includes essential dependencies for modern web development, such as Axios for API requests, i18n for internationalization, React Use Cart for cart hook state and React Router for route management. Includes Tailwind CSS for styling, Flowbite and Pico CSS for Better UI UX, ESLint for code quality, and support for environment variables.
+A lightweight, production-ready boilerplate for React projects built on Vite. This setup includes essential dependencies for modern web development, such as Axios for API requests, i18n for internationalization, React Use Cart for cart hook state and React Router for route management. Includes Tailwind CSS for styling, Flowbite, Pico CSS and Framer Motion for a responsive, dynamic and elegant UI/UX. Includes ESLint for code quality, and support for environment variables.
 
 ## Features
 - **React 18** with **Vite** for fast development
@@ -13,6 +13,7 @@ A lightweight, production-ready boilerplate for React projects built on Vite. Th
 - **React Router** for route management
 - **Tailwind CSS** with Tailwind Merge for custom styling
 - **Pico CSS** to deliver basic styles, responsive and elegant
+- **Framer-Motion** UI animation library
 - **Flowbite** set of design components for Tailwind CSS
 - **Environment configuration** via loadEnv
 
