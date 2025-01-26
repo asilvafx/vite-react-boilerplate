@@ -1,12 +1,24 @@
+/*
+    Import Global
+*/
 import React, { Suspense, lazy, useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async'; 
 
+/*
+    Import Pages
+*/
 import Home from './pages/Home';
-import Sample from './pages/Sample';
+const Sample = lazy(() => import('./pages/Sample'));
 
-const Cookies = lazy(() => import('./components/Cookies'));  
+/*
+    Import Components
+*/
+const Cookies = lazy(() => import('./components/Cookies'));
 
+/*
+    Load App Router
+*/
 const App = () => {    
  
   return (
