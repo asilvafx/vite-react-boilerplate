@@ -9,7 +9,7 @@ const ModalCreate = ({ show, onClose }) => {
             )}
             <div id="defaultModal" tabIndex="-1" aria-hidden={!show} className={`fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full ${show ? 'flex' : 'hidden'}`}>
                 <div className="relative p-4 w-full max-w-2xl h-full md:h-auto">
-                    <div className="relative p-4 bg-secondary rounded-lg shadow-md sm:p-5">
+                    <div className="relative p-4 bg-color rounded-lg shadow-md sm:p-5">
                         <div className="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
                             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                                 Add Product
