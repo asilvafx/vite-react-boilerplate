@@ -29,7 +29,7 @@ const Header = () => {
                 <DarkThemeToggle className="btn text-alt hover:bg-alt focus:ring-0 m-0"/>
 
                 <button onClick={handleOpenModal}
-                        className="p-2 rounded-lg ml-2">
+                        className="p-2 rounded-md ml-2">
                     Open Modal
                 </button>
                 <Navbar.Toggle/>

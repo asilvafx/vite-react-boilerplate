@@ -1,0 +1,69 @@
+
+:root {
+    --background: var(--pico-background-color);
+    --foreground: var(--pico-color);
+    --primary: var(--pico-primary);
+    --secondary: var(--pico-secondary);
+    --border: var(--pico-border-color);
+}
+html, body {
+    scroll-behavior: smooth;
+    overscroll-behavior: none;
+}
+body {
+    margin: 0 auto;
+    max-width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+#loading {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+#root {
+    width: 100%;
+    max-width: 100%;
+    height: 100vh;
+    overscroll-behavior: none;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: relative;
+}
+.text-truncate {
+    white-space: nowrap;
+}
+.text-truncate, .text-truncate-2,.text-truncate-3,.text-truncate-4,.text-truncate-5 {
+    max-width: auto;
+    overflow: hidden;
+    text-overflow: clip;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+}
+.text-truncate-2 {
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+}
+.text-truncate-3 {
+    line-clamp: 3;
+    -webkit-line-clamp: 3;
+}
+.text-truncate-4 {
+    line-clamp: 4;
+    -webkit-line-clamp: 4;
+}
+.text-truncate-5 {
+    line-clamp: 5;
+    -webkit-line-clamp: 5;
+}
+[disabled="true"], [aria-disabled="true"] {
+    opacity: 0.7;
+    pointer-events: none;
+    cursor: default;
+    user-select: none;
+}

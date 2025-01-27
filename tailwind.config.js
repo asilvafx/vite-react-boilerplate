@@ -18,7 +18,7 @@ const config = {
   		}
   	},
   	fontFamily: {
-  		sans: ['Roboto', 'sans-serif']
+  		sans: ['Anton', 'sans-serif']
   	},
   	extend: {
   		colors: {
@@ -84,12 +84,7 @@ const config = {
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
   			'accordion-up': 'accordion-up 0.2s ease-out'
-  		},
-  		borderRadius: {
-  			lg: 'var(--radius)',
-  			md: 'calc(var(--radius) - 2px)',
-  			sm: 'calc(var(--radius) - 4px)'
-  		}
+  		} 
   	}
   },
   plugins: [
