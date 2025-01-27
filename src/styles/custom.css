@@ -31,6 +31,9 @@ body {
     overflow-x: hidden;
     position: relative;
 }
+.top-nav div:first-child {
+    width: 100%;
+}
 .bg-color {
     background-color: var(--bg-color);
 }
