@@ -4,7 +4,7 @@ import { Modal, Dropdown, Button, TextInput, Label, Textarea } from "flowbite-re
 const ModalCreate = ({ show, onClose }) => {
     return (
         <div>
-            <Modal show={show} onClose={onClose}>
+            <Modal dismissible show={show} onClose={onClose}>
                 <Modal.Header>Add Product</Modal.Header>
                 <Modal.Body>
                     <form action="#">
