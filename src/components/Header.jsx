@@ -25,7 +25,7 @@ const Header = () => {
                 <span
                     className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">React App</span>
             </Navbar.Brand>
-            <div className="flex md:order-2">
+            <div className="flex gap-2 md:order-2">
                 <DarkThemeToggle className="btn text-alt hover:bg-alt focus:ring-0 m-0"/>
 
                 <button onClick={handleOpenModal}
