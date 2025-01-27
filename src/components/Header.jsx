@@ -18,7 +18,7 @@ const Header = () => {
 
     return (
         <>
-        <Navbar className="top-nav" fluid rounded>
+        <Navbar className="top-nav fixed w-full" fluid rounded>
             <Navbar.Brand href="/">
                 <img src="https://flowbite.com/docs/images/logo.svg" className="mr-3 h-6 sm:h-9"
                      alt="Flowbite Logo"/>
@@ -39,7 +39,7 @@ const Header = () => {
                 <Link to="/sample">Sample</Link>
             </Navbar.Collapse>
         </Navbar>
-
+        <div className="h-24 w-full"></div>
         <ModalCreate show={isModalVisible} onClose={handleCloseModal} />
 
         </>

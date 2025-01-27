@@ -15,7 +15,7 @@ const Sample = () => {
           </Helmet>
 
           <Header />
-          <div className="w-full max-w-4xl mx-auto px-4">
+          <div className="w-full mx-auto px-4">
               <h1>Sample Page</h1>
           </div>
       </>

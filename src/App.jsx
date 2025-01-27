@@ -29,14 +29,12 @@ const App = () => {
                 v7_startTransition: true,
                 v7_relativeSplatPath: true,
                 }} >    
-              <Cookies /> 
-                <div className="page-view">
-                  <Routes>
-                    <Route path="/" element={<Home />} />
-                      <Route path="/sample" element={<Sample />} />
-                    <Route path="*" element={<Home />} />
-                  </Routes>  
-                </div> 
+              <Cookies />  
+              <Routes>
+                <Route path="/" element={<Home />} />
+                  <Route path="/sample" element={<Sample />} />
+                <Route path="*" element={<Home />} />
+              </Routes>
             </Router>  
       </Suspense>
     </HelmetProvider>
