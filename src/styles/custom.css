@@ -31,7 +31,17 @@ body {
     overflow-x: hidden;
     position: relative;
 }
+.top-nav {
+    margin: 0.5rem 0.5rem 1rem 0.5rem;
+}
 .top-nav div:first-child {
+    width: 100%;
+}
+.flowbite-dropdown ul li {
+    list-style: none;
+}
+[data-testid="flowbite-dropdown-target"] {
+    padding: 0.36rem;
     width: 100%;
 }
 .bg-color {
