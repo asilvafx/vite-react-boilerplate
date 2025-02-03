@@ -17,9 +17,6 @@ const config = {
   			'2xl': '1400px'
   		}
   	},
-  	fontFamily: {
-  		sans: ['Anton', 'sans-serif']
-  	},
   	extend: {
   		colors: {
   			border: 'hsl(var(--border))',
