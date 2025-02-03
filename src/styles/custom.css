@@ -37,3 +37,6 @@
 .modal {
     z-index: 999;
 }
+ul li {
+    list-style: none;
+}
