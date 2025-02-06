@@ -31,7 +31,7 @@ const Home = () => {
                 </ul>
                 <Link to="/sample">
                     <button className="mt-8 px-6 py-3 font-bold rounded-full transition duration-300">
-                        Get a Quote
+                        Get Started
                     </button>
                 </Link>
             </section>
