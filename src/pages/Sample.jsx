@@ -21,7 +21,7 @@ const Sample = () => {
                   CRUD Example
               </h1>
               <h2 className="text-2xl md:text-3xl mt-4">
-                  Create, Read, Update & Delete
+                  Create, Read, Update & Delete Using Axios
               </h2>
               <CrudApi />
               <Link to="/">
