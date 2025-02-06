@@ -5,7 +5,6 @@ import App from './App'
 
 import './lib/i18n';
 import './styles/index.css'
-import './styles/custom.css'
 
 import * as serviceWorker from './serviceWorker';
 
