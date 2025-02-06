@@ -19,7 +19,7 @@ const Home = () => {
                     🚀 Build. Scale. Dominate.
                 </h1>
                 <h2 className="text-2xl md:text-3xl mt-4">
-                    Websites. Online Stores. dApps. ERC-20 Tokens.
+                    Websites. Online Stores. CMS's. dApps.
                 </h2>
                 <p className="mt-6 text-lg md:text-xl">
                     Your business needs a killer digital presence—we build it.
