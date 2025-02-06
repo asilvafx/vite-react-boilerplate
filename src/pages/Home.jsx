@@ -1,9 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import Header from '../components/Header';
-import { motion } from "framer-motion"; // Corrected import for motion
-import { Button } from "flowbite-react";
 
 const Home = () => {
     const { t } = useTranslation();
@@ -11,11 +9,10 @@ const Home = () => {
     return (
         <>
             <Helmet>
-                <title>PIGMIL – Web Solutions for a Digital Future</title>
+                <title>{t('seo_title')}</title>
                 <meta name='description' content={t('seo_description')} />
             </Helmet>
 
-            <Header />
             {/* Hero Section */}
             <section className="text-center py-20 px-4">
                 <h1 className="text-5xl md:text-7xl font-bold text-neon-blue">
@@ -32,10 +29,12 @@ const Home = () => {
                     <li>✅ Custom-tailored solutions.</li>
                     <li>✅ No BS. Just results.</li>
                 </ul>
-                <button className="mt-8 px-6 py-3 font-bold rounded-full transition duration-300">
-                    Get a Quote
-                </button>
-            </section> 
+                <Link to="/sample">
+                    <button className="mt-8 px-6 py-3 font-bold rounded-full transition duration-300">
+                        Get a Quote
+                    </button>
+                </Link>
+            </section>
         </>
     );
 };
