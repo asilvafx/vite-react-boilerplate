@@ -3,7 +3,8 @@
 */
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { HelmetProvider } from 'react-helmet-async'; 
+import { HelmetProvider } from 'react-helmet-async';
+import { Toaster } from 'react-hot-toast';
 
 /*
     Import Pages
@@ -29,7 +30,8 @@ const App = () => {
                 v7_startTransition: true,
                 v7_relativeSplatPath: true,
                 }} >    
-              <Cookies />  
+              <Cookies />
+              <Toaster />
               <Routes>
                 <Route path="/" element={<Home />} />
                   <Route path="/sample" element={<Sample />} />
