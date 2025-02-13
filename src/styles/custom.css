@@ -1,20 +1,42 @@
-@import url('https://fonts.googleapis.com/css2?family=Anton|Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto|Orbitron&display=swap');
 
+:root {
+    --clr-dark: #111111;
+    --clr-light: #f4f4f4;
+}
 body {
-    font-family: 'Anton', sans-serif;
+    width: 100%;
+    height: max-content;
+    min-height: 100vh;
+    font-family: 'Roboto', sans-serif;
+    overscroll-behavior: none;
+    scroll-behavior: smooth;
+    position: relative;
+    background: linear-gradient(-45deg, #656565, #888888, #cccccc, var(--clr-light));
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    -moz-animation: gradientBG 15s ease infinite;
+    -webkit-animation: gradientBG 15s ease infinite;
+}
+.dark body {
+    background: linear-gradient(-45deg, #161616, #161616, #161616, var(--clr-dark));
+}
+#root {
+    height: 100%;
 }
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Orbitron', sans-serif;
 }
-
 .top-nav {
-    background-color: transparent !important;
     z-index: 99;
+    background-color: var(--clr-light) !important;
+}
+.dark .top-nav {
+    background-color: var(--clr-dark) !important;
 }
 .top-nav div:first-child {
     width: 100%;
     padding: 0.7rem;
-    background-color: var(--pico-card-background-color);
     border-radius: 0.33rem;
 }
 .flowbite-dropdown ul li {
@@ -47,4 +69,78 @@ h1, h2, h3, h4, h5, h6 {
 }
 ul li {
     list-style: none;
+}
+.shop-container {
+    padding: 20px;
+}
+
+.product-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    width: 100%;
+    text-align: center;
+}
+
+.product-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+.product-card button {
+    margin-top: 10px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+.product-card button:hover {
+    background-color: #0056b3;
+}
+/* Add this to your custom.css or a new CSS file */
+.offcanvas-container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 300px; /* Adjust width as needed */
+    height: 100%;
+    z-index: 1000;
+    padding: 20px;
+    transition: transform 0.3s ease;
+}
+
+.offcanvas {
+    /* Add styles for the cart content */
+}
+/* Add this to your custom.css or a new CSS file */
+.close-button {
+    background: none;
+    border: none;
+    font-size: 24px; /* Adjust size as needed */
+    color: #333; /* Change color as needed */
+    cursor: pointer;
+    position: absolute;
+    top: 10px; /* Adjust position */
+    right: 10px; /* Adjust position */
+    transition: color 0.3s;
+}
+
+.close-button:hover {
+    color: red; /* Change color on hover */
+}
+
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }

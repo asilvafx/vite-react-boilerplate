@@ -7,6 +7,12 @@ export const encryptPassword = (password) => {
 };
 
 export const decryptPassword = (encryptedPassword) => {
-    const bytes = CryptoJS.AES.decrypt(encryptedPassword, secretKey);
-    return bytes.toString(CryptoJS.enc.Utf8);
+    let bytes = "";
+    try {
+        const decrypt = CryptoJS.AES.decrypt(encryptedPassword, secretKey);
+        bytes = decrypt.toString(CryptoJS.enc.Utf8);
+    } catch (e) {
+        bytes = e;
+    }
+    return bytes;
 };

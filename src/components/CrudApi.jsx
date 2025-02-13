@@ -121,20 +121,20 @@ const CrudApi = () => {
                         </label>
                     </div>
                     <button className="px-4 py-2 bg-blue-500 text-white mt-2 w-full" onClick={sendRequest}>Send Request</button> {/* Button to send request */}
-            </div>
-            <div className="w-full">
-                <h2 className="mb-2">Results:</h2>
-                <ul>
-                    {response ? (
-                        <li>{JSON.stringify(response)}</li> // Display response data
-                    ) : (
-                        <li>No data yet.</li>
-                    )}
-                </ul>
+                </div>
+                <div className="w-full">
+                    <h2 className="mb-2">Results:</h2>
+                    <ul>
+                        {response ? (
+                            <li>{JSON.stringify(response)}</li> // Display response data
+                        ) : (
+                            <li>No data yet.</li>
+                        )}
+                    </ul>
+                </div>
             </div>
         </div>
-</div>
-);
+    );
 };
 
 export default CrudApi;

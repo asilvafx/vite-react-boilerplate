@@ -15,7 +15,9 @@ A lightweight, production-ready boilerplate for React projects built on Vite. Th
 - **Pico CSS** to deliver basic styles, responsive and elegant
 - **Framer-Motion** UI animation library
 - **Flowbite** set of design components for Tailwind CSS
+- **User Authentication** with login status checks and cookie management
 - **Environment configuration** via loadEnv
+- **Firebase** for Realtime database & Hosting
 
 ## Installation
 
@@ -24,3 +26,10 @@ A lightweight, production-ready boilerplate for React projects built on Vite. Th
    git clone https://github.com/asilvafx/vite-react-boilerplate.git
    cd vite-react-boilerplate
    npm install
+   update .env-sample and rename it to .env
+   npm run dev Or npm run build
+
+
+2. **Setup Firebase**
+3. ```bash
+   https://console.firebase.google.com/
