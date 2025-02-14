@@ -4,13 +4,15 @@
     --clr-dark: #111111;
     --clr-light: #f4f4f4;
 }
+html, body {
+    overscroll-behavior: none;
+    scroll-behavior: smooth;
+}
 body {
     width: 100%;
     height: max-content;
     min-height: 100vh;
     font-family: 'Roboto', sans-serif;
-    overscroll-behavior: none;
-    scroll-behavior: smooth;
     position: relative;
     background: linear-gradient(-45deg, #656565, #888888, #cccccc, var(--clr-light));
     background-size: 400% 400%;
@@ -23,6 +25,8 @@ body {
 }
 #root {
     height: 100%;
+    overscroll-behavior: none;
+    scroll-behavior: smooth;
 }
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Orbitron', sans-serif;
