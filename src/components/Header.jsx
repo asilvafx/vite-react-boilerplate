@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Navbar, DarkThemeToggle } from "flowbite-react";
+import { Button, Navbar, DarkThemeToggle, Dropdown } from "flowbite-react";
 import ModalConnect from "./ModalConnect";
 import { useCart } from 'react-use-cart';
 import Cart from './Cart';
-import { useAuth } from '../context/authprovider'; // Import the useAuth hook
+import { useAuth } from '../context/authprovider';
 import { checkLoginStatus, getUserData } from '../lib/user';
+import { shortenAddress } from '../lib/utils';
+
 
 const Header = () => {
     const [isModalVisible, setModalVisible] = useState(false);
@@ -54,7 +56,20 @@ const Header = () => {
                             Connect
                         </Button>
                     ) : (
-                        <span className="text-black dark:text-white font-bold">{currentUser .email}</span>
+                        <Dropdown
+                            label=""
+                            dismissOnClick={false}
+                            renderTrigger={() =>
+                                <Button className="rounded-md m-0 ml-2 border-neutral-300 dark:border-neutral-700 !bg-neutral-200 dark:!bg-neutral-800 text-black dark:text-white font-bold">
+                                    {shortenAddress(currentUser.web3_address)}
+                                </Button>
+                            }
+                            >
+                            <Dropdown.Item>Dashboard</Dropdown.Item>
+                            <Dropdown.Item>Settings</Dropdown.Item>
+                            <Dropdown.Item>Earnings</Dropdown.Item>
+                            <Dropdown.Item>Sign out</Dropdown.Item>
+                        </Dropdown>
                     )}
 
                     {/* Shopping Cart Button */}
