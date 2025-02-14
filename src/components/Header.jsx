@@ -2,16 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Button, Navbar, DarkThemeToggle, Dropdown } from "flowbite-react";
 import {Link} from "react-router-dom";
 import ModalConnect from "./ModalConnect";
-import { useCart } from 'react-use-cart';
-import Cart from './Cart'; 
 import { checkLoginStatus, getUserData } from '../lib/user';
 import { shortenAddress } from '../lib/utils';
 
 
 const Header = () => {
     const [isModalVisible, setModalVisible] = useState(false);
-    const [isCartVisible, setCartVisible] = useState(false);
-    const { totalItems } = useCart();
     const [currentUser , setCurrentUser ] = useState(null);
 
     useEffect(() => {
@@ -31,15 +27,7 @@ const Header = () => {
     const handleCloseModal = () => {
         setModalVisible(false);
     };
-
-    const handleOpenCart = () => {
-        setCartVisible(true);
-    };
-
-    const handleCloseCart = () => {
-        setCartVisible(false);
-    };
-
+  
     return (
         <>
             <Navbar className="top-nav h-14 fixed w-full p-0" fluid>
@@ -69,23 +57,10 @@ const Header = () => {
                         </Dropdown>
                     )}
 
-                    {/* Shopping Cart Button */}
-                    <Button size="sm" onClick={handleOpenCart} className="relative rounded-md m-0 ml-2 border-neutral-300 dark:border-neutral-700 !bg-neutral-200 dark:!bg-neutral-800 text-black dark:text-white font-bold">
-                        Cart
-                        <span className="absolute top-[-5px] right-[-5px] inline-flex items-center justify-center w-4 h-4 text-xs font-medium text-white bg-red-600 rounded-full">
-                            {totalItems > 0 ? totalItems : 0}
-                        </span>
-                    </Button>
                 </div>
             </Navbar>
             <ModalConnect show={isModalVisible} onClose={handleCloseModal} />
 
-            {/* Off-Canvas Cart */}
-            {isCartVisible && (
-                <div className="offcanvas-container bg-white dark:bg-neutral-900 shadow-lg border-l border-gray-300 dark:border-gray-700">
-                    <Cart onClose={handleCloseCart} />
-                </div>
-            )}
 
             <div className="h-14 w-full"></div>
         </>
