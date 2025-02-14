@@ -5,7 +5,7 @@ import ModalConnect from "./ModalConnect";
 import { useCart } from 'react-use-cart';
 import Cart from './Cart';
 import Cookies from 'js-cookie';
-import { decryptPassword } from "../lib/crypto.js";
+import { decryptHash } from "../lib/crypto.js";
 
 const Header = () => {
     const [isModalVisible, setModalVisible] = useState(false);
@@ -20,8 +20,8 @@ const Header = () => {
             const tkn = Cookies.get('tkn');
 
             if (loggedIn && uData && tkn) {
-                const decryptedUData = JSON.parse(decryptPassword(uData));
-                const decryptedTkn = decryptPassword(tkn);
+                const decryptedUData = JSON.parse(decryptHash(uData));
+                const decryptedTkn = decryptHash(tkn);
 
                 // Check if the token matches the email in uData
                 if (decryptedTkn === decryptedUData.email) {
@@ -57,7 +57,7 @@ const Header = () => {
                     <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">React App</span>
                 </Navbar.Brand>
                 <div className="flex items-center gap-2 md:order-2">
-                    <DarkThemeToggle className="bg-transparent border-0 focus:ring-0 m-0" />
+                    <DarkThemeToggle className="!bg-transparent border-0 focus:ring-0 m-0" />
 
                     {/* Conditionally render the Connect button */}
                     {!isLoggedIn && (
@@ -80,7 +80,7 @@ const Header = () => {
 
             {/* Off-Canvas Cart */}
             {isCartVisible && (
-                <div className="offcanvas-container bg-white dark:bg-gray-800 shadow-lg border-l border-gray-300 dark:border-gray-700">
+                <div className="offcanvas-container bg-white dark:bg-neutral-900 shadow-lg border-l border-gray-300 dark:border-gray-700">
                     <Cart onClose={handleCloseCart} />
                 </div>
             )}

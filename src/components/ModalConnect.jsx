@@ -2,16 +2,13 @@ import React, { useState } from 'react';
 import { useAuth } from "../context/AuthProvider";
 import { Modal } from "flowbite-react";
 import { useTranslation } from "react-i18next";
-import DBService from '../data/db.service';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
-import {encryptPassword, decryptPassword} from "../lib/crypto.js";
 
 const ModalConnect = ({ show, onClose }) => {
     const { t } = useTranslation();
-    const auth = useAuth();
 
-    const [web3, setWeb3] = useState(null);
+    const auth = useAuth();
 
     const [isRegistering, setIsRegistering] = useState(false);
     const [input, setInput] = useState({
@@ -40,27 +37,8 @@ const ModalConnect = ({ show, onClose }) => {
             alert("Password must be at least 8 characters long and include letters, numbers, or special characters.");
             return;
         }
-
-        const userCheck = await DBService.getItemByKeyValue('email', input.username, 'users');
-
-        if(userCheck){
-            alert('Email address already exists in our system!');
-            return;
-        }
-
-        const userData = {
-            email: input.username,
-            password: encryptPassword(input.password),
-            fullName: input.fullName,
-        };
-
-        try {
-            await DBService.create(userData, 'users');
-            alert("Registration successful!");
+        if(auth.registerAction(input)){
             setIsRegistering(false);
-        } catch (error) {
-            console.error("Error creating user:", error);
-            alert("Registration failed. Please try again.");
         }
     };
 
@@ -79,9 +57,9 @@ const ModalConnect = ({ show, onClose }) => {
 
     return (
         <div>
-            <Modal size="md" className="modal" dismissible show={show} onClose={onClose}>
-                <Modal.Header>{isRegistering ? "Create an Account" : "Login to Your Account"}</Modal.Header>
-                <Modal.Body>
+            <Modal size="md" position="center" className="modal bg-neutral-100/80 dark:bg-neutral-900/80" dismissible show={show} onClose={onClose}>
+                <Modal.Header className="bg-neutral-200/80 dark:bg-neutral-900/80">{isRegistering ? "Create an Account" : "Login to Your Account"}</Modal.Header>
+                <Modal.Body className="bg-neutral-200/80 dark:bg-neutral-900/90">
                     {isRegistering ? (
                         <RegisterForm input={input} handleInput={handleInput} handleRegister={handleRegister} />
                     ) : (

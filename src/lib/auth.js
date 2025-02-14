@@ -1,6 +1,6 @@
 
 import Cookies from 'js-cookie';
-import { decryptPassword } from './crypto.js';
+import { decryptHash } from './crypto.js';
 
 export const checkLoginStatus = () => {
     const loggedIn = Cookies.get('isLoggedIn') === 'true';
@@ -8,8 +8,8 @@ export const checkLoginStatus = () => {
     const tkn = Cookies.get('tkn');
 
     if (loggedIn && uData && tkn) {
-        const decryptedUData = JSON.parse(decryptPassword(uData));
-        const decryptedTkn = decryptPassword(tkn);
+        const decryptedUData = JSON.parse(decryptHash(uData));
+        const decryptedTkn = decryptHash(tkn);
 
         // Check if the token matches the email in uData
         if (decryptedTkn === decryptedUData.email) {
