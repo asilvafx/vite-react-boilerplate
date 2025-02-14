@@ -53,20 +53,20 @@ const Header = () => {
         <>
             <Navbar className="top-nav h-14 fixed w-full p-0" fluid>
                 <Navbar.Brand href="/">
-                    <img src="https://flowbite.com/docs/images/logo.svg" className="mr-3 h-6 sm:h-8" alt="Flowbite Logo" /> 
+                    <img src="https://flowbite.com/docs/images/logo.svg" className="mr-3 h-6 sm:h-8" alt="Flowbite Logo" />
                 </Navbar.Brand>
                 <div className="flex items-center gap-2 md:order-2">
                     <DarkThemeToggle className="!bg-transparent border-0 focus:ring-0 m-0" />
 
                     {/* Conditionally render the Connect button */}
                     {!isLoggedIn && (
-                        <Button size="sm" onClick={handleOpenModal} className="rounded-md m-0 ml-2 border-0 !bg-neutral-200 dark:!bg-neutral-800 text-black dark:text-white font-bold">
+                        <Button size="sm" onClick={handleOpenModal} className="rounded-md m-0 ml-2 border-neutral-700 !bg-neutral-200 dark:!bg-neutral-800 text-black dark:text-white font-bold">
                             Connect
                         </Button>
                     )}
 
                     {/* Shopping Cart Button */}
-                    <Button size="sm" onClick={handleOpenCart} className="relative rounded-md m-0 ml-2 border-0 !bg-neutral-200 dark:!bg-neutral-800 text-black dark:text-white font-bold">
+                    <Button size="sm" onClick={handleOpenCart} className="relative rounded-md m-0 ml-2 border-neutral-700 !bg-neutral-200 dark:!bg-neutral-800 text-black dark:text-white font-bold">
                         Cart
                         <span className="absolute top-[-5px] right-[-5px] inline-flex items-center justify-center w-4 h-4 text-xs font-medium text-white bg-red-600 rounded-full">
                             {totalItems > 0 ? totalItems : 0}
