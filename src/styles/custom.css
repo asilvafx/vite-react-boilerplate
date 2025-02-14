@@ -29,10 +29,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 .top-nav {
     z-index: 99;
-    background-color: var(--clr-light) !important;
-}
-.dark .top-nav {
-    background-color: var(--clr-dark) !important;
+    background: transparent !important;
 }
 .top-nav div:first-child {
     width: 100%;

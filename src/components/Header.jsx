@@ -61,22 +61,22 @@ const Header = () => {
 
                     {/* Conditionally render the Connect button */}
                     {!isLoggedIn && (
-                        <Button size="sm" gradientDuoTone="purpleToBlue" onClick={handleOpenModal} className="rounded-md m-0 ml-2 border-0">
+                        <Button size="sm" onClick={handleOpenModal} className="rounded-md m-0 ml-2 border-0 !bg-neutral-200 dark:!bg-neutral-800 text-black dark:text-white font-bold">
                             Connect
                         </Button>
                     )}
 
                     {/* Shopping Cart Button */}
-                    <Button size="sm" gradientDuoTone="purpleToBlue" onClick={handleOpenCart} className="relative rounded-md m-0 ml-2 border-0">
+                    <Button size="sm" onClick={handleOpenCart} className="relative rounded-md m-0 ml-2 border-0 !bg-neutral-200 dark:!bg-neutral-800 text-black dark:text-white font-bold">
                         Cart
                         <span className="absolute top-[-5px] right-[-5px] inline-flex items-center justify-center w-4 h-4 text-xs font-medium text-white bg-red-600 rounded-full">
                             {totalItems > 0 ? totalItems : 0}
                         </span>
                     </Button>
 
-                    <Navbar.Toggle />
+                    <Navbar.Toggle className="!bg-neutral-200 dark:!bg-neutral-900 border-0 " />
                 </div>
-                <Navbar.Collapse>
+                <Navbar.Collapse className="shadow-md md:shadow-none bg-neutral-200 dark:bg-neutral-950 border-2 rounded-lg  mt-4 md:mt-0 p-1 md:px-10 md:py-2">
                     <Link to="/" active="true">Home</Link>
                     <Link to="/sample">CRUD</Link>
                     <Link to="/shop">Shop</Link>

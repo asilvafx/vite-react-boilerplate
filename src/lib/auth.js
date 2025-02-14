@@ -1,6 +1,6 @@
 
 import Cookies from 'js-cookie';
-import { decryptPassword } from './crypto.js'; 
+import { decryptPassword } from './crypto.js';
 
 export const checkLoginStatus = () => {
     const loggedIn = Cookies.get('isLoggedIn') === 'true';
