@@ -11,6 +11,8 @@ const ModalConnect = ({ show, onClose }) => {
     const { t } = useTranslation();
     const auth = useAuth();
 
+    const [web3, setWeb3] = useState(null);
+
     const [isRegistering, setIsRegistering] = useState(false);
     const [input, setInput] = useState({
         username: "",
