@@ -1,37 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { Button, Navbar, DarkThemeToggle } from "flowbite-react";
 import ModalConnect from "./ModalConnect";
 import { useCart } from 'react-use-cart';
 import Cart from './Cart';
-import Cookies from 'js-cookie';
-import { decryptHash } from "../lib/crypto.js";
+import { useAuth } from "../context/AuthProvider";
+import { getUserData } from '../lib/auth';
 
 const Header = () => {
     const [isModalVisible, setModalVisible] = useState(false);
     const [isCartVisible, setCartVisible] = useState(false);
     const { totalItems } = useCart();
+
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [userInfo, setUserInfo] = useState([]);
 
+    const user = useAuth();
     useEffect(() => {
-        const checkLoginStatus = () => {
-            const loggedIn = Cookies.get('isLoggedIn') === 'true';
-            const uData = Cookies.get('uData');
-            const tkn = Cookies.get('tkn');
+        if (user.token){
+            console.log(getUserData);
+            setUserInfo(getUserData);
+            setIsLoggedIn(true);
+        }
+    }, [user.token, user.user])
 
-            if (loggedIn && uData && tkn) {
-                const decryptedUData = JSON.parse(decryptHash(uData));
-                const decryptedTkn = decryptHash(tkn);
-
-                // Check if the token matches the email in uData
-                if (decryptedTkn === decryptedUData.email) {
-                    setIsLoggedIn(true);
-                }
-            }
-        };
-
-        checkLoginStatus();
-    }, []);
 
     const handleOpenModal = () => {
         setModalVisible(true);

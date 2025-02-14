@@ -1,8 +1,8 @@
-import { useContext, createContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import {createContext, useContext, useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 import Cookies from 'js-cookie';
 import DBService from '../data/db.service';
-import {encryptHash, decryptHash} from "../lib/crypto.js";
+import {decryptHash, encryptHash} from "../lib/crypto.js";
 import Web3 from 'web3';
 
 const AuthContext = createContext();
@@ -85,7 +85,7 @@ const AuthProvider = ({ children }) => {
             setUser(userData.email);
             const udata = encryptHash(JSON.stringify(userData));
             const token = encryptHash(userData.email);
-            setUser(userData.email);
+            setUser(userData);
             setToken(token);
             Cookies.set('isLoggedIn', true, { path: '', secure: true, sameSite: 'strict' });
             Cookies.set('tkn', token, { path: '', secure: true, sameSite: 'strict' });
