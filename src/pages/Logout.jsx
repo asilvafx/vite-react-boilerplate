@@ -1,19 +1,11 @@
-import React, { useEffect } from 'react';
-import Cookies from 'js-cookie';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import { useAuth } from "../context/AuthProvider";
 
 const Logout = () => {
-    const navigate = useNavigate();
 
-    useEffect(() => {
-        // Clear cookies
-        Cookies.remove('isLoggedIn');
-        Cookies.remove('uData');
-        Cookies.remove('tkn');
+    const user = useAuth();
 
-        // Redirect to home page
-        navigate('/');
-    }, [navigate]);
+    user.logOut();
 
     return (
         <div>

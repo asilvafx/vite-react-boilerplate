@@ -1,25 +1,24 @@
-import {createContext, useContext, useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import { createContext, useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
 import DBService from '../data/db.service';
-import {decryptHash, encryptHash} from "../lib/crypto.js";
+import { decryptHash, encryptHash } from "../lib/crypto.js";
 import Web3 from 'web3';
 
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-
-    const [user, setUser] = useState(null);
+    const [user, setUser ] = useState(null);
     const [token, setToken] = useState(localStorage.getItem("site") || "");
     const navigate = useNavigate();
-
     const [web3, setWeb3] = useState(null);
     const tokenProvider = process.env.WEB3_INFURA_RPC || "";
+
     useEffect(() => {
         if (tokenProvider) {
             try {
                 const newWeb3 = new Web3(new Web3.providers.HttpProvider(tokenProvider));
-                setWeb3(newWeb3);
+                setWeb3(newWeb3 );
             } catch (error) {
                 console.error("Failed to initialize Web3:", error);
             }
@@ -30,7 +29,7 @@ const AuthProvider = ({ children }) => {
         try {
             const userCheck = await DBService.getItemByKeyValue('email', data.username, 'users');
 
-            if(userCheck){
+            if (userCheck) {
                 alert('Email address already exists in our system!');
                 return false;
             }
@@ -63,29 +62,26 @@ const AuthProvider = ({ children }) => {
             return false;
         }
     };
+
     const loginAction = async (data) => {
         try {
-            // Sign in the user
-            // Fetch user data from the database using DBService
             const userData = await DBService.getItemByKeyValue('email', data.username, 'users');
 
-            if(!userData){
+            if (!userData) {
                 console.log('Error: Invalid credentials.');
                 return;
             }
             const currentPassword = userData.password;
 
-            if(decryptHash(currentPassword) !== data.password){
+            if (decryptHash(currentPassword) !== data.password) {
                 console.log('Error: Invalid credentials.');
                 return;
             }
-            // Redirect or perform any action after successful login
             alert('Login Successfully! You will be now redirected..');
 
-            setUser(userData.email);
+            setUser (userData);
             const udata = encryptHash(JSON.stringify(userData));
             const token = encryptHash(userData.email);
-            setUser(userData);
             setToken(token);
             Cookies.set('isLoggedIn', true, { path: '', secure: true, sameSite: 'strict' });
             Cookies.set('tkn', token, { path: '', secure: true, sameSite: 'strict' });
@@ -93,18 +89,20 @@ const AuthProvider = ({ children }) => {
 
             window.location.reload();
             return;
-
-            throw new Error(res.message);
         } catch (err) {
             console.error(err);
         }
     };
 
     const logOut = () => {
-        setUser(null);
+        setUser (null);
         setToken("");
-        localStorage.removeItem("site");
-        navigate("/login");
+
+        Cookies.remove('isLoggedIn');
+        Cookies.remove('uData');
+        Cookies.remove('tkn');
+
+        navigate('/');
     };
 
     return (
@@ -112,7 +110,6 @@ const AuthProvider = ({ children }) => {
             {children}
         </AuthContext.Provider>
     );
-
 };
 
 export default AuthProvider;

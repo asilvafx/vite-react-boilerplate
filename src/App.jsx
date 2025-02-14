@@ -5,7 +5,7 @@ import React, { Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { Toaster } from 'react-hot-toast';
-import { checkLoginStatus } from './lib/auth';
+import { checkLoginStatus } from './lib/user';
 import AuthProvider from "./context/AuthProvider";
 import Cookies from 'js-cookie';
 

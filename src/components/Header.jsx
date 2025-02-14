@@ -1,28 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Navbar, DarkThemeToggle } from "flowbite-react";
 import ModalConnect from "./ModalConnect";
 import { useCart } from 'react-use-cart';
 import Cart from './Cart';
-import { useAuth } from "../context/AuthProvider";
-import { getUserData } from '../lib/auth';
+import { useAuth } from '../context/authprovider'; // Import the useAuth hook
+import { checkLoginStatus, getUserData } from '../lib/user';
 
 const Header = () => {
     const [isModalVisible, setModalVisible] = useState(false);
     const [isCartVisible, setCartVisible] = useState(false);
     const { totalItems } = useCart();
+    const { user, logOut } = useAuth(); // Get user and logOut from context
+    const [currentUser , setCurrentUser ] = useState(null);
 
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [userInfo, setUserInfo] = useState([]);
-
-    const user = useAuth();
     useEffect(() => {
-        if (user.token){
-            console.log(getUserData);
-            setUserInfo(getUserData);
-            setIsLoggedIn(true);
+        const isLoggedIn = checkLoginStatus();
+        if (isLoggedIn) {
+            const userData = getUserData();
+            setCurrentUser (userData);
+        } else {
+            setCurrentUser (null);
         }
-    }, [user.token, user.user])
-
+    }, []);
 
     const handleOpenModal = () => {
         setModalVisible(true);
@@ -49,11 +48,13 @@ const Header = () => {
                 <div className="flex items-center gap-2 md:order-2">
                     <DarkThemeToggle className="!bg-transparent border-0 focus:ring-0 m-0" />
 
-                    {/* Conditionally render the Connect button */}
-                    {!isLoggedIn && (
+                    {/* Conditionally render the Connect button or user email */}
+                    {!currentUser  ? (
                         <Button size="sm" onClick={handleOpenModal} className="rounded-md m-0 ml-2 border-neutral-300 dark:border-neutral-700 !bg-neutral-200 dark:!bg-neutral-800 text-black dark:text-white font-bold">
                             Connect
                         </Button>
+                    ) : (
+                        <span className="text-black dark:text-white font-bold">{currentUser .email}</span>
                     )}
 
                     {/* Shopping Cart Button */}
@@ -63,7 +64,6 @@ const Header = () => {
                             {totalItems > 0 ? totalItems : 0}
                         </span>
                     </Button>
- 
                 </div>
             </Navbar>
             <ModalConnect show={isModalVisible} onClose={handleCloseModal} />
