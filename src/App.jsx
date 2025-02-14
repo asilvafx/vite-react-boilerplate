@@ -45,9 +45,9 @@ const App = () => {
                     v7_startTransition: true,
                     v7_relativeSplatPath: true,
                     }} >
+                  <Toaster />
                   <AuthProvider>
                   <CookiesGDPR />
-                  <Toaster />
                   <Routes>
                       <Route path="/" element={<Home />} />
                       <Route element={<PrivateRoute />}>

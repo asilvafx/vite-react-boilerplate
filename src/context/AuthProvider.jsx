@@ -1,8 +1,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
 import DBService from '../data/db.service';
 import { decryptHash, encryptHash } from "../lib/crypto.js";
+import toast from 'react-hot-toast';
 import Web3 from 'web3';
 
 const AuthContext = createContext();
@@ -10,7 +10,6 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
     const [user, setUser ] = useState(null);
     const [token, setToken] = useState(localStorage.getItem("site") || "");
-    const navigate = useNavigate();
     const [web3, setWeb3] = useState(null);
     const tokenProvider = process.env.WEB3_INFURA_RPC || "";
 
@@ -68,18 +67,14 @@ const AuthProvider = ({ children }) => {
             const userData = await DBService.getItemByKeyValue('email', data.username, 'users');
 
             if (!userData) {
-                console.log('Error: Invalid credentials.');
-                return;
+                return 'Error: Invalid credentials.'; // Return error message
             }
             const currentPassword = userData.password;
 
             if (decryptHash(currentPassword) !== data.password) {
-                console.log('Error: Invalid credentials.');
-                return;
+                return 'Error: Invalid credentials.'; // Return error message
             }
-            alert('Login Successfully! You will be now redirected..');
-
-            setUser (userData);
+            setUser(userData);
             const udata = encryptHash(JSON.stringify(userData));
             const token = encryptHash(userData.email);
             setToken(token);
@@ -87,22 +82,18 @@ const AuthProvider = ({ children }) => {
             Cookies.set('tkn', token, { path: '', secure: true, sameSite: 'strict' });
             Cookies.set('uData', udata, { path: '', secure: true, sameSite: 'strict' });
 
-            window.location.reload();
-            return;
+            toast.success('Login Successfully! You will be now redirected..');
+
+            return true; // Return true for successful login
         } catch (err) {
             console.error(err);
+            return 'Error: An unexpected error occurred.'; // Return a generic error message
         }
     };
 
     const logOut = () => {
         setUser (null);
         setToken("");
-
-        Cookies.remove('isLoggedIn');
-        Cookies.remove('uData');
-        Cookies.remove('tkn');
-
-        navigate('/');
     };
 
     return (

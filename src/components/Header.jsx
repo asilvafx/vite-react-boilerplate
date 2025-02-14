@@ -20,9 +20,9 @@ const Header = () => {
         const isLoggedIn = checkLoginStatus();
         if (isLoggedIn) {
             const userData = getUserData();
-            setCurrentUser (userData);
+            setCurrentUser(userData);
         } else {
-            setCurrentUser (null);
+            setCurrentUser(null);
         }
     }, []);
 
