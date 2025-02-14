@@ -13,10 +13,10 @@ import Cookies from 'js-cookie';
     Import Pages
 */
 import Home from './pages/Home';
+const Dashboard = lazy(() => import('./pages/Dashboard'));
 const Shop = lazy(() => import('./pages/Shop'));
 const Product = lazy(() => import('./pages/Product'));
-const Sample = lazy(() => import('./pages/Sample'));
-const Logout = lazy(() => import('./pages/Logout')); // Import the Logout page
+const Logout = lazy(() => import('./pages/Logout'));
 
 /*
     Import Components
@@ -51,7 +51,7 @@ const App = () => {
                   <Routes>
                       <Route path="/" element={<Home />} />
                       <Route element={<PrivateRoute />}>
-                          <Route path="/sample" element={<Sample />} />
+                          <Route path="/dashboard" element={<Dashboard />} />
                       </Route>
                       <Route path="/shop" element={<Shop />} />
                       <Route path="/products/:productId" element={<Product />} />
