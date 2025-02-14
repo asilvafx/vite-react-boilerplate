@@ -9,7 +9,7 @@ const HeroSection  = () => {
         className="inline-flex justify-between items-center py-1 px-1 pr-4 mb-7 text-sm   rounded-full bg-neutral-200 dark:bg-neutral-800 text-gray-700 dark:text-white hover:bg-neutral-300 dark:hover:bg-neutral-700"
         role="alert"
         >
-        <span className="text-xs bg-blue-500 rounded-full text-primary px-4 py-1.5 mr-3">
+        <span className="text-xs bg-blue-500 rounded-full text-primary px-4 py-1.5 mr-3 text-white">
         New
         </span>{" "}
         <span className="text-sm font-medium">
