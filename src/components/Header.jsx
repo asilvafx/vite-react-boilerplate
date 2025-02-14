@@ -60,13 +60,13 @@ const Header = () => {
 
                     {/* Conditionally render the Connect button */}
                     {!isLoggedIn && (
-                        <Button size="sm" onClick={handleOpenModal} className="rounded-md m-0 ml-2 border-neutral-700 !bg-neutral-200 dark:!bg-neutral-800 text-black dark:text-white font-bold">
+                        <Button size="sm" onClick={handleOpenModal} className="rounded-md m-0 ml-2 border-neutral-300 dark:border-neutral-700 !bg-neutral-200 dark:!bg-neutral-800 text-black dark:text-white font-bold">
                             Connect
                         </Button>
                     )}
 
                     {/* Shopping Cart Button */}
-                    <Button size="sm" onClick={handleOpenCart} className="relative rounded-md m-0 ml-2 border-neutral-700 !bg-neutral-200 dark:!bg-neutral-800 text-black dark:text-white font-bold">
+                    <Button size="sm" onClick={handleOpenCart} className="relative rounded-md m-0 ml-2 border-neutral-300 dark:border-neutral-700 !bg-neutral-200 dark:!bg-neutral-800 text-black dark:text-white font-bold">
                         Cart
                         <span className="absolute top-[-5px] right-[-5px] inline-flex items-center justify-center w-4 h-4 text-xs font-medium text-white bg-red-600 rounded-full">
                             {totalItems > 0 ? totalItems : 0}
