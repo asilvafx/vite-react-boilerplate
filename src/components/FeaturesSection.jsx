@@ -2,10 +2,10 @@ import React, { Suspense, useRef, useEffect } from 'react';
 import { Zap, Lock, Globe, Cpu } from 'lucide-react';
 
 const FeaturesSection = () => {
- 
+
     return (
         <section>
-            <div className="max-w-screen-lg mx-auto">
+            <div className="max-w-screen-lg mx-auto py-16">
                 <div className="flex gap-12 items-center">
                     <div className="absolute">
                         <div className="h-[600px] w-full">
@@ -25,7 +25,7 @@ const FeaturesSection = () => {
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border border-gray-700/50 hover:border-blue-500/50 transition-all duration-300">
+                            <div className="bg-gray-300/50 dark:bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border border-gray-300/50 dark:border-gray-700/50 hover:border-blue-500/50 transition-all duration-300">
                                 <div className="bg-blue-500/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
                                     <Zap className="text-blue-400" size={24} />
                                 </div>
@@ -33,7 +33,7 @@ const FeaturesSection = () => {
                                 <p className="text-gray-400">Near-instant transactions with minimal gas fees across multiple chains.</p>
                             </div>
 
-                            <div className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border border-gray-700/50 hover:border-blue-500/50 transition-all duration-300">
+                            <div className="bg-gray-300/50 dark:bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border border-gray-300/50 dark:border-gray-700/50 hover:border-blue-500/50 transition-all duration-300">
                                 <div className="bg-blue-500/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
                                     <Lock className="text-blue-400" size={24} />
                                 </div>
@@ -41,7 +41,7 @@ const FeaturesSection = () => {
                                 <p className="text-gray-400">Military-grade encryption with multi-signature protection.</p>
                             </div>
 
-                            <div className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border border-gray-700/50 hover:border-blue-500/50 transition-all duration-300">
+                            <div className="bg-gray-300/50 dark:bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border border-gray-300/50 dark:border-gray-700/50 hover:border-blue-500/50 transition-all duration-300">
                                 <div className="bg-blue-500/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
                                     <Globe className="text-blue-400" size={24} />
                                 </div>
@@ -49,7 +49,7 @@ const FeaturesSection = () => {
                                 <p className="text-gray-400">Seamless integration across multiple blockchain networks.</p>
                             </div>
 
-                            <div className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border border -gray-700/50 hover:border-blue-500/50 transition-all duration-300">
+                            <div className="bg-gray-300/50 dark:bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border border-gray-300/50 dark:border-gray-700/50 hover:border-blue-500/50 transition-all duration-300">
                                 <div className="bg-blue-500/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
                                     <Cpu className="text-blue-400" size={24} />
                                 </div>

@@ -1,4 +1,4 @@
-import React from 'react'; 
+import React from 'react';
 
 const HeroSection  = () => {
     return (
@@ -77,7 +77,7 @@ const HeroSection  = () => {
         className="flex flex-wrap justify-center items-center mt-8 text-gray-500 sm:justify-between">
         <a
             href="#"
-            className="mr-5 mb-5 lg:mb-0 hover:text-gray-800 dark:hover:text-gray-400"
+            className="mr-5 mb-5 lg:mb-0 hover:text-gray-800 dark:hover:text-gray-400 text-neutral-600 dark:text-neutral-500"
         >
             <svg
                 className="h-8"
@@ -125,7 +125,7 @@ const HeroSection  = () => {
         </a>
         <a
             href="#"
-            className="mr-5 mb-5 lg:mb-0 hover:text-gray-800 dark:hover:text-gray-400"
+            className="mr-5 mb-5 lg:mb-0 hover:text-gray-800 dark:hover:text-gray-400 text-neutral-600 dark:text-neutral-500"
         >
             <svg
                 className="h-11"
@@ -149,7 +149,7 @@ const HeroSection  = () => {
         </a>
         <a
             href="#"
-            className="mr-5 mb-5 lg:mb-0 hover:text-gray-800 dark:hover:text-gray-400"
+            className="mr-5 mb-5 lg:mb-0 hover:text-gray-800 dark:hover:text-gray-400 text-neutral-600 dark:text-neutral-500"
         >
             <svg
                 className="h-11"

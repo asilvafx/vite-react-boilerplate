@@ -13,19 +13,19 @@ const StatsSection  = () => {
                             The native token powering the next generation of decentralized applications.
                         </p>
                         <div className="grid grid-cols-2 gap-6">
-                            <div className="bg-gray-300/30 dark:bg-gray-800/30 backdrop-blur-sm p-4 rounded-xl">
+                            <div className="bg-gray-300/50 dark:bg-gray-800/50 backdrop-blur-sm p-4 rounded-xl">
                                 <p className="text-sm text-gray-500">Market Cap</p>
                                 <p className="text-xl font-semibold text-black dark:text-white">$142.5M</p>
                             </div>
-                            <div className="bg-gray-300/30 dark:bg-gray-800/30 backdrop-blur-sm p-4 rounded-xl">
+                            <div className="bg-gray-300/50 dark:bg-gray-800/50 backdrop-blur-sm p-4 rounded-xl">
                                 <p className="text-sm text-gray-500">Circulating Supply</p>
                                 <p className="text-xl font-semibold text-black dark:text-white">285.7M BOLT</p>
                             </div>
-                            <div className="bg-gray-300/30 dark:bg-gray-800/30 backdrop-blur-sm p-4 rounded-xl">
+                            <div className="bg-gray-300/50 dark:bg-gray-800/50 backdrop-blur-sm p-4 rounded-xl">
                                 <p className="text-sm text-gray-500">Total Supply</p>
                                 <p className="text-xl font-semibold text-black dark:text-white">1B BOLT</p>
                             </div>
-                            <div className="bg-gray-300/30 dark:bg-gray-800/30 backdrop-blur-sm p-4 rounded-xl">
+                            <div className="bg-gray-300/50 dark:bg-gray-800/50 backdrop-blur-sm p-4 rounded-xl">
                                 <p className="text-sm text-gray-500">Current Price</p>
                                 <p className="text-xl font-semibold text-black dark:text-white">$0.499</p>
                             </div>
@@ -44,7 +44,7 @@ const StatsSection  = () => {
                         </div>
                     </div>
                     <div className="space-y-4">
-                        <div className="bg-gray-300/30 dark:bg-gray-800/30 backdrop-blur-sm p-6 rounded-xl border border-gray-300 dark:border-gray-800">
+                        <div className="bg-gray-300/50 dark:bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border border-gray-300 dark:border-gray-800">
                             <h3 className="text-xl font-semibold text-black dark:text-white mb-4">Contract Information</h3>
                             <div className="space-y-3">
                                 <div>
