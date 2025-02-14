@@ -22,12 +22,12 @@ const StatsSection  = () => {
                         </p>
                         <div className="grid grid-cols-2 gap-6">
                             <div className="bg-gray-300/50 dark:bg-gray-800/50 backdrop-blur-sm p-4 rounded-xl">
-                                <p className="text-sm text-gray-500">Market Cap</p>
-                                <p className="text-xl font-semibold text-black dark:text-white">$142.5M</p>
+                                <p className="text-sm text-gray-500">Blockchain</p>
+                                <p className="text-xl font-semibold text-black dark:text-white">Polygon PoS</p>
                             </div>
                             <div className="bg-gray-300/50 dark:bg-gray-800/50 backdrop-blur-sm p-4 rounded-xl">
-                                <p className="text-sm text-gray-500">Circulating Supply</p>
-                                <p className="text-xl font-semibold text-black dark:text-white">285.7M BOLT</p>
+                                <p className="text-sm text-gray-500">Contract</p>
+                                <p className="text-xl font-semibold text-black dark:text-white">ERC-20</p>
                             </div>
                             <div className="bg-gray-300/50 dark:bg-gray-800/50 backdrop-blur-sm p-4 rounded-xl">
                                 <p className="text-sm text-gray-500">Total Supply</p>
@@ -35,7 +35,7 @@ const StatsSection  = () => {
                             </div>
                             <div className="bg-gray-300/50 dark:bg-gray-800/50 backdrop-blur-sm p-4 rounded-xl">
                                 <p className="text-sm text-gray-500">Current Price</p>
-                                <p className="text-xl font-semibold text-black dark:text-white">$0.499</p>
+                                <p className="text-xl font-semibold text-black dark:text-white">1 BOLT/POL</p>
                             </div>
                         </div>
                         <div className="flex gap-4">
