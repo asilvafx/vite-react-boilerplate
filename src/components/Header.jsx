@@ -66,7 +66,7 @@ const Header = () => {
                                 </Button>
                             }
                             >
-                            <Dropdown.Item>Dashboard</Dropdown.Item> 
+                            <Dropdown.Item><Link to="/">Dashboard</Link></Dropdown.Item>
                             <Dropdown.Item><Link to="/logout">Sign out</Link></Dropdown.Item>
                         </Dropdown>
                     )}
