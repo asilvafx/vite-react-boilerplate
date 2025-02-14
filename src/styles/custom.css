@@ -5,11 +5,14 @@
     --clr-light: #f4f4f4;
 }
 html, body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
     overscroll-behavior: none;
     scroll-behavior: smooth;
 }
 body {
-    width: 100%;
     height: max-content;
     min-height: 100vh;
     font-family: 'Roboto', sans-serif;
