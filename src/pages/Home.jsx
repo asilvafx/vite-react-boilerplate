@@ -5,6 +5,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import HeroSection from '../components/HeroSection';
 import StatsSection from '../components/StatsSection';
+import FeaturesSection from '../components/FeaturesSection';
 
 const Home = () => {
     const { t } = useTranslation();
@@ -21,6 +22,9 @@ const Home = () => {
 
             {/* Hero Section */}
             <HeroSection />
+
+            {/* Token Features Section */}
+            <FeaturesSection />
 
             {/* Stats Section */}
             <StatsSection />

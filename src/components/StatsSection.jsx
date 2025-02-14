@@ -8,7 +8,7 @@ const StatsSection  = () => {
             <div className="w-full max-w-screen-lg mx-auto py-16 border-b border-gray-800">
                 <div className="grid grid-cols-1 gap-12">
                     <div className="space-y-6">
-                        <h2 className="text-3xl font-bold text-black dark:text-white tracking-tight">$BOLT Token</h2>
+                        <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">$BOLT Token</h2>
                         <p className="text-gray-600 dark:text-gray-400 text-lg max-w-md">
                             The native token powering the next generation of decentralized applications.
                         </p>
