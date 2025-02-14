@@ -1,5 +1,7 @@
 import React from 'react';
-import { Github, Twitter, Linkedin, Mail, Heart, Coins } from 'lucide-react';
+import { Mail, Heart } from 'lucide-react';
+import { FaXTwitter, FaDiscord, FaGithubAlt } from "react-icons/fa6";
+import { FaTelegramPlane } from "react-icons/fa";
 
 const Footer = () => {
     return (
@@ -138,17 +140,22 @@ const Footer = () => {
                             <a href="#"
                                className="w-10 h-10 rounded-full bg-neutral-300 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-900 flex items-center justify-center
                             transition-colors duration-200">
-                                <Github size={20} className="text-gray-700 dark:text-gray-300"/>
+                                <FaGithubAlt size={20} className="text-gray-700 dark:text-gray-300"/>
                             </a>
                             <a href="#"
                                className="w-10 h-10 rounded-full bg-neutral-300 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-900 flex items-center justify-center
                             transition-colors duration-200">
-                                <Twitter size={20} className="text-gray-700 dark:text-gray-300"/>
+                                <FaXTwitter size={20} className="text-gray-700 dark:text-gray-300"/>
                             </a>
                             <a href="#"
                                className="w-10 h-10 rounded-full bg-neutral-300 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-900 flex items-center justify-center
                             transition-colors duration-200">
-                                <Coins size={20} className="text-gray-700 dark:text-gray-300"/>
+                                <FaTelegramPlane size={20} className="text-gray-700 dark:text-gray-300"/>
+                            </a>
+                            <a href="#"
+                               className="w-10 h-10 rounded-full bg-neutral-300 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-900 flex items-center justify-center
+                            transition-colors duration-200">
+                                <FaDiscord size={20} className="text-gray-700 dark:text-gray-300"/>
                             </a>
                         </div>
                         <div className="flex items-center gap-2 text-sm text-gray-400">

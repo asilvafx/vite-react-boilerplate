@@ -7,10 +7,15 @@ const StatsSection  = () => {
             {/* Token Stats Section */}
             <div className="w-full max-w-screen-lg mx-auto py-16">
                 <div className="grid grid-cols-1 gap-12">
-                    <div className="absolute">
-                        <div className="h-[600px] w-full">
+                    <div className="w-full absolute">
+                        <div className="w-full relative">
                             <Suspense fallback={<></>}>
-
+                                <>
+                                    <img className="absolute w-full max-h-[400px] object-contain opacity-10"
+                                         src="https://www.pngall.com/wp-content/uploads/13/Glow-Golden-PNG-File.png"/>
+                                    <img className="w-full max-h-[600px] object-contain"
+                                         src="https://static.vecteezy.com/system/resources/previews/042/367/155/non_2x/ai-generated-close-up-of-a-scary-alien-image-free-png.png" />
+                                </>
                             </Suspense>
                         </div>
                     </div>
