@@ -77,7 +77,7 @@ const ModalConnect = ({ show, onClose }) => {
 
     return (
         <div>
-            <Modal className="modal" dismissible show={show} onClose={onClose}>
+            <Modal size="md" className="modal" dismissible show={show} onClose={onClose}>
                 <Modal.Header>{isRegistering ? "Create an Account" : "Login to Your Account"}</Modal.Header>
                 <Modal.Body>
                     {isRegistering ? (
