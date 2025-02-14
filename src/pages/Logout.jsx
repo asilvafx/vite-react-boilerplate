@@ -18,7 +18,7 @@ const Logout = () => {
             Cookies.remove('tkn');
 
             toast.success('You have been successfully logged out.');
-
+            navigate('/');
 
         } else {
             navigate('/');
