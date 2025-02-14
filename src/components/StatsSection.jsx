@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import {File, Shield, Wallet} from "lucide-react";
 
 const StatsSection  = () => {
@@ -7,8 +7,16 @@ const StatsSection  = () => {
             {/* Token Stats Section */}
             <div className="w-full max-w-screen-lg mx-auto py-16">
                 <div className="grid grid-cols-1 gap-12">
+                    <div className="absolute">
+                        <div className="h-[600px] w-full">
+                            <Suspense fallback={<></>}>
+
+                            </Suspense>
+                        </div>
+                    </div>
                     <div className="space-y-6">
-                        <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">$BOLT Token</h2>
+                        <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">$BOLT
+                            Token</h2>
                         <p className="text-gray-600 dark:text-gray-400 text-lg max-w-md">
                             The native token powering the next generation of decentralized applications.
                         </p>
@@ -44,8 +52,10 @@ const StatsSection  = () => {
                         </div>
                     </div>
                     <div className="space-y-4">
-                        <div className="bg-gray-300/50 dark:bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border border-gray-300 dark:border-gray-800">
-                            <h3 className="text-xl font-semibold text-black dark:text-white mb-4">Contract Information</h3>
+                        <div
+                            className="bg-gray-300/50 dark:bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border border-gray-300 dark:border-gray-800">
+                            <h3 className="text-xl font-semibold text-black dark:text-white mb-4">Contract
+                                Information</h3>
                             <div className="space-y-3">
                                 <div>
                                     <p className="text-sm text-gray-500">Contract Address (ETH)</p>

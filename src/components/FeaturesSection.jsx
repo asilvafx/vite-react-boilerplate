@@ -1,4 +1,4 @@
-import React, { Suspense, useRef, useEffect } from 'react';
+import React from 'react';
 import { Zap, Lock, Globe, Cpu } from 'lucide-react';
 
 const FeaturesSection = () => {
@@ -7,13 +7,7 @@ const FeaturesSection = () => {
         <section>
             <div className="max-w-screen-lg mx-auto py-16">
                 <div className="flex gap-12 items-center">
-                    <div className="absolute">
-                        <div className="h-[600px] w-full">
-                            <Suspense fallback={<></>}>
-
-                            </Suspense>
-                        </div>
-                    </div>
+               
                     <div className="space-y-8">
                         <div>
                             <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
