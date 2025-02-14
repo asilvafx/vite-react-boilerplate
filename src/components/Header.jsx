@@ -3,8 +3,7 @@ import { Button, Navbar, DarkThemeToggle, Dropdown } from "flowbite-react";
 import {Link} from "react-router-dom";
 import ModalConnect from "./ModalConnect";
 import { useCart } from 'react-use-cart';
-import Cart from './Cart';
-import { useAuth } from '../context/authprovider';
+import Cart from './Cart'; 
 import { checkLoginStatus, getUserData } from '../lib/user';
 import { shortenAddress } from '../lib/utils';
 
@@ -13,7 +12,6 @@ const Header = () => {
     const [isModalVisible, setModalVisible] = useState(false);
     const [isCartVisible, setCartVisible] = useState(false);
     const { totalItems } = useCart();
-    const { user, logOut } = useAuth(); // Get user and logOut from context
     const [currentUser , setCurrentUser ] = useState(null);
 
     useEffect(() => {
