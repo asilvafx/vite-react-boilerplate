@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Navbar, DarkThemeToggle, Dropdown } from "flowbite-react";
+import {Link} from "react-router-dom";
 import ModalConnect from "./ModalConnect";
 import { useCart } from 'react-use-cart';
 import Cart from './Cart';
@@ -65,10 +66,8 @@ const Header = () => {
                                 </Button>
                             }
                             >
-                            <Dropdown.Item>Dashboard</Dropdown.Item>
-                            <Dropdown.Item>Settings</Dropdown.Item>
-                            <Dropdown.Item>Earnings</Dropdown.Item>
-                            <Dropdown.Item>Sign out</Dropdown.Item>
+                            <Dropdown.Item>Dashboard</Dropdown.Item> 
+                            <Dropdown.Item><Link to="/logout">Sign out</Link></Dropdown.Item>
                         </Dropdown>
                     )}
 
