@@ -53,8 +53,7 @@ const Header = () => {
         <>
             <Navbar className="top-nav h-14 fixed w-full p-0" fluid>
                 <Navbar.Brand href="/">
-                    <img src="https://flowbite.com/docs/images/logo.svg" className="mr-3 h-6 sm:h-8" alt="Flowbite Logo" />
-                    <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">React App</span>
+                    <img src="https://flowbite.com/docs/images/logo.svg" className="mr-3 h-6 sm:h-8" alt="Flowbite Logo" /> 
                 </Navbar.Brand>
                 <div className="flex items-center gap-2 md:order-2">
                     <DarkThemeToggle className="!bg-transparent border-0 focus:ring-0 m-0" />

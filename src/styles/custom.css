@@ -23,10 +23,8 @@ body {
 .dark body {
     background: linear-gradient(-45deg, #161616, #161616, #161616, var(--clr-dark));
 }
-#root {
-    height: 100%;
-    overscroll-behavior: none;
-    scroll-behavior: smooth;
+section {
+    margin: 0 1rem;
 }
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Orbitron', sans-serif;

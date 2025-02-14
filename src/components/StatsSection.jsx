@@ -5,7 +5,7 @@ const StatsSection  = () => {
     return (
         <section>
             {/* Token Stats Section */}
-            <div className="w-full max-w-screen-lg mx-auto py-16 border-b border-gray-800">
+            <div className="w-full max-w-screen-lg mx-auto py-16">
                 <div className="grid grid-cols-1 gap-12">
                     <div className="space-y-6">
                         <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">$BOLT Token</h2>

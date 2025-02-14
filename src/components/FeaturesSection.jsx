@@ -1,28 +1,8 @@
 import React, { Suspense, useRef, useEffect } from 'react';
-import { ArrowRight, Wallet, Zap, Lock, Globe, Cpu } from 'lucide-react';
-import Spline from '@splinetool/react-spline';
+import { Zap, Lock, Globe, Cpu } from 'lucide-react';
 
 const FeaturesSection = () => {
-    const splineRef = useRef(null);
-
-    const handleScroll = () => {
-        if (splineRef.current) {
-            const scrollY = window.scrollY;
-            // Adjust the rotation based on scroll
-            const rotationX = scrollY * 0.1; // Adjust the multiplier for sensitivity
-            const rotationY = scrollY * 0.1; // Adjust the multiplier for sensitivity
-            splineRef.current.setRotation(rotationX, rotationY, 0); // Rotate around X and Y axes
-        }
-    };
-
-    useEffect(() => {
-        window.addEventListener('scroll', handleScroll);
-
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, []);
-
+ 
     return (
         <section>
             <div className="max-w-screen-lg mx-auto">
@@ -30,10 +10,7 @@ const FeaturesSection = () => {
                     <div className="absolute">
                         <div className="h-[600px] w-full">
                             <Suspense fallback={<></>}>
-                                <Spline
-                                    ref={splineRef}
-                                    scene="https://prod.spline.design/UmTyqfPzW1R4uwfm/scene.splinecode"
-                                />
+
                             </Suspense>
                         </div>
                     </div>

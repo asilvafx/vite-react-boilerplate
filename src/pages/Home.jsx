@@ -6,6 +6,7 @@ import Footer from '../components/Footer';
 import HeroSection from '../components/HeroSection';
 import StatsSection from '../components/StatsSection';
 import FeaturesSection from '../components/FeaturesSection';
+import CtaSection from '../components/CtaSection';
 
 const Home = () => {
     const { t } = useTranslation();
@@ -28,6 +29,9 @@ const Home = () => {
 
             {/* Stats Section */}
             <StatsSection />
+
+            {/* CTA Banner */}
+            <CtaSection />
 
             {/* Footer */}
             <Footer />
