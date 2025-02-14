@@ -73,14 +73,8 @@ const Header = () => {
                             {totalItems > 0 ? totalItems : 0}
                         </span>
                     </Button>
-
-                    <Navbar.Toggle className="!bg-neutral-200 dark:!bg-neutral-900 border-0 " />
+ 
                 </div>
-                <Navbar.Collapse className="shadow-md md:shadow-none bg-neutral-200 dark:bg-neutral-950 border-2 rounded-lg  mt-4 md:mt-0 p-1 md:px-10 md:py-2">
-                    <Link to="/" active="true">Home</Link>
-                    <Link to="/sample">CRUD</Link>
-                    <Link to="/shop">Shop</Link>
-                </Navbar.Collapse>
             </Navbar>
             <ModalConnect show={isModalVisible} onClose={handleCloseModal} />
 
