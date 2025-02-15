@@ -27,7 +27,7 @@ const Header = () => {
     const handleCloseModal = () => {
         setModalVisible(false);
     };
-  
+
     return (
         <>
             <Navbar className="top-nav h-14 fixed w-full p-0" fluid>
@@ -47,12 +47,12 @@ const Header = () => {
                             label=""
                             dismissOnClick={false}
                             renderTrigger={() =>
-                                <Button className="rounded-md m-0 ml-2 border-neutral-300 dark:border-neutral-700 !bg-neutral-200 dark:!bg-neutral-800 text-black dark:text-white font-bold">
+                                <Button className="rounded-md m-0 ml-2 border-neutral-700 !bg-neutral-950 dark:!bg-neutral-800 text-white font-bold">
                                     {shortenAddress(currentUser.web3_address)}
                                 </Button>
                             }
                             >
-                            <Dropdown.Item><Link to="/">Dashboard</Link></Dropdown.Item>
+                            <Dropdown.Item><Link to="/dashboard">Dashboard</Link></Dropdown.Item>
                             <Dropdown.Item><Link to="/logout">Sign out</Link></Dropdown.Item>
                         </Dropdown>
                     )}
