@@ -45,7 +45,7 @@ const Dashboard = () => {
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Performance Stats */}
                 <div className="premium-panel p-6 rounded-xl space-y-6">
                     <div className="flex items-center space-x-3">
@@ -113,7 +113,9 @@ const Dashboard = () => {
                         </div>
                     </div>
                 </div>
-
+            </div>
+            </section>
+            <section className="mb-10 w-full max-w-screen-lg mx-auto">
                 {/* Quick Actions */}
                 <div className="premium-panel p-6 rounded-xl space-y-6">
                     <div className="flex items-center space-x-3">
@@ -133,7 +135,6 @@ const Dashboard = () => {
                         </Link>
                     </div>
                 </div>
-            </div>
             </section>
             {/* Hero Section */}
             <section className="premium-panel rounded-2xl text-center py-24 px-8 mb-10 w-full max-w-screen-lg mx-auto">
