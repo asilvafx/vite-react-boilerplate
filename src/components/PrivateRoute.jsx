@@ -3,9 +3,12 @@ import { Navigate, Outlet } from "react-router-dom";
 import { checkLoginStatus } from '../lib/user';
 
 const PrivateRoute = () => {
-    if (!checkLoginStatus){
+    // Call the function to get the actual login status
+    const isLoggedIn = checkLoginStatus();
+
+    if (!isLoggedIn) {
         return <Navigate to="/" />;
-    }  
+    }
 
     return <Outlet />;
 };

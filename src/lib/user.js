@@ -24,12 +24,15 @@ export const checkLoginStatus = () => {
     const tkn = Cookies.get('tkn');
 
     if (loggedIn && uData && tkn) {
-        const decryptedUData = JSON.parse(decryptHash(uData));
-        const decryptedTkn = decryptHash(tkn);
+        try {
+            const decryptedUData = JSON.parse(decryptHash(uData));
+            const decryptedTkn = decryptHash(tkn);
 
-        // Check if the token matches the email in uData
-        if (decryptedTkn === decryptedUData.email) {
-            return true; // Valid login
+            // Check if the token matches the email in uData
+            return decryptedTkn === decryptedUData.email; // Valid login
+        } catch (error) {
+            console.error("Error checking login status:", error);
+            return false; // In case of error, return false
         }
     }
     return false; // Invalid login
