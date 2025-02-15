@@ -30,8 +30,7 @@ const ModalConnect = ({ show, onClose }) => {
         }
         const response = await auth.loginAction(input);
         if (response === true) {
-            navigate('/dashboard');
-            window.location.reload();
+            navigate('/dashboard'); 
         } else {
             setError(response || "Login failed. Please try again.");
         }
