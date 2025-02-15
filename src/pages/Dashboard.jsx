@@ -31,7 +31,7 @@ const Dashboard = () => {
         <>
             <Header />
             {/* User Stats Section */}
-            <section className="premium-panel rounded-2xl p-8">
+            <section className="premium-panel rounded-2xl p-8 my-10 w-full max-w-screen-lg mx-auto">
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8">
                 <div>
                     <h2 className="text-2xl font-medium neon-text mb-2">Your Account</h2>
@@ -136,7 +136,7 @@ const Dashboard = () => {
             </div>
             </section>
             {/* Hero Section */}
-            <section className="premium-panel rounded-2xl text-center py-24 px-8">
+            <section className="premium-panel rounded-2xl text-center py-24 px-8 mb-10 w-full max-w-screen-lg mx-auto">
                 <div className="relative">
                     <Sparkles
                         className="absolute -top-10 left-1/2 transform -translate-x-1/2 w-8 h-8 premium-icon-glow"/>
@@ -161,7 +161,7 @@ const Dashboard = () => {
             </section>
 
             {/* Stats Section */}
-            <section className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <section className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10 w-full max-w-screen-lg mx-auto">
                 <div className="premium-stats-card group">
                     <div className="flex-1 text-center">
                         <h3 className="text-lg font-medium text-gray-400 mb-4 group-hover:text-gray-300 transition-colors">
@@ -189,7 +189,7 @@ const Dashboard = () => {
             </section>
 
             {/* Featured Chests */}
-            <section>
+            <section className="mb-10 w-full max-w-screen-lg mx-auto">
                 <div className="flex items-center mb-10">
                     <TrendingUp className="w-8 h-8 premium-icon mr-3"/>
                     <h2 className="text-3xl font-medium neon-text">Featured Chests</h2>
@@ -238,7 +238,7 @@ const Dashboard = () => {
             </section>
 
             {/* Recent Winners */}
-            <section>
+            <section className="mb-10 w-full max-w-screen-lg mx-auto">
                 <div className="flex items-center mb-10">
                     <Trophy className="w-8 h-8 premium-icon mr-3"/>
                     <h2 className="text-3xl font-medium neon-text">Recent Winners</h2>
