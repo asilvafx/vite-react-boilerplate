@@ -33,7 +33,7 @@ body {
     padding: 0 1rem;
     width: 100%;
     max-width: 100%;
-    height: auto;
+    height: 100vh;
     overscroll-behavior: none;
     overflow-x: hidden;
     overflow-y: auto;
