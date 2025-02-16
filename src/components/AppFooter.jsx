@@ -24,23 +24,24 @@ const Navigation = () => {
     ];
 
     const navClasses = isMobile
-        ? 'fixed bottom-0 left-0 right-0 bg-gray-900 border-t border-gray-800 px-6 py-4'
+        ? 'fixed bottom-0 left-0 right-0 bg-neutral-900 border-t border-gray-800 px-6 py-4'
         : 'hidden';
 
     if (!isMobile) {
         return (
             <>
             </>
-        ); 
+        );
     }
 
     return (
-
+        <>
+        <div className="w-full min-h-24"></div>
         <nav className={navClasses}>
             <div className="container mx-auto">
                 <div className="flex items-center justify-between">
 
-                    <div className={`flex items-center justify-between w-full`}>
+                    <div className={`flex items-center justify-between w-full pb-4`}>
                         {navItems.map((item) => {
                             const Icon = item.icon;
                             const isActive = location.pathname === item.path;
@@ -62,6 +63,7 @@ const Navigation = () => {
                 </div>
             </div>
         </nav>
+        </>
     );
 };
 

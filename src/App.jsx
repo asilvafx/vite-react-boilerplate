@@ -49,6 +49,7 @@ const App = () => {
                   <Toaster />
                   <AuthProvider>
                   <CookiesGDPR />
+                  <main>
                   <Routes>
                       <Route path="/" element={<Home />} />
                       <Route element={<PrivateRoute />}>
@@ -56,10 +57,11 @@ const App = () => {
                           <Route path="/account" element={<Account />} />
                           <Route path="/create" element={<Create />} />
                           <Route path="/join" element={<Join />} />
-                      </Route> 
+                      </Route>
                       <Route path="/logout" element={<Logout />} />
                       <Route path="*" element={<Home />} />
                   </Routes>
+                  </main>
                   </AuthProvider>
                 </Router>
           </Suspense>

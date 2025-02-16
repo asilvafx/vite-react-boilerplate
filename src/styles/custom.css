@@ -27,6 +27,15 @@ body {
 .dark body {
     background: linear-gradient(-45deg, #161616, #161616, #161616, var(--clr-dark));
 }
+main {
+    padding: 0 1rem;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    overscroll-behavior: none;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Orbitron', sans-serif;
 }
