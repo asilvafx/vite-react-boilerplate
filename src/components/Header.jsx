@@ -36,28 +36,28 @@ const Header = () => {
                     <img src="https://flowbite.com/docs/images/logo.svg" className="mr-3 h-6 sm:h-8" alt="Flowbite Logo" />
                 </Navbar.Brand>
                 <div className="flex items-center gap-2 md:order-2">
-                    <DarkThemeToggle className="!bg-transparent border-0 focus:ring-0 m-0" />
+                    {/* <DarkThemeToggle className="!bg-transparent border-0 focus:ring-0 m-0" />  */}
 
                     {/* Conditionally render the Connect button or user email */}
                     {!currentUser  ? (
-                        <Button size="sm" onClick={handleOpenModal} className="rounded-md m-0 ml-2 border-neutral-300 dark:border-neutral-700 !bg-neutral-200 dark:!bg-neutral-800 text-black dark:text-white font-bold">
+                        <Button size="sm" onClick={handleOpenModal} className="rounded-md m-0 ml-2 border-neutral-700 !bg-neutral-800 text-white font-bold">
                             Connect
                         </Button>
                     ) : (
                         <>
                         <div className="hidden md:flex gap-2 items-center">
                         <Link to="/dashboard">
-                            <Button className="rounded-md m-0 ml-2 border-neutral-700 !bg-neutral-950 dark:!bg-neutral-800 text-white font-bold">
+                            <Button className="rounded-md m-0 ml-2 border-neutral-700 !bg-neutral-800 text-white font-bold">
                                 <Home size="20" />
                             </Button>
                         </Link>
                         <Link to="/create">
-                        <Button className="rounded-md m-0 ml-2 border-neutral-700 !bg-neutral-950 dark:!bg-neutral-800 text-white font-bold">
+                        <Button className="rounded-md m-0 ml-2 border-neutral-700 !bg-neutral-800 text-white font-bold">
                             <Plus size="20" />
                         </Button>
                         </Link>
                         <Link to="/join">
-                        <Button className="rounded-md m-0 ml-2 border-neutral-700 !bg-neutral-950 dark:!bg-neutral-800 text-white font-bold">
+                        <Button className="rounded-md m-0 ml-2 border-neutral-700 !bg-neutral-800 text-white font-bold">
                             <Box size="20" />
                         </Button>
                         </Link>
@@ -66,14 +66,14 @@ const Header = () => {
                             label=""
                             dismissOnClick={false}
                             renderTrigger={() => (
-                                <Button className="rounded-md m-0 ml-2 border-neutral-700 !bg-neutral-950 dark:!bg-neutral-800 text-white font-bold">
+                                <Button className="rounded-md m-0 ml-2 border-neutral-700 !bg-neutral-800 text-white font-bold">
                                     <Wallet size="20" className="me-2" />
                                     {shortenAddress(currentUser.web3_address)}
                                 </Button>
                                 )
                             }
                             >
-                            <Link to="/account"><Dropdown.Item className="!bg-neutral-300 dark:!bg-neutral-900 flex flex-col items-start rounded-sm w-[95%] mx-auto">
+                            <Link to="/account"><Dropdown.Item className="!bg-neutral-900 flex flex-col items-start rounded-sm w-[95%] mx-auto">
                                 <span>10000 $BOLT </span>
                                 <span className="text-xs uppercase text-blue-500 font-semibold">Top-up</span>
                             </Dropdown.Item></Link>

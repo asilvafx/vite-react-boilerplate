@@ -49,7 +49,6 @@ const App = () => {
                   <Toaster />
                   <AuthProvider>
                   <CookiesGDPR />
-                  <main>
                   <Routes>
                       <Route path="/" element={<Home />} />
                       <Route element={<PrivateRoute />}>
@@ -60,8 +59,7 @@ const App = () => {
                       </Route>
                       <Route path="/logout" element={<Logout />} />
                       <Route path="*" element={<Home />} />
-                  </Routes>
-                  </main>
+                  </Routes> 
                   </AuthProvider>
                 </Router>
           </Suspense>
