@@ -21,14 +21,21 @@ body {
     color: var(--clr-light);
     background-size: 400% 400%;
 }
-* {
-    color: var(--clr-light);
-}
-#root {
+body::before {
+    content: '';
     background-image: url(https://img.freepik.com/free-vector/abstract-halftone-dots-background_1048-7820.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+    display: block;
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+}
+* {
+    color: var(--clr-light);
+}
+#root {
     padding: 0 1rem;
     width: 100%;
     max-width: 100%;
