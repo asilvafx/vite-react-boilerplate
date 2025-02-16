@@ -32,12 +32,12 @@ const CtaSection = () => {
                       decentralized finance.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                      <button className="group bg-white hover:bg-gray-50 text-blue-600 px-8 py-4 rounded-xl font-semibold
+                      <button className="group bg-neutral-100 hover:bg-gray-50 text-blue-600 px-8 py-4 rounded-xl font-semibold
                                transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-blue-500/25">
-                          <Rocket className="group-hover:translate-x-1 transition-transform duration-300" size={20}/>
+                          <Rocket className="group-hover:translate-x-1 transition-transform duration-300 text-blue-600" size={20}/>
                           Launch App
                       </button>
-                      <button className="bg-gray-900/30 hover:bg-gray-900/40 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-semibold
+                      <button className="bg-gray-900/30 hover:bg-gray-900/40 backdrop-blur-sm text-white px-8 py-2 rounded-xl font-semibold
                                transition-all duration-300 flex items-center justify-center gap-2 border border-white/10">
                           Join Community
                           <ArrowRight className="group-hover:translate-x-1 transition-transform duration-300"

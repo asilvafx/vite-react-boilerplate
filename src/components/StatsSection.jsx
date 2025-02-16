@@ -35,13 +35,13 @@ const StatsSection  = () => {
                         </div>
                         <div className="flex gap-4">
                             <Link to="/dashboard">
-                            <Button className="bg-blue-600 hover:bg-blue-500 px-6 py-3 rounded-lg text-white font-medium
+                            <Button className="bg-blue-600 hover:bg-blue-500 text-white font-medium
                                    transition-all duration-300 flex items-center gap-2">
                                 <Rocket size={20} className="me-2"/>
                                 Launch App
                             </Button>
                             </Link>
-                            <Button className="bg-gray-800 hover:bg-gray-700 px-6 py-3 rounded-lg text-white font-medium
+                            <Button className="bg-gray-800 hover:bg-gray-700 text-white font-medium
                                    transition-all duration-300 flex items-center gap-2">
                                 <File size={20} className="me-2"/>
                                 Whitepaper
