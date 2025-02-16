@@ -13,6 +13,7 @@ html, body {
     scroll-behavior: smooth;
 }
 body {
+    margin: 0 auto;
     height: max-content;
     min-height: 100vh;
     font-family: 'Roboto', sans-serif;
@@ -26,20 +27,22 @@ body {
 .dark body {
     background: linear-gradient(-45deg, #161616, #161616, #161616, var(--clr-dark));
 }
-section {
-    margin: 0 1rem;
-}
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Orbitron', sans-serif;
 }
 .premium-panel {
     @apply relative overflow-hidden backdrop-blur-xl;
+    border: 1px solid var(--premium-border);
+    box-shadow: var(--premium-glow);
+}
+.premium-panel {
+    background: linear-gradient(135deg, rgb(242 242 242 / 80%) 0%, rgb(214 214 235 / 90%) 100%);
+}
+.dark .premium-panel {
     background: linear-gradient(135deg,
     rgba(26, 31, 53, 0.8) 0%,
     rgba(15, 23, 42, 0.9) 100%
     );
-    border: 1px solid var(--premium-border);
-    box-shadow: var(--premium-glow);
 }
 
 .premium-panel::before {
@@ -64,14 +67,14 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .neon-text {
-    @apply text-cyan-300 font-medium relative;
+    @apply text-blue-800 dark:text-cyan-300 font-medium relative;
     text-shadow:
             0 0 5px rgba(0, 255, 255, 0.3),
             0 0 10px rgba(0, 255, 255, 0.1);
 }
 
 .neon-text-intense {
-    @apply text-cyan-300 font-medium;
+    @apply text-blue-800 dark:text-cyan-300 font-medium;
     text-shadow:
             0 0 8px rgba(0, 255, 255, 0.4),
             0 0 10px rgba(0, 255, 255, 0.2),
@@ -80,7 +83,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .cyber-button {
     @apply relative px-6 py-3 bg-gradient-to-r from-cyan-500/10 to-cyan-400/5
-    text-cyan-300 font-medium tracking-wide uppercase text-sm
+    text-neutral-950 dark:text-cyan-300 font-medium tracking-wide uppercase text-sm
     border border-cyan-500/20 rounded-lg transition-all duration-300
     hover:border-cyan-400/40 hover:bg-cyan-500/20
     hover:shadow-[0_0_30px_rgba(0,255,255,0.15)]
@@ -108,7 +111,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .premium-icon {
-    @apply text-cyan-400 opacity-90;
+    @apply text-neutral-900 dark:text-cyan-400 opacity-90;
     filter: drop-shadow(0 0 4px rgba(0, 255, 255, 0.3));
 }
 
@@ -123,6 +126,9 @@ h1, h2, h3, h4, h5, h6 {
 
 .premium-gradient-text {
     @apply text-transparent bg-clip-text font-medium;
+    background-image: linear-gradient(135deg, #5b57f5 0%, #0081cd 100%);
+}
+.dark .premium-gradient-text {
     background-image: linear-gradient(135deg, #22d3ee 0%, #0ea5e9 100%);
 }
 .top-nav {

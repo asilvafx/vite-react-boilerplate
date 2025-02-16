@@ -1,0 +1,68 @@
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { Home, Plus, Box, Wallet } from 'lucide-react';
+import Header from "./Header.jsx";
+
+const Navigation = () => {
+    const location = useLocation();
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    const navItems = [
+        { path: '/dashboard', label: 'Dashboard', icon: Home },
+        { path: '/create', label: 'Create', icon: Plus },
+        { path: '/join', label: 'Chests', icon: Box },
+        { path: '/account', label: 'Account', icon: Wallet },
+    ];
+
+    const navClasses = isMobile
+        ? 'fixed bottom-0 left-0 right-0 bg-gray-900 border-t border-gray-800 px-6 py-4'
+        : 'hidden';
+
+    if (!isMobile) {
+        return (
+            <>
+            </>
+        ); 
+    }
+
+    return (
+
+        <nav className={navClasses}>
+            <div className="container mx-auto">
+                <div className="flex items-center justify-between">
+
+                    <div className={`flex items-center justify-between w-full`}>
+                        {navItems.map((item) => {
+                            const Icon = item.icon;
+                            const isActive = location.pathname === item.path;
+
+                            return (
+                                <Link
+                                    key={item.path}
+                                    to={item.path}
+                                    className={`flex items-center space-x-2 py-2 px-3 rounded-lg transition-colors
+                    ${isActive
+                                        ? 'text-cyan-400 bg-cyan-500/10'
+                                        : 'text-gray-400 hover:text-gray-200 hover:bg-gray-800'}`}
+                                >
+                                    <Icon className="w-5 h-5" />
+                                </Link>
+                            );
+                        })}
+                    </div>
+                </div>
+            </div>
+        </nav>
+    );
+};
+
+export default Navigation;

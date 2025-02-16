@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { ArrowLeft, Shield, Zap, Rocket, Lock } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { TextInput, Select, Textarea, Radio, Label, Alert } from 'flowbite-react';
 import Header from '../components/Header';
+import AppFooter from "../components/AppFooter";
 
 // Mock user data - replace with actual user data from your auth system
 const mockUser = {
@@ -43,27 +43,9 @@ const chestPlans = [
     }
 ];
 
-const durations = [
-    { value: '12', label: '12 Hours' },
-    { value: '24', label: '24 Hours' },
-    { value: '48', label: '48 Hours' },
-    { value: '72', label: '72 Hours' }
-];
 
 const Create = () => {
     const [selectedPlan, setSelectedPlan] = useState('');
-    const [chestData, setChestData] = useState({
-        name: '',
-        description: '',
-        duration: '24',
-        maxTickets: '',
-        isPublic: true
-    });
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log('Creating chest:', { ...chestData, plan: selectedPlan });
-    };
 
     const remainingWinsNeeded = 3 - mockUser.chestsWon;
     const isLevelTooLow = mockUser.level < 0;
@@ -71,7 +53,7 @@ const Create = () => {
     if (isLevelTooLow) {
         return (
             <>
-            <div className="max-w-5xl mx-auto">
+            <section className="w-full max-w-screen-lg mx-auto my-10">
                 <Link to="/" className="inline-flex items-center cyber-button mb-8">
                     <ArrowLeft className="w-4 h-4 mr-2" />
                     Back to Home
@@ -117,7 +99,7 @@ const Create = () => {
                         </Link>
                     </div>
                 </div>
-            </div>
+            </section>
             </>
         );
     }
@@ -127,11 +109,10 @@ const Create = () => {
         <Header />
         <section className="w-full max-w-screen-lg mx-auto relative my-10">
 
-            <div className="premium-panel p-8 rounded-xl">
+            <div>
                 <h1 className="text-3xl font-bold neon-text mb-8">Create a New Chest</h1>
 
                 <div className="mb-12">
-                    <h2 className="text-xl font-medium mb-6 text-gray-200">Select Your Chest Plan</h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         {chestPlans.map((plan) => {
                             const Icon = plan.icon;
@@ -165,91 +146,10 @@ const Create = () => {
                     </div>
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <div className="mb-6">
-                                <Label htmlFor="name" value="Chest Name" className="text-gray-200 mb-2" />
-                                <TextInput
-                                    id="name"
-                                    value={chestData.name}
-                                    onChange={(e) => setChestData({ ...chestData, name: e.target.value })}
-                                    required
-                                    className="bg-gray-800"
-                                />
-                            </div>
-
-                            <div className="mb-6">
-                                <Label htmlFor="duration" value="Duration" className="text-gray-200 mb-2" />
-                                <Select
-                                    id="duration"
-                                    value={chestData.duration}
-                                    onChange={(e) => setChestData({ ...chestData, duration: e.target.value })}
-                                    required
-                                    className="bg-gray-800"
-                                >
-                                    {durations.map((duration) => (
-                                        <option key={duration.value} value={duration.value}>
-                                            {duration.label}
-                                        </option>
-                                    ))}
-                                </Select>
-                            </div>
-
-                            <div>
-                                <Label value="Chest Type" className="text-gray-200 mb-2" />
-                                <div className="flex space-x-4">
-                                    <div className="flex items-center">
-                                        <Radio
-                                            id="public"
-                                            name="type"
-                                            checked={chestData.isPublic}
-                                            onChange={() => setChestData({ ...chestData, isPublic: true })}
-                                            className="text-cyan-500"
-                                        />
-                                        <Label htmlFor="public" className="ml-2 text-gray-300">
-                                            Public Chest
-                                        </Label>
-                                    </div>
-                                    <div className="flex items-center">
-                                        <Radio
-                                            id="private"
-                                            name="type"
-                                            checked={!chestData.isPublic}
-                                            onChange={() => setChestData({ ...chestData, isPublic: false })}
-                                            className="text-cyan-500"
-                                        />
-                                        <Label htmlFor="private" className="ml-2 text-gray-300">
-                                            Private Chest
-                                        </Label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <Label htmlFor="description" value="Description" className="text-gray-200 mb-2" />
-                            <Textarea
-                                id="description"
-                                value={chestData.description}
-                                onChange={(e) => setChestData({ ...chestData, description: e.target.value })}
-                                required
-                                rows={6}
-                                className="bg-gray-800"
-                            />
-                        </div>
-                    </div>
-
-                    <button
-                        type="submit"
-                        disabled={!selectedPlan}
-                        className="cyber-button w-full mt-8 disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                        Create Chest
-                    </button>
-                </form>
             </div>
         </section>
+
+        <AppFooter />
         </>
     );
 };

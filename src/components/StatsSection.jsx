@@ -1,5 +1,5 @@
-import React, { Suspense } from 'react';
-import {File, Shield, Wallet} from "lucide-react";
+import React from 'react';
+import {File, Shield, Rocket} from "lucide-react";
 
 const StatsSection  = () => {
     return (
@@ -7,18 +7,6 @@ const StatsSection  = () => {
             {/* Token Stats Section */}
             <div className="w-full max-w-screen-lg mx-auto py-16">
                 <div className="grid grid-cols-1 gap-12">
-                    <div className="w-full absolute">
-                        <div className="w-full relative">
-                            <Suspense fallback={<></>}>
-                                <>
-                                    <img className="absolute w-full max-h-[400px] object-contain opacity-10"
-                                         src="https://www.pngall.com/wp-content/uploads/13/Glow-Golden-PNG-File.png"/>
-                                    <img className="w-full max-h-[600px] object-contain"
-                                         src="https://static.vecteezy.com/system/resources/previews/042/367/155/non_2x/ai-generated-close-up-of-a-scary-alien-image-free-png.png" />
-                                </>
-                            </Suspense>
-                        </div>
-                    </div>
                     <div className="space-y-6">
                         <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">$BOLT
                             Token</h2>
@@ -26,19 +14,19 @@ const StatsSection  = () => {
                             The native token powering the next generation of decentralized applications.
                         </p>
                         <div className="grid grid-cols-2 gap-6">
-                            <div className="bg-gray-300/50 dark:bg-gray-800/50 backdrop-blur-sm p-4 rounded-xl">
+                            <div className="premium-panel p-4 rounded-xl">
                                 <p className="text-sm text-gray-500">Blockchain</p>
                                 <p className="text-xl font-semibold text-black dark:text-white">Polygon PoS</p>
                             </div>
-                            <div className="bg-gray-300/50 dark:bg-gray-800/50 backdrop-blur-sm p-4 rounded-xl">
+                            <div className="premium-panel p-4 rounded-xl">
                                 <p className="text-sm text-gray-500">Contract</p>
                                 <p className="text-xl font-semibold text-black dark:text-white">ERC-20</p>
                             </div>
-                            <div className="bg-gray-300/50 dark:bg-gray-800/50 backdrop-blur-sm p-4 rounded-xl">
+                            <div className="premium-panel p-4 rounded-xl">
                                 <p className="text-sm text-gray-500">Total Supply</p>
                                 <p className="text-xl font-semibold text-black dark:text-white">1B BOLT</p>
                             </div>
-                            <div className="bg-gray-300/50 dark:bg-gray-800/50 backdrop-blur-sm p-4 rounded-xl">
+                            <div className="premium-panel p-4 rounded-xl">
                                 <p className="text-sm text-gray-500">Current Price</p>
                                 <p className="text-xl font-semibold text-black dark:text-white">1 BOLT/POL</p>
                             </div>
@@ -46,8 +34,8 @@ const StatsSection  = () => {
                         <div className="flex gap-4">
                             <button className="bg-blue-600 hover:bg-blue-500 px-6 py-3 rounded-lg text-white font-medium
                                    transition-all duration-300 flex items-center gap-2">
-                                <Wallet size={20}/>
-                                Buy BOLT
+                                <Rocket size={20}/>
+                                Launch App
                             </button>
                             <button className="bg-gray-800 hover:bg-gray-700 px-6 py-3 rounded-lg text-white font-medium
                                    transition-all duration-300 flex items-center gap-2">
@@ -58,7 +46,7 @@ const StatsSection  = () => {
                     </div>
                     <div className="space-y-4">
                         <div
-                            className="bg-gray-300/50 dark:bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border border-gray-300 dark:border-gray-800">
+                            className="premium-panel p-6 rounded-xl border border-gray-300 dark:border-gray-800">
                             <h3 className="text-xl font-semibold text-black dark:text-white mb-4">Contract
                                 Information</h3>
                             <div className="space-y-3">

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Navbar, DarkThemeToggle, Dropdown } from "flowbite-react";
+import { Plus, Box, Wallet, Home } from 'lucide-react';
 import {Link} from "react-router-dom";
 import ModalConnect from "./ModalConnect";
 import { checkLoginStatus, getUserData } from '../lib/user';
@@ -43,18 +44,44 @@ const Header = () => {
                             Connect
                         </Button>
                     ) : (
+                        <>
+                        <div className="hidden md:flex gap-2 items-center">
+                        <Link to="/dashboard">
+                            <Button className="rounded-md m-0 ml-2 border-neutral-700 !bg-neutral-950 dark:!bg-neutral-800 text-white font-bold">
+                                <Home size="20" />
+                            </Button>
+                        </Link>
+                        <Link to="/create">
+                        <Button className="rounded-md m-0 ml-2 border-neutral-700 !bg-neutral-950 dark:!bg-neutral-800 text-white font-bold">
+                            <Plus size="20" />
+                        </Button>
+                        </Link>
+                        <Link to="/join">
+                        <Button className="rounded-md m-0 ml-2 border-neutral-700 !bg-neutral-950 dark:!bg-neutral-800 text-white font-bold">
+                            <Box size="20" />
+                        </Button>
+                        </Link>
+                        </div>
                         <Dropdown
                             label=""
                             dismissOnClick={false}
-                            renderTrigger={() =>
+                            renderTrigger={() => (
                                 <Button className="rounded-md m-0 ml-2 border-neutral-700 !bg-neutral-950 dark:!bg-neutral-800 text-white font-bold">
+                                    <Wallet size="20" className="me-2" />
                                     {shortenAddress(currentUser.web3_address)}
                                 </Button>
+                                )
                             }
                             >
-                            <Dropdown.Item><Link to="/dashboard">Dashboard</Link></Dropdown.Item>
-                            <Dropdown.Item><Link to="/logout">Sign out</Link></Dropdown.Item>
+                            <Link to="/account"><Dropdown.Item className="!bg-neutral-300 dark:!bg-neutral-900 flex flex-col items-start rounded-sm w-[95%] mx-auto">
+                                <span>10000 $BOLT </span>
+                                <span className="text-xs uppercase text-blue-500 font-semibold">Top-up</span>
+                            </Dropdown.Item></Link>
+                            <Link to="/logout"><Dropdown.Item>
+                                Sign out
+                            </Dropdown.Item></Link>
                         </Dropdown>
+                        </>
                     )}
 
                 </div>

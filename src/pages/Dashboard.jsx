@@ -1,24 +1,10 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import Header from '../components/Header';
-import Footer from '../components/Footer';
-import { Plus, Box, Trophy, TrendingUp, Timer, Users, Sparkles, Wallet, BarChart as ChartBar, Target, Coins, ArrowUpRight, Gauge } from 'lucide-react';
+import { Plus, Box, Trophy, TrendingUp, Timer, Users, Sparkles } from 'lucide-react';
+import AppFooter from "../components/AppFooter";
 
 const Dashboard = () => {
-
-    // Mock user data - replace with actual user data from your auth system
-    const mockUser = {
-        balance: 1000,
-        level: 1,
-        stats: {
-            chestsCreated: 12,
-            chestsWon: 3,
-            totalReturns: 5000,
-            activeChests: 2,
-            winRate: 25, // percentage
-            highestWin: 1500
-        }
-    };
 
     const featuredChests = [
         { id: 1, name: "Mega Jackpot", price: 10, jackpot: 5000, timeLeft: "12:30:45", participants: 42 },
@@ -30,121 +16,16 @@ const Dashboard = () => {
     return (
         <>
             <Header />
-            {/* User Stats Section */}
-            <section className="premium-panel rounded-2xl p-8 my-10 w-full max-w-screen-lg mx-auto">
-            <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8">
-                <div>
-                    <h2 className="text-2xl font-medium neon-text mb-2">Your Account</h2>
-                    <p className="text-gray-400">Level {mockUser.level} Member</p>
-                </div>
-                <div className="flex items-center space-x-2 premium-panel px-6 py-3 rounded-xl mt-4 md:mt-0">
-                    <Wallet className="w-5 h-5 premium-icon" />
-                    <span className="text-2xl font-medium tracking-wide neon-text">
-            {mockUser.balance} TOKENS
-            </span>
-                </div>
-            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Performance Stats */}
-                <div className="premium-panel p-6 rounded-xl space-y-6">
-                    <div className="flex items-center space-x-3">
-                        <div className="p-2 bg-cyan-500/10 rounded-lg">
-                            <ChartBar className="w-5 h-5 premium-icon" />
-                        </div>
-                        <h3 className="text-lg font-medium">Performance</h3>
-                    </div>
-                    <div className="space-y-4">
-                        <div>
-                            <div className="flex justify-between text-sm text-gray-400 mb-1">
-                                <span>Win Rate</span>
-                                <span className="text-cyan-400">{mockUser.stats.winRate}%</span>
-                            </div>
-                            <div className="w-full bg-gray-700 rounded-full h-2">
-                                <div
-                                    className="bg-cyan-500 rounded-full h-2"
-                                    style={{ width: `${mockUser.stats.winRate}%` }}
-                                />
-                            </div>
-                        </div>
-                        <div className="flex justify-between">
-                            <span className="text-gray-400">Highest Win</span>
-                            <span className="font-medium text-cyan-300">{mockUser.stats.highestWin} TOKENS</span>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Activity Stats */}
-                <div className="premium-panel p-6 rounded-xl space-y-6">
-                    <div className="flex items-center space-x-3">
-                        <div className="p-2 bg-purple-500/10 rounded-lg">
-                            <Target className="w-5 h-5 text-purple-400" />
-                        </div>
-                        <h3 className="text-lg font-medium">Activity</h3>
-                    </div>
-                    <div className="grid grid-cols-2 gap-4">
-                        <div className="premium-panel p-3 rounded-lg">
-                            <p className="text-sm text-gray-400 mb-1">Created</p>
-                            <p className="font-medium flex items-center">
-                                <Box className="w-4 h-4 mr-2 premium-icon" />
-                                {mockUser.stats.chestsCreated}
-                            </p>
-                        </div>
-                        <div className="premium-panel p-3 rounded-lg">
-                            <p className="text-sm text-gray-400 mb-1">Active</p>
-                            <p className="font-medium flex items-center">
-                                <Timer className="w-4 h-4 mr-2 premium-icon" />
-                                {mockUser.stats.activeChests}
-                            </p>
-                        </div>
-                        <div className="premium-panel p-3 rounded-lg">
-                            <p className="text-sm text-gray-400 mb-1">Won</p>
-                            <p className="font-medium flex items-center">
-                                <Trophy className="w-4 h-4 mr-2 premium-icon" />
-                                {mockUser.stats.chestsWon}
-                            </p>
-                        </div>
-                        <div className="premium-panel p-3 rounded-lg">
-                            <p className="text-sm text-gray-400 mb-1">Returns</p>
-                            <p className="font-medium flex items-center">
-                                <ArrowUpRight className="w-4 h-4 mr-2 premium-icon" />
-                                {mockUser.stats.totalReturns}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            </section>
-            <section className="mb-10 w-full max-w-screen-lg mx-auto">
-                {/* Quick Actions */}
-                <div className="premium-panel p-6 rounded-xl space-y-6">
-                    <div className="flex items-center space-x-3">
-                        <div className="p-2 bg-emerald-500/10 rounded-lg">
-                            <Gauge className="w-5 h-5 text-emerald-400" />
-                        </div>
-                        <h3 className="text-lg font-medium">Quick Actions</h3>
-                    </div>
-                    <div className="space-y-3">
-                        <Link to="/create" className="cyber-button w-full flex items-center justify-center">
-                            <Plus className="w-4 h-4 mr-2" />
-                            Create Chest
-                        </Link>
-                        <Link to="/join" className="cyber-button w-full flex items-center justify-center">
-                            <Box className="w-4 h-4 mr-2" />
-                            Join Chest
-                        </Link>
-                    </div>
-                </div>
-            </section>
             {/* Hero Section */}
-            <section className="premium-panel rounded-2xl text-center py-24 px-8 mb-10 w-full max-w-screen-lg mx-auto">
+            <section className="premium-panel rounded-2xl text-center py-24 px-8 my-10 w-full max-w-screen-lg mx-auto">
                 <div className="relative">
                     <Sparkles
                         className="absolute -top-10 left-1/2 transform -translate-x-1/2 w-8 h-8 premium-icon-glow"/>
                     <h1 className="text-6xl font-medium tracking-tight neon-text-intense mb-8 max-w-3xl mx-auto leading-tight">
                         Create or Join Digital Treasure Chests
                     </h1>
-                    <p className="text-gray-400 mb-12 max-w-2xl mx-auto text-lg leading-relaxed">
+                    <p className="text-gray-600 dark:text-gray-400 mb-12 max-w-2xl mx-auto text-lg leading-relaxed">
                         Enter the future of digital rewards. Create your own chests or join existing ones
                         for a chance to win massive jackpots.
                     </p>
@@ -165,7 +46,7 @@ const Dashboard = () => {
             <section className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10 w-full max-w-screen-lg mx-auto">
                 <div className="premium-stats-card group">
                     <div className="flex-1 text-center">
-                        <h3 className="text-lg font-medium text-gray-400 mb-4 group-hover:text-gray-300 transition-colors">
+                        <h3 className="text-lg font-medium text-gray-600 dark:text-gray-400 mb-4 group-hover:text-gray-300 transition-colors">
                             Active Chests
                         </h3>
                         <p className="premium-stats-value">156</p>
@@ -173,7 +54,7 @@ const Dashboard = () => {
                 </div>
                 <div className="premium-stats-card group">
                     <div className="flex-1 text-center">
-                        <h3 className="text-lg font-medium text-gray-400 mb-4 group-hover:text-gray-300 transition-colors">
+                        <h3 className="text-lg font-medium text-gray-600 dark:text-gray-400 mb-4 group-hover:text-gray-300 transition-colors">
                             Total Jackpot
                         </h3>
                         <p className="premium-stats-value">50,000</p>
@@ -181,7 +62,7 @@ const Dashboard = () => {
                 </div>
                 <div className="premium-stats-card group">
                     <div className="flex-1 text-center">
-                        <h3 className="text-lg font-medium text-gray-400 mb-4 group-hover:text-gray-300 transition-colors">
+                        <h3 className="text-lg font-medium text-gray-600 dark:text-gray-400 mb-4 group-hover:text-gray-300 transition-colors">
                             Winners Today
                         </h3>
                         <p className="premium-stats-value">24</p>
@@ -203,31 +84,31 @@ const Dashboard = () => {
                                     {chest.name}
                                 </h3>
                                 <div className="px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20">
-                                    <span className="text-sm font-medium text-cyan-300">#{chest.id}</span>
+                                    <span className="text-sm font-medium text-neutral-950 dark:text-cyan-300">#{chest.id}</span>
                                 </div>
                             </div>
                             <div className="space-y-4 text-gray-400">
                                 <div className="flex items-center justify-between">
-              <span className="flex items-center">
+              <span className="flex items-center text-gray-600 dark:text-gray-400">
                 <Timer className="w-4 h-4 mr-2 premium-icon"/>
                 Time Left
               </span>
-                                    <span className="text-white font-medium">{chest.timeLeft}</span>
+                                    <span className="text-neutral-900 dark:text-neutral-100 font-medium">{chest.timeLeft}</span>
                                 </div>
                                 <div className="flex items-center justify-between">
-              <span className="flex items-center">
+              <span className="flex items-center text-gray-600 dark:text-gray-400">
                 <Users className="w-4 h-4 mr-2 premium-icon"/>
                 Participants
               </span>
-                                    <span className="text-white font-medium">{chest.participants}</span>
+                                    <span className="text-neutral-900 dark:text-neutral-100 font-medium">{chest.participants}</span>
                                 </div>
                                 <div className="flex items-center justify-between">
-                                    <span>Ticket Price</span>
-                                    <span className="text-white font-medium">{chest.price} TOKENS</span>
+                                    <span className="text-gray-600 dark:text-gray-400">Ticket Price</span>
+                                    <span className="text-neutral-900 dark:text-neutral-100 font-medium">{chest.price} TOKENS</span>
                                 </div>
                                 <div className="flex items-center justify-between pt-2">
-                                    <span>Jackpot</span>
-                                    <span className="premium-gradient-text text-lg">{chest.jackpot} TOKENS</span>
+                                    <span className="text-gray-600 dark:text-gray-400">Jackpot</span>
+                                    <span className="premium-gradient-text text-lg">{chest.jackpot} $BOLT</span>
                                 </div>
                             </div>
                             <button className="cyber-button w-full mt-8 group-hover:neon-text-intense">
@@ -269,7 +150,8 @@ const Dashboard = () => {
                     </div>
                 </div>
             </section>
-            <Footer />
+
+            <AppFooter />
         </>
     )
 }
