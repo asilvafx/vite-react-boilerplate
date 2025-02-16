@@ -69,9 +69,9 @@ const ModalConnect = ({ show, onClose }) => {
 
     return (
         <div>
-            <Modal size="md" position="center" className="modal bg-neutral-100/80 dark:bg-neutral-900/80" dismissible show={show} onClose={onClose}>
-                <Modal.Header className="bg-neutral-200/80 dark:bg-neutral-900/90">{isRegistering ? "Create an Account" : "Login to Your Account"}</Modal.Header>
-                <Modal.Body className="bg-neutral-200/80 dark:bg-neutral-900/90">
+            <Modal size="md" position="center" className="modal bg-neutral-900/80" dismissible show={show} onClose={onClose}>
+                <Modal.Header className="bg-neutral-900/90">{isRegistering ? "Create an Account" : "Login to Your Account"}</Modal.Header>
+                <Modal.Body className="bg-neutral-900/90">
                     {error && <p className="text-red-500">{error}</p>}
                     {isRegistering ? (
                         <RegisterForm input={input} handleInput={handleInput} handleRegister={handleRegister} />
