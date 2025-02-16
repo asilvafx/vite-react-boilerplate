@@ -47,29 +47,29 @@ const Header = () => {
                         <>
                         <div className="hidden md:flex gap-2 items-center">
                         <Link to="/dashboard">
-                            <Button className="rounded-md m-0 ml-2 border-neutral-700 !bg-neutral-800 text-white font-bold">
+                            <button className="cyber-button flex items-center bg-neutral-950 bg-opacity-95">
                                 <Home size="20" />
-                            </Button>
+                            </button>
                         </Link>
                         <Link to="/create">
-                        <Button className="rounded-md m-0 ml-2 border-neutral-700 !bg-neutral-800 text-white font-bold">
+                        <button className="cyber-button flex items-center bg-neutral-950 bg-opacity-95">
                             <Plus size="20" />
-                        </Button>
+                        </button>
                         </Link>
                         <Link to="/join">
-                        <Button className="rounded-md m-0 ml-2 border-neutral-700 !bg-neutral-800 text-white font-bold">
+                        <button className="cyber-button flex items-center bg-neutral-950 bg-opacity-95">
                             <Box size="20" />
-                        </Button>
+                        </button>
                         </Link>
                         </div>
                         <Dropdown
                             label=""
                             dismissOnClick={false}
                             renderTrigger={() => (
-                                <Button className="rounded-md m-0 ml-2 border-neutral-700 !bg-neutral-800 text-white font-bold">
+                                <button className="cyber-button flex items-center bg-neutral-950 bg-opacity-95">
                                     <Wallet size="20" className="me-2" />
                                     {shortenAddress(currentUser.web3_address)}
-                                </Button>
+                                </button>
                                 )
                             }
                             >
