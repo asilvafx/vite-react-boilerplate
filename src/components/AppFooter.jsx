@@ -30,6 +30,7 @@ const Navigation = () => {
     if (!isMobile) {
         return (
             <>
+                <div className="w-full min-h-10"></div>
             </>
         );
     }
