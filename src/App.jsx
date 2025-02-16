@@ -14,6 +14,7 @@ import Cookies from 'js-cookie';
 */
 import Home from './pages/Home';
 const Dashboard = lazy(() => import('./pages/Dashboard'));
+const Create = lazy(() => import('./pages/Create'));
 const Shop = lazy(() => import('./pages/Shop'));
 const Product = lazy(() => import('./pages/Product'));
 const Logout = lazy(() => import('./pages/Logout'));
@@ -52,6 +53,7 @@ const App = () => {
                       <Route path="/" element={<Home />} />
                       <Route element={<PrivateRoute />}>
                           <Route path="/dashboard" element={<Dashboard />} />
+                          <Route path="/create" element={<Create />} />
                       </Route>
                       <Route path="/shop" element={<Shop />} />
                       <Route path="/products/:productId" element={<Product />} />
