@@ -77,7 +77,7 @@ const TreasureHunt = () => {
                 {/* Collapse Button */}
                 <button
                     onClick={() => setIsGridVisible(!isGridVisible)}
-                    className="cyber-button mb-4 flex items-center"
+                    className="cyber-button mb-4 flex md:hidden items-center"
                 >
                     {isGridVisible ? (
                         <>
