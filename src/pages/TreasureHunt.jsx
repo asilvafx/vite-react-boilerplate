@@ -67,7 +67,7 @@ const TreasureHunt = () => {
         <>
             <Header />
             <section className="w-full max-w-screen-lg mx-auto my-10">
-                <GoBack />
+                <GoBack url="/chests" />
 
                 <div className="premium-panel p-6 rounded-xl mb-8">
                     <h1 className="text-3xl font-bold neon-text mb-2">{chestData.name}</h1>

@@ -48,7 +48,7 @@ const Header = () => {
                             <Plus size="20" />
                         </button>
                         </Link>
-                        <Link to="/join">
+                        <Link to="/chests">
                         <button className="cyber-button flex items-center backdrop-blur-lg">
                             <Box size="20" />
                         </button>

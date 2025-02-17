@@ -147,7 +147,7 @@ const Create = () => {
         <Header />
         <section className="w-full max-w-screen-lg mx-auto my-10">
 
-            <GoBack />
+            <GoBack url="/dashboard" />
 
             {showConfirmation && selectedChestPlan ? (
                 <div className="premium-panel p-8 rounded-xl">

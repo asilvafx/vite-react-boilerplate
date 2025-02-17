@@ -16,7 +16,7 @@ import Home from './pages/Home';
 const TreasureHunt = lazy(() => import('./pages/TreasureHunt'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
 const Account = lazy(() => import('./pages/Account'));
-const Join = lazy(() => import('./pages/Join'));
+const Chests = lazy(() => import('./pages/Chests'));
 const Create = lazy(() => import('./pages/Create'));
 const Login = lazy(() => import('./pages/auth/Login'));
 const Register = lazy(() => import('./pages/auth/Register'));
@@ -61,7 +61,7 @@ const App = () => {
                           <Route path="/dashboard" element={<Dashboard />} />
                           <Route path="/account" element={<Account />} />
                           <Route path="/create" element={<Create />} />
-                          <Route path="/join" element={<Join />} />
+                          <Route path="/chests" element={<Chests />} />
                           <Route path="/logout" element={<Logout />} />
                       </Route>
                       <Route path="/login" element={<Login />} />

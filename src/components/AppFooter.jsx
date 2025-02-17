@@ -19,7 +19,7 @@ const Navigation = () => {
     const navItems = [
         { path: '/dashboard', label: 'Dashboard', icon: Home },
         { path: '/create', label: 'Create', icon: Plus },
-        { path: '/join', label: 'Chests', icon: Box },
+        { path: '/chests', label: 'Chests', icon: Box },
         { path: '/account', label: 'Account', icon: Wallet },
     ];
 
