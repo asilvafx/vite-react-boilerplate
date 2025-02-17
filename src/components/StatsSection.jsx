@@ -8,7 +8,7 @@ const StatsSection  = () => {
         <section>
             {/* Token Stats Section */}
             <div className="w-full max-w-screen-lg mx-auto py-16">
-                <div className="grid grid-cols-1 gap-12">
+                <div className="premium-panel px-8 py-10 rounded-lg grid grid-cols-1 gap-12">
                     <div className="space-y-6">
                         <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">$BOLT
                             Token</h2>

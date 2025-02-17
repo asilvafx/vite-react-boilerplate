@@ -5,7 +5,7 @@ import { TextInput, Select } from 'flowbite-react';
 import Header from '../components/Header';
 import AppFooter from "../components/AppFooter";
 
-const Join = () => {
+const Chests = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [priceFilter, setPriceFilter] = useState('all');
 
@@ -154,4 +154,4 @@ const Join = () => {
     );
 };
 
-export default Join;
+export default Chests;
