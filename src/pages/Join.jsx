@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Search, Filter, Clock, Coins, Users, Trophy, Sparkles } from 'lucide-react';
+import {Link} from 'react-router-dom';
 import { TextInput, Select } from 'flowbite-react';
 import Header from '../components/Header';
 import AppFooter from "../components/AppFooter";
@@ -135,9 +136,13 @@ const Join = () => {
                                 </div>
                             </div>
 
+                            <Link
+                                to={`/treasure-hunt/${chest.id}`}
+                            >
                             <button className="cyber-button min-w-[150px]">
                                 Buy Ticket
                             </button>
+                            </Link>
                         </div>
                     </div>
                 ))}

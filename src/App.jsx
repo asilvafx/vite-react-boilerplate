@@ -13,6 +13,7 @@ import Cookies from 'js-cookie';
     Import Pages
 */
 import Home from './pages/Home';
+const TreasureHunt = lazy(() => import('./pages/TreasureHunt'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
 const Account = lazy(() => import('./pages/Account'));
 const Join = lazy(() => import('./pages/Join'));
@@ -56,6 +57,7 @@ const App = () => {
                   <Routes>
                       <Route path="/" element={<Home />} />
                       <Route element={<PrivateRoute />}>
+                          <Route path="/treasure-hunt/:id" element={<TreasureHunt />} />
                           <Route path="/dashboard" element={<Dashboard />} />
                           <Route path="/account" element={<Account />} />
                           <Route path="/create" element={<Create />} />

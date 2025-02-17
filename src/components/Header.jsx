@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Navbar, DarkThemeToggle, Dropdown } from "flowbite-react";
-import { Plus, Box, Wallet, Home } from 'lucide-react';
+import { Navbar, DarkThemeToggle, Dropdown } from "flowbite-react";
+import { Plus, Box, Wallet, Home, LogOut } from 'lucide-react';
 import {Link} from "react-router-dom";
 import { checkLoginStatus, getUserData } from '../lib/user';
 import { shortenAddress } from '../lib/utils';
@@ -55,6 +55,7 @@ const Header = () => {
                         </Link>
                         </div>
                         <Dropdown
+                            className="premium-panel"
                             label=""
                             dismissOnClick={false}
                             renderTrigger={() => (
@@ -65,12 +66,12 @@ const Header = () => {
                                 )
                             }
                             >
-                            <Link to="/account"><Dropdown.Item className="!bg-neutral-900 flex flex-col items-start rounded-sm w-[95%] mx-auto">
+                            <Link to="/account"><Dropdown.Item className="premium-panel flex flex-col items-start rounded-sm w-[95%] mx-auto">
                                 <span>10000 $BOLT </span>
                                 <span className="text-xs uppercase text-blue-500 font-semibold">Top-up</span>
                             </Dropdown.Item></Link>
-                            <Link to="/logout"><Dropdown.Item>
-                                Sign out
+                            <Link to="/logout"><Dropdown.Item className="text-neutral-100 flex items-center gap-2">
+                            <LogOut size="16" /> Sign out
                             </Dropdown.Item></Link>
                         </Dropdown>
                         </>
