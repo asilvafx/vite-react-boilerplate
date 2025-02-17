@@ -17,7 +17,11 @@ const Dashboard = lazy(() => import('./pages/Dashboard'));
 const Account = lazy(() => import('./pages/Account'));
 const Join = lazy(() => import('./pages/Join'));
 const Create = lazy(() => import('./pages/Create'));
-const Logout = lazy(() => import('./pages/Logout'));
+const Login = lazy(() => import('./pages/auth/Login'));
+const Register = lazy(() => import('./pages/auth/Register'));
+const ForgotPassword = lazy(() => import('./pages/auth/ForgotPassword'));
+const ResetPassword = lazy(() => import('./pages/auth/ResetPassword'));
+const Logout = lazy(() => import('./pages/auth/Logout'));
 
 /*
     Import Components
@@ -56,8 +60,12 @@ const App = () => {
                           <Route path="/account" element={<Account />} />
                           <Route path="/create" element={<Create />} />
                           <Route path="/join" element={<Join />} />
+                          <Route path="/logout" element={<Logout />} />
                       </Route>
-                      <Route path="/logout" element={<Logout />} />
+                      <Route path="/login" element={<Login />} />
+                      <Route path="/register" element={<Register />} />
+                      <Route path="/forgot-password" element={<ForgotPassword />} />
+                      <Route path="/reset-password" element={<ResetPassword />} />
                       <Route path="*" element={<Home />} />
                   </Routes> 
                   </AuthProvider>

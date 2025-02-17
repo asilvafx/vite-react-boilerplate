@@ -33,15 +33,15 @@ const StatsSection  = () => {
                                 <p className="text-xl font-semibold text-white">1 BOLT/POL</p>
                             </div>
                         </div>
-                        <div className="flex gap-4">
+                        <div className="w-full md:max-w-lg grid grid-cols-1 md:grid-cols-2 gap-4">
                             <Link to="/dashboard">
-                            <Button className="bg-blue-600 hover:bg-blue-500 text-white font-medium
+                            <Button className="cyber-button w-full bg-opacity-95 font-medium
                                    transition-all duration-300 flex items-center gap-2">
                                 <Rocket size={20} className="me-2"/>
                                 Launch App
                             </Button>
                             </Link>
-                            <Button className="bg-gray-800 hover:bg-gray-700 text-white font-medium
+                            <Button className="cyber-button w-full bg-opacity-95 bg-gray-800 hover:bg-gray-700 text-white font-medium
                                    transition-all duration-300 flex items-center gap-2">
                                 <File size={20} className="me-2"/>
                                 Whitepaper

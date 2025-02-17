@@ -2,13 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Button, Navbar, DarkThemeToggle, Dropdown } from "flowbite-react";
 import { Plus, Box, Wallet, Home } from 'lucide-react';
 import {Link} from "react-router-dom";
-import ModalConnect from "./ModalConnect";
 import { checkLoginStatus, getUserData } from '../lib/user';
 import { shortenAddress } from '../lib/utils';
 
 
 const Header = () => {
-    const [isModalVisible, setModalVisible] = useState(false);
     const [currentUser , setCurrentUser ] = useState(null);
 
     useEffect(() => {
@@ -21,14 +19,6 @@ const Header = () => {
         }
     }, []);
 
-    const handleOpenModal = () => {
-        setModalVisible(true);
-    };
-
-    const handleCloseModal = () => {
-        setModalVisible(false);
-    };
-
     return (
         <>
             <Navbar className="top-nav h-14 fixed w-full p-0" fluid>
@@ -40,9 +30,11 @@ const Header = () => {
 
                     {/* Conditionally render the Connect button or user email */}
                     {!currentUser  ? (
-                        <Button size="sm" onClick={handleOpenModal} className="rounded-md m-0 ml-2 border-neutral-700 !bg-neutral-800 text-white font-bold">
+                        <Link to="/login">
+                        <Button size="sm"  className="rounded-md m-0 ml-2 border-neutral-700 !bg-neutral-800 text-white font-bold">
                             Connect
                         </Button>
+                        </Link>
                     ) : (
                         <>
                         <div className="hidden md:flex gap-2 items-center">
@@ -85,9 +77,7 @@ const Header = () => {
                     )}
 
                 </div>
-            </Navbar>
-            <ModalConnect show={isModalVisible} onClose={handleCloseModal} />
-
+            </Navbar> 
 
             <div className="h-14 w-full"></div>
         </>
