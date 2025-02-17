@@ -35,17 +35,17 @@ const StatsSection  = () => {
                         </div>
                         <div className="w-full md:max-w-lg grid grid-cols-1 md:grid-cols-2 gap-4">
                             <Link to="/dashboard">
-                            <Button className="cyber-button w-full bg-opacity-95 font-medium
-                                   transition-all duration-300 flex items-center gap-2">
-                                <Rocket size={20} className="me-2"/>
+                            <button className="cyber-button w-full bg-opacity-95 font-medium
+                                   transition-all duration-300 flex justify-center items-center gap-2 backdrop-blur-lg">
+                                <Rocket size={20}/>
                                 Launch App
-                            </Button>
+                            </button>
                             </Link>
-                            <Button className="cyber-button w-full bg-opacity-95 bg-gray-800 hover:bg-gray-700 text-white font-medium
-                                   transition-all duration-300 flex items-center gap-2">
-                                <File size={20} className="me-2"/>
+                            <button className="cyber-button w-full bg-opacity-95 bg-gray-800 hover:bg-gray-700 bg-opacity-90 backdrop-blur-lg text-white font-medium
+                                   transition-all duration-300 flex justify-center items-center gap-2">
+                                <File size={20}/>
                                 Whitepaper
-                            </Button>
+                            </button>
                         </div>
                     </div>
                     <div className="space-y-4">

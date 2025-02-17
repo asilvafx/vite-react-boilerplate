@@ -1,14 +1,9 @@
 import React, { useState } from 'react';
-import { ArrowLeft, Shield, Zap, Rocket, Lock } from 'lucide-react';
+import { ArrowLeft, Shield, Zap, Rocket, Check, Wallet, X, AlertCircle, ArrowRight, Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
-import AppFooter from "../components/AppFooter";
-
-// Mock user data - replace with actual user data from your auth system
-const mockUser = {
-    level: 1,
-    chestsWon: 1
-};
+import AppFooter from '../components/AppFooter';
+import GoBack from '../components/GoBack';
 
 const chestPlans = [
     {
@@ -43,89 +38,193 @@ const chestPlans = [
     }
 ];
 
+const PaymentStatus = {
+    NONE: 'none',
+    PROCESSING: 'processing',
+    SUCCESS: 'success',
+    FAILED: 'failed'
+};
 
 const Create = () => {
     const [selectedPlan, setSelectedPlan] = useState('');
+    const [showConfirmation, setShowConfirmation] = useState(false);
+    const [paymentStatus, setPaymentStatus] = useState(PaymentStatus.NONE);
 
-    const remainingWinsNeeded = 3 - mockUser.chestsWon;
-    const isLevelTooLow = mockUser.level < 0;
+    const handleConfirm = () => {
+        setPaymentStatus(PaymentStatus.PROCESSING);
 
-    if (isLevelTooLow) {
-        return (
-            <>
-            <section className="w-full max-w-screen-lg mx-auto my-10">
-                <Link to="/" className="inline-flex items-center cyber-button mb-8">
-                    <ArrowLeft className="w-4 h-4 mr-2" />
-                    Back to Home
-                </Link>
+        // Simulate payment process
+        setTimeout(() => {
+            // Randomly succeed or fail for demonstration
+            setPaymentStatus(Math.random() > 0.5 ? PaymentStatus.SUCCESS : PaymentStatus.FAILED);
+        }, 2000);
+    };
 
-                <div className="premium-panel p-8 rounded-xl">
-                    <div className="flex items-center mb-6">
-                        <Lock className="w-8 h-8 text-cyan-400 mr-3" />
-                        <h1 className="text-3xl font-bold neon-text">Level 2 Required</h1>
-                    </div>
+    const handleRetry = () => {
+        setPaymentStatus(PaymentStatus.NONE);
+    };
 
-                    <Alert color="warning" className="mb-6">
-                        <div className="font-medium">You need to reach Level 2 to create chests</div>
-                        <div className="mt-2">
-                            Win {remainingWinsNeeded} more {remainingWinsNeeded === 1 ? 'chest' : 'chests'} to advance to Level 2
+    const selectedChestPlan = chestPlans.find(plan => plan.id === selectedPlan);
+
+    const renderPaymentStatus = () => {
+        switch (paymentStatus) {
+            case PaymentStatus.PROCESSING:
+                return (
+                    <div className="fixed inset-0 bg-gray-900/80 backdrop-blur-sm flex items-center justify-center z-50">
+                        <div className="premium-panel p-8 rounded-xl max-w-md w-full mx-4">
+                            <div className="text-center">
+                                <div className="flex justify-center mb-6">
+                                    <Loader2 className="w-12 h-12 text-cyan-400 animate-spin" />
+                                </div>
+                                <h3 className="text-xl font-medium mb-2">Processing Payment</h3>
+                                <p className="text-gray-400">Please wait while we process your transaction...</p>
+                            </div>
                         </div>
-                    </Alert>
+                    </div>
+                );
 
-                    <div className="space-y-6">
-                        <div className="premium-panel p-6 rounded-lg">
-                            <h2 className="text-xl font-medium mb-4">Your Progress</h2>
-                            <div className="space-y-4">
-                                <div>
-                                    <div className="flex justify-between mb-2">
-                                        <span>Current Level</span>
-                                        <span className="text-cyan-400">Level {mockUser.level}</span>
-                                    </div>
-                                    <div className="w-full bg-gray-700 rounded-full h-2">
-                                        <div
-                                            className="bg-cyan-500 rounded-full h-2"
-                                            style={{ width: `${(mockUser.chestsWon / 3) * 100}%` }}
-                                        />
+            case PaymentStatus.SUCCESS:
+                return (
+                    <div className="fixed inset-0 bg-gray-900/80 backdrop-blur-sm flex items-center justify-center z-50">
+                        <div className="premium-panel p-8 rounded-xl max-w-md w-full mx-4">
+                            <div className="text-center">
+                                <div className="flex justify-center mb-6">
+                                    <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center">
+                                        <Check className="w-8 h-8 text-green-400" />
                                     </div>
                                 </div>
-                                <div>
-                                    <span className="text-gray-400">Chests Won: {mockUser.chestsWon}/3</span>
+                                <h3 className="text-xl font-medium mb-2">Payment Successful!</h3>
+                                <p className="text-gray-400 mb-6">Your chest has been created successfully.</p>
+                                <Link to="/dashboard" className="cyber-button w-full flex items-center justify-center">
+                                    <ArrowRight className="w-5 h-5 mr-2" />
+                                    Go to Dashboard
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                );
+
+            case PaymentStatus.FAILED:
+                return (
+                    <div className="fixed inset-0 bg-gray-900/80 backdrop-blur-sm flex items-center justify-center z-50">
+                        <div className="premium-panel p-8 rounded-xl max-w-md w-full mx-4">
+                            <div className="text-center">
+                                <div className="flex justify-center mb-6">
+                                    <div className="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center">
+                                        <X className="w-8 h-8 text-red-400" />
+                                    </div>
+                                </div>
+                                <h3 className="text-xl font-medium mb-2">Payment Failed</h3>
+                                <p className="text-gray-400 mb-4">We couldn't process your payment. Please try again.</p>
+                                <div className="premium-panel p-4 rounded-lg mb-6 bg-red-500/5 border-red-500/10">
+                                    <div className="flex items-start space-x-3">
+                                        <AlertCircle className="w-5 h-5 text-red-400 mt-0.5" />
+                                        <p className="text-sm text-gray-400">
+                                            Error: Insufficient funds or network issue. Please ensure you have enough tokens and your wallet is connected properly.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className="flex space-x-4">
+                                    <button
+                                        onClick={handleRetry}
+                                        className="cyber-button w-full"
+                                    >
+                                        Try Again
+                                    </button>
                                 </div>
                             </div>
                         </div>
-
-                        <Link to="/join" className="cyber-button block text-center">
-                            Join Available Chests
-                        </Link>
                     </div>
-                </div>
-            </section>
-            </>
-        );
-    }
+                );
+
+            default:
+                return null;
+        }
+    };
 
     return (
         <>
         <Header />
-        <section className="w-full max-w-screen-lg mx-auto relative my-10">
+        <section className="w-full max-w-screen-lg mx-auto my-10">
 
-            <div>
-                <h1 className="text-3xl font-bold neon-text mb-8">Create a New Chest</h1>
+            <GoBack />
 
-                <div className="mb-12">
+            {showConfirmation && selectedChestPlan ? (
+                <div className="premium-panel p-8 rounded-xl">
+                    <h2 className="text-2xl font-bold neon-text mb-6">Confirm Chest Creation</h2>
+
+                    <div className="space-y-6">
+                        <div className="premium-panel p-6 rounded-lg">
+                            <div className="flex items-center space-x-4 mb-4">
+                                <div className={`rounded-full w-12 h-12 flex items-center justify-center bg-gradient-to-br ${selectedChestPlan.color}`}>
+                                    <selectedChestPlan.icon className="w-6 h-6 text-white" />
+                                </div>
+                                <div>
+                                    <h3 className="text-xl font-medium text-gray-200">{selectedChestPlan.name}</h3>
+                                    <p className="text-gray-400">{selectedChestPlan.description}</p>
+                                </div>
+                            </div>
+
+                            <div className="premium-divider my-4" />
+
+                            <div className="space-y-3">
+                                {selectedChestPlan.features.map((feature, index) => (
+                                    <div key={index} className="flex items-center text-gray-300">
+                                        <Check className="w-4 h-4 mr-2 text-cyan-400" />
+                                        {feature}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="premium-panel p-6 rounded-lg">
+                            <h3 className="text-lg font-medium mb-4">Payment Details</h3>
+                            <div className="flex items-center justify-between mb-4">
+                                <span className="text-gray-400">Deposit Amount</span>
+                                <span className="text-xl font-medium neon-text">{selectedChestPlan.deposit} TOKENS</span>
+                            </div>
+                            <button
+                                onClick={handleConfirm}
+                                className="cyber-button w-full flex items-center justify-center"
+                                disabled={paymentStatus === PaymentStatus.PROCESSING}
+                            >
+                                <Wallet className="w-5 h-5 mr-2" />
+                                Proceed with Payment
+                            </button>
+                        </div>
+
+                        <button
+                            onClick={() => setShowConfirmation(false)}
+                            className="text-gray-400 hover:text-gray-300 text-sm"
+                        >
+                            ← Go back and select different plan
+                        </button>
+                    </div>
+                </div>
+            ) : (
+                <div className="premium-panel p-8 rounded-xl">
+                    <h1 className="text-3xl font -bold neon-text mb-8">Create a New Chest</h1>
+
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         {chestPlans.map((plan) => {
                             const Icon = plan.icon;
+                            const isSelected = selectedPlan === plan.id;
+
                             return (
                                 <div
                                     key={plan.id}
-                                    className={`premium-card cursor-pointer ${
-                                        selectedPlan === plan.id
+                                    className={`premium-card cursor-pointer relative ${
+                                        isSelected
                                             ? 'border-cyan-400/50 shadow-lg shadow-cyan-500/20'
                                             : 'hover:border-cyan-400/30'
                                     }`}
                                     onClick={() => setSelectedPlan(plan.id)}
                                 >
+                                    {isSelected && (
+                                        <div className="absolute -top-3 -right-3 bg-cyan-500 text-white px-3 py-1 rounded-full text-sm font-medium shadow-lg">
+                                            Selected
+                                        </div>
+                                    )}
                                     <div className={`rounded-full w-12 h-12 mb-4 flex items-center justify-center bg-gradient-to-br ${plan.color}`}>
                                         <Icon className="w-6 h-6 text-white" />
                                     </div>
@@ -144,11 +243,22 @@ const Create = () => {
                             );
                         })}
                     </div>
+
+                    {selectedPlan && (
+                        <div className="mt-8 text-center">
+                            <button
+                                onClick={() => setShowConfirmation(true)}
+                                className="cyber-button px-8"
+                            >
+                                Continue
+                            </button>
+                        </div>
+                    )}
                 </div>
+            )}
 
-            </div>
+            {renderPaymentStatus()}
         </section>
-
         <AppFooter />
         </>
     );
