@@ -1,17 +1,15 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import { Plus, Box, Trophy, TrendingUp, Timer, Users, Sparkles } from 'lucide-react';
 import AppFooter from "../components/AppFooter";
 
 const Dashboard = () => {
-
     const featuredChests = [
         { id: 1, name: "Mega Jackpot", price: 10, jackpot: 5000, timeLeft: "12:30:45", participants: 42 },
         { id: 2, name: "Lucky Strike", price: 5, jackpot: 2500, timeLeft: "06:15:30", participants: 28 },
         { id: 3, name: "Neon Dreams", price: 1, jackpot: 1000, timeLeft: "23:45:00", participants: 15 },
     ];
-
 
     return (
         <>
@@ -22,7 +20,7 @@ const Dashboard = () => {
                 <div className="relative">
                     <Sparkles
                         className="absolute -top-10 left-1/2 transform -translate-x-1/2 w-8 h-8 premium-icon-glow"/>
-                    <h1 className="text-6xl font-medium  tracking-tight neon-text-intense mb-8 max-w-3xl mx-auto leading-tight">
+                    <h1 className="text-6xl font-medium tracking-tight neon-text-intense mb-8 max-w-3xl mx-auto leading-tight">
                         Create or Join Digital Treasure Chests
                     </h1>
                     <p className="text-gray-400 mb-12 max-w-2xl mx-auto text-lg leading-relaxed">
@@ -89,17 +87,17 @@ const Dashboard = () => {
                             </div>
                             <div className="space-y-4 text-gray-400">
                                 <div className="flex items-center justify-between">
-              <span className="flex items-center text-gray-400">
-                <Timer className="w-4 h-4 mr-2 premium-icon"/>
-                Time Left
-              </span>
+                                    <span className="flex items-center text-gray-400">
+                                        <Timer className="w-4 h-4 mr-2 premium-icon"/>
+                                        Time Left
+                                    </span>
                                     <span className="text-neutral-100 font-medium">{chest.timeLeft}</span>
                                 </div>
                                 <div className="flex items-center justify-between">
-              <span className="flex items-center text-gray-400">
-                <Users className="w-4 h-4 mr-2 premium-icon"/>
-                Participants
-              </span>
+                                    <span className="flex items-center text-gray-400">
+                                        <Users className="w-4 h-4 mr-2 premium-icon"/>
+                                        Participants
+                                    </span>
                                     <span className="text-neutral-100 font-medium">{chest.participants}</span>
                                 </div>
                                 <div className="flex items-center justify-between">
@@ -111,9 +109,11 @@ const Dashboard = () => {
                                     <span className="premium-gradient-text text-lg">{chest.jackpot} $BOLT</span>
                                 </div>
                             </div>
-                            <button className="cyber-button w-full mt-8 group-hover:neon-text-intense">
-                                Join Chest
-                            </button>
+                            <Link to={`/treasure-hunt/${chest.id}`}>
+                                <button className="cyber-button w-full mt-8 group-hover:neon-text-intense">
+                                    Join Chest
+                                </button>
+                            </Link>
                         </div>
                     ))}
                 </div>
@@ -153,7 +153,7 @@ const Dashboard = () => {
 
             <AppFooter />
         </>
-    )
-}
+    );
+};
 
 export default Dashboard;
