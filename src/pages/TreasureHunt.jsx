@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Coins, Trophy, Timer, Users, AlertCircle, ChevronDown, ChevronUp } from 'lucide-react';
+import { Coins, Trophy, Timer, Users, AlertCircle, ChevronDown, ChevronUp } from 'lucide-react'; // Import icons for collapse
 import Header from '../components/Header';
 import AppFooter from '../components/AppFooter';
 import GoBack from '../components/GoBack';
@@ -12,11 +12,11 @@ const TreasureHunt = () => {
     const [userTickets, setUserTickets] = useState([]);
     const [ticketCount, setTicketCount] = useState(1);
     const [chestData, setChestData] = useState(null);
-    const [isGridVisible, setIsGridVisible] = useState(true);
+    const [isGridVisible, setIsGridVisible] = useState(true); // State to manage grid visibility
 
     const MAX_TICKETS = 10;
-    const MIN_ROWS = 5;
-    const MAX_COLS = 10;
+    const gridSize = { rows: 5, cols: 5 }; // 5 rows and 10 columns
+    const totalTiles = gridSize.rows * gridSize.cols;
 
     useEffect(() => {
         // In a real app, fetch chest data from API
@@ -32,56 +32,30 @@ const TreasureHunt = () => {
         });
     }, [id]);
 
-    const calculateGridSize = () => {
-        if (!chestData) return { rows: MIN_ROWS, cols: 5 }; // Default to 5x5 if no data
-
-        const { jackpot, participants, ticketPrice } = chestData;
-
-        // Calculate columns based on some logic
-        let cols = Math.min(Math.max(Math.floor(jackpot / 500), 5), MAX_COLS); // Example logic
-        let rows = MIN_ROWS; // Keep rows constant at 5
-
-        return { rows, cols };
-    };
-
-    const { rows, cols } = calculateGridSize();
-    const totalTiles = rows * cols;
-
     const handlePurchaseTicket = () => {
         if (userTickets.length + ticketCount > MAX_TICKETS) {
             return; // Don't allow purchase if it would exceed the limit
         }
 
-        // Generate unique random numbers for each ticket
-        const newTickets = [];
-        while (newTickets.length < ticketCount) {
-            const randomTile = Math.floor(Math.random() * totalTiles);
-            if (!newTickets.includes(randomTile)) {
-                newTickets.push(randomTile);
-            }
-        }
-
+        // This would be connected to your backend
+        const newTickets = Array(ticketCount).fill(0).map(() => {
+            // Generate random number between 0 and totalTiles for each ticket
+            return Math.floor(Math.random() * totalTiles);
+        });
         setUserTickets([...userTickets, ...newTickets]);
     };
 
     const handleTileClick = (index) => {
         if (revealedTiles.has(index) || userTickets.length === 0) return;
 
-        // Check if the clicked tile is one of the user's tickets
-        if (userTickets.includes(index)) {
-            setSelectedTile(index);
-            setRevealedTiles(new Set([...revealedTiles, index]));
+        setSelectedTile(index);
+        setRevealedTiles(new Set([...revealedTiles, index]));
 
-            // Check if any ticket matches this tile
-            const isWinner = userTickets.includes(index);
-            if (isWinner) {
-                console.log('Jackpot found!');
-            }
-        } else {
-            // Reveal empty prize with a cross icon and spend a ticket
-            setRevealedTiles(new Set([...revealedTiles, index]));
-            setUserTickets(userTickets.filter(ticket => ticket !== index)); // Remove one ticket
-            console.log('This tile is not yours!'); // Optional: log for debugging
+        // Check if any ticket matches this tile
+        const isWinner = userTickets.includes(index);
+        if (isWinner) {
+            // Handle win condition
+            console.log('Jackpot found!');
         }
     };
 
@@ -123,7 +97,7 @@ const TreasureHunt = () => {
                     {isGridVisible && (
                         <div className="premium-panel p-6 rounded-xl">
                             <h2 className="text-xl font-medium mb-6 neon-text">Treasure Map</h2>
-                            <div className={`grid grid-cols-${cols} gap-3`}>
+                            <div className="grid grid-cols-10 md:grid-cols-5 gap-3"> {/* Updated to 10 columns */}
                                 {Array.from({ length: totalTiles }).map((_, index) => (
                                     <button
                                         key={index}
@@ -145,7 +119,7 @@ const TreasureHunt = () => {
                                                 {userTickets.includes(index) ? (
                                                     <Trophy className="w-6 h-6 text-green-400" />
                                                 ) : (
-                                                    <span className="text-gray-500">×</span> // Cross icon for empty prize
+                                                    <span className="text-gray-500">×</span>
                                                 )}
                                             </div>
                                         )}
