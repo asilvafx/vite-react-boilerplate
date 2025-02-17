@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Coins, Trophy, Timer, Users, AlertCircle } from 'lucide-react';
+import { Coins, Trophy, Timer, Users, AlertCircle, ChevronDown, ChevronUp } from 'lucide-react'; // Import icons for collapse
 import Header from '../components/Header';
 import AppFooter from '../components/AppFooter';
 import GoBack from '../components/GoBack';
@@ -12,9 +12,10 @@ const TreasureHunt = () => {
     const [userTickets, setUserTickets] = useState([]);
     const [ticketCount, setTicketCount] = useState(1);
     const [chestData, setChestData] = useState(null);
+    const [isGridVisible, setIsGridVisible] = useState(true); // State to manage grid visibility
 
     const MAX_TICKETS = 10;
-    const gridSize = { rows: 5, cols: 10 }; // Updated to 5 rows and 10 columns
+    const gridSize = { rows: 5, cols: 10 }; // 5 rows and 10 columns
     const totalTiles = gridSize.rows * gridSize.cols;
 
     useEffect(() => {
@@ -73,40 +74,60 @@ const TreasureHunt = () => {
                     <p className="text-gray-400">Find the treasure and win the jackpot!</p>
                 </div>
 
+                {/* Collapse Button */}
+                <button
+                    onClick={() => setIsGridVisible(!isGridVisible)}
+                    className="cyber-button mb-4 flex items-center"
+                >
+                    {isGridVisible ? (
+                        <>
+                            <ChevronUp className="w-4 h-4 mr-2" />
+                            Collapse Grid
+                        </>
+                    ) : (
+                        <>
+                            <ChevronDown className="w-4 h-4 mr-2" />
+                            Expand Grid
+                        </>
+                    )}
+                </button>
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     {/* Left Side - Grid */}
-                    <div className="premium-panel p-6 rounded-xl">
-                        <h2 className="text-xl font-medium mb-6 neon-text">Treasure Map</h2>
-                        <div className="grid grid-cols-5 gap-3"> {/* Updated to 10 columns */}
-                            {Array.from({ length: totalTiles }).map((_, index) => (
-                                <button
-                                    key={index}
-                                    onClick={() => handleTileClick(index)}
-                                    disabled={revealedTiles.has(index) || userTickets.length === 0}
-                                    className={`
+                    {isGridVisible && (
+                        <div className="premium-panel p-6 rounded-xl">
+                            <h2 className="text-xl font-medium mb-6 neon-text">Treasure Map</h2>
+                            <div className="grid grid-cols-10 md:grid-cols-5 gap-3"> {/* Updated to 10 columns */}
+                                {Array.from({ length: totalTiles }).map((_, index) => (
+                                    <button
+                                        key={index}
+                                        onClick={() => handleTileClick(index)}
+                                        disabled={revealedTiles.has(index) || userTickets.length === 0}
+                                        className={`
                   aspect-square rounded-lg transition-all duration-300
                   ${revealedTiles.has(index)
-                                        ? userTickets.includes(index)
-                                            ? 'bg-green-500/20 border-green-500/40'
-                                            : 'bg-gray-800/50 border-gray-700/50'
-                                        : 'premium-panel hover:border-cyan-400/40 hover:shadow-lg hover:shadow-cyan-500/10 active:scale-95'}
+                                            ? userTickets.includes(index)
+                                                ? 'bg-green-500/20 border-green-500/40'
+                                                : 'bg-gray-800/50 border-gray-700/50'
+                                            : 'premium-panel hover:border-cyan-400/40 hover:shadow-lg hover:shadow-cyan-500/10 active:scale-95'}
                   ${selectedTile === index ? 'ring-2 ring-cyan-400/50' : ''}
                   ${userTickets.length === 0 ? 'cursor-not-allowed opacity-50' : ''}
                 `}
-                                >
-                                    {revealedTiles.has(index) && (
-                                        <div className="flex items-center justify-center h-full">
-                                            {userTickets.includes(index) ? (
-                                                <Trophy className="w-6 h-6 text-green-400" />
-                                            ) : (
-                                                <span className="text-gray-500">×</span>
-                                            )}
-                                        </div>
-                                    )}
-                                </button>
-                            ))}
+                                    >
+                                        {revealedTiles.has(index) && (
+                                            <div className="flex items-center justify-center h-full">
+                                                {userTickets.includes(index) ? (
+                                                    <Trophy className="w-6 h-6 text-green-400" />
+                                                ) : (
+                                                    <span className="text-gray-500">×</span>
+                                                )}
+                                            </div>
+                                        )}
+                                    </button>
+                                ))}
+                            </div>
                         </div>
-                    </div>
+                    )}
 
                     {/* Right Side - Info & Controls */}
                     <div className="space-y-6">
