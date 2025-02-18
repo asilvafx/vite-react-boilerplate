@@ -14,15 +14,15 @@ const Exchange = () => {
         BOLT: { balance: '500', price: '2.50' }
     };
 
-    const handleExchange = (e) => {
+    const handleExchange = (e: React.FormEvent) => {
         e.preventDefault();
         console.log('Exchange:', exchangeData);
     };
 
     const calculateEstimate = () => {
         const amount = parseFloat(exchangeData.amount) || 0;
-        const fromPrice = parseFloat(tokens[exchangeData.fromToken].price);
-        const toPrice = parseFloat(tokens[exchangeData.toToken].price);
+        const fromPrice = parseFloat(tokens[exchangeData.fromToken as keyof typeof tokens].price);
+        const toPrice = parseFloat(tokens[exchangeData.toToken as keyof typeof tokens].price);
         return ((amount * fromPrice) / toPrice).toFixed(2);
     };
 

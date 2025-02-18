@@ -32,7 +32,7 @@ const Dashboard = () => {
                             <Plus className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform duration-500"/>
                             Create a Chest
                         </Link>
-                        <Link to="/join" className="cyber-button flex items-center group">
+                        <Link to="/chests" className="cyber-button flex items-center group">
                             <Box className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform duration-500"/>
                             Join a Chest
                         </Link>
