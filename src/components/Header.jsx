@@ -37,7 +37,7 @@ const Header = () => {
                         </Link>
                     ) : (
                         <>
-                        <div className="hidden md:flex gap-2 items-center">
+                        <div className="hidden md:flex gap-4 items-center">
                         <Link to="/dashboard">
                             <button className="cyber-button flex items-center backdrop-blur-lg">
                                 <Home size="20" />
