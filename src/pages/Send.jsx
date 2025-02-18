@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 import GoBack from "../components/GoBack";
 import Header from "../components/Header";
 import AppFooter from "../components/AppFooter";
+import TokenBalanceSection from '../components/TokenBalanceSection';
 
 const Send = () => {
     const [formData, setFormData] = useState({
@@ -81,35 +82,7 @@ const Send = () => {
             <div className="premium-panel p-8 rounded-xl">
 
                 {/* Token Balances */}
-                <div className="grid grid-cols-2 gap-4 mb-8">
-                    <div className="premium-panel p-4 rounded-lg">
-                        <div className="flex items-center space-x-3">
-                            <div className="p-2 bg-blue-500/10 rounded-lg">
-                                <Wallet className="w-5 h-5 text-blue-400"/>
-                            </div>
-                            <div>
-                                <p className="text-sm text-gray-400">POL Balance</p>
-                                <p className="text-xl font-medium neon-text">
-                                    {walletData.balances.POL} POL
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="premium-panel p-4 rounded-lg">
-                        <div className="flex items-center space-x-3">
-                            <div className="p-2 bg-purple-500/10 rounded-lg">
-                                <Wallet className="w-5 h-5 text-purple-400"/>
-                            </div>
-                            <div>
-                                <p className="text-sm text-gray-400">BOLT Balance</p>
-                                <p className="text-xl font-medium neon-text">
-                                    {walletData.balances.BOLT} BOLT
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+               <TokenBalanceSection walletData={walletData} />
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>

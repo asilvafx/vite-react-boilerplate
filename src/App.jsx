@@ -10,13 +10,14 @@ import Cookies from 'js-cookie';
     Import Pages
 */
 import Home from './pages/Home';
-const Buy = lazy(() => import('./pages/Buy'));
+const Receive = lazy(() => import('./pages/Receive'));
 const Exchange = lazy(() => import('./pages/Exchange'));
 const Send = lazy(() => import('./pages/Send'));
 const HorseRacing = lazy(() => import('./pages/HorseRacing'));
 const TreasureHunt = lazy(() => import('./pages/TreasureHunt'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
 const Account = lazy(() => import('./pages/Account'));
+const MyChests = lazy(() => import('./pages/MyChests'));
 const Chests = lazy(() => import('./pages/Chests'));
 const Create = lazy(() => import('./pages/Create'));
 const Login = lazy(() => import('./pages/auth/Login'));
@@ -60,12 +61,11 @@ const App = () => {
                         <div className="aurora"></div>
                         <div className="aurora"></div>
                         <div className="aurora"></div>
-                        <div className="stars" id="stars"></div>
 
                         <Routes>
                             <Route path="/" element={<Home />} />
                             <Route element={<PrivateRoute />}>
-                                <Route path="/buy" element={<Buy />} />
+                                <Route path="/receive" element={<Receive />} />
                                 <Route path="/exchange" element={<Exchange />} />
                                 <Route path="/send" element={<Send />} />
                                 <Route path="/racing" element={<HorseRacing />} />
@@ -73,6 +73,7 @@ const App = () => {
                                 <Route path="/dashboard" element={<Dashboard />} />
                                 <Route path="/account" element={<Account />} />
                                 <Route path="/create" element={<Create />} />
+                                <Route path="/my-chests" element={<MyChests />} />
                                 <Route path="/chests" element={<Chests />} />
                                 <Route path="/logout" element={<Logout />} />
                             </Route>

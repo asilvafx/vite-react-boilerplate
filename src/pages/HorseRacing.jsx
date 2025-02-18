@@ -24,6 +24,11 @@ const HorseRacing = () => {
         { id: 'horse3', name: 'Digital Storm', odds: 4.2, color: 'bg-emerald-500', position: 0, lap: 0, angle: 0 },
         { id: 'horse4', name: 'Quantum Racer', odds: 5.0, color: 'bg-yellow-500', position: 0, lap: 0, angle: 0 },
         { id: 'horse5', name: 'Binary Bolt', odds: 6.5, color: 'bg-red-500', position: 0, lap: 0, angle: 0 },
+        { id: 'horse6', name: 'Binary Bolt', odds: 6.5, color: 'bg-red-500', position: 0, lap: 0, angle: 0 },
+        { id: 'horse7', name: 'Binary Bolt', odds: 6.5, color: 'bg-red-500', position: 0, lap: 0, angle: 0 },
+        { id: 'horse8', name: 'Binary Bolt', odds: 6.5, color: 'bg-red-500', position: 0, lap: 0, angle: 0 },
+        { id: 'horse9', name: 'Binary Bolt', odds: 6.5, color: 'bg-red-500', position: 0, lap: 0, angle: 0 },
+        { id: 'horse10', name: 'Binary Bolt', odds: 6.5, color: 'bg-red-500', position: 0, lap: 0, angle: 0 },
     ]);
 
     const [isRacing, setIsRacing] = useState(false);
