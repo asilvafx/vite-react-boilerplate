@@ -1,6 +1,3 @@
-/*
-    Import Global
-*/
 import React, { Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
@@ -34,46 +31,27 @@ const PrivateRoute = lazy(() => import('./components/PrivateRoute'));
     Load App Router
 */
 const App = () => {
-
-    const createStars = () => {
-        const starsContainer = document.getElementById("stars");
-        const fragment = document.createDocumentFragment();
-        const starCount = 200;
-
-        for (let i = 0; i < starCount; i++) {
-            const star = document.createElement("div");
-            star.classList.add("star");
-            star.style.top = `${Math.random() * 100}vh`;
-            star.style.left = `${Math.random() * 100}vw`;
-            star.style.opacity = `${Math.random() * 0.5}`;
-            fragment.appendChild(star);
-        }
-
-        starsContainer.appendChild(fragment);
-    };
-
-    createStars();
-
-
     useEffect(() => {
+       
         const isLoggedIn = checkLoginStatus();
         if (!isLoggedIn) {
             Cookies.remove('isLoggedIn');
             Cookies.remove('uData');
-            Cookies.remove('tkn');}
-    }, );
+            Cookies.remove('tkn');
+        }
+    }, []); // Empty dependency array to run only once on mount
 
-      return (
+    return (
         <HelmetProvider>
-          <Suspense fallback={<div id="loading">Loading...</div>}>
+            <Suspense fallback={<div id="loading">Loading...</div>}>
                 <Router
                     future={{
-                    v7_startTransition: true,
-                    v7_relativeSplatPath: true,
+                        v7_startTransition: true,
+                        v7_relativeSplatPath: true,
                     }} >
-                  <Toaster />
+                    <Toaster />
                     <AuthProvider>
-                        <CookiesGDPR/>
+                        <CookiesGDPR />
                         <div className="aurora"></div>
                         <div className="aurora"></div>
                         <div className="aurora"></div>
@@ -81,26 +59,26 @@ const App = () => {
                         <div className="stars" id="stars"></div>
 
                         <Routes>
-                            <Route path="/" element={<Home/>}/>
-                            <Route element={<PrivateRoute/>}>
-                                <Route path="/treasure-hunt/:id" element={<TreasureHunt/>}/>
-                                <Route path="/dashboard" element={<Dashboard/>}/>
-                                <Route path="/account" element={<Account/>}/>
-                                <Route path="/create" element={<Create/>}/>
-                                <Route path="/chests" element={<Chests/>}/>
-                                <Route path="/logout" element={<Logout/>}/>
+                            <Route path="/" element={<Home />} />
+                            <Route element={<PrivateRoute />}>
+                                <Route path="/treasure-hunt/:id" element={<TreasureHunt />} />
+                                <Route path="/dashboard" element={<Dashboard />} />
+                                <Route path="/account" element={<Account />} />
+                                <Route path="/create" element={<Create />} />
+                                <Route path="/chests" element={<Chests />} />
+                                <Route path="/logout" element={<Logout />} />
                             </Route>
-                            <Route path="/login" element={<Login/>}/>
-                            <Route path="/register" element={<Register/>}/>
-                            <Route path="/forgot-password" element={<ForgotPassword/>}/>
-                            <Route path="/reset-password" element={<ResetPassword/>}/>
-                            <Route path="*" element={<Home/>}/>
+                            <Route path="/login" element={<Login />} />
+                            <Route path="/register" element={<Register />} />
+                            <Route path="/forgot-password" element={<ForgotPassword />} />
+                            <Route path="/reset-password" element={<ResetPassword />} />
+                            <Route path="*" element={<Home />} />
                         </Routes>
                     </AuthProvider>
                 </Router>
-          </Suspense>
+            </Suspense>
         </HelmetProvider>
-      );
+    );
 };
 
 export default App;

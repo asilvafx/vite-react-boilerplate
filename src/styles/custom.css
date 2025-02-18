@@ -310,18 +310,4 @@ ul li {
         transform: translate(0%, 0%) rotate(0deg);
     }
 }
-
-.stars {
-    position: absolute;
-    width: 100vw;
-    height: 100vh;
-    background: transparent;
-}
-
-.star {
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    background: white;
-    border-radius: 50%;
-}
+ 
