@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Coins, Trophy, Timer, Users, AlertCircle, ChevronDown, ChevronUp } from 'lucide-react'; // Import icons for collapse
 import Header from '../components/Header';
 import AppFooter from '../components/AppFooter';
-import GoBack from '../components/GoBack';
+import GoBack from '../components/GoBack'; 
 
 const TreasureHunt = () => {
     const { id } = useParams();
@@ -100,6 +100,7 @@ const TreasureHunt = () => {
                     {/* Left Side - Grid */}
                     {isGridVisible && (
                         <div className="premium-panel p-6 rounded-xl h-fit">
+
                             <h2 className="text-xl font-medium mb-6 neon-text">Treasure Map</h2>
                             <div className="grid grid-cols-10 md:grid-cols-5 gap-3"> {/* Updated to 10 columns */}
                                 {Array.from({length: totalTiles}).map((_, index) => (

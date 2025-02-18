@@ -19,7 +19,7 @@ export default defineConfig(({ mode }) => {
         output: {
           entryFileNames: `assets/[name]-${d}.js`,
           chunkFileNames: `assets/[name]-${d}.js`,
-          assetFileNames: `assets/[name]-${d}.[ext]`,
+          assetFileNames: `assets/[name].[ext]`,
           manualChunks: () => `index-${d}.js`,
         },
       },

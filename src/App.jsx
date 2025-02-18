@@ -13,6 +13,7 @@ import Home from './pages/Home';
 const Buy = lazy(() => import('./pages/Buy'));
 const Exchange = lazy(() => import('./pages/Exchange'));
 const Send = lazy(() => import('./pages/Send'));
+const HorseRacing = lazy(() => import('./pages/HorseRacing'));
 const TreasureHunt = lazy(() => import('./pages/TreasureHunt'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
 const Account = lazy(() => import('./pages/Account'));
@@ -67,6 +68,7 @@ const App = () => {
                                 <Route path="/buy" element={<Buy />} />
                                 <Route path="/exchange" element={<Exchange />} />
                                 <Route path="/send" element={<Send />} />
+                                <Route path="/racing" element={<HorseRacing />} />
                                 <Route path="/treasure-hunt/:id" element={<TreasureHunt />} />
                                 <Route path="/dashboard" element={<Dashboard />} />
                                 <Route path="/account" element={<Account />} />

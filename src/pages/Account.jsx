@@ -322,6 +322,24 @@ const Account = () => {
                                 </div>
                             </div>
                         </Link>
+
+                        <Link
+                            to="/racing"
+                            className="premium-panel p-4 rounded-lg hover:bg-cyan-500/5 transition-colors group"
+                        >
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center space-x-3">
+                                    <div className="p-2 bg-purple-500/10 rounded-lg">
+                                        <Box className="w-5 h-5 text-purple-400"/>
+                                    </div>
+                                    <div>
+                                        <p className="font-medium group-hover:text-cyan-400 transition-colors">Horse
+                                            Racing</p>
+                                        <p className="text-sm text-gray-400 truncate">Find all available races</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </Link>
                     </div>
 
                     </div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Navbar, DarkThemeToggle, Dropdown } from "flowbite-react";
-import { Plus, Box, Wallet, Home, LogOut } from 'lucide-react';
+import {Plus, Box, Wallet, Home, LogOut, ArrowLeft} from 'lucide-react';
 import {Link} from "react-router-dom";
 import { checkLoginStatus, getUserData } from '../lib/user';
 import { shortenAddress } from '../lib/utils';
@@ -22,9 +22,11 @@ const Header = () => {
     return (
         <>
             <Navbar className="top-nav h-14 fixed w-full p-0" fluid>
-                <Navbar.Brand href="/">
+                <Navbar.Brand href="/" className="flex items-center gap-4">
                     <img src="https://flowbite.com/docs/images/logo.svg" className="mr-3 h-6 sm:h-8" alt="Flowbite Logo" />
+                  
                 </Navbar.Brand>
+
                 <div className="flex items-center gap-2 md:order-2">
                     {/* <DarkThemeToggle className="!bg-transparent border-0 focus:ring-0 m-0" />  */}
 
