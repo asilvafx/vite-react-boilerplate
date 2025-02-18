@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Wallet, ArrowRightLeft, Coins } from 'lucide-react';
 import { TextInput, Label, Select } from 'flowbite-react';
+import Header from "../components/Header.jsx";
+import GoBack from "../components/GoBack.jsx";
+import AppFooter from "../components/AppFooter.jsx";
 
 const Exchange = () => {
     const [exchangeData, setExchangeData] = useState({
@@ -14,21 +17,29 @@ const Exchange = () => {
         BOLT: { balance: '500', price: '2.50' }
     };
 
-    const handleExchange = (e: React.FormEvent) => {
+    const handleExchange = (e) => {
         e.preventDefault();
         console.log('Exchange:', exchangeData);
     };
 
     const calculateEstimate = () => {
         const amount = parseFloat(exchangeData.amount) || 0;
-        const fromPrice = parseFloat(tokens[exchangeData.fromToken as keyof typeof tokens].price);
-        const toPrice = parseFloat(tokens[exchangeData.toToken as keyof typeof tokens].price);
+        const fromPrice = parseFloat(tokens[exchangeData.fromToken].price);
+        const toPrice = parseFloat(tokens[exchangeData.toToken].price);
         return ((amount * fromPrice) / toPrice).toFixed(2);
     };
 
     return (
-        <div className="container mx-auto px-4 py-8 mt-20">
-            <h1 className="text-3xl font-bold neon-text mb-8">Token Exchange</h1>
+        <>
+        <section className="w-full max-w-screen-lg mx-auto my-10">
+            <Header />
+
+            <div className="flex items-center justify-start gap-4 mb-8">
+
+                <GoBack url="/account"/>
+                <h1 className="text-3xl font-bold neon-text">Token Exchange</h1>
+
+            </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {/* Exchange Form */}
@@ -108,16 +119,18 @@ const Exchange = () => {
                                         <p className="text-2xl font-medium neon-text">{data.balance} {token}</p>
                                     </div>
                                     <div className="text-right">
-                                        <p className="text-gray-400 mb-1">Price</p>
-                                        <p className="text-lg font-medium text-cyan-400">${data.price}</p>
+                                    <p className="text-gray-400 mb-1">Price</p>
+                                    <p className="text-lg font-medium text-cyan-400">${data.price}</p>
                                     </div>
-                                </div>
                             </div>
-                        ))}
+                            </div>
+                            ))}
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
+        <AppFooter />
+        </>
     );
 };
 

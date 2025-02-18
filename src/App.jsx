@@ -10,6 +10,9 @@ import Cookies from 'js-cookie';
     Import Pages
 */
 import Home from './pages/Home';
+const Buy = lazy(() => import('./pages/Buy'));
+const Exchange = lazy(() => import('./pages/Exchange'));
+const Send = lazy(() => import('./pages/Send'));
 const TreasureHunt = lazy(() => import('./pages/TreasureHunt'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
 const Account = lazy(() => import('./pages/Account'));
@@ -32,7 +35,7 @@ const PrivateRoute = lazy(() => import('./components/PrivateRoute'));
 */
 const App = () => {
     useEffect(() => {
-       
+
         const isLoggedIn = checkLoginStatus();
         if (!isLoggedIn) {
             Cookies.remove('isLoggedIn');
@@ -61,6 +64,9 @@ const App = () => {
                         <Routes>
                             <Route path="/" element={<Home />} />
                             <Route element={<PrivateRoute />}>
+                                <Route path="/buy" element={<Buy />} />
+                                <Route path="/exchange" element={<Exchange />} />
+                                <Route path="/send" element={<Send />} />
                                 <Route path="/treasure-hunt/:id" element={<TreasureHunt />} />
                                 <Route path="/dashboard" element={<Dashboard />} />
                                 <Route path="/account" element={<Account />} />

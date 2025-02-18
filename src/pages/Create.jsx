@@ -148,13 +148,14 @@ const Create = () => {
         <section className="w-full max-w-screen-lg mx-auto my-10">
 
             {showConfirmation && selectedChestPlan ? (
+                    <>
+                    <div className="flex items-center justify-start gap-4 mb-8">
+
+                        <GoBack url="/create" onClick={() => setShowConfirmation(false)} />
+                        <h1 className="text-2xl font-bold neon-text">Confirm Chest Creation</h1>
+                    </div>
                     <div className="premium-panel p-8 rounded-xl">
 
-                        <div className="flex items-center justify-start gap-4 mb-8">
-
-                            <GoBack url="/create" onClick={() => setShowConfirmation(false)} />
-                            <h2 className="text-2xl font-bold neon-text">Confirm Chest Creation</h2>
-                        </div>
                             <div className="space-y-6">
                                 <div className="premium-panel p-6 rounded-lg">
                                     <div className="flex items-center space-x-4 mb-4">
@@ -205,69 +206,74 @@ const Create = () => {
                                 </button>
                             </div>
                         </div>
+                    </>
                         ) : (
-                        <div className="premium-panel p-8 rounded-xl">
-                            <div className="flex items-center justify-start gap-4 mb-8">
+                <>
+                <div className="flex items-center justify-start gap-4 mb-8">
 
-                                <GoBack url="/dashboard"/>
-                                <h1 className="text-3xl font-bold neon-text">Create a New Chest</h1>
+                    <GoBack url="/dashboard"/>
+                    <h1 className="text-3xl font-bold neon-text">Create a New Chest</h1>
 
-                            </div>
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                {chestPlans.map((plan) => {
-                                    const Icon = plan.icon;
-                                    const isSelected = selectedPlan === plan.id;
+                </div>
+                    <div className="premium-panel p-8 rounded-xl">
+                        <h2 className="text-2xl font-bold neon-text mb-8">Choose One</h2>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            {chestPlans.map((plan) => {
+                                const Icon = plan.icon;
+                                const isSelected = selectedPlan === plan.id;
 
-                                    return (
-                                        <div
-                                            key={plan.id}
-                                            className={`premium-card cursor-pointer relative ${
-                                                isSelected
-                                                    ? 'border-cyan-400/50 shadow-lg shadow-cyan-500/20'
-                                                    : 'hover:border-cyan-400/30'
-                                            }`}
-                                            onClick={() => setSelectedPlan(plan.id)}
-                                        >
-                                            {isSelected && (
-                                                <div
-                                                    className="absolute -top-3 -right-3 bg-cyan-500 text-white px-3 py-1 rounded-full text-sm font-medium shadow-lg">
-                                                    Selected
-                                                </div>
-                                            )}
-                                            <div
-                                                className={`rounded-full w-12 h-12 mb-4 flex items-center justify-center bg-gradient-to-br ${plan.color}`}>
-                                                <Icon className="w-6 h-6 text-white"/>
-                                            </div>
-                                            <h3 className="text-xl font-medium mb-2 text-gray-200">{plan.name}</h3>
-                                            <p className="text-2xl font-bold mb-4 neon-text">{plan.deposit} TOKENS</p>
-                                            <p className="text-gray-400 text-sm mb-4">{plan.description}</p>
-                                            <ul className="space-y-2">
-                                                {plan.features.map((feature, index) => (
-                                                    <li key={index} className="text-sm text-gray-300 flex items-center">
-                                                        <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full mr-2"/>
-                                                        {feature}
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </div>
-                                    );
-                                })}
-                            </div>
-
-                            {selectedPlan && (
-                                <div className="mt-8 text-center">
-                                    <button
-                                        onClick={() => setShowConfirmation(true)}
-                                        className="cyber-button px-8"
+                                return (
+                                    <div
+                                        key={plan.id}
+                                        className={`premium-card cursor-pointer relative ${
+                                            isSelected
+                                                ? 'border-cyan-400/50 shadow-lg shadow-cyan-500/20'
+                                                : 'hover:border-cyan-400/30'
+                                        }`}
+                                        onClick={() => setSelectedPlan(plan.id)}
                                     >
-                                        Continue
-                                    </button>
-                                </div>
-                            )}
+                                        {isSelected && (
+                                            <div
+                                                className="absolute -top-3 -right-3 bg-cyan-500 text-white px-3 py-1 rounded-full text-sm font-medium shadow-lg">
+                                                Selected
+                                            </div>
+                                        )}
+                                        <div
+                                            className={`rounded-full w-12 h-12 mb-4 flex items-center justify-center bg-gradient-to-br ${plan.color}`}>
+                                            <Icon className="w-6 h-6 text-white"/>
+                                        </div>
+                                        <h3 className="text-xl font-medium mb-2 text-gray-200">{plan.name}</h3>
+                                        <p className="text-2xl font-bold mb-4 neon-text">{plan.deposit} TOKENS</p>
+                                        <p className="text-gray-400 text-sm mb-4">{plan.description}</p>
+                                        <ul className="space-y-2">
+                                            {plan.features.map((feature, index) => (
+                                                <li key={index} className="text-sm text-gray-300 flex items-center">
+                                                    <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full mr-2"/>
+                                                    {feature}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                );
+                            })}
                         </div>
-                        )}
 
-                        {renderPaymentStatus()}
+                        {selectedPlan && (
+                            <div className="mt-8 text-center">
+                                <button
+                                    onClick={() => setShowConfirmation(true)}
+                                    className="cyber-button px-8"
+                                >
+                                    Continue
+                                </button>
+                            </div>
+                        )}
+                    </div>
+
+                </>
+            )}
+
+            {renderPaymentStatus()}
                     </section>
                 <AppFooter/>
                 </>

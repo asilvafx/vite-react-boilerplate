@@ -67,7 +67,11 @@ const TreasureHunt = () => {
         <>
             <Header />
             <section className="w-full max-w-screen-lg mx-auto my-10">
-                <GoBack url="/chests" />
+                <div className="flex items-center justify-start gap-4 mb-8">
+
+                    <GoBack url="/chests"/>
+                    <h1 className="text-3xl font-bold neon-text">Treasure Hunt</h1>
+                </div>
 
                 <div className="premium-panel p-6 rounded-xl mb-8">
                     <h1 className="text-3xl font-bold neon-text mb-2">{chestData.name}</h1>
@@ -81,12 +85,12 @@ const TreasureHunt = () => {
                 >
                     {isGridVisible ? (
                         <>
-                            <ChevronUp className="w-4 h-4 mr-2" />
+                            <ChevronUp className="w-4 h-4 mr-2"/>
                             Collapse Grid
                         </>
                     ) : (
                         <>
-                            <ChevronDown className="w-4 h-4 mr-2" />
+                            <ChevronDown className="w-4 h-4 mr-2"/>
                             Expand Grid
                         </>
                     )}
@@ -95,10 +99,10 @@ const TreasureHunt = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     {/* Left Side - Grid */}
                     {isGridVisible && (
-                        <div className="premium-panel p-6 rounded-xl">
+                        <div className="premium-panel p-6 rounded-xl h-fit">
                             <h2 className="text-xl font-medium mb-6 neon-text">Treasure Map</h2>
                             <div className="grid grid-cols-10 md:grid-cols-5 gap-3"> {/* Updated to 10 columns */}
-                                {Array.from({ length: totalTiles }).map((_, index) => (
+                                {Array.from({length: totalTiles}).map((_, index) => (
                                     <button
                                         key={index}
                                         onClick={() => handleTileClick(index)}
@@ -117,7 +121,7 @@ const TreasureHunt = () => {
                                         {revealedTiles.has(index) && (
                                             <div className="flex items-center justify-center h-full">
                                                 {userTickets.includes(index) ? (
-                                                    <Trophy className="w-6 h-6 text-green-400" />
+                                                    <Trophy className="w-6 h-6 text-green-400"/>
                                                 ) : (
                                                     <span className="text-gray-500">×</span>
                                                 )}
@@ -138,28 +142,28 @@ const TreasureHunt = () => {
                                 <div className="premium-panel p-3 rounded-lg">
                                     <p className="text-sm text-gray-400 mb-1">Time Left</p>
                                     <p className="font-medium flex items-center">
-                                        <Timer className="w-4 h-4 mr-2 premium-icon" />
+                                        <Timer className="w-4 h-4 mr-2 premium-icon"/>
                                         {chestData.timeLeft}
                                     </p>
                                 </div>
                                 <div className="premium-panel p-3 rounded-lg">
                                     <p className="text-sm text-gray-400 mb-1">Participants</p>
                                     <p className="font-medium flex items-center">
-                                        <Users className="w-4 h-4 mr-2 premium-icon" />
+                                        <Users className="w-4 h-4 mr-2 premium-icon"/>
                                         {chestData.participants}/{chestData.maxParticipants}
                                     </p>
                                 </div>
                                 <div className="premium-panel p-3 rounded-lg">
                                     <p className="text-sm text-gray-400 mb-1">Ticket Price</p>
                                     <p className="font-medium flex items-center">
-                                        <Coins className="w-4 h-4 mr-2 premium-icon" />
+                                        <Coins className="w-4 h-4 mr-2 premium-icon"/>
                                         {chestData.ticketPrice} TOKENS
                                     </p>
                                 </div>
                                 <div className="premium-panel p-3 rounded-lg">
                                     <p className="text-sm text-gray-400 mb-1">Jackpot</p>
                                     <p className="premium-gradient-text font-medium flex items-center">
-                                        <Trophy className="w-4 h-4 mr-2 premium-icon" />
+                                        <Trophy className="w-4 h-4 mr-2 premium-icon"/>
                                         {chestData.jackpot} TOKENS
                                     </p>
                                 </div>
@@ -195,8 +199,9 @@ const TreasureHunt = () => {
                                             </span>
                                         </div>
                                         <div className="text-sm text-gray-400 flex items-center">
-                                            <AlertCircle className="w-4 h-4 mr-2" />
-                                            You can buy up to {remainingTickets} more ticket{remainingTickets !== 1 ? 's' : ''}
+                                            <AlertCircle className="w-4 h-4 mr-2"/>
+                                            You can buy up to {remainingTickets} more
+                                            ticket{remainingTickets !== 1 ? 's' : ''}
                                         </div>
                                         <button
                                             onClick={handlePurchaseTicket}
@@ -229,7 +234,7 @@ const TreasureHunt = () => {
                     </div>
                 </div>
             </section>
-            <AppFooter />
+            <AppFooter/>
         </>
     );
 };

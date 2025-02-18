@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { ArrowLeft, Send as SendIcon, AlertCircle, Wallet, Loader2 } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Send as SendIcon, AlertCircle, Wallet, Loader2 } from 'lucide-react';
 import { TextInput, Label, Select } from 'flowbite-react';
 import toast from 'react-hot-toast';
+import GoBack from "../components/GoBack";
+import Header from "../components/Header";
+import AppFooter from "../components/AppFooter";
 
 const Send = () => {
     const [formData, setFormData] = useState({
@@ -22,7 +24,7 @@ const Send = () => {
     };
 
     // Get current balance based on selected token
-    const currentBalance = walletData.balances[formData.token as keyof typeof walletData.balances];
+    const currentBalance = walletData.balances[formData.token];
 
     const validateForm = () => {
         const amount = parseFloat(formData.amount);
@@ -44,7 +46,7 @@ const Send = () => {
         return true;
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (!validateForm()) return;
@@ -65,26 +67,25 @@ const Send = () => {
     };
 
     return (
-        <div className="max-w-2xl mx-auto px-4 py-8 mt-20">
-            <Link to="/account" className="inline-flex items-center cyber-button mb-8">
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to Account
-            </Link>
+        <>
+        <section className="w-full max-w-screen-lg mx-auto my-10">
+            <Header />
+
+            <div className="flex items-center justify-start gap-4 mb-8">
+
+                <GoBack url="/account"/>
+                <h1 className="text-3xl font-bold neon-text">Send Crypto</h1>
+
+            </div>
 
             <div className="premium-panel p-8 rounded-xl">
-                <div className="flex items-center space-x-3 mb-8">
-                    <div className="p-2 bg-purple-500/10 rounded-lg">
-                        <SendIcon className="w-6 h-6 text-purple-400" />
-                    </div>
-                    <h1 className="text-2xl font-medium">Send Tokens</h1>
-                </div>
 
                 {/* Token Balances */}
                 <div className="grid grid-cols-2 gap-4 mb-8">
                     <div className="premium-panel p-4 rounded-lg">
                         <div className="flex items-center space-x-3">
                             <div className="p-2 bg-blue-500/10 rounded-lg">
-                                <Wallet className="w-5 h-5 text-blue-400" />
+                                <Wallet className="w-5 h-5 text-blue-400"/>
                             </div>
                             <div>
                                 <p className="text-sm text-gray-400">POL Balance</p>
@@ -98,7 +99,7 @@ const Send = () => {
                     <div className="premium-panel p-4 rounded-lg">
                         <div className="flex items-center space-x-3">
                             <div className="p-2 bg-purple-500/10 rounded-lg">
-                                <Wallet className="w-5 h-5 text-purple-400" />
+                                <Wallet className="w-5 h-5 text-purple-400"/>
                             </div>
                             <div>
                                 <p className="text-sm text-gray-400">BOLT Balance</p>
@@ -112,11 +113,11 @@ const Send = () => {
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
-                        <Label htmlFor="token" value="Select Token" className="text-gray-300 mb-2" />
+                        <Label htmlFor="token" value="Select Token" className="text-gray-300 mb-2"/>
                         <Select
                             id="token"
                             value={formData.token}
-                            onChange={(e) => setFormData({ ...formData, token: e.target.value })}
+                            onChange={(e) => setFormData({...formData, token: e.target.value})}
                             required
                             className="bg-gray-800"
                         >
@@ -129,26 +130,26 @@ const Send = () => {
                     </div>
 
                     <div>
-                        <Label htmlFor="amount" value="Amount" className="text-gray-300 mb-2" />
+                        <Label htmlFor="amount" value="Amount" className="text-gray-300 mb-2"/>
                         <TextInput
                             id="amount"
                             type="number"
                             step="0.01"
                             placeholder="0.00"
                             value={formData.amount}
-                            onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
+                            onChange={(e) => setFormData({...formData, amount: e.target.value})}
                             required
                         />
                     </div>
 
                     <div>
-                        <Label htmlFor="address" value="Recipient Address" className="text-gray-300 mb-2" />
+                        <Label htmlFor="address" value="Recipient Address" className="text-gray-300 mb-2"/>
                         <TextInput
                             id="address"
                             type="text"
                             placeholder="0x..."
                             value={formData.address}
-                            onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                            onChange={(e) => setFormData({...formData, address: e.target.value})}
                             required
                         />
                     </div>
@@ -156,13 +157,15 @@ const Send = () => {
                     <div className="space-y-4">
                         <div className="premium-panel p-4 rounded-lg bg-cyan-500/5">
                             <div className="flex items-start space-x-3">
-                                <AlertCircle className="w-5 h-5 text-cyan-400 mt-0.5" />
+                                <AlertCircle className="w-5 h-5 text-cyan-400 mt-0.5"/>
                                 <div className="space-y-2">
                                     <p className="text-sm text-gray-300">
-                                        Please verify the recipient's address carefully. Token transfers cannot be reversed.
+                                        Please verify the recipient's address carefully. Token transfers cannot be
+                                        reversed.
                                     </p>
                                     <p className="text-sm text-gray-400">
-                                        Only send {formData.token} tokens to a compatible wallet address on the Polygon network.
+                                        Only send {formData.token} tokens to a compatible wallet address on the Polygon
+                                        network.
                                     </p>
                                 </div>
                             </div>
@@ -171,10 +174,11 @@ const Send = () => {
                         {formData.token === 'BOLT' && (
                             <div className="premium-panel p-4 rounded-lg bg-purple-500/5">
                                 <div className="flex items-start space-x-3">
-                                    <AlertCircle className="w-5 h-5 text-purple-400 mt-0.5" />
+                                    <AlertCircle className="w-5 h-5 text-purple-400 mt-0.5"/>
                                     <div className="space-y-2">
                                         <p className="text-sm text-gray-300">
-                                            BOLT tokens can only be sent to addresses that support the BOLT token contract.
+                                            BOLT tokens can only be sent to addresses that support the BOLT token
+                                            contract.
                                         </p>
                                         <p className="text-sm text-gray-400">
                                             Make sure the recipient's wallet is compatible with BOLT tokens.
@@ -192,19 +196,21 @@ const Send = () => {
                     >
                         {isProcessing ? (
                             <>
-                                <Loader2 className="w-5 h-5 animate-spin" />
+                                <Loader2 className="w-5 h-5 animate-spin"/>
                                 <span>Processing...</span>
                             </>
                         ) : (
                             <>
-                                <SendIcon className="w-5 h-5" />
+                                <SendIcon className="w-5 h-5"/>
                                 <span>Send Tokens</span>
                             </>
                         )}
                     </button>
                 </form>
             </div>
-        </div>
+        </section>
+        <AppFooter />
+        </>
     );
 };
 

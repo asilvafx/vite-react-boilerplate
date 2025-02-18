@@ -57,13 +57,15 @@ const Chests = () => {
         <Header />
             <section className="w-full max-w-screen-lg mx-auto my-10">
 
+                <div className="flex items-center justify-start gap-4 mb-8">
+
+                    <GoBack url="/dashboard"/>
+                    <h1 className="text-3xl font-bold neon-text">Join a Chest</h1>
+                </div>
+
                 <div className="premium-panel p-6 rounded-xl mb-8">
-                    <div className="flex items-center justify-start gap-4 mb-8">
 
-                        <GoBack url="/dashboard"/>
-                        <h1 className="text-3xl font-bold neon-text">Join a Chest</h1>
-                    </div>
-
+                    <h2 className="text-2xl font-bold neon-text mb-8">Search</h2>
                     <div className="flex flex-col md:flex-row gap-4">
                         <div className="flex-1">
                             <TextInput
@@ -147,7 +149,7 @@ const Chests = () => {
                                     to={`/treasure-hunt/${chest.id}`}
                                 >
                                     <button className="cyber-button min-w-[150px]">
-                                        Buy Ticket
+                                       Hunt
                                     </button>
                                 </Link>
                             </div>

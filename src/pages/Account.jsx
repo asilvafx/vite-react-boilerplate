@@ -255,12 +255,38 @@ const Account = () => {
                                     </div>
                                     <div>
                                         <p className="font-medium group-hover:text-cyan-400 transition-colors">Send</p>
-                                        <p className="text-sm text-gray-400 truncate">Transfer tokens to another wallet</p>
+                                        <p className="text-sm text-gray-400 truncate">Transfer tokens to another
+                                            wallet</p>
                                     </div>
                                 </div>
                             </div>
                         </Link>
 
+                    </div>
+                    <div className="flex items-center space-x-3 pt-4">
+                        <div className="p-2 bg-emerald-500/10 rounded-lg">
+                            <Box className="w-5 h-5 text-emerald-400"/>
+                        </div>
+                        <h3 className="text-lg font-medium">Chests</h3>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+
+                        <Link
+                            to="/chests"
+                            className="premium-panel p-4 rounded-lg hover:bg-cyan-500/5 transition-colors group"
+                        >
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center space-x-3">
+                                    <div className="p-2 bg-purple-500/10 rounded-lg">
+                                        <Box className="w-5 h-5 text-purple-400"/>
+                                    </div>
+                                    <div>
+                                        <p className="font-medium group-hover:text-cyan-400 transition-colors">Creations</p>
+                                        <p className="text-sm text-gray-400 truncate">Manage your chests</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </Link>
                         <Link
                             to="/create"
                             className="premium-panel p-4 rounded-lg hover:bg-cyan-500/5 transition-colors group"
@@ -298,7 +324,7 @@ const Account = () => {
                         </Link>
                     </div>
 
-                </div>
+                    </div>
             </section>
 
             <section className="mb-10 w-full max-w-screen-lg mx-auto">
@@ -307,7 +333,7 @@ const Account = () => {
                     <div className="premium-panel p-6 rounded-xl space-y-6">
                         <div className="flex items-center space-x-3">
                             <div className="p-2 bg-cyan-500/10 rounded-lg">
-                                <ChartBar className="w-5 h-5 premium-icon"/>
+                            <ChartBar className="w-5 h-5 premium-icon"/>
                             </div>
                             <h3 className="text-lg font-medium">Performance</h3>
                         </div>

@@ -91,7 +91,7 @@ const Footer = () => {
                             <li>
                                 <a href="#"
                                    className="inline-block text-gray-400 hover:text-primary transition-colors duration-200">
-                                    Forum
+                                    X
                                 </a>
                             </li>
                             <li>
@@ -114,7 +114,7 @@ const Footer = () => {
                             <li>
                                 <a href="#"
                                    className="inline-block text-gray-400 hover:text-primary transition-colors duration-200">
-                                    Brand Assets
+                                    FAQ
                                 </a>
                             </li>
                             <li>
@@ -134,7 +134,7 @@ const Footer = () => {
                 </div>
 
                 {/* Bottom Section */}
-                <div className="py-10 border-t border-gray:200 dark:border-gray-800">
+                <div className="py-10 border-t border-gray-800">
                     <div className="flex flex-col md:flex-row justify-between items-center gap-6">
                         <div className="flex items-center gap-6">
                             <a href="#"

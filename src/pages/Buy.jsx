@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { ArrowLeft, Wallet, AlertCircle, ExternalLink } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { AlertCircle, ExternalLink } from 'lucide-react'; 
 import { TextInput, Label } from 'flowbite-react';
+import Header from "../components/Header.jsx";
+import GoBack from "../components/GoBack.jsx";
+import AppFooter from "../components/AppFooter.jsx";
 
 const Buy = () => {
     const [amount, setAmount] = useState('');
@@ -10,26 +12,25 @@ const Buy = () => {
     const exchangeRate = 1.5; // 1 MATIC = 1.5 USD
     const estimatedCost = parseFloat(amount) * exchangeRate || 0;
 
-    const handleBuy = (e: React.FormEvent) => {
+    const handleBuy = (e) => {
         e.preventDefault();
         // Implement web3 purchase logic
         console.log('Buy POL tokens:', amount);
     };
 
     return (
-        <div className="max-w-2xl mx-auto px-4 py-8 mt-20">
-            <Link to="/account" className="inline-flex items-center cyber-button mb-8">
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to Account
-            </Link>
+        <>
+        <section className="w-full max-w-screen-lg mx-auto my-10">
+            <Header />
+
+            <div className="flex items-center justify-start gap-4 mb-8">
+
+                <GoBack url="/account"/>
+                <h1 className="text-3xl font-bold neon-text">Buy Crypto</h1>
+
+            </div>
 
             <div className="premium-panel p-8 rounded-xl">
-                <div className="flex items-center space-x-3 mb-8">
-                    <div className="p-2 bg-emerald-500/10 rounded-lg">
-                        <Wallet className="w-6 h-6 text-emerald-400" />
-                    </div>
-                    <h1 className="text-2xl font-medium">Buy POL Tokens</h1>
-                </div>
 
                 <div className="premium-panel p-6 rounded-lg mb-8 bg-cyan-500/5">
                     <h2 className="text-lg font-medium mb-4">Why Buy POL?</h2>
@@ -97,7 +98,9 @@ const Buy = () => {
                     </a>
                 </form>
             </div>
-        </div>
+        </section>
+        <AppFooter />
+        </>
     );
 };
 
