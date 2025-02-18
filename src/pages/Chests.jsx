@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import { TextInput, Select } from 'flowbite-react';
 import Header from '../components/Header';
 import AppFooter from "../components/AppFooter";
+import GoBack from "../components/GoBack.jsx";
 
 const Chests = () => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -54,102 +55,108 @@ const Chests = () => {
     return (
         <>
         <Header />
-        <section className="w-full max-w-screen-lg mx-auto my-10">
-            <h1 className="text-3xl font-bold neon-text mb-8">Join a Chest</h1>
+            <section className="w-full max-w-screen-lg mx-auto my-10">
 
-            <div className="premium-panel p-6 rounded-xl mb-8">
-                <div className="flex flex-col md:flex-row gap-4">
-                    <div className="flex-1">
-                        <TextInput
-                            type="text"
-                            icon={Search}
-                            placeholder="Search chests..."
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                            className="bg-gray-800"
-                        />
+                <div className="premium-panel p-6 rounded-xl mb-8">
+                    <div className="flex items-center justify-start gap-4 mb-8">
+
+                        <GoBack url="/dashboard"/>
+                        <h1 className="text-3xl font-bold neon-text">Join a Chest</h1>
                     </div>
-                    <div className="flex items-center space-x-2 min-w-[200px]">
-                        <Filter className="text-gray-400" />
-                        <Select
-                            value={priceFilter}
-                            onChange={(e) => setPriceFilter(e.target.value)}
-                            className="bg-gray-800"
-                        >
-                            <option value="all">All Prices</option>
-                            <option value="1">1 TOKEN</option>
-                            <option value="5">5 TOKENS</option>
-                            <option value="10">10 TOKENS</option>
-                        </Select>
-                    </div>
-                </div>
-            </div>
 
-            <div className="grid grid-cols-1 gap-6">
-                {filteredChests.map(chest => (
-                    <div key={chest.id} className="premium-panel p-6 rounded-xl hover:scale-[1.01] transition-transform">
-                        <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
-                            <div className="flex-1">
-                                <div className="flex items-center space-x-3 mb-2">
-                                    <h3 className="text-xl font-bold neon-text">{chest.name}</h3>
-                                    <span className={`px-3 py-1 rounded-full text-xs font-medium 
-                    ${chest.type === 'premium' ? 'bg-purple-500/20 text-purple-300' :
-                                        chest.type === 'standard' ? 'bg-blue-500/20 text-blue-300' :
-                                            'bg-emerald-500/20 text-emerald-300'}`}>
-                    {chest.type.toUpperCase()}
-                  </span>
-                                </div>
-                                <p className="text-gray-400 flex items-center mb-4">
-                                    <Trophy className="w-4 h-4 mr-2 premium-icon" />
-                                    Created by {chest.creator}
-                                </p>
-
-                                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                                    <div className="premium-panel p-3 rounded-lg">
-                                        <p className="text-sm text-gray-400 mb-1">Time Left</p>
-                                        <p className="font-medium flex items-center">
-                                            <Clock className="w-4 h-4 mr-2 premium-icon" />
-                                            {chest.timeLeft}
-                                        </p>
-                                    </div>
-                                    <div className="premium-panel p-3 rounded-lg">
-                                        <p className="text-sm text-gray-400 mb-1">Participants</p>
-                                        <p className="font-medium flex items-center">
-                                            <Users className="w-4 h-4 mr-2 premium-icon" />
-                                            {chest.participants}/{chest.maxTickets}
-                                        </p>
-                                    </div>
-                                    <div className="premium-panel p-3 rounded-lg">
-                                        <p className="text-sm text-gray-400 mb-1">Ticket Price</p>
-                                        <p className="font-medium flex items-center">
-                                            <Coins className="w-4 h-4 mr-2 premium-icon" />
-                                            {chest.ticketPrice} TOKENS
-                                        </p>
-                                    </div>
-                                    <div className="premium-panel p-3 rounded-lg">
-                                        <p className="text-sm text-gray-400 mb-1">Jackpot</p>
-                                        <p className="premium-gradient-text font-medium flex items-center">
-                                            <Sparkles className="w-4 h-4 mr-2 premium-icon" />
-                                            {chest.jackpot} TOKENS
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <Link
-                                to={`/treasure-hunt/${chest.id}`}
+                    <div className="flex flex-col md:flex-row gap-4">
+                        <div className="flex-1">
+                            <TextInput
+                                type="text"
+                                icon={Search}
+                                placeholder="Search chests..."
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                                className="bg-gray-800"
+                            />
+                        </div>
+                        <div className="flex items-center space-x-2 min-w-[200px]">
+                            <Filter className="text-gray-400"/>
+                            <Select
+                                value={priceFilter}
+                                onChange={(e) => setPriceFilter(e.target.value)}
+                                className="bg-gray-800"
                             >
-                            <button className="cyber-button min-w-[150px]">
-                                Buy Ticket
-                            </button>
-                            </Link>
+                                <option value="all">All Prices</option>
+                                <option value="1">1 TOKEN</option>
+                                <option value="5">5 TOKENS</option>
+                                <option value="10">10 TOKENS</option>
+                            </Select>
                         </div>
                     </div>
-                ))}
-            </div>
-        </section>
+                </div>
 
-        <AppFooter />
+                <div className="grid grid-cols-1 gap-6">
+                    {filteredChests.map(chest => (
+                        <div key={chest.id}
+                             className="premium-panel p-6 rounded-xl hover:scale-[1.01] transition-transform">
+                            <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
+                                <div className="flex-1">
+                                    <div className="flex items-center space-x-3 mb-2">
+                                        <h3 className="text-xl font-bold neon-text">{chest.name}</h3>
+                                        <span className={`px-3 py-1 rounded-full text-xs font-medium 
+                    ${chest.type === 'premium' ? 'bg-purple-500/20 text-purple-300' :
+                                            chest.type === 'standard' ? 'bg-blue-500/20 text-blue-300' :
+                                                'bg-emerald-500/20 text-emerald-300'}`}>
+                    {chest.type.toUpperCase()}
+                  </span>
+                                    </div>
+                                    <p className="text-gray-400 flex items-center mb-4">
+                                        <Trophy className="w-4 h-4 mr-2 premium-icon"/>
+                                        Created by {chest.creator}
+                                    </p>
+
+                                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                        <div className="premium-panel p-3 rounded-lg">
+                                            <p className="text-sm text-gray-400 mb-1">Time Left</p>
+                                            <p className="font-medium flex items-center">
+                                                <Clock className="w-4 h-4 mr-2 premium-icon"/>
+                                                {chest.timeLeft}
+                                            </p>
+                                        </div>
+                                        <div className="premium-panel p-3 rounded-lg">
+                                            <p className="text-sm text-gray-400 mb-1">Participants</p>
+                                            <p className="font-medium flex items-center">
+                                                <Users className="w-4 h-4 mr-2 premium-icon"/>
+                                                {chest.participants}/{chest.maxTickets}
+                                            </p>
+                                        </div>
+                                        <div className="premium-panel p-3 rounded-lg">
+                                            <p className="text-sm text-gray-400 mb-1">Ticket Price</p>
+                                            <p className="font-medium flex items-center">
+                                                <Coins className="w-4 h-4 mr-2 premium-icon"/>
+                                                {chest.ticketPrice} TOKENS
+                                            </p>
+                                        </div>
+                                        <div className="premium-panel p-3 rounded-lg">
+                                            <p className="text-sm text-gray-400 mb-1">Jackpot</p>
+                                            <p className="premium-gradient-text font-medium flex items-center">
+                                                <Sparkles className="w-4 h-4 mr-2 premium-icon"/>
+                                                {chest.jackpot} TOKENS
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <Link
+                                    to={`/treasure-hunt/${chest.id}`}
+                                >
+                                    <button className="cyber-button min-w-[150px]">
+                                        Buy Ticket
+                                    </button>
+                                </Link>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </section>
+
+            <AppFooter/>
         </>
     );
 };

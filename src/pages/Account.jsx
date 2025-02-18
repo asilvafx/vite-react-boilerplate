@@ -100,12 +100,43 @@ const Account = () => {
 
     return (
         <>
-            <Header />
+            <Header/>
             {/* User Stats Section */}
             <section className="my-10 w-full max-w-screen-lg mx-auto">
                 <h1 className="text-3xl font-bold neon-text mb-8">My Wallet</h1>
 
                 <div className="grid grid-cols-1 gap-8 mb-8">
+
+                    {/* WorldID Verification Banner */}
+                    {!isVerified && (
+                        <div className="premium-panel p-6 rounded-xl relative overflow-hidden">
+                            <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/5 rounded-full blur-3xl"/>
+                            <div className="relative z-10">
+                                <div className="flex items-center space-x-3 mb-4">
+                                    <div className="p-2 bg-cyan-500/10 rounded-lg">
+                                        <Globe className="w-6 h-6 premium-icon"/>
+                                    </div>
+                                    <h2 className="text-xl font-medium">Verify Your Humanity</h2>
+                                </div>
+
+                                <p className="text-gray-400 mb-6 max-w-2xl">
+                                    Verify your humanity using WorldID and receive <span
+                                    className="text-cyan-400 font-medium">50 TOKENS</span> as a reward.
+                                    This helps us maintain a fair and bot-free environment.
+                                </p>
+
+                                <button
+                                    onClick={handleWorldIDVerification}
+                                    className="cyber-button flex items-center space-x-2 group"
+                                >
+                                    <Shield
+                                        className="w-5 h-5 group-hover:scale-110 transition-transform duration-500"/>
+                                    <span>Verify with WorldID</span>
+                                </button>
+                            </div>
+                        </div>
+                    )}
+
                     {/* Wallet Info */}
                     <div className="premium-panel p-6 rounded-xl">
 
@@ -166,37 +197,111 @@ const Account = () => {
                         </div>
                     </div>
                 </div>
+            </section>
 
-                {/* WorldID Verification Banner */}
-                {!isVerified && (
-                    <div className="premium-panel p-6 rounded-xl mb-8 relative overflow-hidden">
-                        <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/5 rounded-full blur-3xl"/>
-                        <div className="relative z-10">
-                            <div className="flex items-center space-x-3 mb-4">
-                                <div className="p-2 bg-cyan-500/10 rounded-lg">
-                                    <Globe className="w-6 h-6 premium-icon"/>
-                                </div>
-                                <h2 className="text-xl font-medium">Verify Your Humanity</h2>
-                            </div>
-
-                            <p className="text-gray-400 mb-6 max-w-2xl">
-                                Verify your humanity using WorldID and receive <span
-                                className="text-cyan-400 font-medium">50 TOKENS</span> as a reward.
-                                This helps us maintain a fair and bot-free environment.
-                            </p>
-
-                            <button
-                                onClick={handleWorldIDVerification}
-                                className="cyber-button flex items-center space-x-2 group"
-                            >
-                                <Shield className="w-5 h-5 group-hover:scale-110 transition-transform duration-500"/>
-                                <span>Verify with WorldID</span>
-                            </button>
+            <section className="mb-10 w-full max-w-screen-lg mx-auto">
+                {/* Quick Actions */}
+                <div className="premium-panel p-6 rounded-xl space-y-6">
+                    <div className="flex items-center space-x-3">
+                        <div className="p-2 bg-emerald-500/10 rounded-lg">
+                            <Gauge className="w-5 h-5 text-emerald-400"/>
                         </div>
+                        <h3 className="text-lg font-medium">Quick Actions</h3>
                     </div>
-                )}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <Link
+                            to="/buy"
+                            className="premium-panel p-4 rounded-lg hover:bg-cyan-500/5 transition-colors group"
+                        >
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center space-x-3">
+                                    <div className="p-2 bg-emerald-500/10 rounded-lg">
+                                        <Box className="w-5 h-5 text-emerald-400"/>
+                                    </div>
+                                    <div>
+                                        <p className="font-medium group-hover:text-cyan-400 transition-colors">Buy
+                                            Tokens</p>
+                                        <p className="text-sm text-gray-400 truncate">Purchase POL tokens</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </Link>
 
-                {/* Token Management Section */}
+                        <Link
+                            to="/exchange"
+                            className="premium-panel p-4 rounded-lg hover:bg-cyan-500/5 transition-colors group"
+                        >
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center space-x-3">
+                                    <div className="p-2 bg-blue-500/10 rounded-lg">
+                                        <ArrowUpRight className="w-5 h-5 text-blue-400"/>
+                                    </div>
+                                    <div>
+                                        <p className="font-medium group-hover:text-cyan-400 transition-colors">Exchange</p>
+                                        <p className="text-sm text-gray-400 truncate">Swap between POL and BOLT</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </Link>
+
+                        <Link
+                            to="/send"
+                            className="premium-panel p-4 rounded-lg hover:bg-cyan-500/5 transition-colors group"
+                        >
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center space-x-3">
+                                    <div className="p-2 bg-purple-500/10 rounded-lg">
+                                        <Box className="w-5 h-5 text-purple-400"/>
+                                    </div>
+                                    <div>
+                                        <p className="font-medium group-hover:text-cyan-400 transition-colors">Send</p>
+                                        <p className="text-sm text-gray-400 truncate">Transfer tokens to another wallet</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </Link>
+
+                        <Link
+                            to="/create"
+                            className="premium-panel p-4 rounded-lg hover:bg-cyan-500/5 transition-colors group"
+                        >
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center space-x-3">
+                                    <div className="p-2 bg-purple-500/10 rounded-lg">
+                                        <Plus className="w-5 h-5 text-purple-400"/>
+                                    </div>
+                                    <div>
+                                        <p className="font-medium group-hover:text-cyan-400 transition-colors">Create
+                                            Chest</p>
+                                        <p className="text-sm text-gray-400 truncate">Create new chests</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </Link>
+
+                        <Link
+                            to="/chests"
+                            className="premium-panel p-4 rounded-lg hover:bg-cyan-500/5 transition-colors group"
+                        >
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center space-x-3">
+                                    <div className="p-2 bg-purple-500/10 rounded-lg">
+                                        <Box className="w-5 h-5 text-purple-400"/>
+                                    </div>
+                                    <div>
+                                        <p className="font-medium group-hover:text-cyan-400 transition-colors">Join
+                                            Chest</p>
+                                        <p className="text-sm text-gray-400 truncate">Find all available chests</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </Link>
+                    </div>
+
+                </div>
+            </section>
+
+            <section className="mb-10 w-full max-w-screen-lg mx-auto">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* Performance Stats */}
                     <div className="premium-panel p-6 rounded-xl space-y-6">
@@ -267,105 +372,7 @@ const Account = () => {
                     </div>
                 </div>
             </section>
-            <section className="mb-10 w-full max-w-screen-lg mx-auto">
-                {/* Quick Actions */}
-                <div className="premium-panel p-6 rounded-xl space-y-6">
-                    <div className="flex items-center space-x-3">
-                        <div className="p-2 bg-emerald-500/10 rounded-lg">
-                            <Gauge className="w-5 h-5 text-emerald-400"/>
-                        </div>
-                        <h3 className="text-lg font-medium">Quick Actions</h3>
-                    </div>
-                    <div className="grid grid-cols-1 gap-4">
-                        <Link
-                            to="/buy"
-                            className="premium-panel p-4 rounded-lg hover:bg-cyan-500/5 transition-colors group"
-                        >
-                            <div className="flex items-center justify-between">
-                                <div className="flex items-center space-x-3">
-                                    <div className="p-2 bg-emerald-500/10 rounded-lg">
-                                        <Box className="w-5 h-5 text-emerald-400"/>
-                                    </div>
-                                    <div>
-                                        <p className="font-medium group-hover:text-cyan-400 transition-colors">Buy
-                                            Tokens</p>
-                                        <p className="text-sm text-gray-400">Purchase POL tokens</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </Link>
 
-                        <Link
-                            to="/exchange"
-                            className="premium-panel p-4 rounded-lg hover:bg-cyan-500/5 transition-colors group"
-                        >
-                            <div className="flex items-center justify-between">
-                                <div className="flex items-center space-x-3">
-                                    <div className="p-2 bg-blue-500/10 rounded-lg">
-                                        <ArrowUpRight className="w-5 h-5 text-blue-400"/>
-                                    </div>
-                                    <div>
-                                        <p className="font-medium group-hover:text-cyan-400 transition-colors">Exchange</p>
-                                        <p className="text-sm text-gray-400">Swap between POL and BOLT</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </Link>
-
-                        <Link
-                            to="/send"
-                            className="premium-panel p-4 rounded-lg hover:bg-cyan-500/5 transition-colors group"
-                        >
-                            <div className="flex items-center justify-between">
-                                <div className="flex items-center space-x-3">
-                                    <div className="p-2 bg-purple-500/10 rounded-lg">
-                                        <Box className="w-5 h-5 text-purple-400"/>
-                                    </div>
-                                    <div>
-                                        <p className="font-medium group-hover:text-cyan-400 transition-colors">Send</p>
-                                        <p className="text-sm text-gray-400">Transfer tokens to another wallet</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </Link>
-
-                        <Link
-                            to="/create"
-                            className="premium-panel p-4 rounded-lg hover:bg-cyan-500/5 transition-colors group"
-                        >
-                            <div className="flex items-center justify-between">
-                                <div className="flex items-center space-x-3">
-                                    <div className="p-2 bg-purple-500/10 rounded-lg">
-                                        <Plus className="w-5 h-5 text-purple-400"/>
-                                    </div>
-                                    <div>
-                                        <p className="font-medium group-hover:text-cyan-400 transition-colors">Create Chest</p>
-                                        <p className="text-sm text-gray-400">Create new chests</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </Link>
-
-                        <Link
-                            to="/chests"
-                            className="premium-panel p-4 rounded-lg hover:bg-cyan-500/5 transition-colors group"
-                        >
-                            <div className="flex items-center justify-between">
-                                <div className="flex items-center space-x-3">
-                                    <div className="p-2 bg-purple-500/10 rounded-lg">
-                                        <Box className="w-5 h-5 text-purple-400"/>
-                                    </div>
-                                    <div>
-                                        <p className="font-medium group-hover:text-cyan-400 transition-colors">Join Chest</p>
-                                        <p className="text-sm text-gray-400">Find all available chests</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </Link>
-                    </div>
-
-                </div>
-            </section>
             <AppFooter/>
         </>
     );
