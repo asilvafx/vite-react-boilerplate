@@ -7,7 +7,7 @@ const PrivateRoute = () => {
     const isLoggedIn = checkLoginStatus();
 
     if (!isLoggedIn) {
-        return <Navigate to="/" />;
+        return <Navigate to="/login" />;
     }
 
     return <Outlet />;
