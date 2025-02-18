@@ -35,6 +35,26 @@ const PrivateRoute = lazy(() => import('./components/PrivateRoute'));
 */
 const App = () => {
 
+    const createStars = () => {
+        const starsContainer = document.getElementById("stars");
+        const fragment = document.createDocumentFragment();
+        const starCount = 200;
+
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement("div");
+            star.classList.add("star");
+            star.style.top = `${Math.random() * 100}vh`;
+            star.style.left = `${Math.random() * 100}vw`;
+            star.style.opacity = `${Math.random() * 0.5}`;
+            fragment.appendChild(star);
+        }
+
+        starsContainer.appendChild(fragment);
+    };
+
+    createStars();
+
+
     useEffect(() => {
         const isLoggedIn = checkLoginStatus();
         if (!isLoggedIn) {
@@ -52,25 +72,31 @@ const App = () => {
                     v7_relativeSplatPath: true,
                     }} >
                   <Toaster />
-                  <AuthProvider>
-                  <CookiesGDPR />
-                  <Routes>
-                      <Route path="/" element={<Home />} />
-                      <Route element={<PrivateRoute />}>
-                          <Route path="/treasure-hunt/:id" element={<TreasureHunt />} />
-                          <Route path="/dashboard" element={<Dashboard />} />
-                          <Route path="/account" element={<Account />} />
-                          <Route path="/create" element={<Create />} />
-                          <Route path="/chests" element={<Chests />} />
-                          <Route path="/logout" element={<Logout />} />
-                      </Route>
-                      <Route path="/login" element={<Login />} />
-                      <Route path="/register" element={<Register />} />
-                      <Route path="/forgot-password" element={<ForgotPassword />} />
-                      <Route path="/reset-password" element={<ResetPassword />} />
-                      <Route path="*" element={<Home />} />
-                  </Routes> 
-                  </AuthProvider>
+                    <AuthProvider>
+                        <CookiesGDPR/>
+                        <div className="aurora"></div>
+                        <div className="aurora"></div>
+                        <div className="aurora"></div>
+                        <div className="aurora"></div>
+                        <div className="stars" id="stars"></div>
+
+                        <Routes>
+                            <Route path="/" element={<Home/>}/>
+                            <Route element={<PrivateRoute/>}>
+                                <Route path="/treasure-hunt/:id" element={<TreasureHunt/>}/>
+                                <Route path="/dashboard" element={<Dashboard/>}/>
+                                <Route path="/account" element={<Account/>}/>
+                                <Route path="/create" element={<Create/>}/>
+                                <Route path="/chests" element={<Chests/>}/>
+                                <Route path="/logout" element={<Logout/>}/>
+                            </Route>
+                            <Route path="/login" element={<Login/>}/>
+                            <Route path="/register" element={<Register/>}/>
+                            <Route path="/forgot-password" element={<ForgotPassword/>}/>
+                            <Route path="/reset-password" element={<ResetPassword/>}/>
+                            <Route path="*" element={<Home/>}/>
+                        </Routes>
+                    </AuthProvider>
                 </Router>
           </Suspense>
         </HelmetProvider>
