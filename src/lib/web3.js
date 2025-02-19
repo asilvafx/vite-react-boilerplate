@@ -63,11 +63,6 @@ export const createWallet = async () => {
 export const sendTransaction = async (amountToSend, destinationAddress, tokenHolder, holderSecretKey) => {
     if (!web3) return;
 
-    console.log('Amount:'+amountToSend);
-    console.log('To: '+destinationAddress);
-    console.log('From: '+tokenHolder);
-    console.log('PK: '+holderSecretKey);
-
     const amountInWei = web3.utils.toWei(amountToSend, "ether");
 
     try {
