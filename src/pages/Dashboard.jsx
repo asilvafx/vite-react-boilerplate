@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import Header from '../components/Header';
 import AppFooter from '../components/AppFooter';
 import { toast } from 'react-hot-toast';
-import TokenBalanceSection from "../components/TokenBalanceSection.jsx";
+import TokenBalanceSection from "../components/TokenBalanceSection";
+import IDKit from '../components/IDKit';
 
 const Dashboard = () => {
 
@@ -73,11 +74,6 @@ const Dashboard = () => {
         console.log(`Claimed ${rewardAmount} BOLT tokens`);
     };
 
-    const handleWorldIDVerification = () => {
-        // Placeholder for WorldID verification logic
-        console.log('WorldID verification clicked');
-    };
-
     const copyToClipboard = (text) => {
         navigator.clipboard.writeText(text);
         toast.success('Wallet address copied to clipboard', {
@@ -113,14 +109,8 @@ const Dashboard = () => {
                                     This helps us maintain a fair and bot-free environment.
                                 </p>
 
-                                <button
-                                    onClick={handleWorldIDVerification}
-                                    className="cyber-button flex items-center space-x-2 group"
-                                >
-                                    <Shield
-                                        className="w-5 h-5 group-hover:scale-110 transition-transform duration-500"/>
-                                    <span>Verify with WorldID</span>
-                                </button>
+                                <IDKit/>
+
                             </div>
                         </div>
                     )}
