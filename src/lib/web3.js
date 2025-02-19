@@ -108,10 +108,9 @@ export const sendTransaction = async (amountToSend, destinationAddress, tokenHol
 };
 
 export const getTokenBalance = async (tokenHolder, chain = false) => {
-
+ 
     if (!web3) return; // Ensure web3 is initialized
     try {
-
         // Get main chain token balance
         if(chain){
             const balance = await web3.eth.getBalance(tokenHolder);

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Send as SendIcon, AlertCircle, Wallet, Loader2, Check, X, ArrowRight } from 'lucide-react';
+import { Send as SendIcon, AlertCircle, Loader2, Check, X, ArrowRight } from 'lucide-react';
 import { TextInput, Label, Select } from 'flowbite-react';
 import toast from 'react-hot-toast';
 import GoBack from "../components/GoBack";

@@ -18,7 +18,7 @@ return (
                     <div>
                         <p className="text-sm text-gray-400">POL Balance</p>
                         <p className="text-xl font-medium neon-text">
-                            {userData?.web3_network_token_balance} POL
+                            {parseFloat(userData?.web3_network_token_balance).toFixed(3)} POL
                         </p>
                     </div>
                 </div>
@@ -33,7 +33,7 @@ return (
                     <div>
                         <p className="text-sm text-gray-400">BOLT Balance</p>
                         <p className="text-xl font-medium neon-text">
-                            {userData?.web3_custom_token_balance} BOLT
+                            {parseFloat(userData?.web3_custom_token_balance).toFixed(3)} BOLT
                         </p>
                     </div>
                 </div>

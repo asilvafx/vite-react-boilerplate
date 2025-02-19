@@ -3,6 +3,7 @@ import Cookies from 'js-cookie';
 import { encryptHash, decryptHash } from './crypto.js';
 import DBService from "../data/db.service.js";
 import { getTokenBalance } from "./web3.js";
+import { useUser } from '../context/UserProvider';
 
 export const getUserData = () => {
     const loggedIn = Cookies.get('isLoggedIn') === 'true';
@@ -50,7 +51,7 @@ export const updateData = async (userData) => {
         ...userData,
         web3_custom_token_balance: fetchTokenBalance,
         web3_network_token_balance: fetchChainBalance,
-    };
+    }; 
 
     const userKey = await DBService.getItemKey('email', userData.email, 'users');
 

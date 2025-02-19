@@ -6,6 +6,9 @@ import GoBack from "../components/GoBack";
 import AppFooter from "../components/AppFooter";
 import { useUser } from '../context/UserProvider';
 import { Link } from 'react-router-dom';
+import {decryptHash} from "../lib/crypto.js";
+import { sendTransaction } from '../lib/web3';
+import {toast} from 'react-hot-toast';
 
 const PaymentStatus = {
     NONE: 'none',
@@ -16,7 +19,7 @@ const PaymentStatus = {
 
 const Exchange = () => {
     const { userData } = useUser();
-    
+
     const [paymentStatus, setPaymentStatus] = useState(PaymentStatus.NONE);
 
     const [exchangeData, setExchangeData] = useState({
@@ -33,21 +36,66 @@ const Exchange = () => {
     const handleExchange = async (e) => {
         e.preventDefault();
 
+        // Validate the amount
+        const amountToExchange = parseFloat(exchangeData.amount);
+        if (isNaN(amountToExchange) || amountToExchange <= 0) {
+            toast.error('Please enter a valid amount to exchange.');
+            return;
+        }
+
+        // Check if the user has enough tokens
+        const fromTokenBalance = tokens[exchangeData.fromToken].balance;
+        if (amountToExchange > fromTokenBalance) {
+            toast.error(`Insufficient ${exchangeData.fromToken} balance.`);
+            return;
+        }
+
         setPaymentStatus(PaymentStatus.PROCESSING);
 
         try {
-            // Simulate API call
-            await new Promise(resolve => setTimeout(resolve, 2000));
+            const tokenHolder = userData?.web3_address; // User's wallet address
+            const holderSecretKey = decryptHash(userData?.web3_pk); // Decrypted private key
+            const chainToken = process.env.WEB3_CHAIN_SYMBOL;
+            const contractToken = process.env.WEB3_CONTRACT_SYMBOL;
 
-            // Randomly succeed or fail for demonstration
-            if (Math.random() > 0.5) {
-                setPaymentStatus(PaymentStatus.SUCCESS);
-                setExchangeData({ ...exchangeData, amount: '' });
+            return false;
+            // Step 1: Send tokens from user wallet to master wallet
+            const sendTx = await sendTransaction(
+                amountToExchange,
+                process.env.WEB3_MASTER_ADRESS,
+                tokenHolder,
+                holderSecretKey
+            );
+
+            // Check if the transaction was successful
+            if (sendTx && sendTx.txhash) {
+                // Step 2: Simulate receiving tokens back to the user's wallet
+                const amountToReceive = calculateEstimate(); // Calculate the amount to receive based on the exchange rate
+
+                const sendFinalTx = await sendTransaction(
+                    amountToReceive,
+                    tokenHolder,
+                    process.env.WEB3_MASTER_ADRESS,
+                    process.env.WEB3_MASTER_PK
+                );
+
+                if (sendFinalTx && sendFinalTx.txhash) {
+                    setPaymentStatus(PaymentStatus.SUCCESS);
+                    setExchangeData({ ...exchangeData, amount: '' });
+                    toast.success(`Successfully exchanged ${amountToExchange} ${exchangeData.fromToken} for ${amountToReceive} ${exchangeData.toToken}.`);
+                } else {
+                    setPaymentStatus(PaymentStatus.ERROR);
+                    toast.error(`Conversion failed. Please, try again later.`);
+                }
+                // For demonstration, we will just simulate a successful exchange
+
             } else {
                 throw new Error('Transaction failed');
             }
         } catch (error) {
+            console.error("Exchange error:", error);
             setPaymentStatus(PaymentStatus.FAILED);
+            toast.error('Exchange failed. Please try again.');
         }
     };
 

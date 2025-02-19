@@ -4,8 +4,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { Toaster } from 'react-hot-toast';
 import { checkLoginStatus, getUserData, updateData } from './lib/user';
 import AuthProvider from "./context/AuthProvider";
-import { UserProvider, useUser } from './context/UserProvider';
-import Cookies from 'js-cookie';
+import { UserProvider } from './context/UserProvider';
 
 /*
     Import Pages
@@ -33,15 +32,11 @@ const PrivateRoute = lazy(() => import('./components/PrivateRoute'));
     Load App Router
 */
 const App = () => {
-
+ 
     useEffect(() => {
         async function fetchLoginStatus() {
             const isLoggedIn = await checkLoginStatus();
-            if (!isLoggedIn) {
-                Cookies.remove('isLoggedIn');
-                Cookies.remove('uData');
-                Cookies.remove('tkn');
-            } else {
+            if (isLoggedIn) {
                 const userData = await getUserData();
                 if(userData){
                 await updateData(userData);
