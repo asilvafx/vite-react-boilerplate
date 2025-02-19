@@ -93,7 +93,7 @@ const Account = () => {
             <section className="my-10 w-full max-w-screen-lg mx-auto">
                 <h1 className="text-3xl font-bold neon-text mb-8">My Wallet</h1>
 
-                <div className="grid grid-cols-1 gap-8 mb-8">
+                <div className="grid grid-cols-1 gap-8 mb-10">
 
                     {/* WorldID Verification Banner */}
                     {!isVerified && (
@@ -149,8 +149,8 @@ const Account = () => {
                         </div>
                     </div>
 
-                    {/* Quick Actions */}
-                <div className="premium-panel p-6 rounded-xl space-y-6">
+                {/* Quick Actions */}
+                <div className="premium-panel p-6 rounded-xl space-y-6 mb-10">
                     <div className="flex items-center space-x-3">
                         <div className="p-2 bg-emerald-500/10 rounded-lg">
                             <Gauge className="w-5 h-5 text-emerald-400"/>

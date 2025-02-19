@@ -14,6 +14,7 @@ package-lock.json
 *.local
 
 # Editor directories and files
+.firebase/*
 dist/
 .vscode/*
 !.vscode/extensions.json

@@ -29,6 +29,8 @@ const Logout = lazy(() => import('./pages/auth/Logout'));
 /*
     Import Components
 */
+
+import ScrollToTop from './components/ScrollToTop';
 const CookiesGDPR = lazy(() => import('./components/Cookies'));
 const PrivateRoute = lazy(() => import('./components/PrivateRoute'));
 
@@ -54,6 +56,7 @@ const App = () => {
                         v7_startTransition: true,
                         v7_relativeSplatPath: true,
                     }} >
+                    <ScrollToTop>
                     <Toaster />
                     <AuthProvider>
                         <CookiesGDPR />
@@ -84,6 +87,7 @@ const App = () => {
                             <Route path="*" element={<Home />} />
                         </Routes>
                     </AuthProvider>
+                    </ScrollToTop>
                 </Router>
             </Suspense>
         </HelmetProvider>
