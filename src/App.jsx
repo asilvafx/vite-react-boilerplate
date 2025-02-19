@@ -10,10 +10,10 @@ import Cookies from 'js-cookie';
     Import Pages
 */
 import Home from './pages/Home';
+import Dashboard from './pages/Dashboard';
 const Receive = lazy(() => import('./pages/Receive'));
 const Exchange = lazy(() => import('./pages/Exchange'));
 const Send = lazy(() => import('./pages/Send'));
-const Dashboard = lazy(() => import('./pages/Dashboard'));
 const Login = lazy(() => import('./pages/auth/Login'));
 const Register = lazy(() => import('./pages/auth/Register'));
 const ForgotPassword = lazy(() => import('./pages/auth/ForgotPassword'));
