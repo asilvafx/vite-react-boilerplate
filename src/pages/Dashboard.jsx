@@ -6,23 +6,18 @@ import AppFooter from '../components/AppFooter';
 import { toast } from 'react-hot-toast';
 import TokenBalanceSection from "../components/TokenBalanceSection";
 import IDKit from '../components/IDKit';
+import { shortenAddress } from '../lib/utils';
+import { useUser } from '../context/UserProvider';
 
 const Dashboard = () => {
-
+    
+    const { userData } = useUser();
     const [isVerified, setIsVerified] = useState(false);
     const [timeUntilNextReward, setTimeUntilNextReward] = useState('');
     const [canClaimReward, setCanClaimReward] = useState(false);
 
-    // Mock wallet data - replace with actual web3 integration
-    const walletData = {
-        address: '0x1234...5678',
-        balances: {
-            POL: 100.50,
-            BOLT: 500.25
-        }
-    };
-
     useEffect(() => {
+
         // In a real app, fetch the last claim time from your database
         const checkRewardStatus = async () => {
             // Mock API call - replace with actual database check
@@ -84,7 +79,7 @@ const Dashboard = () => {
 
     return (
         <>
-            <Header/>
+            <Header />
             {/* User Stats Section */}
             <section className="my-10 w-full max-w-screen-lg mx-auto">
                 <h1 className="text-3xl font-bold neon-text mb-8">My Wallet</h1>
@@ -123,17 +118,17 @@ const Dashboard = () => {
                                 <div className="flex items-center justify-between mb-2">
                                     <span className="text-gray-400">Wallet Address</span>
                                     <button
-                                        onClick={() => copyToClipboard(walletData.address)}
+                                        onClick={() => copyToClipboard(userData?.web3_address)}
                                         className="text-cyan-400 hover:text-cyan-300 p-1 transition-colors"
                                     >
                                         <Copy className="w-4 h-4"/>
                                     </button>
                                 </div>
-                                <p className="font-medium text-gray-300 font-mono">{walletData.address}</p>
+                                <p className="font-medium text-gray-300 font-mono">{shortenAddress(userData?.web3_address)}</p>
                             </div>
 
                             {/* Token Balances */}
-                            <TokenBalanceSection walletData={walletData} />
+                            <TokenBalanceSection />
 
                         </div>
                     </div>

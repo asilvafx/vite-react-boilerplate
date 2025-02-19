@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Mail, Lock, Box } from 'lucide-react';
-import { TextInput, Label, Button } from 'flowbite-react';
+import { Box } from 'lucide-react';
+import { TextInput, Label } from 'flowbite-react';
 import { useAuth } from '../../context/AuthProvider';
 import { toast } from 'react-hot-toast';
 
@@ -11,6 +11,7 @@ const Login = () => {
         password: '',
     });
     const [error, setError] = useState(null);
+    const [rememberMe, setRememberMe] = useState(false); // State for remember me checkbox
     const navigate = useNavigate();
     const auth = useAuth();
 
@@ -73,6 +74,8 @@ const Login = () => {
                                 type="checkbox"
                                 id="remember"
                                 className="rounded border-gray-600 bg-gray-700 text-cyan-500 focus:ring-cyan-500"
+                                checked={rememberMe}
+                                onChange={() => setRememberMe(!rememberMe)} // Toggle remember me state
                             />
                             <label htmlFor="remember" className="ml-2 text-sm text-gray-400">
                                 Remember me

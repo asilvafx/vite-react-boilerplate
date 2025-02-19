@@ -1,23 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Navbar, DarkThemeToggle, Dropdown } from "flowbite-react";
-import {Wallet, LogOut} from 'lucide-react';
+import {LogOut} from 'lucide-react';
 import {Link} from "react-router-dom";
-import { checkLoginStatus, getUserData } from '../lib/user';
 import { shortenAddress } from '../lib/utils';
-
+import { useUser } from '../context/UserProvider';
 
 const Header = () => {
-    const [currentUser , setCurrentUser ] = useState(null);
 
-    useEffect(() => {
-        const isLoggedIn = checkLoginStatus();
-        if (isLoggedIn) {
-            const userData = getUserData();
-            setCurrentUser(userData);
-        } else {
-            setCurrentUser(null);
-        }
-    }, []);
+    const { userData } = useUser();
 
     return (
         <>
@@ -30,7 +20,7 @@ const Header = () => {
                     {/* <DarkThemeToggle className="!bg-transparent border-0 focus:ring-0 m-0" />  */}
 
                     {/* Conditionally render the Connect button or user email */}
-                    {!currentUser  ? (
+                    {!userData  ? (
                         <Link to="/login">
                         <button size="sm"  className="cyber-button flex items-center backdrop-blur-lg">
                             Connect
@@ -44,15 +34,16 @@ const Header = () => {
                             dismissOnClick={false}
                             renderTrigger={() => (
                                 <button className="cyber-button flex items-center backdrop-blur-lg">
-                                    <Wallet size="20" className="me-2" />
-                                    {shortenAddress(currentUser.web3_address)}
+                                    {parseFloat(userData?.web3_custom_token_balance).toFixed(3)} $BOLT
                                 </button>
                                 )
                             }
                             >
-                            <Link to="/dashboard"><Dropdown.Item className="premium-panel flex flex-col items-start rounded-sm w-[95%] mx-auto">
-                                <span>10000 $BOLT </span>
-                                <span className="text-xs uppercase text-blue-500 font-semibold">Top-up</span>
+                            <Link to="/dashboard"><Dropdown.Item
+                                className="premium-panel flex flex-col items-start rounded-sm w-[95%] mx-auto">
+
+                                <span>{shortenAddress(userData.web3_address)}</span>
+                                <span className="text-xs uppercase text-blue-500 font-semibold">Manage</span>
                             </Dropdown.Item></Link>
                             <Link to="/logout"><Dropdown.Item className="text-neutral-100 flex items-center gap-2">
                             <LogOut size="16" /> Sign out

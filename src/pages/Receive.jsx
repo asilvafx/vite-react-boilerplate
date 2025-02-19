@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
-import { ArrowLeft, Copy, Wallet, QrCode, Share2, Download } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Copy, Wallet, QrCode, Share2, Download } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import toast from 'react-hot-toast';
-import Header from "../components/Header.jsx";
-import GoBack from "../components/GoBack.jsx";
-import AppFooter from "../components/AppFooter.jsx";
+import Header from "../components/Header";
+import GoBack from "../components/GoBack";
+import AppFooter from "../components/AppFooter";
+import {getUserData} from "../lib/user";
+import { shortenAddress } from '../lib/utils';
 
 const Receive = () => {
 
+    const userData = getUserData();
 
     // Mock wallet address - replace with actual wallet integration
-    const walletAddress = '0x1234...5678';
-    const fullWalletAddress = '0x1234567890abcdef1234567890abcdef12345678';
+    const walletAddress = shortenAddress(userData?.web3_address);
+    const fullWalletAddress = userData?.web3_address;
 
     const [showFullAddress, setShowFullAddress] = useState(false);
 
@@ -32,7 +34,7 @@ const Receive = () => {
                     text: fullWalletAddress,
                 });
             } catch (error) {
-                console.error('Error sharing:', error);
+                console.warn('Error sharing:', error);
             }
         } else {
             copyToClipboard();

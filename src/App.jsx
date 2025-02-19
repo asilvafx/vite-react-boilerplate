@@ -2,8 +2,9 @@ import React, { Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { Toaster } from 'react-hot-toast';
-import { checkLoginStatus } from './lib/user';
+import { checkLoginStatus, getUserData, updateData } from './lib/user';
 import AuthProvider from "./context/AuthProvider";
+import { UserProvider, useUser } from './context/UserProvider';
 import Cookies from 'js-cookie';
 
 /*
@@ -23,8 +24,8 @@ const Logout = lazy(() => import('./pages/auth/Logout'));
 /*
     Import Components
 */
-
 import ScrollToTop from './components/ScrollToTop';
+import UserUpdater from './components/UserUpdater';
 const CookiesGDPR = lazy(() => import('./components/Cookies'));
 const PrivateRoute = lazy(() => import('./components/PrivateRoute'));
 
@@ -32,27 +33,33 @@ const PrivateRoute = lazy(() => import('./components/PrivateRoute'));
     Load App Router
 */
 const App = () => {
-    useEffect(() => {
 
-        const isLoggedIn = checkLoginStatus();
-        if (!isLoggedIn) {
-            Cookies.remove('isLoggedIn');
-            Cookies.remove('uData');
-            Cookies.remove('tkn');
+    useEffect(() => {
+        async function fetchLoginStatus() {
+            const isLoggedIn = await checkLoginStatus();
+            if (!isLoggedIn) {
+                Cookies.remove('isLoggedIn');
+                Cookies.remove('uData');
+                Cookies.remove('tkn');
+            } else {
+                const userData = await getUserData();
+                if(userData){
+                await updateData(userData);
+                }
+            }
         }
-    }, []); // Empty dependency array to run only once on mount
+        fetchLoginStatus();
+    }, []);
 
     return (
         <HelmetProvider>
             <Suspense fallback={<div id="loading">Loading...</div>}>
-                <Router
-                    future={{
-                        v7_startTransition: true,
-                        v7_relativeSplatPath: true,
-                    }} >
-                    <ScrollToTop>
-                    <Toaster />
+                <Router>
+                    <ScrollToTop />
+                    <UserProvider>
                     <AuthProvider>
+                    <UserUpdater />
+                    <Toaster />
                         <CookiesGDPR />
                         <div className="aurora"></div>
                         <div className="aurora"></div>
@@ -75,7 +82,7 @@ const App = () => {
                             <Route path="*" element={<Home />} />
                         </Routes>
                     </AuthProvider>
-                    </ScrollToTop>
+                    </UserProvider>
                 </Router>
             </Suspense>
         </HelmetProvider>

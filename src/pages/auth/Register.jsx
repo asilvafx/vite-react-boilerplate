@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Mail, Lock, User, Box } from 'lucide-react';
-import { TextInput, Label, Button } from 'flowbite-react';
+import { Box } from 'lucide-react';
+import { TextInput, Label } from 'flowbite-react';
 import { useAuth } from '../../context/AuthProvider';
 import PasswordStrengthBar from 'react-password-strength-bar';
 
@@ -12,8 +12,7 @@ const Register = () => {
         password: '',
         confirmPassword: '',
     });
-    const [error, setError] = useState(null);
-    const [isRegistering, setIsRegistering] = useState(false);
+    const [error, setError] = useState(null); 
     const navigate = useNavigate();
     const auth = useAuth();
 
@@ -63,7 +62,7 @@ const Register = () => {
 
                 <form onSubmit={handleRegister} className="space-y-6">
                     <div>
-                        <Label htmlFor="fullName" value="Full Name" />
+                        <Label className="text-neutral-100" htmlFor="fullName" value="Full Name" />
                         <TextInput
                             id="fullName"
                             name="fullName"
@@ -74,7 +73,7 @@ const Register = () => {
                         />
                     </div>
                     <div>
-                        <Label htmlFor="username" value="Email" />
+                        <Label className="text-neutral-100" htmlFor="username" value="Email" />
                         <TextInput
                             id="username"
                             name="username"
@@ -86,8 +85,9 @@ const Register = () => {
                         />
                     </div>
                     <div>
-                        <Label htmlFor="password" value="Password" />
+                        <Label className="text-neutral-100" htmlFor="password" value="Password" />
                         <TextInput
+                            className="mb-4"
                             id="password"
                             name="password"
                             type="password"
@@ -99,7 +99,7 @@ const Register = () => {
                         <PasswordStrengthBar password={input.password} />
                     </div>
                     <div>
-                        <Label htmlFor="confirmPassword" value="Confirm Password" />
+                        <Label className="text-neutral-100" htmlFor="confirmPassword" value="Confirm Password" />
                         <TextInput
                             id="confirmPassword"
                             name="confirmPassword"
