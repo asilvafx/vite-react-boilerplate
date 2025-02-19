@@ -24,7 +24,6 @@ const Header = () => {
             <Navbar className="top-nav h-14 fixed w-full p-0" fluid>
                 <Navbar.Brand href="/" className="flex items-center gap-4">
                     <img src="https://flowbite.com/docs/images/logo.svg" className="mr-3 h-6 sm:h-8" alt="Flowbite Logo" />
-
                 </Navbar.Brand>
 
                 <div className="flex items-center gap-2 md:order-2">

@@ -74,7 +74,7 @@ const Send = () => {
 
             <div className="flex items-center justify-start gap-4 mb-8">
 
-                <GoBack url="/account"/>
+                <GoBack url="/dashboard"/>
                 <h1 className="text-3xl font-bold neon-text">Send Crypto</h1>
 
             </div>
