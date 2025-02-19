@@ -13,13 +13,7 @@ import Home from './pages/Home';
 const Receive = lazy(() => import('./pages/Receive'));
 const Exchange = lazy(() => import('./pages/Exchange'));
 const Send = lazy(() => import('./pages/Send'));
-const HorseRacing = lazy(() => import('./pages/HorseRacing'));
-const TreasureHunt = lazy(() => import('./pages/TreasureHunt'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
-const Account = lazy(() => import('./pages/Account'));
-const MyChests = lazy(() => import('./pages/MyChests'));
-const Chests = lazy(() => import('./pages/Chests'));
-const Create = lazy(() => import('./pages/Create'));
 const Login = lazy(() => import('./pages/auth/Login'));
 const Register = lazy(() => import('./pages/auth/Register'));
 const ForgotPassword = lazy(() => import('./pages/auth/ForgotPassword'));
@@ -71,13 +65,7 @@ const App = () => {
                                 <Route path="/receive" element={<Receive />} />
                                 <Route path="/exchange" element={<Exchange />} />
                                 <Route path="/send" element={<Send />} />
-                                <Route path="/racing" element={<HorseRacing />} />
-                                <Route path="/treasure-hunt/:id" element={<TreasureHunt />} />
                                 <Route path="/dashboard" element={<Dashboard />} />
-                                <Route path="/account" element={<Account />} />
-                                <Route path="/create" element={<Create />} />
-                                <Route path="/my-chests" element={<MyChests />} />
-                                <Route path="/chests" element={<Chests />} />
                                 <Route path="/logout" element={<Logout />} />
                             </Route>
                             <Route path="/login" element={<Login />} />

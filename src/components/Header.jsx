@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Navbar, DarkThemeToggle, Dropdown } from "flowbite-react";
-import {Plus, Box, Wallet, Home, LogOut, ArrowLeft} from 'lucide-react';
+import {Wallet, LogOut} from 'lucide-react';
 import {Link} from "react-router-dom";
 import { checkLoginStatus, getUserData } from '../lib/user';
 import { shortenAddress } from '../lib/utils';
@@ -24,7 +24,7 @@ const Header = () => {
             <Navbar className="top-nav h-14 fixed w-full p-0" fluid>
                 <Navbar.Brand href="/" className="flex items-center gap-4">
                     <img src="https://flowbite.com/docs/images/logo.svg" className="mr-3 h-6 sm:h-8" alt="Flowbite Logo" />
-                  
+
                 </Navbar.Brand>
 
                 <div className="flex items-center gap-2 md:order-2">
@@ -39,23 +39,6 @@ const Header = () => {
                         </Link>
                     ) : (
                         <>
-                        <div className="hidden md:flex gap-4 items-center">
-                        <Link to="/dashboard">
-                            <button className="cyber-button flex items-center backdrop-blur-lg">
-                                <Home size="20" />
-                            </button>
-                        </Link>
-                        <Link to="/create">
-                        <button className="cyber-button flex items-center backdrop-blur-lg">
-                            <Plus size="20" />
-                        </button>
-                        </Link>
-                        <Link to="/chests">
-                        <button className="cyber-button flex items-center backdrop-blur-lg">
-                            <Box size="20" />
-                        </button>
-                        </Link>
-                        </div>
                         <Dropdown
                             className="premium-panel"
                             label=""
@@ -68,7 +51,7 @@ const Header = () => {
                                 )
                             }
                             >
-                            <Link to="/account"><Dropdown.Item className="premium-panel flex flex-col items-start rounded-sm w-[95%] mx-auto">
+                            <Link to="/dashboard"><Dropdown.Item className="premium-panel flex flex-col items-start rounded-sm w-[95%] mx-auto">
                                 <span>10000 $BOLT </span>
                                 <span className="text-xs uppercase text-blue-500 font-semibold">Top-up</span>
                             </Dropdown.Item></Link>

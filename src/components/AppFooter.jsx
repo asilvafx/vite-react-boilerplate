@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Plus, Box, Wallet } from 'lucide-react';
-import Header from "./Header.jsx";
+import { Home } from 'lucide-react';
 
 const Navigation = () => {
     const location = useLocation();
@@ -18,9 +17,6 @@ const Navigation = () => {
 
     const navItems = [
         { path: '/dashboard', label: 'Dashboard', icon: Home },
-        { path: '/create', label: 'Create', icon: Plus },
-        { path: '/chests', label: 'Chests', icon: Box },
-        { path: '/account', label: 'Account', icon: Wallet },
     ];
 
     const navClasses = isMobile

@@ -1,159 +1,252 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { ArrowUpRight, Globe, Shield, Box, Gauge, Plus, Target, Timer, Trophy, Copy } from "lucide-react";
+import { Link } from "react-router-dom";
 import Header from '../components/Header';
-import { Plus, Box, Trophy, TrendingUp, Timer, Users, Sparkles } from 'lucide-react';
-import AppFooter from "../components/AppFooter";
+import AppFooter from '../components/AppFooter';
+import { toast } from 'react-hot-toast';
+import TokenBalanceSection from "../components/TokenBalanceSection.jsx";
 
 const Dashboard = () => {
-    const featuredChests = [
-        { id: 1, name: "Mega Jackpot", price: 10, jackpot: 5000, timeLeft: "12:30:45", participants: 42 },
-        { id: 2, name: "Lucky Strike", price: 5, jackpot: 2500, timeLeft: "06:15:30", participants: 28 },
-        { id: 3, name: "Neon Dreams", price: 1, jackpot: 1000, timeLeft: "23:45:00", participants: 15 },
-    ];
+
+    const [isVerified, setIsVerified] = useState(false);
+    const [timeUntilNextReward, setTimeUntilNextReward] = useState('');
+    const [canClaimReward, setCanClaimReward] = useState(false);
+
+    // Mock wallet data - replace with actual web3 integration
+    const walletData = {
+        address: '0x1234...5678',
+        balances: {
+            POL: 100.50,
+            BOLT: 500.25
+        }
+    };
+
+    useEffect(() => {
+        // In a real app, fetch the last claim time from your database
+        const checkRewardStatus = async () => {
+            // Mock API call - replace with actual database check
+            const lastClaimTime = localStorage.getItem('lastRewardClaim');
+
+            if (!lastClaimTime) {
+                setCanClaimReward(true);
+                return;
+            }
+
+            const lastClaim = new Date(lastClaimTime);
+            const now = new Date();
+            const nextClaimTime = new Date(lastClaim.getTime() + 24 * 60 * 60 * 1000);
+
+            if (now >= nextClaimTime) {
+                setCanClaimReward(true);
+            } else {
+                setCanClaimReward(false);
+                updateCountdown(nextClaimTime);
+            }
+        };
+
+        checkRewardStatus();
+        const interval = setInterval(checkRewardStatus, 1000);
+        return () => clearInterval(interval);
+    }, []);
+
+    const updateCountdown = (nextClaimTime) => {
+        const now = new Date();
+        const diff = nextClaimTime.getTime() - now.getTime();
+
+        const hours = Math.floor(diff / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        setTimeUntilNextReward(
+            `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
+        );
+    };
+
+    const handleClaimReward = async () => {
+        // In a real app, send this to your backend
+        const now = new Date();
+        localStorage.setItem('lastRewardClaim', now.toISOString());
+        setCanClaimReward(false);
+
+        // Mock reward amount - replace with actual reward logic
+        const rewardAmount = 50;
+        console.log(`Claimed ${rewardAmount} BOLT tokens`);
+    };
+
+    const handleWorldIDVerification = () => {
+        // Placeholder for WorldID verification logic
+        console.log('WorldID verification clicked');
+    };
+
+    const copyToClipboard = (text) => {
+        navigator.clipboard.writeText(text);
+        toast.success('Wallet address copied to clipboard', {
+            icon: <Copy className="w-4 h-4 text-emerald-400" />,
+            duration: 2000,
+        });
+    };
 
     return (
         <>
-            <Header />
+            <Header/>
+            {/* User Stats Section */}
+            <section className="my-10 w-full max-w-screen-lg mx-auto">
+                <h1 className="text-3xl font-bold neon-text mb-8">My Wallet</h1>
 
-            {/* Hero Section */}
-            <section className="premium-panel rounded-2xl text-center py-24 px-8 my-10 w-full max-w-screen-lg mx-auto">
-                <div className="relative">
-                    <Sparkles
-                        className="absolute -top-10 left-1/2 transform -translate-x-1/2 w-8 h-8 premium-icon-glow"/>
-                    <h1 className="text-6xl font-medium tracking-tight neon-text-intense mb-8 max-w-3xl mx-auto leading-tight">
-                        Create or Join Digital Treasure Chests
-                    </h1>
-                    <p className="text-gray-400 mb-12 max-w-2xl mx-auto text-lg leading-relaxed">
-                        Enter the future of digital rewards. Create your own chests or join existing ones
-                        for a chance to win massive jackpots.
-                    </p>
-                    <div className="flex justify-center space-x-8">
-                        <Link to="/create" className="cyber-button flex items-center group">
-                            <Plus className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform duration-500"/>
-                            Create a Chest
-                        </Link>
-                        <Link to="/chests" className="cyber-button flex items-center group">
-                            <Box className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform duration-500"/>
-                            Join a Chest
-                        </Link>
-                    </div>
-                </div>
-            </section>
+                <div className="grid grid-cols-1 gap-8 mb-10">
 
-            {/* Stats Section */}
-            <section className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10 w-full max-w-screen-lg mx-auto">
-                <div className="premium-stats-card group">
-                    <div className="flex-1 text-center">
-                        <h3 className="text-lg font-medium text-gray-400 mb-4 group-hover:text-gray-300 transition-colors">
-                            Active Chests
-                        </h3>
-                        <p className="premium-stats-value">156</p>
-                    </div>
-                </div>
-                <div className="premium-stats-card group">
-                    <div className="flex-1 text-center">
-                        <h3 className="text-lg font-medium text-gray-400 mb-4 group-hover:text-gray-300 transition-colors">
-                            Total Jackpot
-                        </h3>
-                        <p className="premium-stats-value">50,000</p>
-                    </div>
-                </div>
-                <div className="premium-stats-card group">
-                    <div className="flex-1 text-center">
-                        <h3 className="text-lg font-medium text-gray-400 mb-4 group-hover:text-gray-300 transition-colors">
-                            Winners
-                        </h3>
-                        <p className="premium-stats-value">24</p>
-                    </div>
-                </div>
-            </section>
+                    {/* WorldID Verification Banner */}
+                    {!isVerified && (
+                        <div className="premium-panel p-6 rounded-xl relative overflow-hidden">
+                            <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/5 rounded-full blur-3xl"/>
+                            <div className="relative z-10">
+                                <div className="flex items-center space-x-3 mb-4">
+                                    <div className="p-2 bg-cyan-500/10 rounded-lg">
+                                        <Globe className="w-6 h-6 premium-icon"/>
+                                    </div>
+                                    <h2 className="text-xl font-medium">Verify Your Humanity</h2>
+                                </div>
 
-            {/* Featured Chests */}
-            <section className="mb-10 w-full max-w-screen-lg mx-auto">
-                <div className="flex items-center mb-10">
-                    <TrendingUp className="w-8 h-8 premium-icon mr-3"/>
-                    <h2 className="text-3xl font-medium neon-text">Featured Chests</h2>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {featuredChests.map(chest => (
-                        <div key={chest.id} className="premium-card group">
-                            <div className="flex items-start justify-between mb-6">
-                                <h3 className="text-xl font-medium group-hover:neon-text transition-all duration-300">
-                                    {chest.name}
-                                </h3>
-                                <div className="px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20">
-                                    <span className="text-sm font-medium text-cyan-300">#{chest.id}</span>
-                                </div>
-                            </div>
-                            <div className="space-y-4 text-gray-400">
-                                <div className="flex items-center justify-between">
-                                    <span className="flex items-center text-gray-400">
-                                        <Timer className="w-4 h-4 mr-2 premium-icon"/>
-                                        Time Left
-                                    </span>
-                                    <span className="text-neutral-100 font-medium">{chest.timeLeft}</span>
-                                </div>
-                                <div className="flex items-center justify-between">
-                                    <span className="flex items-center text-gray-400">
-                                        <Users className="w-4 h-4 mr-2 premium-icon"/>
-                                        Participants
-                                    </span>
-                                    <span className="text-neutral-100 font-medium">{chest.participants}</span>
-                                </div>
-                                <div className="flex items-center justify-between">
-                                    <span className="text-gray-400">Ticket Price</span>
-                                    <span className="text-neutral-100 font-medium">{chest.price} TOKENS</span>
-                                </div>
-                                <div className="flex items-center justify-between pt-2">
-                                    <span className="text-gray-400">Jackpot</span>
-                                    <span className="premium-gradient-text text-lg">{chest.jackpot} $BOLT</span>
-                                </div>
-                            </div>
-                            <Link to={`/treasure-hunt/${chest.id}`}>
-                                <button className="cyber-button w-full mt-8 group-hover:neon-text-intense">
-                                    Join Chest
+                                <p className="text-gray-400 mb-6 max-w-2xl">
+                                    Verify your humanity using WorldID and receive <span
+                                    className="text-cyan-400 font-medium">50 TOKENS</span> as a reward.
+                                    This helps us maintain a fair and bot-free environment.
+                                </p>
+
+                                <button
+                                    onClick={handleWorldIDVerification}
+                                    className="cyber-button flex items-center space-x-2 group"
+                                >
+                                    <Shield
+                                        className="w-5 h-5 group-hover:scale-110 transition-transform duration-500"/>
+                                    <span>Verify with WorldID</span>
                                 </button>
-                            </Link>
+                            </div>
                         </div>
-                    ))}
-                </div>
-            </section>
+                    )}
 
-            {/* Recent Winners */}
-            <section className="mb-10 w-full max-w-screen-lg mx-auto">
-                <div className="flex items-center mb-10">
-                    <Trophy className="w-8 h-8 premium-icon mr-3"/>
-                    <h2 className="text-3xl font-medium neon-text">Recent Winners</h2>
-                </div>
-                <div className="premium-panel rounded-xl overflow-hidden">
-                    <div className="divide-y divide-cyan-500/10">
-                        {[1, 2, 3].map(i => (
-                            <div key={i}
-                                 className="flex items-center justify-between p-8 hover:bg-cyan-500/5 transition-colors group">
-                                <div>
-                                    <p className="font-medium text-lg mb-2 group-hover:neon-text transition-colors">
-                                        User_{Math.random().toString(36).substr(2, 6)}
-                                    </p>
-                                    <p className="text-gray-400 flex items-center">
-                                        <Trophy className="w-4 h-4 mr-2 premium-icon"/>
-                                        Won Mega Jackpot #{i}
-                                    </p>
+                    {/* Wallet Info */}
+                    <div className="premium-panel p-6 rounded-xl">
+
+                        <div className="space-y-4">
+                            <div className="premium-panel p-4 rounded-lg">
+                                <div className="flex items-center justify-between mb-2">
+                                    <span className="text-gray-400">Wallet Address</span>
+                                    <button
+                                        onClick={() => copyToClipboard(walletData.address)}
+                                        className="text-cyan-400 hover:text-cyan-300 p-1 transition-colors"
+                                    >
+                                        <Copy className="w-4 h-4"/>
+                                    </button>
                                 </div>
-                                <div className="text-right">
-                                    <p className="premium-gradient-text text-2xl font-medium mb-1">
-                                        {1000 * i} TOKENS
-                                    </p>
-                                    <p className="text-sm text-gray-400">2 hours ago</p>
+                                <p className="font-medium text-gray-300 font-mono">{walletData.address}</p>
+                            </div>
+
+                            {/* Token Balances */}
+                            <TokenBalanceSection walletData={walletData} />
+
+                        </div>
+                    </div>
+                </div>
+
+                {/* Quick Actions */}
+                <div className="premium-panel p-6 rounded-xl space-y-6 mb-10">
+                    <div className="flex items-center space-x-3">
+                        <div className="p-2 bg-emerald-500/10 rounded-lg">
+                            <Gauge className="w-5 h-5 text-emerald-400"/>
+                        </div>
+                        <h3 className="text-lg font-medium">Quick Actions</h3>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
+                        <Link
+                            to="/receive"
+                            className="premium-panel p-4 rounded-lg hover:bg-cyan-500/5 transition-colors group"
+                        >
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center space-x-3">
+                                    <div className="p-2 bg-emerald-500/10 rounded-lg">
+                                        <Box className="w-5 h-5 text-emerald-400"/>
+                                    </div>
+                                    <div>
+                                        <p className="font-medium group-hover:text-cyan-400 transition-colors">Receive</p>
+                                        <p className="text-sm text-gray-400 truncate">Receive BOLT tokens</p>
+                                    </div>
                                 </div>
                             </div>
-                        ))}
+                        </Link>
+
+                        <Link
+                            to="/exchange"
+                            className="premium-panel p-4 rounded-lg hover:bg-cyan-500/5 transition-colors group"
+                        >
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center space-x-3">
+                                    <div className="p-2 bg-blue-500/10 rounded-lg">
+                                        <ArrowUpRight className="w-5 h-5 text-blue-400"/>
+                                    </div>
+                                    <div>
+                                        <p className="font-medium group-hover:text-cyan-400 transition-colors">Exchange</p>
+                                        <p className="text-sm text-gray-400 truncate">Swap between POL and BOLT</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </Link>
+
+                        <Link
+                            to="/send"
+                            className="premium-panel p-4 rounded-lg hover:bg-cyan-500/5 transition-colors group"
+                        >
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center space-x-3">
+                                    <div className="p-2 bg-purple-500/10 rounded-lg">
+                                        <Box className="w-5 h-5 text-purple-400"/>
+                                    </div>
+                                    <div>
+                                        <p className="font-medium group-hover:text-cyan-400 transition-colors">Send</p>
+                                        <p className="text-sm text-gray-400 truncate">Transfer tokens to another
+                                            wallet</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </Link>
+
+                    </div>
+                </div>
+
+                {/* Daily Reward Section */}
+                <div className="premium-panel p-6 rounded-xl mb-8 relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-purple-500/5 rounded-full blur-3xl"/>
+                    <div className="relative z-10">
+                        <div className="flex items-center space-x-3 mb-4">
+                            <div className="p-2 bg-purple-500/10 rounded-lg">
+                                <Trophy className="w-6 h-6 text-purple-400"/>
+                            </div>
+                            <h2 className="text-xl font-medium">Daily Reward</h2>
+                        </div>
+
+                        <div className="flex flex-col md:flex-row items-start md:items-center justify-between">
+                            <div className="mb-4 md:mb-0">
+                                <p className="text-gray-400 mb-2">
+                                    Claim your daily reward of <span className="text-purple-400 font-medium">50 BOLT tokens</span>
+                                </p>
+                            </div>
+
+                            <button
+                                onClick={handleClaimReward}
+                                disabled={!canClaimReward}
+                                className={`cyber-button flex items-center space-x-2 group ${!canClaimReward ? 'opacity-50 cursor-not-allowed' : ''}`}
+                            >
+                                <Trophy className="w-5 h-5 group-hover:scale-110 transition-transform duration-500"/>
+                                <span>{canClaimReward ? 'Claim Reward' : timeUntilNextReward}</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <AppFooter />
+            <AppFooter/>
         </>
     );
-};
+}
 
 export default Dashboard;
