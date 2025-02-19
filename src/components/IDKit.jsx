@@ -24,7 +24,7 @@ const IDKit = () => {
             console.log(modifiedProof);
 
             // Call your API route to verify the proof
-            const res = await fetch(WLD_ServerUrl, { // Update the URL to your backend server
+            const res = await fetch(WLD_ServerUrl + '?appId=' + WLD_AppId, { // Update the URL to your backend server
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
