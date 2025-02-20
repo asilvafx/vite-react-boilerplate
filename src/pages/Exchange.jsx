@@ -221,7 +221,7 @@ const Exchange = () => {
                                     <Label htmlFor="fromToken" value="From" className="text-gray-300 mb-2" />
                                     <select
                                         id="fromToken"
-                                        className="bg-neutral-900 premium-border shadow-sm w-full rounded-lg"
+                                        className="bg-neutral-900/50 premium-border shadow-sm w-full rounded-lg"
                                         value={exchangeData.fromToken}
                                         onChange={(e) => setExchangeData({ ...exchangeData, fromToken: e.target.value })}
                                         required
@@ -234,7 +234,7 @@ const Exchange = () => {
                                     <Label htmlFor="toToken" value="To" className="text-gray-300 mb-2" />
                                     <select
                                         id="toToken"
-                                        className="bg-neutral-900 premium-border shadow-sm w-full rounded-lg"
+                                        className="bg-neutral-900/50 premium-border shadow-sm w-full rounded-lg"
                                         value={exchangeData.toToken}
                                         onChange={(e) => setExchangeData({ ...exchangeData, toToken: e.target.value })}
                                         required
@@ -254,7 +254,7 @@ const Exchange = () => {
                         value={exchangeData.amount}
                         onChange={(e) => setExchangeData({ ...exchangeData, amount: e.target.value })}
                         required
-                        className="text-3xl bg-neutral-900 premium-border shadow-sm w-full rounded-lg text-center" // Large font size for input
+                        className="text-3xl bg-neutral-900/50 premium-border shadow-sm w-full rounded-lg text-center" // Large font size for input
                         />
                 </div>
 

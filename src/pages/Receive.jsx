@@ -7,6 +7,7 @@ import GoBack from "../components/GoBack";
 import AppFooter from "../components/AppFooter";
 import {getUserData} from "../lib/user";
 import { shortenAddress } from '../lib/utils';
+import {loadConfig} from '../lib/site';
 
 const Receive = () => {
 
@@ -143,11 +144,7 @@ const Receive = () => {
                             <div className="space-y-2">
                                 <div className="flex items-center space-x-2">
                                     <div className="w-2 h-2 rounded-full bg-purple-400"/>
-                                    <span className="text-gray-300">Polygon Network (MATIC)</span>
-                                </div>
-                                <div className="flex items-center space-x-2">
-                                    <div className="w-2 h-2 rounded-full bg-cyan-400"/>
-                                    <span className="text-gray-300">BOLT Token</span>
+                                    <span className="text-gray-300">{loadConfig.WEB3_CHAIN_NAME} ({loadConfig.WEB3_CHAIN_SYMBOL})</span>
                                 </div>
                             </div>
                         </div>
@@ -161,7 +158,7 @@ const Receive = () => {
                 <div className="premium-panel p-4 rounded-lg bg-yellow-500/5 border border-yellow-500/10">
                     <p className="text-sm text-yellow-400">Important</p>
                     <p className="text-sm text-gray-400 mt-1">
-                        Only send MATIC or BOLT tokens to this address. Sending other tokens may result in permanent
+                        Only send {loadConfig.WEB3_CHAIN_SYMBOL} or {loadConfig.WEB3_CONTRACT_SYMBOL} tokens to this address. Sending other tokens may result in permanent
                         loss.
                     </p>
                 </div>

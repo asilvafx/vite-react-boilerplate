@@ -13,6 +13,7 @@ import SiteUpdater from './context/SiteUpdater';
 */
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
+const Contacts = lazy(() => import('./pages/Contacts'));
 const Receive = lazy(() => import('./pages/Receive'));
 const Exchange = lazy(() => import('./pages/Exchange'));
 const Send = lazy(() => import('./pages/Send'));
@@ -66,6 +67,7 @@ const App = () => {
                         <Routes>
                             <Route path="/" element={<Home />} />
                             <Route element={<PrivateRoute />}>
+                                <Route path="/contacts" element={<Contacts />} />
                                 <Route path="/receive" element={<Receive />} />
                                 <Route path="/exchange" element={<Exchange />} />
                                 <Route path="/send" element={<Send />} />

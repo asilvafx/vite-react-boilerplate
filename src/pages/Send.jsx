@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Send as SendIcon, AlertCircle, Loader2, Check, X, ArrowRight } from 'lucide-react';
-import { TextInput, Label, Select } from 'flowbite-react';
+import { Label } from 'flowbite-react';
 import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import GoBack from "../components/GoBack";
@@ -9,8 +9,8 @@ import AppFooter from "../components/AppFooter";
 import TokenBalanceSection from '../components/TokenBalanceSection';
 import { useUser } from '../context/UserProvider';
 import { sendTransaction } from '../lib/web3';
-import {decryptHash} from '../lib/crypto';
-import {loadConfig} from '../lib/site';
+import { decryptHash } from '../lib/crypto';
+import { loadConfig } from '../lib/site';
 
 const PaymentStatus = {
     NONE: 'none',
@@ -23,22 +23,28 @@ const Send = () => {
     const { userData } = useUser();
 
     const [formData, setFormData] = useState({
-        token: 'POL',
+        token: loadConfig.WEB3_CHAIN_SYMBOL,
         amount: '',
         address: ''
     });
 
     const [paymentStatus, setPaymentStatus] = useState(PaymentStatus.NONE);
 
-    // Mock wallet data - replace with actual web3 integration
+    const chainToken = loadConfig.WEB3_CHAIN_SYMBOL;
+    const contractToken = loadConfig.WEB3_CONTRACT_SYMBOL;
+
+    const userBalance = {
+        chain: parseFloat(userData.web3_network_token_balance),
+        contract: parseFloat(userData.web3_custom_token_balance)
+    };
+
     const walletData = {
         balances: {
-            POL: 100.50,
-            BOLT: 500.25
+            [chainToken]: userBalance.chain.toFixed(3),
+            [contractToken]: userBalance.contract.toFixed(3)
         }
     };
 
-    // Get current balance based on selected token
     const currentBalance = walletData.balances[formData.token];
 
     const validateForm = () => {
@@ -69,10 +75,8 @@ const Send = () => {
         setPaymentStatus(PaymentStatus.PROCESSING);
 
         try {
-            // Call sendTransaction with the required parameters
-            const tokenHolder = userData?.web3_address;
-            const holderSecretKey = decryptHash(userData?.web3_pk);
-            const chainToken = loadConfig.WEB3_CHAIN_SYMBOL;
+            const tokenHolder = userData.web3_address;
+            const holderSecretKey = decryptHash(userData.web3_pk);
             const sendTx = await sendTransaction(formData.amount, formData.address, tokenHolder, holderSecretKey, formData.token === chainToken);
 
             if (sendTx && sendTx.txhash && sendTx.block) {
@@ -98,7 +102,7 @@ const Send = () => {
             case PaymentStatus.PROCESSING:
                 return (
                     <div className="fixed inset-0 bg-neutral-900/70 backdrop-blur-sm flex items-center justify-center z-50">
-                        <div className="premium-panel p-8 rounded-xl max-w-md w-full mx-4">
+                        <div className="premium-panel p-8 rounded-xl max-w-md w-full mx- 4">
                             <div className="text-center">
                                 <div className="flex justify-center mb-6">
                                     <Loader2 className="w-12 h-12 text-cyan-400 animate-spin" />
@@ -180,48 +184,49 @@ const Send = () => {
                 </div>
 
                 <div className="premium-panel p-8 rounded-xl">
-                    {/* Token Balances */}
                     <TokenBalanceSection walletData={walletData} />
 
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div>
                             <Label htmlFor="token" value="Select Token" className="text-gray-300 mb-2"/>
-                            <Select
+                            <select
                                 id="token"
                                 value={formData.token}
                                 onChange={(e) => setFormData({...formData, token: e.target.value})}
                                 required
-                                className="bg-gray-800"
+                                className="bg-neutral-900/50 premium-border shadow-sm w-full rounded-lg"
                             >
-                                <option value="POL">POL Token</option>
-                                <option value="BOLT">BOLT Token</option>
-                            </Select>
+                                <option value={loadConfig.WEB3_CHAIN_SYMBOL}>{loadConfig.WEB3_CHAIN_SYMBOL}</option>
+                                <option value={loadConfig.WEB3_CONTRACT_SYMBOL}>{loadConfig.WEB3_CONTRACT_SYMBOL}</option>
+                            </select>
                             <p className="mt-2 text-sm text-gray-400">
                                 Selected token balance: {currentBalance} {formData.token}
-                            </p>
+                            </ p>
+                        </div>
+
+                        <div>
+                            <Label htmlFor="address" value="Recipient Address" className="text-gray-300 mb-2"/>
+                            <input
+                                className="bg-neutral-900/50 premium-border shadow-sm w-full rounded-lg"
+                                id="address"
+                                type="text"
+                                placeholder="0x..."
+                                value={formData.address}
+                                onChange={(e) => setFormData({...formData, address: e.target.value})}
+                                required
+                            />
                         </div>
 
                         <div>
                             <Label htmlFor="amount" value="Amount" className="text-gray-300 mb-2"/>
-                            <TextInput
+                            <input
+                                className="text-3xl text-center bg-neutral-900/50 premium-border shadow-sm w-full rounded-lg"
                                 id="amount"
                                 type="number"
                                 step="0.01"
                                 placeholder="0.00"
                                 value={formData.amount}
                                 onChange={(e) => setFormData({...formData, amount: e.target.value})}
-                                required
-                            />
-                        </div>
-
-                        <div>
-                            <Label htmlFor="address" value="Recipient Address" className="text-gray-300 mb-2"/>
-                            <TextInput
-                                id="address"
-                                type="text"
-                                placeholder="0x..."
-                                value={formData.address}
-                                onChange={(e) => setFormData({...formData, address: e.target.value})}
                                 required
                             />
                         </div>
@@ -236,24 +241,26 @@ const Send = () => {
                                             reversed.
                                         </p>
                                         <p className="text-sm text-gray-400">
-                                            Only send {formData.token} tokens to a compatible wallet address on the Polygon
-                                            network.
+                                            Only send {formData.token} tokens to a compatible wallet address on the
+                                            {loadConfig.WEB3_CHAIN_NAME} network.
                                         </p>
                                     </div>
                                 </div>
                             </div>
 
-                            {formData.token === 'BOLT' && (
+                            {formData.token === loadConfig.WEB3_CONTRACT_SYMBOL && (
                                 <div className="premium-panel p-4 rounded-lg bg-purple-500/5">
                                     <div className="flex items-start space-x-3">
                                         <AlertCircle className="w-5 h-5 text-purple-400 mt-0.5"/>
                                         <div className="space-y-2">
                                             <p className="text-sm text-gray-300">
-                                                BOLT tokens can only be sent to addresses that support the BOLT token
+                                                {loadConfig.WEB3_CONTRACT_SYMBOL} tokens can only be sent to addresses
+                                                that support the {loadConfig.WEB3_CONTRACT_SYMBOL} token
                                                 contract.
                                             </p>
                                             <p className="text-sm text-gray-400">
-                                                Make sure the recipient's wallet is compatible with BOLT tokens.
+                                                Make sure the recipient's wallet is compatible
+                                                with {loadConfig.WEB3_CONTRACT_SYMBOL} tokens.
                                             </p>
                                         </div>
                                     </div>
@@ -271,7 +278,7 @@ const Send = () => {
                     </form>
                 </div>
             </section>
-            <AppFooter />
+            <AppFooter/>
 
             {renderPaymentStatus()}
         </>
