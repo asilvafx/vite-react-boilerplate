@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowUpRight, Globe, Box, Gauge, Trophy, Copy } from "lucide-react";
+import { Globe, Gauge, Trophy, Copy, SendToBack, Send, HandCoins } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from '../components/Header';
 import AppFooter from '../components/AppFooter';
@@ -8,14 +8,14 @@ import TokenBalanceSection from "../components/TokenBalanceSection";
 import IDKit from '../components/IDKit';
 import { shortenAddress } from '../lib/utils';
 import { useUser } from '../context/UserProvider';
+import {RiVerifiedBadgeFill} from "react-icons/ri";
 
 const Dashboard = () => {
-    
+
     const { userData } = useUser();
     const [isVerified, setIsVerified] = useState(false);
     const [timeUntilNextReward, setTimeUntilNextReward] = useState('');
     const [canClaimReward, setCanClaimReward] = useState(false);
-
     useEffect(() => {
 
         // In a real app, fetch the last claim time from your database
@@ -82,7 +82,6 @@ const Dashboard = () => {
             <Header />
             {/* User Stats Section */}
             <section className="my-10 w-full max-w-screen-lg mx-auto">
-                <h1 className="text-3xl font-bold neon-text mb-8">My Wallet</h1>
 
                 <div className="grid grid-cols-1 gap-8 mb-10">
 
@@ -113,6 +112,7 @@ const Dashboard = () => {
                     {/* Wallet Info */}
                     <div className="premium-panel p-6 rounded-xl">
 
+                        <h1 className="text-3xl font-bold neon-text mb-8">My Wallet</h1>
                         <div className="space-y-4">
                             <div className="premium-panel p-4 rounded-lg">
                                 <div className="flex items-center justify-between mb-2">
@@ -124,11 +124,20 @@ const Dashboard = () => {
                                         <Copy className="w-4 h-4"/>
                                     </button>
                                 </div>
-                                <p className="font-medium text-gray-300 font-mono">{shortenAddress(userData?.web3_address)}</p>
+                                <div className="flex items-center gap-2">
+                                    <p className="font-medium text-gray-300 font-mono">{shortenAddress(userData?.web3_address)} </p>
+
+                                    {userData?.is_verified ? (
+                                        <RiVerifiedBadgeFill className="fill-blue-500"/>
+                                    ) : (
+                                        <RiVerifiedBadgeFill className="fill-gray-600"/>
+                                    )}
+
+                                </div>
                             </div>
 
                             {/* Token Balances */}
-                            <TokenBalanceSection />
+                            <TokenBalanceSection/>
 
                         </div>
                     </div>
@@ -150,7 +159,7 @@ const Dashboard = () => {
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center space-x-3">
                                     <div className="p-2 bg-emerald-500/10 rounded-lg">
-                                        <Box className="w-5 h-5 text-emerald-400"/>
+                                        <HandCoins className="w-5 h-5 text-emerald-400"/>
                                     </div>
                                     <div>
                                         <p className="font-medium group-hover:text-cyan-400 transition-colors">Receive</p>
@@ -167,7 +176,7 @@ const Dashboard = () => {
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center space-x-3">
                                     <div className="p-2 bg-blue-500/10 rounded-lg">
-                                        <ArrowUpRight className="w-5 h-5 text-blue-400"/>
+                                        <SendToBack className="w-5 h-5 text-blue-400"/>
                                     </div>
                                     <div>
                                         <p className="font-medium group-hover:text-cyan-400 transition-colors">Exchange</p>
@@ -184,7 +193,7 @@ const Dashboard = () => {
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center space-x-3">
                                     <div className="p-2 bg-purple-500/10 rounded-lg">
-                                        <Box className="w-5 h-5 text-purple-400"/>
+                                        <Send className="w-5 h-5 text-purple-400"/>
                                     </div>
                                     <div>
                                         <p className="font-medium group-hover:text-cyan-400 transition-colors">Send</p>

@@ -47,15 +47,16 @@ export const updateData = async (userData) => {
     const fetchChainBalance = await getTokenBalance(userData.web3_address, true);
 
     // Prepare the updated data
+    const userActualData = await DBService.getItemByKeyValue('email', userData.email, 'users');
+    const userKey = await DBService.getItemKey('email', userData.email, 'users');
+
     const data = {
-        ...userData,
+        ...userActualData,
         web3_custom_token_balance: fetchTokenBalance,
         web3_network_token_balance: fetchChainBalance,
     };
 
-    const userKey = await DBService.getItemByKeyValue('email', userData.email, 'users');
-
-    await DBService.update(userKey[0], data, 'users');
+    await DBService.update(userKey, data, 'users');
 
     // Encrypt the updated user data and update the cookie
     const encryptedData = encryptHash(JSON.stringify(data));
