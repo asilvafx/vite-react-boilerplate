@@ -56,27 +56,28 @@ const Exchange = () => {
             const tokenHolder = userData?.web3_address; // User's wallet address
             const holderSecretKey = decryptHash(userData?.web3_pk); // Decrypted private key
             const chainToken = process.env.WEB3_CHAIN_SYMBOL;
-            const contractToken = process.env.WEB3_CONTRACT_SYMBOL;
 
-            return false;
             // Step 1: Send tokens from user wallet to master wallet
             const sendTx = await sendTransaction(
                 amountToExchange,
-                process.env.WEB3_MASTER_ADRESS,
+                process.env.WEB3_MASTER_ADDRESS,
                 tokenHolder,
-                holderSecretKey
+                holderSecretKey,
+                exchangeData.fromToken === chainToken
             );
 
             // Check if the transaction was successful
             if (sendTx && sendTx.txhash) {
                 // Step 2: Simulate receiving tokens back to the user's wallet
                 const amountToReceive = calculateEstimate(); // Calculate the amount to receive based on the exchange rate
+console.log(amountToReceive);
 
                 const sendFinalTx = await sendTransaction(
                     amountToReceive,
                     tokenHolder,
-                    process.env.WEB3_MASTER_ADRESS,
-                    process.env.WEB3_MASTER_PK
+                    process.env.WEB3_MASTER_ADDRESS,
+                    process.env.WEB3_MASTER_PK,
+                    exchangeData.toToken === chainToken
                 );
 
                 if (sendFinalTx && sendFinalTx.txhash) {

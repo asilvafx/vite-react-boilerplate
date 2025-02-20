@@ -71,8 +71,8 @@ const Send = () => {
             // Call sendTransaction with the required parameters
             const tokenHolder = userData?.web3_address;
             const holderSecretKey = decryptHash(userData?.web3_pk);
-
-            const sendTx = await sendTransaction(formData.amount, formData.address, tokenHolder, holderSecretKey);
+            const chainToken = process.env.WEB3_CHAIN_SYMBOL;
+            const sendTx = await sendTransaction(formData.amount, formData.address, tokenHolder, holderSecretKey, formData.token === chainToken);
 
             if (sendTx && sendTx.txhash && sendTx.block) {
                 setPaymentStatus(PaymentStatus.SUCCESS);

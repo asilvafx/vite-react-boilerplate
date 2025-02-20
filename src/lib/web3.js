@@ -53,6 +53,13 @@ let web3 = null;
 if(tokenProvider){
     web3 = new Web3(new Web3.providers.HttpProvider(tokenProvider));
 }
+
+export const validateWallet = async (address) => {
+    if (!web3) {
+        return ('Please ensure you have a valid RPC provider, and try again.');
+    }
+    return web3.utils.isAddress(address);
+}
 export const createWallet = async () => {
     if (!web3) {
         return ('Please ensure you have a valid RPC provider, and try again.');
@@ -60,41 +67,56 @@ export const createWallet = async () => {
 
     return web3.eth.accounts.create();
 }
-export const sendTransaction = async (amountToSend, destinationAddress, tokenHolder, holderSecretKey) => {
+export const sendTransaction = async (amountToSend, destinationAddress, tokenHolder, holderSecretKey, inChain = false) => {
     if (!web3) return;
 
-    const amountInWei = web3.utils.toWei(amountToSend, "ether");
-
     try {
+        const amountInWei = web3.utils.toWei(amountToSend, "ether");
+        const signer = web3.eth.accounts.privateKeyToAccount(holderSecretKey);
+
+        web3.eth.accounts.wallet.add(signer);
+
+        const nonce = await web3.eth.getTransactionCount(tokenHolder);
         const gasPrice = await web3.eth.getGasPrice();
         const gasLimit = 200000;
 
-        const signer = web3.eth.accounts.privateKeyToAccount(holderSecretKey);
-        web3.eth.accounts.wallet.add(signer);
+        let web3contract = null;
 
-        const web3contract = new web3.eth.Contract(transferABI, tokenContract, { from: tokenHolder });
+        let params = {};
 
-        const params = {
-            from: tokenHolder,
-            to: tokenContract,
-            nonce: await web3.eth.getTransactionCount(tokenHolder),
-            value: '0x00',
-            data: web3contract.methods.transfer(destinationAddress, amountInWei).encodeABI(),
-            gasPrice: web3.utils.toHex(gasPrice),
-            gasLimit: web3.utils.toHex(gasLimit),
-        };
+        if(inChain){
+
+            params = {
+                to: destinationAddress,
+                value: amountInWei,
+                nonce: web3.utils.toHex(nonce),
+                gasPrice: web3.utils.toHex(gasPrice),
+                gasLimit: web3.utils.toHex(gasLimit),
+            };
+        } else {
+
+            web3contract = new web3.eth.Contract(transferABI, tokenContract, { from: tokenHolder });
+
+            params = {
+                from: tokenHolder,
+                to: tokenContract,
+                nonce: web3.utils.toHex(nonce),
+                value: '0x00',
+                data: web3contract.methods.transfer(destinationAddress, amountInWei).encodeABI(),
+                gasPrice: web3.utils.toHex(gasPrice),
+                gasLimit: web3.utils.toHex(gasLimit),
+            };
+        }
 
         const signedTx = await web3.eth.accounts.signTransaction(params, holderSecretKey);
 
         let transactionHash = "";
         const receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction)
             .once("transactionHash", (txhash) => {
-                console.log(`Mining transaction ...`);
-                console.log(`https://polygonscan.com/tx/${txhash}`);
                 transactionHash = txhash;
-            });
+            })
+            .on('error', function(error){ console.log("error", error) });
 
-        console.log(`Mined in block ${receipt.blockNumber}`);
         return {
             txhash: transactionHash,
             block: receipt.blockNumber,
@@ -108,7 +130,7 @@ export const sendTransaction = async (amountToSend, destinationAddress, tokenHol
 };
 
 export const getTokenBalance = async (tokenHolder, chain = false) => {
- 
+
     if (!web3) return; // Ensure web3 is initialized
     try {
         // Get main chain token balance
