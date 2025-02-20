@@ -58,7 +58,7 @@ const App = () => {
                     <UserUpdater />
                     <SiteUpdater />
                     <Toaster toastOptions={{
-                        className: 'bg-neutral-950',
+                        className: 'text-neutral-200 bg-neutral-950 premium-border',
                         success: {
                             className: 'text-green-200 bg-neutral-900 premium-border',
                         },
