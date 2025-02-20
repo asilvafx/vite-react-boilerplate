@@ -36,18 +36,15 @@ class DBService {
         });
     }
 
-    // New method to get an item by a specific key-value pair
-    getItemKey(key, value, table) {
-        const itemsRef = ref(db, `/${table}`);
-        const q = query(itemsRef, orderByChild(key), equalTo(value));
+    // Get an item by a id pair
+    getItem(key, table) {
+        const itemsRef = ref(db, `/${table}/${key}`);
+        const q = query(itemsRef);
 
         return get(q).then((snapshot) => {
             if (snapshot.exists()) {
                 const snapshotValue = snapshot.val();
-                const userObj = Object.keys(snapshotValue);
-                const getUserId = userObj[0];
-
-                return getUserId; // Return the data for the specific item(s)
+                return snapshotValue; // Return the data for the specific item(s)
             } else {
                 return null; // Return null if no items match the query
             }
@@ -55,11 +52,6 @@ class DBService {
     }
 
     getAll(table) {
-        const requestRef = ref(db, `/${table}`);
-        return requestRef;
-    }
-
-    getAllPromise(table) {
         const requestRef = ref(db, `/${table}`);
         return get(requestRef).then((snapshot) => {
             if (snapshot.exists()) {

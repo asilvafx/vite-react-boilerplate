@@ -5,6 +5,8 @@ import { Toaster } from 'react-hot-toast';
 import { checkLoginStatus, getUserData, updateData } from './lib/user';
 import AuthProvider from "./context/AuthProvider";
 import { UserProvider } from './context/UserProvider';
+import UserUpdater from './context/UserUpdater';
+import SiteUpdater from './context/SiteUpdater';
 
 /*
     Import Pages
@@ -24,7 +26,6 @@ const Logout = lazy(() => import('./pages/auth/Logout'));
     Import Components
 */
 import ScrollToTop from './components/ScrollToTop';
-import UserUpdater from './components/UserUpdater';
 const CookiesGDPR = lazy(() => import('./components/Cookies'));
 const PrivateRoute = lazy(() => import('./components/PrivateRoute'));
 
@@ -32,7 +33,7 @@ const PrivateRoute = lazy(() => import('./components/PrivateRoute'));
     Load App Router
 */
 const App = () => {
- 
+
     useEffect(() => {
         async function fetchLoginStatus() {
             const isLoggedIn = await checkLoginStatus();
@@ -54,6 +55,7 @@ const App = () => {
                     <UserProvider>
                     <AuthProvider>
                     <UserUpdater />
+                    <SiteUpdater />
                     <Toaster />
                         <CookiesGDPR />
                         <div className="aurora"></div>

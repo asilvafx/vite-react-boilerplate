@@ -1,7 +1,7 @@
-// src/components/UserUpdater.jsx
+
 import React, { useEffect } from 'react';
 import { getUserData, updateData } from '../lib/user';
-import { useUser  } from '../context/UserProvider';
+import { useUser  } from './UserProvider';
 import Cookies from "js-cookie";
 
 const UserUpdater = () => {
