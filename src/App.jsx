@@ -57,7 +57,15 @@ const App = () => {
                     <AuthProvider>
                     <UserUpdater />
                     <SiteUpdater />
-                    <Toaster />
+                    <Toaster toastOptions={{
+                        className: 'bg-neutral-950',
+                        success: {
+                            className: 'text-green-200 bg-neutral-900 premium-border',
+                        },
+                        error: {
+                            className: 'text-red-200 bg-neutral-900 premium-border',
+                        },
+                        }} />
                         <CookiesGDPR />
                         <div className="aurora"></div>
                         <div className="aurora"></div>

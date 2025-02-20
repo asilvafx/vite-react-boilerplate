@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import { Html5QrcodeScanner } from 'html5-qrcode';
-import { X, QrCode, Camera } from 'lucide-react';
+import {X, QrCode, Camera, Copy} from 'lucide-react';
+import {shortenAddress} from "../lib/utils";
+import copyToClipboard from '../components/CopyToClipboard';
 
 const QRModal = ({ isOpen, onClose, walletAddress }) => {
     const [activeTab, setActiveTab] = useState('code');
@@ -80,6 +82,7 @@ const QRModal = ({ isOpen, onClose, walletAddress }) => {
         setActiveTab(tab);
     };
 
+
     if (!isOpen) return null;
 
     return (
@@ -125,20 +128,29 @@ const QRModal = ({ isOpen, onClose, walletAddress }) => {
 
                 <div className="flex flex-col items-center overflow-hidden">
                     {activeTab === 'code' ? (
-                        <div className="premium-panel p-4 rounded-xl bg-white">
+                        <div className="premium-panel p-4 rounded-xl ">
                             <QRCodeSVG
                                 value={walletAddress}
                                 size={200}
                                 level="H"
                                 includeMargin={true}
                             />
+                            <div className="w-full premium-panel flex items-center justify-between mt-4 p-2 gap-2">
+                                <p>{shortenAddress(walletAddress)}</p>
+                                <button
+                                    onClick={() => copyToClipboard(walletAddress, 'Wallet address copied to clipboard')}
+                                    className="text-cyan-400 hover:text-cyan-300 p-1 transition-colors"
+                                >
+                                    <Copy className="w-4 h-4"/>
+                                </button>
+                            </div>
                         </div>
                     ) : (
                         <div className="w-full">
-                            <div id="qr-reader" className="premium-panel rounded-xl overflow-hidden" />
+                            <div id="qr-reader" className="premium-panel rounded-xl overflow-hidden"/>
                             {scannedResult && (
                                 <div className="mt-4 p-4 premium-panel rounded-lg">
-                                    <p className="text-sm text-gray-400">Scanned Address:</p>
+                                <p className="text-sm text-gray-400">Scanned Address:</p>
                                     <p className="font-mono text-sm text-cyan-400 break-all">{scannedResult}</p>
                                 </div>
                             )}

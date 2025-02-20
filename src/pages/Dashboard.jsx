@@ -11,6 +11,7 @@ import AppFooter from '../components/AppFooter';
 import TokenBalanceSection from "../components/TokenBalanceSection";
 import IDKit from '../components/IDKit';
 import ContactList from '../components/ContactList';
+import copyToClipboard from "../components/CopyToClipboard";
 
 const Dashboard = () => {
 
@@ -86,14 +87,6 @@ const Dashboard = () => {
         console.log(`Claimed ${rewardAmount} BOLT tokens`);
     };
 
-    const copyToClipboard = (text) => {
-        navigator.clipboard.writeText(text);
-        toast.success('Wallet address copied to clipboard', {
-            icon: <Copy className="w-4 h-4 text-emerald-400" />,
-            duration: 2000,
-        });
-    };
-
     const handleProfileUpdate = (e) => {
         e.preventDefault();
         console.log('Update profile:', profileData);
@@ -153,7 +146,7 @@ const Dashboard = () => {
                                 <div className="flex items-center justify-between mb-2">
                                     <span className="text-gray-400">Wallet Address</span>
                                     <button
-                                        onClick={() => copyToClipboard(userData?.web3_address)}
+                                        onClick={() => copyToClipboard(userData?.web3_address, 'Wallet address copied to clipboard')}
                                         className="text-cyan-400 hover:text-cyan-300 p-1 transition-colors"
                                     >
                                         <Copy className="w-4 h-4"/>

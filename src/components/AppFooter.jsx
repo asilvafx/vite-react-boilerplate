@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home } from 'lucide-react';
+import { HandCoins, SendToBack, Send, Wallet } from 'lucide-react';
 
 const Navigation = () => {
     const location = useLocation();
@@ -16,7 +16,10 @@ const Navigation = () => {
     }, []);
 
     const navItems = [
-        { path: '/dashboard', label: 'Dashboard', icon: Home },
+        { path: '/receive', label: 'Receive', icon: HandCoins },
+        { path: '/exchange', label: 'Exchange', icon: SendToBack },
+        { path: '/send', label: 'Send', icon: Send },
+        { path: '/dashboard', label: 'Wallet', icon: Wallet },
     ];
 
     const navClasses = isMobile

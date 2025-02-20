@@ -103,7 +103,7 @@ h1, h2, h3, h4, h5, h6 {
             0 0 20px rgba(0, 255, 255, 0.1);
 }
 
-.cyber-button {
+.cyber-button, #html5-qrcode-button-camera-permission, #html5-qrcode-button-camera-stop {
     @apply relative px-6 py-3 bg-gradient-to-r from-cyan-500/10 to-cyan-400/5
     text-cyan-300 font-bold tracking-wide uppercase text-sm
     border border-cyan-500/20 rounded-lg transition-all duration-300
