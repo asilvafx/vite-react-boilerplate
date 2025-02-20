@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { Wallet, ArrowRightLeft, Coins, Loader2, Check, X, ArrowRight } from 'lucide-react';
 import { TextInput, Label, Select } from 'flowbite-react';
+import { Link } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
+import { useUser  } from '../context/UserProvider';
 import Header from "../components/Header";
 import GoBack from "../components/GoBack";
 import AppFooter from "../components/AppFooter";
-import { useUser } from '../context/UserProvider';
-import { Link } from 'react-router-dom';
-import {decryptHash} from "../lib/crypto.js";
+import { decryptHash } from "../lib/crypto.js";
 import { sendTransaction } from '../lib/web3';
-import {toast} from 'react-hot-toast';
+import { loadConfig } from '../lib/site';
 
 const PaymentStatus = {
     NONE: 'none',
@@ -18,23 +19,43 @@ const PaymentStatus = {
 };
 
 const Exchange = () => {
-    const { userData } = useUser();
-
+    const { userData } = useUser ();
     const [paymentStatus, setPaymentStatus] = useState(PaymentStatus.NONE);
-
     const [exchangeData, setExchangeData] = useState({
-        fromToken: 'POL',
-        toToken: 'BOLT',
+        fromToken: loadConfig.WEB3_CONTRACT_SYMBOL,
+        toToken: loadConfig.WEB3_CHAIN_SYMBOL,
         amount: '',
     });
 
+    // Access the chain and contract token symbols
+    const chainToken = loadConfig.WEB3_CHAIN_SYMBOL;
+    const contractToken = loadConfig.WEB3_CONTRACT_SYMBOL;
+
+    const userBalance = {
+        chain: parseFloat(userData?.web3_network_token_balance),
+        contract: parseFloat(userData?.web3_custom_token_balance)
+    };
+
+    // Construct the tokens object
     const tokens = {
-        POL: { balance: parseFloat(userData?.web3_network_token_balance).toFixed(3), price: '1.00' },
-        BOLT: { balance: parseFloat(userData?.web3_custom_token_balance).toFixed(3), price: '0.10' }
+        [chainToken]: {
+            balance: userBalance.chain.toFixed(3),
+            price: '1.00'
+        },
+        [contractToken]: {
+            balance: userBalance.contract.toFixed(3),
+            price: loadConfig.WEB3_CONTRACT_BASE_PRICE
+        }
     };
 
     const handleExchange = async (e) => {
         e.preventDefault();
+
+        // Check if tokens match
+        if (exchangeData.toToken === exchangeData.fromToken) {
+            toast.error(`Invalid swap method.`);
+            return;
+        }
 
         // Validate the amount
         const amountToExchange = parseFloat(exchangeData.amount);
@@ -55,7 +76,7 @@ const Exchange = () => {
         try {
             const tokenHolder = userData?.web3_address; // User's wallet address
             const holderSecretKey = decryptHash(userData?.web3_pk); // Decrypted private key
-            const chainToken = process.env.WEB3_CHAIN_SYMBOL;
+            const chainToken = loadConfig.WEB3_CHAIN_SYMBOL;
 
             // Step 1: Send tokens from user wallet to master wallet
             const sendTx = await sendTransaction(
@@ -70,7 +91,6 @@ const Exchange = () => {
             if (sendTx && sendTx.txhash) {
                 // Step 2: Simulate receiving tokens back to the user's wallet
                 const amountToReceive = calculateEstimate(); // Calculate the amount to receive based on the exchange rate
-console.log(amountToReceive);
 
                 const sendFinalTx = await sendTransaction(
                     amountToReceive,
@@ -85,13 +105,11 @@ console.log(amountToReceive);
                     setExchangeData({ ...exchangeData, amount: '' });
                     toast.success(`Successfully exchanged ${amountToExchange} ${exchangeData.fromToken} for ${amountToReceive} ${exchangeData.toToken}.`);
                 } else {
-                    setPaymentStatus(PaymentStatus.ERROR);
+                    setPaymentStatus(PaymentStatus.FAILED);
                     toast.error(`Conversion failed. Please, try again later.`);
                 }
-                // For demonstration, we will just simulate a successful exchange
-
             } else {
-                throw new Error('Transaction failed');
+                throw new Error('Transaction failed ');
             }
         } catch (error) {
             console.error("Exchange error:", error);
@@ -181,107 +199,109 @@ console.log(amountToReceive);
 
     return (
         <>
-            <section className="w-full max-w-screen-lg mx-auto my-10">
-                <Header />
+        <section className="w-full max-w-screen-lg mx-auto my-10">
+            <Header />
 
-                <div className="flex items-center justify-start gap-4 mb-8">
-                    <GoBack url="/dashboard"/>
-                    <h1 className="text-3xl font-bold neon-text">Token Exchange</h1>
-                </div>
+            <div className="flex items-center justify-start gap-4 mb-8">
+                <GoBack url="/dashboard"/>
+                <h1 className="text-3xl font-bold neon-text">Token Exchange</h1>
+            </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {/* Exchange Form */}
-                    <div className="premium-panel p-6 rounded-xl">
-                        <div className="flex items-center space-x-3 mb-6">
-                            <ArrowRightLeft className="w-6 h-6 premium-icon" />
-                            <h2 className="text-xl font-medium">Exchange Tokens</h2>
-                        </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {/* Exchange Form */}
+                <div className="premium-panel p-6 rounded-xl">
+                    <div className="flex items-center space-x-3 mb-6">
+                        <ArrowRightLeft className="w-6 h-6 premium-icon" />
+                        <h2 className="text-xl font-medium">Exchange Tokens</h2>
+                    </div>
 
-                        <form onSubmit={handleExchange} className="space-y-6">
-                            <div className="grid grid-cols-2 gap-4">
-                                <div>
+                    <form onSubmit={handleExchange} className="space-y-6">
+                        <div className="grid grid-cols-2 gap-4">
+                            <div>
                                     <Label htmlFor="fromToken" value="From" className="text-gray-300 mb-2" />
-                                    <Select
+                                    <select
                                         id="fromToken"
+                                        className="bg-neutral-900 premium-border shadow-sm w-full rounded-lg"
                                         value={exchangeData.fromToken}
                                         onChange={(e) => setExchangeData({ ...exchangeData, fromToken: e.target.value })}
                                         required
                                     >
-                                        <option value="POL">POL</option>
-                                        <option value="BOLT">BOLT</option>
-                                    </Select>
+                                        <option value={chainToken}>{chainToken}</option>
+                                        <option value={contractToken}>{contractToken}</option>
+                                    </select>
                                 </div>
                                 <div>
                                     <Label htmlFor="toToken" value="To" className="text-gray-300 mb-2" />
-                                    <Select
+                                    <select
                                         id="toToken"
+                                        className="bg-neutral-900 premium-border shadow-sm w-full rounded-lg"
                                         value={exchangeData.toToken}
                                         onChange={(e) => setExchangeData({ ...exchangeData, toToken: e.target.value })}
                                         required
                                     >
-                                        <option value="BOLT">BOLT</option>
-                                        <option value="POL">POL</option>
-                                    </Select>
+                                        <option value={contractToken}>{contractToken}</option>
+                                        <option value={chainToken}>{chainToken}</option>
+                                    </select>
                                 </div>
                             </div>
 
                             <div>
                                 <Label htmlFor="amount" value="Amount" className="text-gray-300 mb-2" />
-                                <TextInput
+                                <input
                                     id="amount"
                                     type="number"
-                                    icon={Coins}
                                     placeholder="0.00"
-                                    value={exchangeData.amount}
-                                    onChange={(e) => setExchangeData({ ...exchangeData, amount: e.target.value })}
-                                    required
-                                />
-                            </div>
-
-                            <div className="p-4 bg-gray-800 rounded-lg">
-                                <p className="text-gray-400 mb-2">Estimated {exchangeData.toToken} to receive:</p>
-                                <p className="text-2xl font-medium neon-text">
-                                    {exchangeData.amount ? calculateEstimate() : '0.000'} {exchangeData.toToken}
-                                </p>
-                            </div>
-
-                            <button type="submit" className="cyber-button w-full">
-                                Exchange Tokens
-                            </button>
-                        </form>
-                    </div>
-
-                    {/* Token Balances */}
-                    <div className="premium-panel p-6 rounded-xl">
-                        <div className="flex items-center space-x-3 mb-6">
-                            <Wallet className="w-6 h-6 premium-icon" />
-                            <h2 className="text-xl font-medium">Your Balances</h2>
-                        </div>
-
-                        <div className="space-y-4">
-                            {Object.entries(tokens).map(([token, data]) => (
-                                <div key={token} className="p-4 bg-gray-800 rounded-lg">
-                                    <div className="flex justify-between items-center">
-                                        <div>
-                                            <p className="text-gray-400 mb-1">{token} Balance</p>
-                                            <p className="text-2xl font-medium neon-text">{data.balance} {token}</p>
-                                        </div>
-                                        <div className="text-right">
-                                            <p className="text-gray-400 mb-1">Price</p>
-                                            <p className="text-lg font-medium text-cyan-400">${data.price}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
+                        value={exchangeData.amount}
+                        onChange={(e) => setExchangeData({ ...exchangeData, amount: e.target.value })}
+                        required
+                        className="text-3xl bg-neutral-900 premium-border shadow-sm w-full rounded-lg text-center" // Large font size for input
+                        />
                 </div>
-            </section>
-            <AppFooter />
 
-            {renderPaymentStatus()}
-        </>
-    );
+                <div className="p-4 premium-card rounded-lg">
+                    <p className="text-gray-400 mb-2">Estimated {exchangeData.toToken} to receive:</p>
+                    <p className="text-2xl font-medium neon-text">
+                        {exchangeData.amount ? calculateEstimate() : '0.000'} {exchangeData.toToken}
+                    </p>
+                </div>
+
+                <button type="submit" className="cyber-button w-full">
+                    Exchange Tokens
+                </button>
+            </form>
+        </div>
+
+        {/* Token Balances */}
+        <div className="premium-panel p-6 rounded-xl">
+            <div className="flex items-center space-x-3 mb-6">
+                <Wallet className="w-6 h-6 premium-icon" />
+                <h2 className="text-xl font-medium">Your Balances</h2>
+            </div>
+
+            <div className="space-y-4">
+                {Object.entries(tokens).map(([token, data]) => (
+                    <div key={token} className="p-4 premium-bg premium-border rounded-lg">
+                        <div className="flex justify-between items-center">
+                            <div>
+                                <p className="text-gray-400 mb-1">{token} Balance</p>
+                                <p className="text-2xl font-medium neon-text">{data.balance} {token}</p>
+                            </div>
+                            <div className="text-right">
+                                <p className="text-gray-400 mb-1">Price</p>
+                                <p className="text-lg font-medium text-cyan-400">${data.price}</p>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+        </div>
+</section>
+    <AppFooter />
+
+    {renderPaymentStatus()}
+</>
+);
 };
 
 export default Exchange;

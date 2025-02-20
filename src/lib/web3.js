@@ -1,4 +1,5 @@
 import Web3 from 'web3';
+import {loadConfig} from './site';
 
 const balanceOfABI = [
     {
@@ -45,8 +46,7 @@ const transferABI = [
         "type": "function"
     }
 ];
-
-const tokenContract = process.env.WEB3_CONTRACT_ADDRESS || "";
+const tokenContract = loadConfig.WEB3_CONTRACT_ADDRESS || "";
 const tokenProvider = process.env.WEB3_INFURA_RPC || "";
 
 let web3 = null;

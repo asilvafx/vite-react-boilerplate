@@ -1,9 +1,12 @@
 import React from 'react';
 import {File, Shield, Rocket} from "lucide-react";
-import {Button} from 'flowbite-react';
 import {Link} from 'react-router-dom';
+import {loadConfig} from '../lib/site';
 
 const StatsSection  = () => {
+
+    const site = loadConfig;
+
     return (
         <section>
             {/* Token Stats Section */}
@@ -18,19 +21,19 @@ const StatsSection  = () => {
                         <div className="grid grid-cols-2 gap-6">
                             <div className="premium-panel p-4 rounded-xl">
                                 <p className="text-sm text-gray-500">Blockchain</p>
-                                <p className="text-xl font-semibold text-white">Polygon PoS</p>
+                                <p className="text-xl font-semibold text-white">{site.WEB3_CHAIN_NAME}</p>
                             </div>
                             <div className="premium-panel p-4 rounded-xl">
                                 <p className="text-sm text-gray-500">Contract</p>
-                                <p className="text-xl font-semibold text-white">ERC-20</p>
+                                <p className="text-xl font-semibold text-white">{site.WEB3_CONTRACT_TYPE}</p>
                             </div>
                             <div className="premium-panel p-4 rounded-xl">
                                 <p className="text-sm text-gray-500">Total Supply</p>
-                                <p className="text-xl font-semibold text-white">1B BOLT</p>
+                                <p className="text-xl font-semibold text-white">{site.WEB3_CONTRACT_SUPPLY} {site.WEB3_CONTRACT_SYMBOL}</p>
                             </div>
                             <div className="premium-panel p-4 rounded-xl">
                                 <p className="text-sm text-gray-500">Current Price</p>
-                                <p className="text-xl font-semibold text-white">1 BOLT/POL</p>
+                                <p className="text-xl font-semibold text-white">{`${site.WEB3_CONTRACT_BASE_PRICE} ${site.WEB3_CONTRACT_SYMBOL}/${site.WEB3_CHAIN_SYMBOL}`}</p>
                             </div>
                         </div>
                         <div className="w-full md:max-w-lg grid grid-cols-1 md:grid-cols-2 gap-4">

@@ -13,6 +13,7 @@ import {RiVerifiedBadgeFill} from "react-icons/ri";
 const Dashboard = () => {
 
     const { userData } = useUser();
+    
     const [isVerified, setIsVerified] = useState(false);
     const [timeUntilNextReward, setTimeUntilNextReward] = useState('');
     const [canClaimReward, setCanClaimReward] = useState(false);

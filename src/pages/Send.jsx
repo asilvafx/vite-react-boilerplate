@@ -2,14 +2,15 @@ import React, { useState } from 'react';
 import { Send as SendIcon, AlertCircle, Loader2, Check, X, ArrowRight } from 'lucide-react';
 import { TextInput, Label, Select } from 'flowbite-react';
 import toast from 'react-hot-toast';
+import { Link } from 'react-router-dom';
 import GoBack from "../components/GoBack";
 import Header from "../components/Header";
 import AppFooter from "../components/AppFooter";
 import TokenBalanceSection from '../components/TokenBalanceSection';
-import { Link } from 'react-router-dom';
-import { sendTransaction } from '../lib/web3';
 import { useUser } from '../context/UserProvider';
+import { sendTransaction } from '../lib/web3';
 import {decryptHash} from '../lib/crypto';
+import {loadConfig} from '../lib/site';
 
 const PaymentStatus = {
     NONE: 'none',
@@ -71,7 +72,7 @@ const Send = () => {
             // Call sendTransaction with the required parameters
             const tokenHolder = userData?.web3_address;
             const holderSecretKey = decryptHash(userData?.web3_pk);
-            const chainToken = process.env.WEB3_CHAIN_SYMBOL;
+            const chainToken = loadConfig.WEB3_CHAIN_SYMBOL;
             const sendTx = await sendTransaction(formData.amount, formData.address, tokenHolder, holderSecretKey, formData.token === chainToken);
 
             if (sendTx && sendTx.txhash && sendTx.block) {

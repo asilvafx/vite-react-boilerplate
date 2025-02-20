@@ -1,12 +1,40 @@
-import {useEffect} from 'react';
-import {useLocation} from 'react-router-dom';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import DBService from '../data/db.service';
-import {getTokenBalance} from "../lib/web3";
 import Cookies from "js-cookie";
-import {decryptHash, encryptHash} from "../lib/crypto";
+import { getTokenBalance } from "../lib/web3";
+import { decryptHash, encryptHash } from "../lib/crypto";
+import {loadConfig} from '../lib/site';
 
 const SiteUpdater = () => {
     const location = useLocation(); // Get the current location
+
+    async function fetchExchangeRate() {
+        try {
+            let coinFrom = "ethereum";
+            let coinTo = "usd";
+
+            const chainNetwork = loadConfig.WEB3_CHAIN_SYMBOL;
+
+            switch (chainNetwork) {
+                case "POL":
+                    coinFrom = "polygon-ecosystem-token";
+                break;
+            }
+
+            const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${coinFrom}&vs_currencies=${coinTo}`);
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch exchange rate');
+            }
+
+            const data = await response.json();
+            return data[coinFrom][coinTo]; // Correctly access the price using coinTo as a key
+        } catch (error) {
+            console.error("Error fetching exchange rate:", error);
+            return null; // Return null if there's an error
+        }
+    }
 
     async function updateData(key = "") {
         const masterWalletAddress = process.env.WEB3_MASTER_ADDRESS || "";
@@ -15,10 +43,14 @@ const SiteUpdater = () => {
         const tokenBalance = await getTokenBalance(masterWalletAddress);
         const currentTime = Date.now(); // Get current time in milliseconds
 
+        // Fetch the exchange rate for POL in USD
+        const exchangeRate = await fetchExchangeRate();
+
         const updateData = {
             tokenBalance: tokenBalance,
             chainBalance: chainBalance,
-            lastUpdated: currentTime
+            lastUpdated: currentTime,
+            exchangeRate: exchangeRate // Include the exchange rate in the update data
         };
 
         try {
@@ -34,7 +66,7 @@ const SiteUpdater = () => {
 
                         // Ensure lastUpdated is a valid timestamp
                         if (fetchData && fetchData.lastUpdated) {
-                            if(timeDifference(fetchData.lastUpdated)){
+                            if (timeDifference(fetchData.lastUpdated)) {
                                 await DBService.update(siteKey, updateData, 'site');
                             }
                         } else {
@@ -42,7 +74,6 @@ const SiteUpdater = () => {
                         }
                     }
                 }
-
             } else {
                 await DBService.update(key, updateData, 'site');
             }
@@ -60,15 +91,15 @@ const SiteUpdater = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
+
                 const dataCookies = Cookies.get('site');
 
                 if (dataCookies) {
                     const decryptedData = JSON.parse(decryptHash(dataCookies)); // Ensure to parse the decrypted data
 
-
                     // Ensure lastUpdated is a valid timestamp
                     if (decryptedData && decryptedData.lastUpdated) {
-                        if(timeDifference(decryptedData.lastUpdated)){
+                        if (timeDifference(decryptedData.lastUpdated)) {
                             await updateData(decryptedData.siteKey); // Update data if older than 5 minutes
                         }
                     } else {
