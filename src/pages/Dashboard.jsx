@@ -1,4 +1,3 @@
-// src/Dashboard.jsx
 import React from 'react';
 import { useUser  } from '../context/UserProvider';
 import Header from '../components/Header';
@@ -9,9 +8,15 @@ import ManageAccount from '../components/ManageAccount';
 import ContactList from '../components/ContactList';
 import WorldIDVerification from '../components/WorldIDVerification';
 import DailyReward from '../components/DailyReward';
+import Loading from '../components/Loading';
 
 const Dashboard = () => {
     const { userData } = useUser ();
+
+    // If userData is not available, show the loading component
+    if (!userData) {
+        return <Loading />;
+    }
 
     return (
         <>

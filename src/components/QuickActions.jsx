@@ -4,6 +4,7 @@ import { Gauge, HandCoins, SendToBack, Send } from "lucide-react";
 
 const QuickActions = () => {
     return (
+    <section className="mb-10 w-full max-w-screen-lg mx-auto">
         <div className="premium-panel p-6 rounded-xl space-y-6 mb-10">
             <div className="flex items-center space-x-3">
                 <div className="p-2 bg-emerald-500/10 rounded-lg">
@@ -12,7 +13,8 @@ const QuickActions = () => {
                 <h3 className="text-lg font-medium">Quick Actions</h3>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
-                <Link to="/receive" className="premium-panel p-4 rounded-lg hover:bg-cyan-500/5 transition-colors group">
+                <Link to="/receive"
+                      className="premium-panel p-4 rounded-lg hover:bg-cyan-500/5 transition-colors group">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-3">
                             <div className="p-2 bg-emerald-500/10 rounded-lg">
@@ -25,7 +27,8 @@ const QuickActions = () => {
                         </div>
                     </div>
                 </Link>
-                <Link to="/exchange" className="premium-panel p-4 rounded-lg hover:bg-cyan-500/5 transition-colors group">
+                <Link to="/exchange"
+                      className="premium-panel p-4 rounded-lg hover:bg-cyan-500/5 transition-colors group">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-3">
                             <div className="p-2 bg-blue-500/10 rounded-lg">
@@ -53,6 +56,7 @@ const QuickActions = () => {
                 </Link>
             </div>
         </div>
+    </section>
     );
 };
 

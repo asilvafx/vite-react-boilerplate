@@ -51,33 +51,36 @@ const DailyReward = () => {
     };
 
     return (
-        <div className="premium-panel p-6 rounded-xl mb-8 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-purple-500/5 rounded-full blur-3xl"/>
-            <div className="relative z-10">
-                <div className="flex items-center space-x-3 mb-4">
-                    <div className="p-2 bg-purple-500/10 rounded-lg">
-                        <Trophy className="w-6 h-6 text-purple-400"/>
+        <section className="mb-10 w-full max-w-screen-lg mx-auto">
+            <div className="premium-panel p-6 rounded-xl relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-purple-500/5 rounded-full blur-3xl"/>
+                <div className="relative z-10">
+                    <div className="flex items-center space-x-3 mb-4">
+                        <div className="p-2 bg-purple-500/10 rounded-lg">
+                            <Trophy className="w-6 h-6 text-purple-400"/>
+                        </div>
+                        <h2 className="text-xl font-medium">Daily Reward</h2>
                     </div>
-                    <h2 className="text-xl font-medium">Daily Reward</h2>
-                </div>
-                <div className="flex flex-col md:flex-row items-start md:items-center justify-between">
-                    <div className="mb-4 md:mb-0">
-                        <p className="text-gray-400 mb-2">
-                            Claim your daily reward of <span className="text-purple-400 font-medium">50 BOLT tokens</span>
-                        </p>
+                    <div className="flex flex-col md:flex-row items-start md:items-center justify-between">
+                        <div className="mb-4 md:mb-0">
+                            <p className="text-gray-400 mb-2">
+                                Claim your daily reward of <span
+                                className="text-purple-400 font-medium">50 BOLT tokens</span>
+                            </p>
+                        </div>
+                        <button
+                            onClick={handleClaimReward}
+                            disabled={!canClaimReward}
+                            className={`cyber-button flex items-center space-x-2 group ${!canClaimReward ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        >
+                            <Trophy className="w-5 h-5 group-hover:scale-110 transition-transform duration-500"/>
+                            <span>{canClaimReward ? 'Claim Reward' : timeUntilNextReward}</span>
+                        </button>
                     </div>
-                    <button
-                        onClick={handleClaimReward}
-                        disabled={!canClaimReward}
-                        className={`cyber-button flex items-center space-x-2 group ${!canClaimReward ? 'opacity-50 cursor-not-allowed' : ''}`}
-                    >
-                        <Trophy className="w-5 h-5 group-hover:scale-110 transition-transform duration-500"/>
-                        <span>{canClaimReward ? 'Claim Reward' : timeUntilNextReward}</span>
-                    </button>
                 </div>
             </div>
-        </div>
-    );
+        </section>
+        );
 };
 
 export default DailyReward;

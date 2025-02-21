@@ -2,9 +2,14 @@ import React from 'react';
 import { Globe } from "lucide-react";
 import IDKit from './IDKit';
 
-const WorldIDVerification = ({ isVerified = true }) => {
+const WorldIDVerification = ({ isVerified }) => {
+    // Only show the verification section if isVerified is false
+    if (isVerified) {
+        return null; // Hide the component if the user is verified
+    }
+
     return (
-        !isVerified && (
+        <section className="mb-10 w-full max-w-screen-lg mx-auto">
             <div className="premium-panel p-6 rounded-xl relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/5 rounded-full blur-3xl"/>
                 <div className="relative z-10">
@@ -15,14 +20,15 @@ const WorldIDVerification = ({ isVerified = true }) => {
                         <h2 className="text-xl font-medium">Verify Your Humanity</h2>
                     </div>
                     <p className="text-gray-400 mb-6 max-w-2xl">
-                        Verify your humanity using WorldID and receive <span className="text-cyan-400 font-medium">50 TOKENS</span> as a reward.
+                        Verify your humanity using WorldID and receive <span className="text-cyan-400 font-medium">50 TOKENS</span> as
+                        a reward.
                         This helps us maintain a fair and bot-free environment.
                     </p>
                     <IDKit/>
                 </div>
-            </div>
-        )
-    );
-};
+                </div>
+            </section>
+            );
+            };
 
-export default WorldIDVerification;
+            export default WorldIDVerification;
