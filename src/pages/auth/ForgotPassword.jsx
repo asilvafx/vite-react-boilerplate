@@ -1,16 +1,32 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {Link, useNavigate} from 'react-router-dom';
 import { Mail, Box } from 'lucide-react';
 import { TextInput, Label } from 'flowbite-react';
+import Cookies from "js-cookie";
+import Loading from "../../components/Loading.jsx";
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState('');
+
+    const isLoggedIn = Cookies.get('isLoggedIn');
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if(isLoggedIn){
+            navigate('/dashboard');
+        }
+    }, [navigate, isLoggedIn]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         // Handle password reset logic
         console.log('Reset password for:', email);
     };
+
+    if(isLoggedIn){
+        return (<Loading />)
+    }
 
     return (
         <div className="min-h-screen flex items-center justify-center px-4">

@@ -2,7 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useUser  } from '../context/UserProvider';
-import Header from '../components/Header';
+import AppHeader from '../components/AppHeader';
 import AppFooter from '../components/AppFooter';
 import UserStats from '../components/UserStats';
 import QuickActions from '../components/QuickActions';
@@ -28,8 +28,8 @@ const Dashboard = () => {
                 <title>PIGMIL – Web Solutions for a Digital Future</title>
                 <meta name='description' content={t('seo_description')}/>
             </Helmet>
-            
-            <Header />
+
+            <AppHeader />
 
             <WorldIDVerification isVerified={userData?.is_verified} />
             <UserStats />

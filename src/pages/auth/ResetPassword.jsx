@@ -1,9 +1,21 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {Link, useNavigate} from 'react-router-dom';
 import { Lock, Box } from 'lucide-react';
 import { TextInput, Label } from 'flowbite-react';
+import Cookies from "js-cookie";
+import Loading from "../../components/Loading.jsx";
 
 const ResetPassword = () => {
+    const isLoggedIn = Cookies.get('isLoggedIn');
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if(isLoggedIn){
+            navigate('/dashboard');
+        }
+    }, [navigate, isLoggedIn]);
+
     const [formData, setFormData] = useState({
         password: '',
         confirmPassword: '',
@@ -15,6 +27,10 @@ const ResetPassword = () => {
         console.log('New password:', formData);
     };
 
+    if(isLoggedIn){
+        return (<Loading />)
+    }
+    
     return (
         <div className="min-h-screen flex items-center justify-center px-4">
             <div className="premium-panel p-8 rounded-xl w-full max-w-md">

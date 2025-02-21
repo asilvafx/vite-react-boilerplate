@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Wallet, ArrowRightLeft, Coins, Loader2, Check, X, ArrowRight } from 'lucide-react';
-import { TextInput, Label, Select } from 'flowbite-react';
+import { Wallet, ArrowRightLeft, Loader2, Check, X, ArrowRight } from 'lucide-react';
+import { Label } from 'flowbite-react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import { useUser  } from '../context/UserProvider';
-import Header from "../components/Header";
+import AppHeader from "../components/AppHeader";
 import GoBack from "../components/GoBack";
 import AppFooter from "../components/AppFooter";
 import { decryptHash } from "../lib/crypto.js";
@@ -200,7 +200,7 @@ const Exchange = () => {
     return (
         <>
         <section className="w-full max-w-screen-lg mx-auto my-10">
-            <Header />
+            <AppHeader />
 
             <div className="flex items-center justify-start gap-4 mb-8">
                 <GoBack url="/dashboard"/>

@@ -4,7 +4,7 @@ import { Label } from 'flowbite-react';
 import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import GoBack from "../components/GoBack";
-import Header from "../components/Header";
+import AppHeader from "../components/AppHeader";
 import AppFooter from "../components/AppFooter";
 import TokenBalanceSection from '../components/TokenBalanceSection';
 import { useUser } from '../context/UserProvider';
@@ -176,7 +176,7 @@ const Send = () => {
     return (
         <>
             <section className="w-full max-w-screen-lg mx-auto my-10">
-                <Header />
+                <AppHeader />
 
                 <div className="flex items-center justify-start gap-4 mb-8">
                     <GoBack url="/dashboard"/>

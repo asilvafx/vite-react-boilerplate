@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Users, Search, Plus, Trash2, Copy, Check } from 'lucide-react';
-import { TextInput, Label } from 'flowbite-react';
+import { Users, Plus, Trash2, Copy, Check } from 'lucide-react';
+import { Label } from 'flowbite-react';
 import toast from 'react-hot-toast';
-import Header from "../components/Header";
+import AppHeader from "../components/AppHeader";
 import GoBack from "../components/GoBack";
 import AppFooter from "../components/AppFooter";
 
@@ -62,7 +62,7 @@ const Contacts = () => {
     return (
         <>
             <section className="w-full max-w-screen-lg mx-auto my-10">
-                <Header />
+                <AppHeader />
 
                 <div className="flex items-center justify-start gap-4 mb-8">
                     <GoBack url="/dashboard"/>

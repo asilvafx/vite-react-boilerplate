@@ -8,7 +8,7 @@ const PreFooter = () => {
             <div className="grid grid-cols-1 gap-8 mb-8">
                 {/* Disclaimer */}
                 <div className="premium-panel p-6 rounded-xl bg-yellow-500/5">
-                    <div className="flex items-start space-x-3">
+                    <div className="flex items-start space-x-3 p-2">
                         <AlertTriangle className="w-5 h-5 text-yellow-400 mt-1 flex-shrink-0"/>
                         <div className="space-y-2">
                             <h3 className="text-lg font-medium text-yellow-400">Risk Disclaimer</h3>
@@ -33,16 +33,10 @@ const PreFooter = () => {
                             </div>
                         </div>
                     </div>
-                </div>
-
-
-                {/* Legal Links */}
-                <div className="premium-panel p-6 rounded-xl">
-                    <h3 className="text-lg font-medium mb-4">Legal Information</h3>
-                    <div className="grid grid-cols-2 gap-4">
-                        <div>
-                            <h4 className="text-sm font-medium text-gray-300 mb-2">Policies</h4>
-                            <ul className="space-y-2">
+                    <div className="w-full grid grid-cols-1 gap-4 mt-8 p-4">
+                        <LanguageSelector/>
+                        <div className="my-auto p-4">
+                            <ul className="flex flex-wrap items-center justify-between">
                                 <li>
                                     <a href="#" className="text-sm text-gray-400 hover:text-gray-300">Terms of
                                         Service</a>
@@ -55,28 +49,12 @@ const PreFooter = () => {
                                 </li>
                             </ul>
                         </div>
-                        <div>
-                            <h4 className="text-sm font-medium text-gray-300 mb-2">Compliance</h4>
-                            <ul className="space-y-2">
-                                <li>
-                                    <a href="#" className="text-sm text-gray-400 hover:text-gray-300">AML Policy</a>
-                                </li>
-                                <li>
-                                    <a href="#" className="text-sm text-gray-400 hover:text-gray-300">KYC
-                                        Requirements</a>
-                                </li>
-                                <li>
-                                    <a href="#" className="text-sm text-gray-400 hover:text-gray-300">Responsible
-                                        Gaming</a>
-                                </li>
-                            </ul>
-                        </div>
                     </div>
                 </div>
 
-                <div className="w-full">
-                    <LanguageSelector/>
-                </div>
+                <p className="mx-auto text-xs text-gray-500">
+                    &copy; {new Date().getFullYear()} PIGMIL. All rights reserved.
+                </p>
             </div>
         </section>
     )

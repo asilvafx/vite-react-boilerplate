@@ -161,7 +161,7 @@ const Footer = () => {
                         <div className="flex items-center gap-2 text-sm text-gray-400">
                             <span>Built with</span>
                             <Heart size={16} className="text-blue-500 animate-pulse"/>
-                            <span>© 2024 BOLT Network. All rights reserved.</span>
+                            <span>&copy; {new Date().getFullYear()} PIGMIL. All rights reserved.</span>
                         </div>
                     </div>
                 </div>

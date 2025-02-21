@@ -1,19 +1,30 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Box } from 'lucide-react';
+import PasswordStrengthBar from 'react-password-strength-bar';
+import Cookies from "js-cookie";
 import { TextInput, Label } from 'flowbite-react';
 import { useAuth } from '../../context/AuthProvider';
-import PasswordStrengthBar from 'react-password-strength-bar';
+import Loading from '../../components/Loading';
 
 const Register = () => {
+    const isLoggedIn = Cookies.get('isLoggedIn');
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if(isLoggedIn){
+            navigate('/dashboard');
+        }
+    }, [navigate, isLoggedIn]);
+
     const [input, setInput] = useState({
         username: '',
         fullName: '',
         password: '',
         confirmPassword: '',
     });
-    const [error, setError] = useState(null); 
-    const navigate = useNavigate();
+    const [error, setError] = useState(null);
     const auth = useAuth();
 
     const handleRegister = async (e) => {
@@ -46,6 +57,10 @@ const Register = () => {
         const regex = /^(?=.*[A-Za-z])(?=.*\d|(?=.*[!@#$%^&*()_+[\]{};':"\\|,.<>?]))[A-Za-z\d!@#$%^&*()_+[\]{};':"\\|,.<>?]{8,}$/;
         return regex.test(password);
     };
+
+    if(isLoggedIn){
+        return (<Loading />)
+    }
 
     return (
         <section className="min-h-screen my-10 flex items-center justify-center px-4">

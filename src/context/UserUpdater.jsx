@@ -1,15 +1,18 @@
 
-import React, { useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import { getUserData, updateData } from '../lib/user';
 import { useUser  } from './UserProvider';
 import Cookies from "js-cookie";
+import Loading from '../components/Loading';
 
 const UserUpdater = () => {
     const { setUserData } = useUser ();
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const isLoggedIn = Cookies.get('isLoggedIn') === 'true';
         if (!isLoggedIn) {
+            setLoading(false);
             return; // Exit if not logged in
         }
 
@@ -21,6 +24,7 @@ const UserUpdater = () => {
 
             const newData = await updateData(fetchNewData);
             setUserData(newData); // Update user data in context
+            setLoading(false);
         };
 
         // Initial fetch
@@ -35,6 +39,9 @@ const UserUpdater = () => {
         return () => clearInterval(intervalId);
     }, [setUserData]); // Add setUser Data to the dependency array
 
+    if(loading){
+        return (<Loading />)
+    }
     return null; // This component does not render anything
 };
 

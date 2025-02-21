@@ -1,18 +1,28 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Box } from 'lucide-react';
 import { TextInput, Label } from 'flowbite-react';
+import Cookies from 'js-cookie';
 import { useAuth } from '../../context/AuthProvider';
-import { toast } from 'react-hot-toast';
+import Loading from "../../components/Loading.jsx";
 
 const Login = () => {
+    const isLoggedIn = Cookies.get('isLoggedIn');
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if(isLoggedIn){
+            navigate('/dashboard');
+        }
+    }, [navigate, isLoggedIn]);
+
     const [formData, setFormData] = useState({
         username: '',
         password: '',
     });
     const [error, setError] = useState(null);
     const [rememberMe, setRememberMe] = useState(false); // State for remember me checkbox
-    const navigate = useNavigate();
     const auth = useAuth();
 
     const handleSubmit = async (e) => {
@@ -29,6 +39,10 @@ const Login = () => {
             setError(response || "Login failed. Please try again.");
         }
     };
+
+    if(isLoggedIn){
+        return (<Loading />)
+    }
 
     return (
         <section className="min-h-screen flex items-center justify-center my-10 px-4">

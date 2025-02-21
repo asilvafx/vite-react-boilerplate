@@ -18,7 +18,7 @@ const LanguageSelector = () => {
     };
 
     return (
-        <div className="premium-panel p-6 rounded-xl">
+        <div>
             <div className="flex items-center space-x-3 mb-4">
                 <Globe className="w-5 h-5 text-cyan-400" />
                 <h3 className="text-lg font-medium">Language</h3>
