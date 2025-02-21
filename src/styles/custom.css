@@ -117,7 +117,7 @@ h1, h2, h3, h4, h5, h6 {
             0 0 20px rgba(0, 255, 255, 0.1);
 }
 
-.cyber-button, #html5-qrcode-button-camera-permission, #html5-qrcode-button-camera-stop {
+.cyber-button, button.cm__btn, #html5-qrcode-button-camera-permission, #html5-qrcode-button-camera-stop {
     @apply relative px-6 py-3 bg-gradient-to-r from-cyan-500/10 to-cyan-400/5
     text-cyan-300 font-bold tracking-wide uppercase text-sm
     border border-cyan-500/20 rounded-lg transition-all duration-300
@@ -242,6 +242,31 @@ ul li {
 
 .close-button:hover {
     color: red; /* Change color on hover */
+}
+
+#cc-main .cm, .cm__footer, .pm.pm--box {
+    background: var(--clr-dark) !important;
+    border: 1px solid var(--premium-border) !important;
+}
+#cc-main .cm__btns {
+    border: none !important
+}
+.cm__btn, .pm__btn {
+    background: var(--clr-dark) !important;
+    border: 1px solid var(--premium-border) !important;
+}
+.pm__btn.pm__btn--secondary, .cm__btn.cm__btn--secondary {
+    background: var(--clr-light) !important;
+    color: var(--clr-dark) !important;
+}
+.pm__section-title, .toggle__icon {
+    background: var(--clr-dark) !important;
+}
+.cm__title, .pm__title {
+    @apply !text-neutral-200;
+}
+.cm__desc, .pm__section-title, .pm__section-desc, .cc__link {
+    @apply !text-white;
 }
 .aurora {
     position: fixed;
