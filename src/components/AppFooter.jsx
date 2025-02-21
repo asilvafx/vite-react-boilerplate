@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { HandCoins, SendToBack, Send, Wallet } from 'lucide-react';
+import PreFooter from '../components/PreFooter';
 
 const Navigation = () => {
     const location = useLocation();
@@ -29,6 +30,7 @@ const Navigation = () => {
     if (!isMobile) {
         return (
             <>
+                <PreFooter />
                 <div className="w-full min-h-10"></div>
             </>
         );
@@ -36,6 +38,7 @@ const Navigation = () => {
 
     return (
         <>
+        <PreFooter />
         <div className="w-full min-h-24"></div>
         <nav className={navClasses}>
             <div className="container mx-auto">

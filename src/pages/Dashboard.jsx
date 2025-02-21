@@ -1,4 +1,6 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
+import { useTranslation } from 'react-i18next';
 import { useUser  } from '../context/UserProvider';
 import Header from '../components/Header';
 import AppFooter from '../components/AppFooter';
@@ -13,6 +15,8 @@ import Loading from '../components/Loading';
 const Dashboard = () => {
     const { userData } = useUser ();
 
+    const { t } = useTranslation();
+
     // If userData is not available, show the loading component
     if (!userData) {
         return <Loading />;
@@ -20,6 +24,11 @@ const Dashboard = () => {
 
     return (
         <>
+            <Helmet>
+                <title>PIGMIL – Web Solutions for a Digital Future</title>
+                <meta name='description' content={t('seo_description')}/>
+            </Helmet>
+            
             <Header />
 
             <WorldIDVerification isVerified={userData?.is_verified} />

@@ -26,7 +26,8 @@ const Logout = lazy(() => import('./pages/auth/Logout'));
 /*
     Import Components
 */
-import ScrollToTop from './components/ScrollToTop';
+const Loading = lazy(() => import('./components/Loading'));
+const ScrollToTop = lazy(() => import('./components/ScrollToTop'));
 const CookiesGDPR = lazy(() => import('./components/Cookies'));
 const PrivateRoute = lazy(() => import('./components/PrivateRoute'));
 
@@ -50,13 +51,9 @@ const App = () => {
 
     return (
         <HelmetProvider>
-            <Suspense fallback={<div id="loading">Loading...</div>}>
+            <Suspense fallback={<Loading />}>
                 <Router>
                     <ScrollToTop />
-                    <UserProvider>
-                    <AuthProvider>
-                    <UserUpdater />
-                    <SiteUpdater />
                     <Toaster toastOptions={{
                         className: 'text-neutral-200 bg-neutral-950 premium-border',
                         success: {
@@ -65,8 +62,13 @@ const App = () => {
                         error: {
                             className: 'text-red-200 bg-neutral-900 premium-border',
                         },
-                        }} />
-                        <CookiesGDPR />
+                    }} />
+                    <UserProvider>
+                    <AuthProvider>
+                    <UserUpdater />
+                    <SiteUpdater />
+                    <CookiesGDPR />
+
                         <div className="aurora"></div>
                         <div className="aurora"></div>
                         <div className="aurora"></div>
@@ -88,6 +90,7 @@ const App = () => {
                             <Route path="/reset-password" element={<ResetPassword />} />
                             <Route path="*" element={<Home />} />
                         </Routes>
+
                     </AuthProvider>
                     </UserProvider>
                 </Router>
