@@ -1,5 +1,5 @@
 import React from 'react';
-import { Users, ArrowRight } from 'lucide-react';
+import { Users, ArrowRight, SendHorizontal } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const ContactList = ({ contacts }) => {
@@ -26,7 +26,7 @@ const ContactList = ({ contacts }) => {
                                 key={contact.id}
                                 className="premium-panel p-4 rounded-lg hover:bg-cyan-500/5 transition-colors group"
                             >
-                                <div className="flex items-center space-x-4">
+                                <div className="w-full flex items-center space-x-4">
                                     <div
                                         className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-500/20 to-blue-500/10 flex items-center justify-center">
                   <span className="text-lg font-medium text-cyan-400">
@@ -38,6 +38,19 @@ const ContactList = ({ contacts }) => {
                                         <p className="text-sm text-gray-400 font-mono">
                                             {contact.address.slice(0, 6)}...{contact.address.slice(-4)}
                                         </p>
+                                    </div>
+                                    <div className="m-l-auto">
+                                        <Link
+                                            to={`/send/${btoa(contact.address)}`}
+                                        >
+                                            <button className="cyber-button flex items-center justify-center gap-2">
+
+                                                <span>Send</span>
+                                                <SendHorizontal className="w-4 h-4" />
+                                                
+                                            </button>
+                                        </Link>
+
                                     </div>
                                 </div>
                             </div>

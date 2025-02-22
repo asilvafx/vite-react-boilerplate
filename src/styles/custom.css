@@ -268,6 +268,12 @@ ul li {
 .cm__desc, .pm__section-title, .pm__section-desc, .cc__link {
     @apply !text-white;
 }
+.m-l-auto {
+    margin: 0 0 0 auto !important;
+}
+.m-r-auto {
+    margin: 0 auto 0 0 !important;
+}
 .aurora {
     position: fixed;
     z-index: -1;

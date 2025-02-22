@@ -35,7 +35,6 @@ const Dashboard = () => {
             <UserStats />
             <DailyReward />
             <QuickActions />
-            <ManageAccount userData={userData} />
             <ContactList
                 contacts={[
                     { id: '1', name: 'Alice', address: '0x1234567890abcdef1234567890abcdef12345678' },
@@ -43,6 +42,7 @@ const Dashboard = () => {
                     { id: '3', name: 'Charlie', address: '0x7890abcdef1234567890abcdef1234567890abcd' },
                 ]}
             />
+            <ManageAccount userData={userData} />
             <AppFooter />
         </>
     );

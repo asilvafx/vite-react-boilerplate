@@ -1,6 +1,7 @@
 import React from 'react';
-import { Heart, AlertTriangle } from 'lucide-react';
+import {AlertTriangle} from 'lucide-react';
 import LanguageSelector from './LanguageSelector';
+import {loadConfig} from '../lib/site';
 
 const PreFooter = () => {
     return (
@@ -33,31 +34,38 @@ const PreFooter = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="w-full grid grid-cols-1 gap-4 mt-8 p-4">
-                        <LanguageSelector/>
-                        <div className="my-auto p-4">
-                            <ul className="flex flex-wrap items-center justify-between">
-                                <li>
-                                    <a href="#" className="text-sm text-gray-400 hover:text-gray-300">Terms of
-                                        Service</a>
-                                </li>
-                                <li>
-                                    <a href="#" className="text-sm text-gray-400 hover:text-gray-300">Privacy Policy</a>
-                                </li>
-                                <li>
-                                    <a href="#" className="text-sm text-gray-400 hover:text-gray-300">Cookie Policy</a>
-                                </li>
-                            </ul>
+                </div>
+
+                <div className="w-full grid grid-cols-1 md:grid-cols-2 p-4 gap-8">
+                    <div className="order-2 md:order-1">
+                        <div className="w-full flex items-center space-x-3 mb-4">
+                            <h4 className="text-md font-medium">{loadConfig.WEB3_CONTRACT_NAME}</h4>
                         </div>
+                        <ul className="flex flex-wrap items-center justify-start gap-4">
+                            <li>
+                                <a href="#" className="text-sm text-gray-400 hover:text-gray-300">Terms of
+                                    Service</a>
+                            </li>
+                            <li>
+                                <a href="#" className="text-sm text-gray-400 hover:text-gray-300">Privacy Policy</a>
+                            </li>
+                            <li>
+                                <a href="#" className="text-sm text-gray-400 hover:text-gray-300">Cookie Policy</a>
+                            </li>
+                        </ul>
+
+                        <p className="mx-auto text-xs text-gray-500 mt-4">
+                            &copy; {new Date().getFullYear()} PIGMIL. All rights reserved.
+                        </p>
+                    </div>
+                    <div className="order-1 md:order-2">
+                        <LanguageSelector/>
                     </div>
                 </div>
 
-                <p className="mx-auto text-xs text-gray-500">
-                    &copy; {new Date().getFullYear()} PIGMIL. All rights reserved.
-                </p>
             </div>
         </section>
-    )
+)
 }
 
 export default PreFooter;

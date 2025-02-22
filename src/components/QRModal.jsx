@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import { Html5QrcodeScanner } from 'html5-qrcode';
-import {X, QrCode, Camera, Copy} from 'lucide-react';
+import {X, Copy} from 'lucide-react';
 import {shortenAddress} from "../lib/utils";
 import copyToClipboard from '../components/CopyToClipboard';
 

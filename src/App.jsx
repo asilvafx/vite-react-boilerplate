@@ -55,12 +55,12 @@ const App = () => {
                 <Router>
                     <ScrollToTop />
                     <Toaster toastOptions={{
-                        className: 'text-neutral-200 bg-neutral-950 premium-border',
+                        className: '!text-neutral-200 !bg-neutral-950 premium-border',
                         success: {
-                            className: 'text-green-200 bg-neutral-900 premium-border',
+                            className: '!text-green-200 !bg-neutral-900 premium-border',
                         },
                         error: {
-                            className: 'text-red-200 bg-neutral-900 premium-border',
+                            className: '!text-red-200 !bg-neutral-900 premium-border',
                         },
                     }} />
                     <UserProvider>
@@ -81,6 +81,7 @@ const App = () => {
                                 <Route path="/receive" element={<Receive />} />
                                 <Route path="/exchange" element={<Exchange />} />
                                 <Route path="/send" element={<Send />} />
+                                <Route path="/send/:address" element={<Send />} />
                                 <Route path="/dashboard" element={<Dashboard />} />
                                 <Route path="/logout" element={<Logout />} />
                             </Route>
