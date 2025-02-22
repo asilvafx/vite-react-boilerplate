@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { QRCodeSVG } from 'qrcode.react';
 import { Html5QrcodeScanner } from 'html5-qrcode';
-import {X, Copy} from 'lucide-react';
-import {shortenAddress} from "../lib/utils";
+import { X, Copy } from 'lucide-react';
+import { shortenAddress } from "../lib/utils";
 import copyToClipboard from '../components/CopyToClipboard';
 
 const QRModal = ({ isOpen, onClose, walletAddress }) => {
     const [activeTab, setActiveTab] = useState('code');
     const [scannedResult, setScannedResult] = useState(null);
     const [scanner, setScanner] = useState(null);
+    const [contactAdded, setContactAdded] = useState(false); // State to track if contact is added
+    const navigate = useNavigate(); // Use navigate for programmatic navigation
 
     useEffect(() => {
         if (isOpen && activeTab === 'scan') {
@@ -26,7 +29,9 @@ const QRModal = ({ isOpen, onClose, walletAddress }) => {
 
             newScanner.render(
                 (decodedText) => {
-                    console.log('Scanned QR Code:', decodedText);
+                    if (!decodedText.startsWith('0x') || decodedText.length !== 42) {
+                        return;
+                    }
                     setScannedResult(decodedText);
                     newScanner.pause();
                 },
@@ -82,15 +87,28 @@ const QRModal = ({ isOpen, onClose, walletAddress }) => {
         setActiveTab(tab);
     };
 
+    const handleAddContact = () => {
+        // Here you would implement the logic to add the contact to the database
+        setContactAdded(true); // Update the button state to indicate contact has been added
+    };
+
+    const handleSendCrypto = () => {
+        if (scannedResult) {
+            onClose(); // Close the modal
+            navigate(`/send/${btoa(scannedResult)}`); // Navigate to the send page with the encoded address
+        }
+    };
+
+    const handleScanAgain = () => {
+        setScannedResult(null); // Clear the scanned result 
+        scanner.resume();
+    };
 
     if (!isOpen) return null;
 
     return (
         <div className="fixed inset-0 bg-neutral-900/70 backdrop-blur-sm flex items-center justify-center z-50">
-            <div
-                className="premium-panel p-6 rounded-xl w-[360px] mx-4 relative"
-                style={{ maxHeight: 'calc(100vh - 2rem)' }}
-            >
+            <div className="premium-panel p-6 rounded-xl w-[360px] mx-4 relative" style={{ maxHeight: 'calc(100vh - 2rem)' }}>
                 <button
                     onClick={handleClose}
                     className="absolute top-3 right-3 w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700 transition-colors"
@@ -147,11 +165,26 @@ const QRModal = ({ isOpen, onClose, walletAddress }) => {
                         </div>
                     ) : (
                         <div className="w-full">
-                            <div id="qr-reader" className="premium-panel rounded-xl overflow-hidden"/>
+                            <div id="qr-reader" className={`premium-panel rounded-xl overflow-hidden ${scannedResult && 'hidden'}`}/>
                             {scannedResult && (
                                 <div className="mt-4 p-4 premium-panel rounded-lg">
-                                <p className="text-sm text-gray-400">Scanned Address:</p>
+                                    <p className="text-sm text-gray-400">Address Found:</p>
                                     <p className="font-mono text-sm text-cyan-400 break-all">{scannedResult}</p>
+                                    <div className="grid grid-cols-1 gap-4 mt-4">
+                                        <button
+                                            className={`cyber-button ${contactAdded ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                            onClick={handleAddContact}
+                                            disabled={contactAdded}
+                                        >
+                                            {contactAdded ? 'Contact added' : 'Add contact'}
+                                        </button>
+                                        <button className="cyber-button" onClick={handleSendCrypto}>
+                                            Send Crypto
+                                        </button>
+                                        <button className="cyber-button" onClick={handleScanAgain}>
+                                            Scan Again
+                                        </button>
+                                    </div>
                                 </div>
                             )}
                         </div>

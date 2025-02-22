@@ -206,7 +206,7 @@ const Send = () => {
                     <h1 className="text-3xl font-bold neon-text">Send Crypto</h1>
                 </div>
 
-                <div className="premium-panel p-8 rounded-xl">
+                <div className="premium-panel p-4 md:p-8 rounded-xl">
                     <TokenBalanceSection walletData={walletData} />
 
                     <form onSubmit={handleSubmit} className="space-y-6">

@@ -9,7 +9,7 @@ const { userData } = useUser();
 
 return (
     <>
-        <div className="grid grid-cols-2 gap-4 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
             <div className="premium-panel p-4 rounded-lg">
                 <div className="flex items-center space-x-3">
                     <div className="p-2 bg-blue-500/10 rounded-full">

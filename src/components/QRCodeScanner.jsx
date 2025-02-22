@@ -1,18 +1,15 @@
-// src/components/QRCodeScanner.jsx
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Html5QrcodeScanner } from 'html5-qrcode';
 import { Loader2, X } from 'lucide-react';
+import toast from "react-hot-toast";
 
 const QRCodeScanner = ({ onScanResult, onClose }) => {
-    const scannerRef = useRef(null); // Use a ref to store the scanner instance
     const [loading, setLoading] = useState(true);
-    const [scanner, setScanner] = useState(null);
-    const [isScannerInitialized, setScannerInitialized] = useState(false); // State to track scanner initialization
 
     useEffect(() => {
         const qrEl = document.getElementById('qr-reader');
 
-        if (!qrEl) return; // Ensure the element exists
+        if (!qrEl) return; // Ensure the qr-reader element exists
 
         const newScanner = new Html5QrcodeScanner(
             "qr-reader",
@@ -24,11 +21,11 @@ const QRCodeScanner = ({ onScanResult, onClose }) => {
             false
         );
 
-        setScanner(newScanner);
-
         newScanner.render(
             (decodedText) => {
-                console.log('Scanned QR Code:', decodedText);
+                if (!decodedText.startsWith('0x') || decodedText.length !== 42) { 
+                    return;
+                }
                 onScanResult(decodedText); // Pass the scanned result to the parent
                 newScanner.pause(); // Pause the scanner after a successful scan
                 onClose(); // Close the scanner after scanning
@@ -39,7 +36,6 @@ const QRCodeScanner = ({ onScanResult, onClose }) => {
         );
 
         setLoading(false); // Set loading to false once the scanner is ready
-        setScannerInitialized(true); // Mark the scanner as initialized
 
         return () => {
             if (newScanner) {

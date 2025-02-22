@@ -13,7 +13,7 @@ const UserStats = () => {
         <section className="my-10 w-full max-w-screen-lg mx-auto">
 
             {/* Wallet Info */}
-            <div className="premium-panel p-6 rounded-xl">
+            <div className="premium-panel p-4 md:p-6 rounded-xl">
                 <h1 className="text-3xl font-bold neon-text mb-8">My Wallet</h1>
                 <div className="space-y-4">
                     <div className="premium-panel p-4 rounded-lg">

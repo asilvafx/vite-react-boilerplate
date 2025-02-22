@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import { ArrowRight, Rocket } from 'lucide-react';
 
 const CtaSection = () => {
@@ -32,11 +33,13 @@ const CtaSection = () => {
                       decentralized finance.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                      <Link to="/dashboard">
                       <button className="cyber-button group backdrop-blur-lg !px-8 !py-4 rounded-xl font-semibold
                                transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-blue-500/25">
                           <Rocket className="group-hover:translate-x-1 transition-transform duration-300 text-blue-600" size={20}/>
                           Launch App
                       </button>
+                      </Link>
                       <button className="bg-gray-900/30 hover:bg-gray-900/40 backdrop-blur-sm text-white !px-8 !py-4 rounded-xl font-semibold
                                transition-all duration-300 flex items-center justify-center gap-2 border border-white/10">
                           Join Community

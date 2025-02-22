@@ -2,6 +2,7 @@ import React from 'react';
 import {File, Shield, Rocket} from "lucide-react";
 import {Link} from 'react-router-dom';
 import {loadConfig} from '../lib/site';
+import {formatNumber} from '../lib/utils';
 
 const StatsSection  = () => {
 
@@ -11,14 +12,14 @@ const StatsSection  = () => {
         <section>
             {/* Token Stats Section */}
             <div className="w-full max-w-screen-lg mx-auto py-16">
-                <div className="premium-panel px-8 py-10 rounded-lg grid grid-cols-1 gap-12">
+                <div className="premium-panel px-4 md:px-8 py-6 md:py-10 rounded-lg grid grid-cols-1 gap-12">
                     <div className="space-y-6">
                         <h2 className="text-4xl font-bold mb-4 neon-text-intense bg-clip-text">$BOLT
                             Token</h2>
                         <p className="text-gray-400 text-lg max-w-md">
                             The native token powering the next generation of decentralized applications.
                         </p>
-                        <div className="grid grid-cols-2 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div className="premium-panel p-4 rounded-xl">
                                 <p className="text-sm text-gray-500">Blockchain</p>
                                 <p className="text-xl font-semibold text-white">{site.WEB3_CHAIN_NAME}</p>
@@ -29,7 +30,7 @@ const StatsSection  = () => {
                             </div>
                             <div className="premium-panel p-4 rounded-xl">
                                 <p className="text-sm text-gray-500">Total Supply</p>
-                                <p className="text-xl font-semibold text-white">{site.WEB3_CONTRACT_SUPPLY} {site.WEB3_CONTRACT_SYMBOL}</p>
+                                <p className="text-xl font-semibold text-white">{formatNumber(site.WEB3_CONTRACT_SUPPLY)} {site.WEB3_CONTRACT_SYMBOL}</p>
                             </div>
                             <div className="premium-panel p-4 rounded-xl">
                                 <p className="text-sm text-gray-500">Current Price</p>
@@ -59,8 +60,8 @@ const StatsSection  = () => {
                             </h3>
                             <div className="space-y-3">
                                 <div>
-                                    <p className="text-sm text-gray-500">Contract Address (ETH)</p>
-                                    <p className="text-gray-300 font-mono text-sm">0x742d35Cc6634C0532925a3b844Bc454e4438f44e</p>
+                                    <p className="text-sm text-gray-500">Contract Address ({loadConfig.WEB3_CHAIN_SYMBOL})</p>
+                                    <p className="text-gray-300 font-mono text-sm text-truncate">{loadConfig.WEB3_CONTRACT_ADDRESS}</p>
                                 </div>
                                 <div className="flex items-center gap-2 text-blue-400">
                                     <Shield size={16}/>
