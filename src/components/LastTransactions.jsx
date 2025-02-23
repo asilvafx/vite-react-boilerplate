@@ -26,7 +26,8 @@ const LastTransactions = () => {
     };
 
     return (
-        <section className="w-full max-w-screen-lg mx-auto premium-panel p-4 md:p-6 rounded-xl mb-10">
+        <section className="w-full max-w-screen-lg mx-auto mb-10">
+            <div className="premium-panel p-4 md:p-6 rounded-xl">
             <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center space-x-3">
                     <div className="p-2 bg-cyan-500/10 rounded-lg">
@@ -78,6 +79,7 @@ const LastTransactions = () => {
                 <span>Transactions</span>
                 <ArrowRight className="w-4 h-4"/>
             </Link>
+            </div>
         </section>
     )
 }

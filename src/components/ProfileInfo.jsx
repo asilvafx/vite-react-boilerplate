@@ -11,7 +11,8 @@ const ProfileInfo = () => {
     const {userData} = useUser();
 
     return (
-    <section className="w-full max-w-screen-lg mx-auto premium-panel p-4 md:p-6 rounded-xl mb-10">
+    <section className="w-full max-w-screen-lg mx-auto mb-10">
+        <div className="premium-panel p-4 md:p-6 rounded-xl">
         <div className="flex items-center space-x-3 mb-6">
             <div className="p-2 bg-cyan-500/10 rounded-lg">
                 <User className="w-6 h-6 premium-icon" />
@@ -52,6 +53,7 @@ const ProfileInfo = () => {
                 Manage Account
                 <ArrowRight className="w-4 h-4"/>
             </Link>
+        </div>
         </div>
     </section>
     )

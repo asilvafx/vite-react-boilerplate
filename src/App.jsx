@@ -13,6 +13,8 @@ import SiteUpdater from './context/SiteUpdater';
 */
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
+const Join = lazy(() => import('./pages/Join'));
+const Create = lazy(() => import('./pages/Create'));
 const Chests = lazy(() => import('./pages/Chests'));
 const Transactions = lazy(() => import('./pages/Transactions'));
 const Account = lazy(() => import('./pages/Account'));
@@ -80,7 +82,9 @@ const App = () => {
                         <Routes>
                             <Route path="/" element={<Home />} />
                             <Route element={<PrivateRoute />}>
-                                <Route path="/chests/create" element={<Chests create={true} />} />
+
+                                <Route path="/join/:id" element={<Join />} />
+                                <Route path="/create" element={<Create />} />
                                 <Route path="/chests" element={<Chests />} />
                                 <Route path="/transactions" element={<Transactions />} />
                                 <Route path="/account" element={<Account />} />
