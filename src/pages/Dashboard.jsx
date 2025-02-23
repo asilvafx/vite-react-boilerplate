@@ -11,6 +11,7 @@ import ContactList from '../components/ContactList';
 import WorldIDVerification from '../components/WorldIDVerification';
 import DailyReward from '../components/DailyReward';
 import Loading from '../components/Loading';
+import SectionTitle from "../components/SectionTitle";
 
 const Dashboard = () => {
     const { userData } = useUser ();
@@ -29,21 +30,21 @@ const Dashboard = () => {
                 <meta name='description' content={t('seo_description')}/>
             </Helmet>
 
-            <AppHeader />
-
-            <WorldIDVerification isVerified={userData?.is_verified} />
-            <UserStats />
-            <DailyReward />
-            <QuickActions />
+            <AppHeader/>
+            <SectionTitle title='My Wallet' />
+            <WorldIDVerification isVerified={userData?.is_verified}/>
+            <DailyReward/>
+            <UserStats/>
+            <QuickActions/>
             <ContactList
                 contacts={[
-                    { id: '1', name: 'Alice', address: '0x1234567890abcdef1234567890abcdef12345678' },
-                    { id: '2', name: 'Bob', address: '0xabcdef1234567890abcdef1234567890abcdef12' },
-                    { id: '3', name: 'Charlie', address: '0x7890abcdef1234567890abcdef1234567890abcd' },
+                    {id: '1', name: 'Alice', address: '0x1234567890abcdef1234567890abcdef12345678'},
+                    {id: '2', name: 'Bob', address: '0xabcdef1234567890abcdef1234567890abcdef12'},
+                    {id: '3', name: 'Charlie', address: '0x7890abcdef1234567890abcdef1234567890abcd'},
                 ]}
             />
-            <ManageAccount userData={userData} />
-            <AppFooter />
+            <ManageAccount userData={userData}/>
+            <AppFooter/>
         </>
     );
 };

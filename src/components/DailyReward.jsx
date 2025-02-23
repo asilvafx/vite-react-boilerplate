@@ -1,4 +1,3 @@
-// src/components/DailyReward.jsx
 import React, { useState, useEffect } from 'react';
 import { Trophy } from "lucide-react";
 import { toast } from "react-hot-toast";
@@ -51,8 +50,8 @@ const DailyReward = () => {
     };
 
     return (
-        <section className="mb-10 w-full max-w-screen-lg mx-auto">
-            <div className="premium-panel p-6 rounded-xl relative overflow-hidden">
+        <section className="w-full max-w-screen-lg mx-auto mb-10">
+            <div className="premium-panel p-4 md:p-6 rounded-xl relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-purple-500/5 rounded-full blur-3xl"/>
                 <div className="relative z-10">
                     <div className="flex items-center space-x-3 mb-4">

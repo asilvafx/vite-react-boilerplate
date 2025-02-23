@@ -44,7 +44,7 @@ const Navigation = () => {
             <div className="container mx-auto">
                 <div className="flex items-center justify-between">
 
-                    <div className={`flex items-center justify-between w-full pb-4`}>
+                    <div className={`flex items-center justify-between w-full pb-2`}>
                         {navItems.map((item) => {
                             const Icon = item.icon;
                             const isActive = location.pathname === item.path;

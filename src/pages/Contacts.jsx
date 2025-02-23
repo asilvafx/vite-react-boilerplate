@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 import AppHeader from "../components/AppHeader";
 import GoBack from "../components/GoBack";
 import AppFooter from "../components/AppFooter";
+import {shortenAddress} from "../lib/utils";
 
 const Contacts = () => {
     const [contacts, setContacts] = useState([
@@ -154,7 +155,7 @@ const Contacts = () => {
                                             </div>
                                             <div>
                                                 <p className="font-medium text-gray-200">{contact.name}</p>
-                                                <p className="text-sm text-gray-400 font-mono">{contact.address}</p>
+                                                <p className="text-sm text-gray-400 font-mono">{shortenAddress(contact.address)}</p>
                                             </div>
                                         </div>
                                         <div className="flex items-center space-x-2">

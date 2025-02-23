@@ -13,6 +13,7 @@ import { useUser  } from '../context/UserProvider';
 import { sendTransaction } from '../lib/web3';
 import { decryptHash } from '../lib/crypto';
 import { loadConfig } from '../lib/site';
+import SectionTitle from "../components/SectionTitle.jsx";
 
 const PaymentStatus = {
     NONE: 'none',
@@ -199,12 +200,9 @@ const Send = () => {
     return (
         <>
             <section className="w-full max-w-screen-lg mx-auto my-10">
-                <AppHeader />
+                <AppHeader backUrl='/dashboard' />
 
-                <div className="flex items-center justify-start gap-4 mb-8">
-                    <GoBack url="/dashboard"/>
-                    <h1 className="text-3xl font-bold neon-text">Send Crypto</h1>
-                </div>
+                <SectionTitle title='Send Crypto' />
 
                 <div className="premium-panel p-4 md:p-8 rounded-xl">
                     <TokenBalanceSection walletData={walletData} />

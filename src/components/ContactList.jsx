@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const ContactList = ({ contacts }) => {
     return (
         <section className="mb-10 w-full max-w-screen-lg mx-auto">
-            <div className="w-full premium-panel p-6 rounded-xl">
+            <div className="w-full premium-panel p-4 md:p-6 rounded-xl">
                 <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center space-x-3">
                         <div className="p-2 bg-cyan-500/10 rounded-lg">
@@ -13,7 +13,7 @@ const ContactList = ({ contacts }) => {
                         </div>
                         <h2 className="text-xl font-medium">Recent Contacts</h2>
                     </div>
-                    <Link to="/contacts" className="cyber-button flex items-center space-x-2">
+                    <Link to="/contacts" className="hidden md:flex cyber-button items-center space-x-2">
                         <span>View All</span>
                         <ArrowRight className="w-4 h-4"/>
                     </Link>
@@ -43,11 +43,11 @@ const ContactList = ({ contacts }) => {
                                         <Link
                                             to={`/send/${btoa(contact.address)}`}
                                         >
-                                            <button className="cyber-button flex items-center justify-center gap-2">
+                                            <button className="premium-border premium-bg px-3 py-2 uppercase shadow-sm text-sm font-semibold neon-text rounded-lg flex items-center justify-center gap-2">
 
                                                 <span>Send</span>
-                                                <SendHorizontal className="w-4 h-4" />
-                                                
+                                                <SendHorizontal className="w-3 h-3" />
+
                                             </button>
                                         </Link>
 
@@ -61,7 +61,13 @@ const ContactList = ({ contacts }) => {
                             <p className="text-gray-400">No contacts yet</p>
                         </div>
                     )}
+
                 </div>
+
+                <Link to="/contacts" className="mt-6 w-full cyber-button flex md:hidden items-center justify-between space-x-2">
+                    <span>View All</span>
+                    <ArrowRight className="w-4 h-4"/>
+                </Link>
             </div>
         </section>
         );

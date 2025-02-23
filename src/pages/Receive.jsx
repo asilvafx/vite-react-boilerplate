@@ -8,6 +8,7 @@ import AppFooter from "../components/AppFooter";
 import {getUserData} from "../lib/user";
 import { shortenAddress } from '../lib/utils';
 import {loadConfig} from '../lib/site';
+import SectionTitle from "../components/SectionTitle.jsx";
 
 const Receive = () => {
 
@@ -67,23 +68,11 @@ const Receive = () => {
     return (
         <>
         <section className="w-full max-w-screen-lg mx-auto my-10">
-            <AppHeader />
+            <AppHeader backUrl='/dashboard' />
 
-            <div className="flex items-center justify-start gap-4 mb-8">
-
-                <GoBack url="/dashboard"/>
-                <h1 className="text-3xl font-bold neon-text">Receive Crypto</h1>
-
-            </div>
+            <SectionTitle title='Receive Crypto' />
 
             <div className="premium-panel p-8 rounded-xl">
-
-                <div className="flex items-center space-x-3 mb-8">
-                    <div className="p-2 bg-cyan-500/10 rounded-lg">
-                        <Wallet className="w-6 h-6 premium-icon"/>
-                    </div>
-                    <h1 className="text-2xl font-medium">Receive Tokens</h1>
-                </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 mb-10">
 
@@ -93,21 +82,11 @@ const Receive = () => {
                             <QRCodeSVG
                                 id="wallet-qr"
                                 value={fullWalletAddress}
-                                size={200}
+                                size={800}
                                 level="H"
                                 includeMargin={true}
-                                className="w-48 h-48"
+                                className="max-w-full w-80 h-80 filter invert rounded-xl premium-border"
                             />
-                        </div>
-                        <div className="w-10/12 grid grid-cols-1 md:grid-cols-2 gap-4 mx-auto">
-                            <button onClick={downloadQR} className="w-full cyber-button flex items-center justify-center">
-                                <Download className="w-4 h-4 mr-2"/>
-                                Save QR
-                            </button>
-                            <button onClick={handleShare} className="w-full cyber-button flex items-center justify-center">
-                                <Share2 className="w-4 h-4 mr-2"/>
-                                Share
-                            </button>
                         </div>
                     </div>
 
@@ -144,9 +123,24 @@ const Receive = () => {
                             <div className="space-y-2">
                                 <div className="flex items-center space-x-2">
                                     <div className="w-2 h-2 rounded-full bg-purple-400"/>
-                                    <span className="text-gray-300">{loadConfig.WEB3_CHAIN_NAME} ({loadConfig.WEB3_CHAIN_SYMBOL})</span>
+                                    <span
+                                        className="text-gray-300">{loadConfig.WEB3_CHAIN_NAME} ({loadConfig.WEB3_CHAIN_SYMBOL})</span>
                                 </div>
                             </div>
+                        </div>
+
+                        {/* Action buttons */}
+                        <div className="w-full pt-6 md:pt-8 grid grid-cols-1 md:grid-cols-2 gap-4 mx-auto">
+                            <button onClick={downloadQR}
+                                    className="w-full cyber-button flex items-center justify-center">
+                                <Download className="w-4 h-4 mr-2"/>
+                                Save QR
+                            </button>
+                            <button onClick={handleShare}
+                                    className="w-full cyber-button flex items-center justify-center">
+                                <Share2 className="w-4 h-4 mr-2"/>
+                                Share
+                            </button>
                         </div>
 
                     </div>
@@ -158,7 +152,8 @@ const Receive = () => {
                 <div className="premium-panel p-4 rounded-lg bg-yellow-500/5 border border-yellow-500/10">
                     <p className="text-sm text-yellow-400">Important</p>
                     <p className="text-sm text-gray-400 mt-1">
-                        Only send {loadConfig.WEB3_CHAIN_SYMBOL} or {loadConfig.WEB3_CONTRACT_SYMBOL} tokens to this address. Sending other tokens may result in permanent
+                        Only send {loadConfig.WEB3_CHAIN_SYMBOL} or {loadConfig.WEB3_CONTRACT_SYMBOL} tokens to this
+                        address. Sending other tokens may result in permanent
                         loss.
                     </p>
                 </div>

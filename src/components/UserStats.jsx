@@ -14,7 +14,6 @@ const UserStats = () => {
 
             {/* Wallet Info */}
             <div className="premium-panel p-4 md:p-6 rounded-xl">
-                <h1 className="text-3xl font-bold neon-text mb-8">My Wallet</h1>
                 <div className="space-y-4">
                     <div className="premium-panel p-4 rounded-lg">
                         <div className="flex items-center justify-between mb-2">

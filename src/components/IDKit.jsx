@@ -70,7 +70,7 @@ const IDKit = () => {
                     verification_level={WLD_VerificationLevel}
                     handleVerify={handleVerify}
                     onSuccess={onSuccess}
-                    onError={onError} // Pass the onError function
+                    onError={onError}
                 >
                     {({ open }) => (
                         <button

@@ -39,16 +39,16 @@ const StatsSection  = () => {
                         </div>
                         <div className="w-full md:max-w-lg grid grid-cols-1 md:grid-cols-2 gap-4">
                             <Link to="/dashboard">
-                            <button className="cyber-button !py-4 w-full bg-opacity-95 font-medium
+                            <button className="cyber-button !py-4 w-full bg-opacity-95
                                    transition-all duration-300 flex justify-center items-center gap-2 backdrop-blur-lg">
                                 <Rocket size={20}/>
-                                Launch App
+                                <span className="neon-text-intense">Launch App</span>
                             </button>
                             </Link>
-                            <button className="cyber-button !py-4 w-full bg-opacity-95 bg-gray-800 hover:bg-gray-700 bg-opacity-90 backdrop-blur-lg text-white font-medium
+                            <button className="cyber-button !py-4 w-full bg-opacity-95 bg-gray-800 hover:bg-gray-700 bg-opacity-90 backdrop-blur-lg text-white
                                    transition-all duration-300 flex justify-center items-center gap-2">
                                 <File size={20}/>
-                                Whitepaper
+                                <span>Whitepaper</span>
                             </button>
                         </div>
                     </div>

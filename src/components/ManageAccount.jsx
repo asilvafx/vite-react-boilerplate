@@ -3,6 +3,7 @@ import { Label } from 'flowbite-react';
 import {toast} from "react-hot-toast";
 import {User} from "lucide-react";
 import {useUser} from "../context/UserProvider";
+import LanguageSelector from "./LanguageSelector.jsx";
 
 const ManageAccount = () => {
     const {userData} = useUser();
@@ -37,7 +38,7 @@ const ManageAccount = () => {
 
     return (
         <section className="w-full max-w-screen-lg mx-auto mb-10">
-            <div className="w-100 premium-panel p-6 rounded-xl mb-10">
+            <div className="w-100 premium-panel p-4 md:p-6 rounded-xl mb-10">
                 <div className="flex items-center space-x-3 mb-6">
                     <div className="p-2 bg-cyan-500/10 rounded-lg">
                         <User  className="w-6 h-6 premium-icon"/>
@@ -82,7 +83,7 @@ const ManageAccount = () => {
                             />
                         </div>
                         <button type="submit" className="cyber-button w-full">
-                            Update Profile
+                            <span>Update Profile</span>
                         </button>
                     </form>
                 )}
@@ -167,6 +168,7 @@ const ManageAccount = () => {
                     </div>
                 )}
             </div>
+            <LanguageSelector/>
         </section>
     );
 };

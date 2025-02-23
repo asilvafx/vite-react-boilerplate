@@ -7,9 +7,11 @@ import { useUser  } from '../context/UserProvider';
 import AppHeader from "../components/AppHeader";
 import GoBack from "../components/GoBack";
 import AppFooter from "../components/AppFooter";
+import TokenBalanceSection from '../components/TokenBalanceSection';
 import { decryptHash } from "../lib/crypto.js";
 import { sendTransaction } from '../lib/web3';
 import { loadConfig } from '../lib/site';
+import SectionTitle from "../components/SectionTitle.jsx";
 
 const PaymentStatus = {
     NONE: 'none',
@@ -34,6 +36,13 @@ const Exchange = () => {
     const userBalance = {
         chain: parseFloat(userData?.web3_network_token_balance),
         contract: parseFloat(userData?.web3_custom_token_balance)
+    };
+
+    const walletData = {
+        balances: {
+            [chainToken]: userBalance?.chain.toFixed(3),
+            [contractToken]: userBalance?.contract.toFixed(3)
+        }
     };
 
     // Construct the tokens object
@@ -200,108 +209,80 @@ const Exchange = () => {
     return (
         <>
         <section className="w-full max-w-screen-lg mx-auto my-10">
-            <AppHeader />
+            <AppHeader backUrl='/dashboard' />
+ 
+            <SectionTitle title='Token Exchange' />
 
-            <div className="flex items-center justify-start gap-4 mb-8">
-                <GoBack url="/dashboard"/>
-                <h1 className="text-3xl font-bold neon-text">Token Exchange</h1>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid gap-8">
                 {/* Exchange Form */}
                 <div className="premium-panel p-6 rounded-xl">
-                    <div className="flex items-center space-x-3 mb-6">
-                        <ArrowRightLeft className="w-6 h-6 premium-icon" />
-                        <h2 className="text-xl font-medium">Exchange Tokens</h2>
-                    </div>
-
+                    <TokenBalanceSection walletData={walletData}/>
+ 
                     <form onSubmit={handleExchange} className="space-y-6">
                         <div className="grid grid-cols-2 gap-4">
                             <div>
-                                    <Label htmlFor="fromToken" value="From" className="text-gray-300 mb-2" />
-                                    <select
-                                        id="fromToken"
-                                        className="bg-neutral-900/50 premium-border shadow-sm w-full rounded-lg"
-                                        value={exchangeData.fromToken}
-                                        onChange={(e) => setExchangeData({ ...exchangeData, fromToken: e.target.value })}
-                                        required
-                                    >
-                                        <option value={chainToken}>{chainToken}</option>
-                                        <option value={contractToken}>{contractToken}</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <Label htmlFor="toToken" value="To" className="text-gray-300 mb-2" />
-                                    <select
-                                        id="toToken"
-                                        className="bg-neutral-900/50 premium-border shadow-sm w-full rounded-lg"
-                                        value={exchangeData.toToken}
-                                        onChange={(e) => setExchangeData({ ...exchangeData, toToken: e.target.value })}
-                                        required
-                                    >
-                                        <option value={contractToken}>{contractToken}</option>
-                                        <option value={chainToken}>{chainToken}</option>
-                                    </select>
-                                </div>
+                                <Label htmlFor="fromToken" value="From" className="text-gray-300 mb-2"/>
+                                <select
+                                    id="fromToken"
+                                    className="bg-neutral-900/50 premium-border shadow-sm w-full rounded-lg"
+                                    value={exchangeData.fromToken}
+                                    onChange={(e) => setExchangeData({...exchangeData, fromToken: e.target.value})}
+                                    required
+                                >
+                                    <option value={chainToken}>{chainToken}</option>
+                                    <option value={contractToken}>{contractToken}</option>
+                                </select>
                             </div>
-
                             <div>
-                                <Label htmlFor="amount" value="Amount" className="text-gray-300 mb-2" />
-                                <input
-                                    id="amount"
-                                    type="number"
-                                    placeholder="0.00"
-                        value={exchangeData.amount}
-                        onChange={(e) => setExchangeData({ ...exchangeData, amount: e.target.value })}
-                        required
-                        className="text-3xl bg-neutral-900/50 premium-border shadow-sm w-full rounded-lg text-center" // Large font size for input
-                        />
-                </div>
-
-                <div className="p-4 premium-card rounded-lg">
-                    <p className="text-gray-400 mb-2">Estimated {exchangeData.toToken} to receive:</p>
-                    <p className="text-2xl font-medium neon-text">
-                        {exchangeData.amount ? calculateEstimate() : '0.000'} {exchangeData.toToken}
-                    </p>
-                </div>
-
-                <button type="submit" className="cyber-button w-full">
-                    Exchange Tokens
-                </button>
-            </form>
-        </div>
-
-        {/* Token Balances */}
-        <div className="premium-panel p-6 rounded-xl">
-            <div className="flex items-center space-x-3 mb-6">
-                <Wallet className="w-6 h-6 premium-icon" />
-                <h2 className="text-xl font-medium">Your Balances</h2>
-            </div>
-
-            <div className="space-y-4">
-                {Object.entries(tokens).map(([token, data]) => (
-                    <div key={token} className="p-4 premium-bg premium-border rounded-lg">
-                        <div className="flex justify-between items-center">
-                            <div>
-                                <p className="text-gray-400 mb-1">{token} Balance</p>
-                                <p className="text-2xl font-medium neon-text">{data.balance} {token}</p>
-                            </div>
-                            <div className="text-right">
-                                <p className="text-gray-400 mb-1">Price</p>
-                                <p className="text-lg font-medium text-cyan-400">${data.price}</p>
+                                <Label htmlFor="toToken" value="To" className="text-gray-300 mb-2"/>
+                                <select
+                                    id="toToken"
+                                    className="bg-neutral-900/50 premium-border shadow-sm w-full rounded-lg"
+                                    value={exchangeData.toToken}
+                                    onChange={(e) => setExchangeData({...exchangeData, toToken: e.target.value})}
+                                    required
+                                >
+                                    <option value={contractToken}>{contractToken}</option>
+                                    <option value={chainToken}>{chainToken}</option>
+                                </select>
                             </div>
                         </div>
-                    </div>
-                ))}
-            </div>
-        </div>
-        </div>
-</section>
-    <AppFooter />
 
-    {renderPaymentStatus()}
-</>
-);
+                        <div>
+                            <Label htmlFor="amount" value="Amount" className="text-gray-300 mb-2"/>
+                            <input
+                                id="amount"
+                                type="number"
+                                placeholder="0.00"
+                                value={exchangeData.amount}
+                                onChange={(e) => setExchangeData({...exchangeData, amount: e.target.value})}
+                                required
+                                className="text-3xl bg-neutral-900/50 premium-border shadow-sm w-full rounded-lg text-center" // Large font size for input
+                            />
+                        </div>
+
+                        <div className="p-4 premium-card rounded-lg">
+                            <p className="text-gray-400 mb-2">Estimated {exchangeData.toToken} to receive:</p>
+                            <p className="text-2xl font-medium neon-text">
+                                {exchangeData.amount ? calculateEstimate() : '0.000'} {exchangeData.toToken}
+                            </p>
+                        </div>
+
+                        <button type="submit" className="cyber-button w-full">
+                            Exchange Tokens
+                        </button>
+                    </form>
+                </div>
+
+                {/* Token Balances */}
+
+            </div>
+        </section>
+            <AppFooter/>
+
+            {renderPaymentStatus()}
+        </>
+    );
 };
 
 export default Exchange;

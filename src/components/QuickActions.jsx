@@ -5,12 +5,12 @@ import { Gauge, HandCoins, SendToBack, Send } from "lucide-react";
 const QuickActions = () => {
     return (
     <section className="mb-10 w-full max-w-screen-lg mx-auto">
-        <div className="premium-panel p-6 rounded-xl space-y-6 mb-10">
+        <div className="premium-panel p-4 md:p-6 rounded-xl space-y-6 mb-10">
             <div className="flex items-center space-x-3">
                 <div className="p-2 bg-emerald-500/10 rounded-lg">
-                    <Gauge className="w-5 h-5 text-emerald-400"/>
+                    <Gauge className="w-6 h-6 premium-icon"/>
                 </div>
-                <h3 className="text-lg font-medium">Quick Actions</h3>
+                <h3 className="text-xl font-medium">Quick Actions</h3>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
                 <Link to="/receive"

@@ -18,10 +18,12 @@ const LanguageSelector = () => {
     };
 
     return (
-        <div>
-            <div className="flex items-center space-x-3 mb-4">
-                <Globe className="w-4 h-4 text-cyan-400" />
-                <h4 className="text-md font-medium">Language</h4>
+        <div className="w-100 premium-panel p-4 md:p-6 rounded-xl">
+            <div className="flex items-center space-x-3 mb-6">
+                <div className="p-2 bg-cyan-500/10 rounded-lg">
+                    <Globe className="w-6 h-6 premium-icon" />
+                </div>
+                <h4 className="text-xl font-medium">Language</h4>
             </div>
             <select
                 onChange={handleLanguageChange}

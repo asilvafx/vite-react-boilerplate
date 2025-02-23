@@ -9,8 +9,8 @@ const WorldIDVerification = ({ isVerified }) => {
     }
 
     return (
-        <section className="my-10 w-full max-w-screen-lg mx-auto">
-            <div className="premium-panel p-6 rounded-xl relative overflow-hidden">
+        <section className="mb-10 w-full max-w-screen-lg mx-auto">
+            <div className="premium-panel p-4 md:p-6 rounded-xl relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/5 rounded-full blur-3xl"/>
                 <div className="relative z-10">
                     <div className="flex items-center space-x-3 mb-4">

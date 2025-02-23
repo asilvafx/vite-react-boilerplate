@@ -9,10 +9,13 @@ const PreFooter = () => {
             <div className="grid grid-cols-1 gap-8 mb-8">
                 {/* Disclaimer */}
                 <div className="premium-panel p-6 rounded-xl bg-yellow-500/5">
-                    <div className="flex items-start space-x-3 p-2">
-                        <AlertTriangle className="w-5 h-5 text-yellow-400 mt-1 flex-shrink-0"/>
+                    <div className="flex items-start space-x-3">
+
                         <div className="space-y-2">
-                            <h3 className="text-lg font-medium text-yellow-400">Risk Disclaimer</h3>
+                            <div className="flex gap-2 items-center">
+                                <AlertTriangle className="w-5 h-5 fill-yellow-400"/>
+                                <h3 className="text-lg font-medium text-yellow-400">Risk Disclaimer</h3>
+                            </div>
                             <div className="space-y-2 text-sm text-gray-400">
                                 <p>
                                     Cryptocurrency trading and gambling involve substantial risk and may not be suitable
@@ -37,7 +40,7 @@ const PreFooter = () => {
                 </div>
 
                 <div className="w-full grid grid-cols-1 md:grid-cols-2 p-4 gap-8">
-                    <div className="order-2 md:order-1">
+                    <div>
                         <div className="w-full flex items-center space-x-3 mb-4">
                             <h4 className="text-md font-medium">{loadConfig.WEB3_CONTRACT_NAME}</h4>
                         </div>
@@ -58,8 +61,8 @@ const PreFooter = () => {
                             &copy; {new Date().getFullYear()} PIGMIL. All rights reserved.
                         </p>
                     </div>
-                    <div className="order-1 md:order-2">
-                        <LanguageSelector/>
+                    <div className="text-end">
+                        <span>Powered by Web3</span>
                     </div>
                 </div>
 
