@@ -148,7 +148,7 @@ h1, h2, h3, h4, h5, h6 {
             0 0 20px rgba(0, 255, 255, 0.1);
 }
 
-.cyber-button, button.cm__btn, #html5-qrcode-button-camera-permission, #html5-qrcode-button-camera-stop {
+.cyber-button, button.cm__btn, #html5-qrcode-button-camera-permission, #html5-qrcode-button-camera-stop, #html5-qrcode-button-camera-start {
     @apply relative px-6 py-3 bg-gradient-to-r from-cyan-500/10 to-cyan-400/5
     text-cyan-300 font-bold tracking-wide uppercase text-sm
     border border-cyan-500/20 rounded-lg transition-all duration-300
@@ -195,6 +195,24 @@ h1, h2, h3, h4, h5, h6 {
     @apply text-transparent bg-clip-text font-medium;
     background-image: linear-gradient(135deg, #22d3ee 0%, #0ea5e9 100%);
 }
+#html5-qrcode-select-camera {
+    background: radial-gradient(var(--clr-dark) 0%, #000000 100%);
+    border: 1px solid var(--premium-border);
+    border-radius: 10px;
+    box-shadow: 0 -1px 0 rgba(0, 255, 255, 0.05), 0 1px 0 rgba(0, 255, 255, 0.05);
+    margin: .5rem 0 1rem 0;
+}
+#html5-qrcode-anchor-scan-type-change {
+    margin-top: .5rem;
+}
+#qr-reader div img {
+    filter: invert(1);
+    margin: .5rem;
+}
+#qr-reader__scan_region img {
+    margin: auto;
+    filter: invert(1);
+}
 .top-nav {
     top: 0;
     left: 0;
@@ -233,8 +251,8 @@ h1, h2, h3, h4, h5, h6 {
 .secondary-color {
     color: var(--secondary);
 }
-.modal {
-    z-index: 999;
+#modal, .modal {
+    z-index: 9999;
 }
 ul li {
     list-style: none;

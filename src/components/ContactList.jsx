@@ -14,7 +14,7 @@ const ContactList = ({ contacts }) => {
                         <h2 className="text-xl font-medium">Recent Contacts</h2>
                     </div>
                     <Link to="/contacts" className="hidden md:flex cyber-button items-center space-x-2">
-                        <span>View All</span>
+                        <span>Contacts</span>
                         <ArrowRight className="w-4 h-4"/>
                     </Link>
                 </div>
@@ -65,7 +65,7 @@ const ContactList = ({ contacts }) => {
                 </div>
 
                 <Link to="/contacts" className="mt-6 w-full cyber-button flex md:hidden items-center justify-between space-x-2">
-                    <span>View All</span>
+                    <span>Contacts</span>
                     <ArrowRight className="w-4 h-4"/>
                 </Link>
             </div>

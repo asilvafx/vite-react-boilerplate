@@ -149,11 +149,12 @@ const QRModal = ({ isOpen, onClose, walletAddress }) => {
                         <div className="premium-panel p-4 rounded-xl ">
                             <QRCodeSVG
                                 value={walletAddress}
-                                size={200}
+                                size={250}
                                 level="H"
-                                includeMargin={true}
+                                className="filter invert premium-border rounded-xl"
+
                             />
-                            <div className="w-full premium-panel flex items-center justify-between mt-4 p-2 gap-2">
+                            <div className="w-full premium-bg premium-border rounded-lg flex items-center justify-between mt-4 p-2 gap-2">
                                 <p>{shortenAddress(walletAddress)}</p>
                                 <button
                                     onClick={() => copyToClipboard(walletAddress, 'Wallet address copied to clipboard')}

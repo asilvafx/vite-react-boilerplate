@@ -2,12 +2,15 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import DBService from '../data/db.service';
 import Cookies from "js-cookie";
-import { getTokenBalance } from "../lib/web3";
+import {getGasPrice, getTokenBalance} from "../lib/web3";
 import { decryptHash, encryptHash } from "../lib/crypto";
 import {loadConfig} from '../lib/site';
 
 const SiteUpdater = () => {
     const location = useLocation(); // Get the current location
+
+    // Set update interval in minutes
+    const UPDATE_TIME = 1;
 
     async function fetchExchangeRate() {
         try {
@@ -46,11 +49,15 @@ const SiteUpdater = () => {
         // Fetch the exchange rate for POL in USD
         const exchangeRate = await fetchExchangeRate();
 
+        // Fetch the latest gas price
+        const gasPrice = await getGasPrice();
+
         const updateData = {
+            gasPrice: gasPrice,
             tokenBalance: tokenBalance,
             chainBalance: chainBalance,
             lastUpdated: currentTime,
-            exchangeRate: exchangeRate // Include the exchange rate in the update data
+            exchangeRate: exchangeRate
         };
 
         try {
@@ -121,8 +128,8 @@ const SiteUpdater = () => {
         const currentTime = Date.now(); // Get current time in milliseconds
         const totalDifference = currentTime - timestamp;
 
-        // Check if the difference is greater than 5 minutes (5 * 60 * 1000 milliseconds)
-        return totalDifference > (5 * 60 * 1000);
+        // Check if the difference is greater than x minutes (x * 60 * 1000 milliseconds)
+        return totalDifference > (UPDATE_TIME * 60 * 1000);
     }
 
     return null; // This component does not render anything

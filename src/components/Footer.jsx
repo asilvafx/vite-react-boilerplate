@@ -2,7 +2,7 @@ import React from 'react';
 import { Mail, Heart } from 'lucide-react';
 import { FaXTwitter, FaDiscord, FaGithubAlt } from "react-icons/fa6";
 import { FaTelegramPlane } from "react-icons/fa";
-
+import PreFooter from '../components/PreFooter';
 const footerMenuItems = [
     {
         title: "Protocol",
@@ -63,30 +63,11 @@ const Footer = () => {
                         </div>
                     ))}
                 </div>
-
                 {/* Bottom Section */}
                 <div className="py-10 border-t border-gray-800">
-                    <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-                        <div className="flex items-center gap-6">
-                            <a href="#" className="w-10 h-10 rounded-full bg-neutral-800 hover:bg-neutral-900 flex items-center justify-center transition-colors duration-200">
-                                <FaGithubAlt size={20} className="text-gray-300" />
-                            </a>
-                            <a href="#" className="w-10 h-10 rounded-full bg-neutral-800 hover:bg-neutral-900 flex items-center justify-center transition-colors duration-200">
-                                <FaXTwitter size={20} className="text-gray-300" />
-                            </a>
-                            <a href="#" className="w-10 h-10 rounded-full bg-neutral-800 hover:bg-neutral-900 flex items-center justify-center transition-colors duration-200">
-                                <FaTelegramPlane size={20} className="text-gray-300" />
-                            </a>
-                            <a href="#" className="w-10 h-10 rounded-full bg-neutral-800 hover:bg-neutral-900 flex items-center justify-center transition-colors duration-200">
-                                <FaDiscord size={20} className="text-gray-300" />
-                            </a>
-                        </div>
-                        <div className="flex items-center gap-2 text-sm text-gray-400">
-                            <span>Built with</span>
-                            <Heart size={16} className="text-blue-500 animate-pulse" />
-                            <span>&copy; {new Date().getFullYear()} PIGMIL. All rights reserved.</span>
-                        </div>
-                    </div>
+
+                    <PreFooter hideDisclaimer={true} />
+
                 </div>
             </div>
         </footer>

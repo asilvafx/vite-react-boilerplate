@@ -13,6 +13,9 @@ import SiteUpdater from './context/SiteUpdater';
 */
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
+const Chests = lazy(() => import('./pages/Chests'));
+const Transactions = lazy(() => import('./pages/Transactions'));
+const Account = lazy(() => import('./pages/Account'));
 const Contacts = lazy(() => import('./pages/Contacts'));
 const Receive = lazy(() => import('./pages/Receive'));
 const Exchange = lazy(() => import('./pages/Exchange'));
@@ -77,6 +80,10 @@ const App = () => {
                         <Routes>
                             <Route path="/" element={<Home />} />
                             <Route element={<PrivateRoute />}>
+                                <Route path="/chests/create" element={<Chests create={true} />} />
+                                <Route path="/chests" element={<Chests />} />
+                                <Route path="/transactions" element={<Transactions />} />
+                                <Route path="/account" element={<Account />} />
                                 <Route path="/contacts" element={<Contacts />} />
                                 <Route path="/receive" element={<Receive />} />
                                 <Route path="/exchange" element={<Exchange />} />

@@ -10,7 +10,7 @@ import AppFooter from "../components/AppFooter";
 import TokenBalanceSection from '../components/TokenBalanceSection';
 import { decryptHash } from "../lib/crypto.js";
 import { sendTransaction } from '../lib/web3';
-import { loadConfig } from '../lib/site';
+import {getSiteData, loadConfig} from '../lib/site';
 import SectionTitle from "../components/SectionTitle.jsx";
 
 const PaymentStatus = {
@@ -77,6 +77,11 @@ const Exchange = () => {
         const fromTokenBalance = tokens[exchangeData.fromToken].balance;
         if (amountToExchange > fromTokenBalance) {
             toast.error(`Insufficient ${exchangeData.fromToken} balance.`);
+            return;
+        }
+
+        if(userData.web3_network_token_balance < getSiteData().gasPrice){
+            toast.error(`Insufficient ${loadConfig.WEB3_CHAIN_SYMBOL} balance to cover the network costs.`);
             return;
         }
 
@@ -218,7 +223,7 @@ const Exchange = () => {
                 <div className="premium-panel p-6 rounded-xl">
                     <TokenBalanceSection walletData={walletData}/>
  
-                    <form onSubmit={handleExchange} className="space-y-6">
+                    <form onSubmit={handleExchange} className="space-y-6 mt-6">
                         <div className="grid grid-cols-2 gap-4">
                             <div>
                                 <Label htmlFor="fromToken" value="From" className="text-gray-300 mb-2"/>

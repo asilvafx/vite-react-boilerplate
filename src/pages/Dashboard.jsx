@@ -6,12 +6,13 @@ import AppHeader from '../components/AppHeader';
 import AppFooter from '../components/AppFooter';
 import UserStats from '../components/UserStats';
 import QuickActions from '../components/QuickActions';
-import ManageAccount from '../components/ManageAccount';
 import ContactList from '../components/ContactList';
 import WorldIDVerification from '../components/WorldIDVerification';
 import DailyReward from '../components/DailyReward';
 import Loading from '../components/Loading';
 import SectionTitle from "../components/SectionTitle";
+import ProfileInfo from "../components/ProfileInfo";
+import LastTransactions from '../components/LastTransactions';
 
 const Dashboard = () => {
     const { userData } = useUser ();
@@ -31,9 +32,10 @@ const Dashboard = () => {
             </Helmet>
 
             <AppHeader/>
-            <SectionTitle title='My Wallet' />
+            <SectionTitle title='My Account' />
             <WorldIDVerification isVerified={userData?.is_verified}/>
             <DailyReward/>
+            <ProfileInfo />
             <UserStats/>
             <QuickActions/>
             <ContactList
@@ -43,7 +45,7 @@ const Dashboard = () => {
                     {id: '3', name: 'Charlie', address: '0x7890abcdef1234567890abcdef1234567890abcd'},
                 ]}
             />
-            <ManageAccount userData={userData}/>
+            <LastTransactions />
             <AppFooter/>
         </>
     );

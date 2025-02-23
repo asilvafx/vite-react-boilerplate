@@ -43,7 +43,7 @@ const ManageAccount = () => {
                     <div className="p-2 bg-cyan-500/10 rounded-lg">
                         <User  className="w-6 h-6 premium-icon"/>
                     </div>
-                    <h2 className="text-xl font-medium">Manage Account</h2>
+                    <h2 className="text-xl font-medium">Account Details</h2>
                 </div>
 
                 <div className="flex space-x-4 mb-6">

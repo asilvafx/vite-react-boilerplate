@@ -18,8 +18,6 @@ const Receive = () => {
     const walletAddress = shortenAddress(userData?.web3_address);
     const fullWalletAddress = userData?.web3_address;
 
-    const [showFullAddress, setShowFullAddress] = useState(false);
-
     const copyToClipboard = () => {
         navigator.clipboard.writeText(fullWalletAddress);
         toast.success('Wallet address copied to clipboard', {
@@ -84,7 +82,6 @@ const Receive = () => {
                                 value={fullWalletAddress}
                                 size={800}
                                 level="H"
-                                includeMargin={true}
                                 className="max-w-full w-80 h-80 filter invert rounded-xl premium-border"
                             />
                         </div>
@@ -97,16 +94,10 @@ const Receive = () => {
                                 <div>
                                     <p className="text-sm text-gray-400 mb-1">Wallet Address</p>
                                     <p className="font-medium font-mono">
-                                        {showFullAddress ? fullWalletAddress : walletAddress}
+                                        {walletAddress}
                                     </p>
                                 </div>
                                 <div className="flex space-x-2">
-                                    <button
-                                        onClick={() => setShowFullAddress(!showFullAddress)}
-                                        className="p-2 text-gray-400 hover:text-gray-300 transition-colors"
-                                    >
-                                        <QrCode className="w-5 h-5"/>
-                                    </button>
                                     <button
                                         onClick={copyToClipboard}
                                         className="p-2 text-gray-400 hover:text-gray-300 transition-colors"

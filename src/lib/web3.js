@@ -1,5 +1,6 @@
 import Web3 from 'web3';
 import {loadConfig} from './site';
+import {string} from "prop-types";
 
 const balanceOfABI = [
     {
@@ -60,9 +61,40 @@ export const validateWallet = async (address) => {
     }
     return web3.utils.isAddress(address);
 }
+export const getGasPrice = async () => {
+    if (!web3) {
+        return ('Please ensure you have a valid RPC provider, and try again.');
+    }
+
+    const gasPrice = await web3.eth.getGasPrice();
+    const ethPrice = web3.utils.fromWei(gasPrice, "Gwei");
+    const ratePrice = parseFloat(ethPrice / 10000);
+    return ratePrice.toFixed(3);
+}
 export const createWallet = async () => {
     if (!web3) {
         return ('Please ensure you have a valid RPC provider, and try again.');
+    }
+
+    return web3.eth.accounts.create();
+}
+export const getTxStatus = async (hash) => {
+    if (!web3) {
+        return ('Please ensure you have a valid RPC provider, and try again.');
+    }
+
+    try {
+        // Get transaction receipt
+        const receipt = await web3.eth.getTransactionReceipt(hash);
+
+        if(receipt) { 
+            // Return data
+            return receipt;
+        } else {
+            return ('Transaction is not mined yet or does not exist.');
+        }
+    } catch (error) {
+        return ('Error fetching transaction status: ' + error);
     }
 
     return web3.eth.accounts.create();
@@ -72,9 +104,8 @@ export const sendTransaction = async (amountToSend, destinationAddress, tokenHol
 
     try {
         const amountInWei = web3.utils.toWei(amountToSend, "ether");
-        const signer = web3.eth.accounts.privateKeyToAccount(holderSecretKey);
-
-        web3.eth.accounts.wallet.add(signer);
+        //const signer = web3.eth.accounts.privateKeyToAccount(holderSecretKey);
+        //web3.eth.accounts.wallet.add(signer);
 
         const nonce = await web3.eth.getTransactionCount(tokenHolder);
         const gasPrice = await web3.eth.getGasPrice();
@@ -91,7 +122,7 @@ export const sendTransaction = async (amountToSend, destinationAddress, tokenHol
                 value: amountInWei,
                 nonce: web3.utils.toHex(nonce),
                 gasPrice: web3.utils.toHex(gasPrice),
-                gasLimit: web3.utils.toHex(gasLimit),
+                gas: web3.utils.toHex(gasLimit),
             };
         } else {
 

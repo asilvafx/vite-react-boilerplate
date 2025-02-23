@@ -67,6 +67,7 @@ const IDKit = () => {
                 <IDKitWidget
                     app_id={WLD_AppId}
                     action={WLD_Action}
+                    signal={WLD_Action}
                     verification_level={WLD_VerificationLevel}
                     handleVerify={handleVerify}
                     onSuccess={onSuccess}

@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Send as SendIcon, Camera, AlertCircle, Loader2, Check, X, ArrowRight } from 'lucide-react';
+import { Send as SendIcon, Scan, AlertCircle, Loader2, Check, X, ArrowRight } from 'lucide-react';
 import { Label } from 'flowbite-react';
 import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
-import GoBack from "../components/GoBack";
 import AppHeader from "../components/AppHeader";
 import AppFooter from "../components/AppFooter";
 import TokenBalanceSection from '../components/TokenBalanceSection';
 import QRCodeScanner from '../components/QRCodeScanner';
 import { useUser  } from '../context/UserProvider';
-import { sendTransaction } from '../lib/web3';
+import { sendTransaction} from '../lib/web3';
 import { decryptHash } from '../lib/crypto';
-import { loadConfig } from '../lib/site';
+import { loadConfig, getSiteData } from '../lib/site';
 import SectionTitle from "../components/SectionTitle.jsx";
 
 const PaymentStatus = {
@@ -36,6 +35,7 @@ const Send = () => {
     const [isScannerOpen, setScannerOpen] = useState(false);
 
     useEffect(() => {
+
         // Check if address exists in URL params
         if (address) {
             // Validate if the address is a valid Base64 string
@@ -85,6 +85,11 @@ const Send = () => {
 
         if (!formData.address.startsWith('0x') || formData.address.length !== 42) {
             toast.error('Please enter a valid wallet address');
+            return false;
+        }
+
+        if(userData.web3_network_token_balance < getSiteData().gasPrice){
+            toast.error(`Insufficient ${loadConfig.WEB3_CHAIN_SYMBOL} balance to cover the network costs.`);
             return false;
         }
 
@@ -207,7 +212,7 @@ const Send = () => {
                 <div className="premium-panel p-4 md:p-8 rounded-xl">
                     <TokenBalanceSection walletData={walletData} />
 
-                    <form onSubmit={handleSubmit} className="space-y-6">
+                    <form onSubmit={handleSubmit} className="space-y-6 mt-6">
                         <div>
                             <Label htmlFor="token" value="Select Token" className="text-gray-300 mb-2"/>
                             <select
@@ -242,9 +247,9 @@ const Send = () => {
                                 <button
                                     type="button"
                                     onClick={() => setScannerOpen(true)} // Open QR scanner
-                                    className="absolute top-50 right-3 p-2  transition-colors"
+                                    className="absolute top-0 bottom-0 right-3 p-2 transition-colors"
                                 >
-                                    <Camera className="w-5 h-5 text-gray-400"/>
+                                    <Scan color="gray" className="w-5 h-5 "/>
                                 </button>
                             </div>
                         </div>

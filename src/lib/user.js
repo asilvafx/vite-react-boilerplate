@@ -2,9 +2,7 @@
 import Cookies from 'js-cookie';
 import { encryptHash, decryptHash } from './crypto.js';
 import DBService from "../data/db.service.js";
-import { getTokenBalance } from "./web3.js";
-import { useUser } from '../context/UserProvider';
-
+import { getTokenBalance } from "./web3.js"; 
 export const getUserData = () => {
     const loggedIn = Cookies.get('isLoggedIn') === 'true';
     const uData = Cookies.get('uData');
@@ -43,6 +41,10 @@ export const checkLoginStatus = async () => {
 
 export const updateData = async (userData) => {
     // Fetch the current token balances
+    if(!userData){
+        userData = await getUserData();
+    }
+
     const fetchTokenBalance = await getTokenBalance(userData.web3_address);
     const fetchChainBalance = await getTokenBalance(userData.web3_address, true);
 

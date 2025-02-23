@@ -12,6 +12,12 @@ export const loadConfig = {
     WEB3_CONTRACT_ADDRESS: "0xcAe70C1E0d33484D157F13CF04C554512ED225f6",
 };
 
+export const loadEnv = {
+    WEB3_MASTER_ADDRESS: process.env.WEB3_MASTER_ADDRESS,
+    WEB3_MASTER_PK: process.env.WEB3_MASTER_PK
+
+};
+
 export const getSiteData = () => {
     const sData = Cookies.get('site');
 
