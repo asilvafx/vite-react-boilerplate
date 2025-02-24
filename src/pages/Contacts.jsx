@@ -1,29 +1,37 @@
-import React, { useState } from 'react';
-import { Users, Plus, Trash2, Copy, Check } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { Users, Plus, Trash2, Copy, Check, Edit } from 'lucide-react';
 import { Label } from 'flowbite-react';
 import toast from 'react-hot-toast';
 import AppHeader from "../components/AppHeader";
-import GoBack from "../components/GoBack";
+import SectionTitle from "../components/SectionTitle";
 import AppFooter from "../components/AppFooter";
-import {shortenAddress} from "../lib/utils";
+import { shortenAddress } from "../lib/utils";
+import DBService from '../data/db.service';
+import { useUser  } from '../context/UserProvider';
+import {updateData} from "../lib/user"; 
 
 const Contacts = () => {
-    const [contacts, setContacts] = useState([
-        { id: '1', name: 'Alice', address: '0x1234567890abcdef1234567890abcdef12345678' },
-        { id: '2', name: 'Bob', address: '0xabcdef1234567890abcdef1234567890abcdef12' },
-        { id: '3', name: 'Charlie', address: '0x7890abcdef1234567890abcdef1234567890abcd' },
-    ]);
+    const { userData } = useUser ();
+    const [contacts, setContacts] = useState([]);
 
     const [searchTerm, setSearchTerm] = useState('');
     const [showAddForm, setShowAddForm] = useState(false);
     const [newContact, setNewContact] = useState({ name: '', address: '' });
+    const [editContactId, setEditContactId] = useState(null); // Track which contact is being edited
+
+    // Load user contacts when the component mounts
+    useEffect(() => {
+        if (userData?.contacts && userData.contacts.length > 0) {
+            setContacts(userData.contacts);
+        }
+    }, [userData]);
 
     const filteredContacts = contacts.filter(contact =>
         contact.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         contact.address.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    const handleAddContact = (e) => {
+    const handleAddContact = async (e) => {
         e.preventDefault();
 
         if (!newContact.address.startsWith('0x') || newContact.address.length !== 42) {
@@ -41,15 +49,61 @@ const Contacts = () => {
             return;
         }
 
-        setContacts([...contacts, { ...newContact, id: Date.now().toString() }]);
+        // Add the new contact to the local state
+        const updatedContacts = [...contacts, { ...newContact, id: Date.now().toString() }];
+        setContacts(updatedContacts);
         setNewContact({ name: '', address: '' });
         setShowAddForm(false);
         toast.success('Contact added successfully');
+
+        // Save the new contact to the database
+        let userId = userData?.uid;
+        if (!userId) {
+            userId = await DBService.getItemKey('email', userData.email, 'users');
+        }
+        await DBService.update(userId, { contacts: updatedContacts }, 'users'); // Update the user's contacts in the database
+        await updateData();
     };
 
-    const handleDeleteContact = (id) => {
-        setContacts(contacts.filter(c => c.id !== id));
+    const handleEditContact = async (e) => {
+        e.preventDefault();
+
+        if (!newContact.address.startsWith('0x') || newContact.address.length !== 42) {
+            toast.error('Please enter a valid wallet address');
+            return;
+        }
+
+        const updatedContacts = contacts.map(contact =>
+            contact.id === editContactId ? { ...contact, ...newContact } : contact
+        );
+
+        setContacts(updatedContacts);
+        setNewContact({ name: '', address: '' });
+        setShowAddForm(false);
+        setEditContactId(null); // Reset edit contact ID
+        toast.success('Contact updated successfully');
+
+        // Update the contacts in the database
+        let userId = userData?.uid;
+        if (!userId) {
+            userId = await DBService.getItemKey('email', userData.email, 'users');
+        }
+        await DBService.update(userId, { contacts: updatedContacts }, 'users'); // Update the user's contacts in the database
+        await updateData();
+    };
+
+    const handleDeleteContact = async (id) => {
+        const updatedContacts = contacts.filter(c => c.id !== id);
+        setContacts(updatedContacts);
         toast.success('Contact deleted successfully');
+
+        // Update the contacts in the database
+        let userId = userData?.uid;
+        if (!userId) {
+            userId = await DBService.getItemKey('email', userData.email, 'users');
+        }
+        await DBService.update(userId, { contacts: updatedContacts }, 'users'); // Update the user's contacts in the database
+        await updateData();
     };
 
     const copyToClipboard = (address) => {
@@ -63,12 +117,8 @@ const Contacts = () => {
     return (
         <>
             <section className="w-full max-w-screen-lg mx-auto my-10">
-                <AppHeader />
-
-                <div className="flex items-center justify-start gap-4 mb-8">
-                    <GoBack url="/dashboard"/>
-                    <h1 className="text-3xl font-bold neon-text">Contacts</h1>
-                </div>
+                <AppHeader backUrl="/dashboard" />
+                <SectionTitle title="Contacts" />
 
                 <div className="premium-panel p-6 rounded-xl">
                     {/* Search and Add */}
@@ -94,7 +144,7 @@ const Contacts = () => {
                     {/* Add Contact Form */}
                     {showAddForm && (
                         <div className="premium-panel p-6 rounded-lg mb-6 bg-cyan-500/5">
-                            <form onSubmit={handleAddContact} className="space-y-4">
+                            <form onSubmit={editContactId ? handleEditContact : handleAddContact} className="space-y-4">
                                 <div>
                                     <Label htmlFor="name" value="Contact Name" className="text-gray-300 mb-2" />
                                     <input
@@ -112,7 +162,7 @@ const Contacts = () => {
                                     <Label htmlFor="address" value="Wallet Address" className="text-gray-300 mb-2" />
                                     <input
                                         className="bg-neutral-900/50 premium-border shadow-sm w-full rounded-lg"
-                                        id=" address"
+                                        id="address"
                                         type="text"
                                         placeholder="0x..."
                                         value={newContact.address}
@@ -124,11 +174,15 @@ const Contacts = () => {
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <button type="submit" className="w-full cyber-button flex items-center justify-center">
                                         <Check className="w-4 h-4 mr-2" />
-                                        Save Contact
+                                        {editContactId ? 'Update Contact' : 'Save Contact'}
                                     </button>
                                     <button
                                         type="button"
-                                        onClick={() => setShowAddForm(false)}
+                                        onClick={() => {
+                                            setShowAddForm(false);
+                                            setNewContact({ name: '', address: '' });
+                                            setEditContactId(null); // Reset edit contact ID
+                                        }}
                                         className="w-full cyber-button flex items-center justify-center bg-gray-800"
                                     >
                                         Cancel
@@ -149,9 +203,9 @@ const Contacts = () => {
                                     <div className="flex items-center justify-between">
                                         <div className="flex items-center space-x-4">
                                             <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-500/20 to-blue-500/10 flex items-center justify-center">
-                        <span className="text-lg font-medium text-cyan-400">
-                          {contact.name[0].toUpperCase()}
-                        </span>
+                                                <span className="text-lg font-medium text-cyan-400">
+                                                    {contact.name[0].toUpperCase()}
+                                                </span>
                                             </div>
                                             <div>
                                                 <p className="font-medium text-gray-200">{contact.name}</p>
@@ -160,10 +214,14 @@ const Contacts = () => {
                                         </div>
                                         <div className="flex items-center space-x-2">
                                             <button
-                                                onClick={() => copyToClipboard(contact.address)}
+                                                onClick={() => {
+                                                    setNewContact({ name: contact.name, address: contact.address });
+                                                    setEditContactId(contact.id); // Set the ID of the contact being edited
+                                                    setShowAddForm(true);
+                                                }}
                                                 className="p-2 text-gray-400 hover:text-gray-300 transition-colors"
                                             >
-                                                <Copy className="w-4 h-4" />
+                                                <Edit className="w-4 h-4" />
                                             </button>
                                             <button
                                                 onClick={() => handleDeleteContact(contact.id)}

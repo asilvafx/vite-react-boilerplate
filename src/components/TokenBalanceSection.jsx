@@ -10,7 +10,7 @@ const TokenBalanceSection = () => {
 
     const userBalance = {
         chain: parseFloat(userData?.web3_network_token_balance),
-        contract: parseFloat(userData?.web3_custom_token_balance)
+        contract: parseFloat(userData?.web3_available_balance)
     };
 
     function calculateRate(amount, currency) {

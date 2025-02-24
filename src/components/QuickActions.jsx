@@ -37,7 +37,7 @@ const actionLinks = [
 const QuickActions = () => {
     return (
         <section className="mb-10 w-full max-w-screen-lg mx-auto">
-            <div className="premium-panel p-4 md:p-6 rounded-xl space-y-6 mb-10">
+            <div className="premium-panel p-4 md:p-6 rounded-xl space-y-6">
                 <div className="flex items-center space-x-3">
                     <div className="p-2 bg-emerald-500/10 rounded-lg">
                         <Gauge className="w-6 h-6 premium-icon" />

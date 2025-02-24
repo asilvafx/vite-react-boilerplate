@@ -39,11 +39,7 @@ const Dashboard = () => {
             <UserStats/>
             <QuickActions/>
             <ContactList
-                contacts={[
-                    {id: '1', name: 'Alice', address: '0x1234567890abcdef1234567890abcdef12345678'},
-                    {id: '2', name: 'Bob', address: '0xabcdef1234567890abcdef1234567890abcdef12'},
-                    {id: '3', name: 'Charlie', address: '0x7890abcdef1234567890abcdef1234567890abcd'},
-                ]}
+                contacts={userData?.contacts || []}
             />
             <LastTransactions />
             <AppFooter/>

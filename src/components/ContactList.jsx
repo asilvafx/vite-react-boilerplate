@@ -20,7 +20,7 @@ const ContactList = ({ contacts }) => {
                 </div>
 
                 <div className="space-y-4">
-                    {contacts.length > 0 ? (
+                    {contacts && contacts.length > 0 ? ( // Check if contacts exist and have items
                         contacts.slice(0, 3).map(contact => (
                             <div
                                 key={contact.id}
@@ -29,9 +29,9 @@ const ContactList = ({ contacts }) => {
                                 <div className="w-full flex items-center space-x-4">
                                     <div
                                         className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-500/20 to-blue-500/10 flex items-center justify-center">
-                  <span className="text-lg font-medium text-cyan-400">
-                    {contact.name[0].toUpperCase()}
-                  </span>
+                                        <span className="text-lg font-medium text-cyan-400">
+                                            {contact.name[0].toUpperCase()}
+                                        </span>
                                     </div>
                                     <div>
                                         <p className="font-medium text-gray-200">{contact.name}</p>
@@ -44,13 +44,10 @@ const ContactList = ({ contacts }) => {
                                             to={`/send/${btoa(contact.address)}`}
                                         >
                                             <button className="premium-border premium-bg px-3 py-2 uppercase shadow-sm text-sm font-semibold neon-text rounded-lg flex items-center justify-center gap-2">
-
                                                 <span>Send</span>
                                                 <SendHorizontal className="w-3 h-3" />
-
                                             </button>
                                         </Link>
-
                                     </div>
                                 </div>
                             </div>
@@ -61,7 +58,6 @@ const ContactList = ({ contacts }) => {
                             <p className="text-gray-400">No contacts yet</p>
                         </div>
                     )}
-
                 </div>
 
                 <Link to="/contacts" className="mt-6 w-full cyber-button flex md:hidden items-center justify-between space-x-2">
@@ -70,7 +66,7 @@ const ContactList = ({ contacts }) => {
                 </Link>
             </div>
         </section>
-        );
+    );
 };
 
 export default ContactList;

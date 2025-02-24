@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import Cookies from 'js-cookie';
 import DBService from '../data/db.service';
 import { decryptHash, encryptHash } from "../lib/crypto.js";
@@ -68,11 +68,20 @@ const AuthProvider = ({ children }) => {
             if (decryptHash(currentPassword) !== data.password) {
                 return 'Error: Invalid credentials.'; // Return error message
             }
-            setUser(userData);
-            const udata = encryptHash(JSON.stringify(userData));
-            const token = encryptHash(userData.email);
+
+            const userKey = await DBService.getItemKey('email', data.username, 'users');
+
+            // Add userKey to userData
+            const fetchedData = {
+                ...userData,
+                uid: userKey, // Add the userKey here
+            };
+
+            setUser (fetchedData);
+            const udata = encryptHash(JSON.stringify(fetchedData));
+            const token = encryptHash(fetchedData.email);
             setToken(token);
-            setUserData(userData);
+            setUserData(fetchedData);
             Cookies.set('isLoggedIn', true, { path: '', secure: true, sameSite: 'strict', expires: 7 });
             Cookies.set('tkn', token, { path: '', secure: true, sameSite: 'strict', expires: 7 });
             Cookies.set('uData', udata, { path: '', secure: true, sameSite: 'strict', expires: 7 });

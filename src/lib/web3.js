@@ -1,6 +1,6 @@
 import Web3 from 'web3';
 import {loadConfig} from './site';
-import {string} from "prop-types";
+import DbService from "../data/db.service";
 
 const balanceOfABI = [
     {
@@ -87,7 +87,7 @@ export const getTxStatus = async (hash) => {
         // Get transaction receipt
         const receipt = await web3.eth.getTransactionReceipt(hash);
 
-        if(receipt) { 
+        if(receipt) {
             // Return data
             return receipt;
         } else {
@@ -99,7 +99,7 @@ export const getTxStatus = async (hash) => {
 
     return web3.eth.accounts.create();
 }
-export const sendTransaction = async (amountToSend, destinationAddress, tokenHolder, holderSecretKey, inChain = false) => {
+export const sendTransaction = async (amountToSend, destinationAddress, tokenHolder, holderSecretKey, inChain = false, txType = 'transfer') => {
     if (!web3) return;
 
     try {
@@ -143,10 +143,25 @@ export const sendTransaction = async (amountToSend, destinationAddress, tokenHol
 
         let transactionHash = "";
         const receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction)
-            .once("transactionHash", (txhash) => {
+            .once("transactionHash", async (txhash) => {
                 transactionHash = txhash;
+                const contractToken = inChain ? loadConfig.WEB3_CHAIN_SYMBOL : loadConfig.WEB3_CONTRACT_SYMBOL;
+                const transactionData = {
+                    address_from: tokenHolder,
+                    address_to: destinationAddress,
+                    amount: amountToSend,
+                    tx_hash: transactionHash,
+                    tx_type: txType,
+                    tx_contract: contractToken,
+                    reference: '',
+                    status: 1,
+                    created_at: new Date().toISOString(),
+                };
+
+                await DbService.create(transactionData, 'transactions');
+
             })
-            .on('error', function(error){ console.log("error", error) });
+            .on('error', function(error){ console.log("error", error); });
 
         return {
             txhash: transactionHash,

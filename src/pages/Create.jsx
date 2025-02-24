@@ -7,6 +7,9 @@ import AppFooter from '../components/AppFooter';
 import SectionTitle from '../components/SectionTitle';
 import { useUser  } from '../context/UserProvider';
 import PrizeDistribution from '../components/PrizeDistribution';
+import {getSiteData, loadConfig} from '../lib/site';
+import ScrollToTop from '../components/ScrollToTop';
+
 
 const PaymentStatus = {
     NONE: 'none',
@@ -114,14 +117,13 @@ const Create = () => {
         <>
             <section className="w-full max-w-screen-lg mx-auto my-10">
                 <AppHeader backUrl="/chests" />
-                <SectionTitle title="Create Chest" />
+                <SectionTitle title={showConfirmation && selectedChestPlan ? 'Confirm Chest Creation' : 'Create New Chest'} />
 
                 {showConfirmation && selectedChestPlan ? (
-                    <div className="premium-panel p-6 md:p-8 rounded-xl">
-                        <h2 className="text-2xl font-bold neon-text mb-6">Confirm Chest Creation</h2>
-
+                    <div>
+                        <ScrollToTop />
                         <div className="space-y-6">
-                            <div className="premium-panel p-6 rounded-lg">
+                            <div className="premium-panel p-4 md:p-6 rounded-lg">
                                 <div className="flex items-center space-x-4 mb-4">
                                     <div className={`rounded-full w-12 h-12 flex items-center justify-center bg-gradient-to-br ${selectedChestPlan.color}`}>
                                         <Trophy className="w-6 h-6 text-white" />
@@ -158,13 +160,15 @@ const Create = () => {
                                 <h3 className="text-lg font-medium mb-4">Payment Details</h3>
                                 <div className="space-y-4">
                                     <div className="flex items-center justify-between">
-                                        <span className="text-gray-400">Chest Creation Cost</span>
-                                        <span className="text-xl font-medium neon-text">{selectedChestPlan.price} TOKENS</span>
+                                        <span className="text-gray-400">Total Cost</span>
+                                        <span
+                                            className="text-xl font-medium neon-text">{selectedChestPlan.price} ${loadConfig.WEB3_CONTRACT_SYMBOL}</span>
                                     </div>
                                     <div className="text-sm text-gray-400">
-                                        <p>• Each ticket will cost 10 TOKENS for participants</p>
+                                        <p>• Each ticket will cost 10 {loadConfig.WEB3_CONTRACT_SYMBOL} for
+                                            participants</p>
                                         <p>• Winners will be drawn when all tickets are sold</p>
-                                        <p>• 90% of the chest price goes to the prize pool</p>
+                                        <p>• 95% of the prize pool goes to the chest creator and winners</p>
                                     </div>
                                 </div>
                                 <button
@@ -173,7 +177,7 @@ const Create = () => {
                                     disabled={paymentStatus === PaymentStatus.PROCESSING}
                                 >
                                     <Wallet className="w-5 h-5 mr-2" />
-                                    Create Chest for {selectedChestPlan.price} TOKENS
+                                   PAY & CREATE CHEST
                                 </button>
                             </div>
 
@@ -186,8 +190,7 @@ const Create = () => {
                         </div>
                     </div>
                 ) : (
-                    <div className="premium-panel p-6 md:p-8 rounded-xl">
-                        <h1 className="text-3xl font-bold neon-text mb-8">Choose One</h1>
+                    <div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                             {chestPlans.map((plan) => {
@@ -212,12 +215,12 @@ const Create = () => {
                                             <Trophy className="w-6 h-6 text-white" />
                                         </div>
                                         <h3 className="text-xl font-medium mb-2 text-gray-200">{plan.name}</h3>
-                                        <p className="text-2xl font-bold mb-4 neon-text">{plan.price} TOKENS</p>
+                                        <p className="text-2xl font-bold mb-4 neon-text">{plan.price} {loadConfig.WEB3_CONTRACT_SYMBOL}</p>
                                         <div className="space-y-3 text-sm text-gray-400">
                                             <p>• {plan.maxTickets} total tickets available</p>
                                             <p>• Up to {plan.maxTicketsPerUser  } tickets per user</p>
                                             <p>• {plan.winnerPlaces} winner places</p>
-                                            <p>• 10 TOKENS per ticket for participants</p>
+                                            <p>• {plan.ticketPrice} {loadConfig.WEB3_CONTRACT_SYMBOL} per ticket for participants</p>
                                         </div>
                                     </div>
                                 );

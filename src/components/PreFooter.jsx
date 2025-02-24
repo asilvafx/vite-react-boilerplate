@@ -36,7 +36,7 @@ const PreFooter = (param) => {
                             &copy; {new Date().getFullYear()} PIGMIL. All rights reserved.
                         </p>
                     </div>
-                    <div className="flex flex-col text-start md:text-end">
+                    <div className="flex flex-col justify-center gap-2 text-start md:text-end">
                         <span className="text-gray-500 text-sm">Powered by</span>
                         <img alt="web3" width={100} height={100}
                              className="me-auto md:me-0 md:ms-auto h-12 w-auto filter !invert opacity-75 premium-icon-glow pointer-events-none"

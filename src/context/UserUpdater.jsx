@@ -5,7 +5,7 @@ import { useUser  } from './UserProvider';
 import Cookies from "js-cookie";
 import Loading from '../components/Loading';
 
-const UserUpdater = () => {
+const UserUpdater = (forceLoading=true) => {
     const { setUserData } = useUser ();
     const [loading, setLoading] = useState(true);
 
@@ -39,7 +39,7 @@ const UserUpdater = () => {
         return () => clearInterval(intervalId);
     }, [setUserData]); // Add setUser Data to the dependency array
 
-    if(loading){
+    if(forceLoading && loading){
         return (<Loading />)
     }
     return null; // This component does not render anything

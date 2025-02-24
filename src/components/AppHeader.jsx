@@ -53,7 +53,7 @@ const Header = ({backUrl}) => {
                                 renderTrigger={() => (
                                     <button className="cyber-button flex items-center backdrop-blur-lg">
                                         <span>
-                                            {parseFloat(userData?.web3_custom_token_balance).toFixed(3)}
+                                            {parseFloat(userData?.web3_available_balance).toFixed(3)}
                                             {' '}
                                             ${loadConfig.WEB3_CONTRACT_SYMBOL}
                                         </span>

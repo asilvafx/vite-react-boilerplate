@@ -6,7 +6,7 @@ import TokenBalanceSection from "../components/TokenBalanceSection";
 const UserStats = () => {
 
     return (
-        <section className="my-10 w-full max-w-screen-lg mx-auto">
+        <section className="mb-10 w-full max-w-screen-lg mx-auto">
 
             {/* Wallet Info */}
             <div className="premium-panel p-4 md:p-6 rounded-xl">

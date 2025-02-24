@@ -37,48 +37,50 @@ const Join = () => {
     return (
         <>
             <section className="w-full max-w-screen-lg mx-auto my-10">
-                <AppHeader backUrl="/dashboard" />
-                <SectionTitle title="Chests" />
+                <AppHeader backUrl="/chests" />
+                <SectionTitle title={`Chest #${id}`} />
 
-                <div className="premium-panel p-4 md:p-6 rounded-xl mb-8">
-                    <div className="flex items-center justify-between mb-6">
-                        <div>
-                            <h1 className="text-3xl font-bold neon-text mb-2">Chest #{id}</h1>
-                            <p className="text-gray-400">Created by {chestData.creator}</p>
-                        </div>
-                        <span
-                            className={`px-4 py-2 rounded-lg text-sm font-medium bg-gradient-to-br ${chestData.plan.color}`}>
+                <div>
+                    <div className="premium-card mb-6">
+                        <div className="flex items-center justify-between mb-6">
+                            <div>
+                                <p className="text-lg text-gray-400">Created by {chestData.creator}</p>
+                            </div>
+                            <span
+                                className={`px-4 py-2 rounded-lg text-sm font-medium bg-gradient-to-br ${chestData.plan.color}`}>
                             {chestData.plan.name}
                         </span>
+                        </div>
+
+                        {/* Progress Bar */}
+                        <div className="space-y-4">
+                            <div className="flex justify-between text-sm text-gray-400">
+                                <span>Progress: {chestData.ticketsSold} / {chestData.plan.maxTickets} tickets sold</span>
+                                <span>{progressPercentage.toFixed(1)}% Complete</span>
+                            </div>
+                            <div className="h-4 bg-gray-800 rounded-full overflow-hidden">
+                                <div
+                                    className="h-full bg-gradient-to-r from-cyan-500 to-blue-500 transition-all duration-500"
+                                    style={{width: `${progressPercentage}%`}}
+                                />
+                            </div>
+                        </div>
                     </div>
 
-                    {/* Progress Bar */}
-                    <div className="space-y-4 mb-8">
-                        <div className="flex justify-between text-sm text-gray-400">
-                            <span>Progress: {chestData.ticketsSold} / {chestData.plan.maxTickets} tickets sold</span>
-                            <span>{progressPercentage.toFixed(1)}% Complete</span>
-                        </div>
-                        <div className="h-4 bg-gray-800 rounded-full overflow-hidden">
-                            <div
-                                className="h-full bg-gradient-to-r from-cyan-500 to-blue-500 transition-all duration-500"
-                                style={{ width: `${progressPercentage}%` }}
-                            />
-                        </div>
-                    </div>
 
                     {/* Chest Stats */}
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
                         <div className="premium-panel p-4 rounded-lg">
                             <p className="text-sm text-gray-400 mb-1">Tickets Left</p>
                             <p className="font-medium flex items-center">
-                                <Timer className="w-4 h-4 mr-2 premium-icon" />
+                                <Timer className="w-4 h-4 mr-2 premium-icon"/>
                                 {remainingTickets}
                             </p>
                         </div>
                         <div className="premium-panel p-4 rounded-lg">
                             <p className="text-sm text-gray-400 mb-1">Participants</p>
                             <p className="font-medium flex items-center">
-                                <Users className="w-4 h-4 mr-2 premium-icon" />
+                                <Users className="w-4 h-4 mr-2 premium-icon"/>
                                 {chestData.participants.length}
                             </p>
                         </div>
@@ -124,7 +126,7 @@ const Join = () => {
                                     </button>
                                 </div>
                                 <span className="text-gray-400">
-                                    Total: {ticketCount * 10} TOKENS
+                                    Total: {ticketCount * 10} {loadConfig.WEB3_CONTRACT_SYMBOL}
                                 </span>
                             </div>
 

@@ -90,7 +90,7 @@ const ManageAccount = () => {
 
                 {activeTab === 'security' && (
                     <div className="space-y-6">
-                        <div className="premium-panel p-6 rounded-lg bg-cyan-500/5">
+                        <div className="premium-panel p-4 md:p-6 rounded-lg bg-cyan-500/5">
                             <h3 className="text-lg font-medium mb-4">Change Email</h3>
                             <form onSubmit={handleEmailUpdate} className="space-y-4">
                                 <div>
@@ -109,7 +109,7 @@ const ManageAccount = () => {
                             </form>
                         </div>
 
-                        <div className="premium-panel p-6 rounded-lg bg-cyan-500/5">
+                        <div className="premium-panel p-4 md:p-6 rounded-lg bg-cyan-500/5">
                             <h3 className="text-lg font-medium mb-4">Change Password</h3>
                             <form onSubmit={handlePasswordUpdate} className="space-y-4">
                                 <div>

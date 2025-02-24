@@ -13,7 +13,7 @@ const PrizeDistribution = ({ planName }) => {
             <div className="space-y-2">
                 {/* Display Creator Reward */}
                 <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-400">Creator Reward ({distribution.creatorReward.percentage})</span>
+                    <span className="text-gray-400">Chest Creator ({distribution.creatorReward.percentage})</span>
                     <span className="font-medium text-cyan-400">
                         {parseFloat(distribution.creatorReward.tokens).toFixed(3)} ${loadConfig.WEB3_CONTRACT_SYMBOL}
                     </span>

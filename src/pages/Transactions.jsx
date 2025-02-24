@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
-import { ArrowLeft, Search, Filter, ArrowRightLeft } from 'lucide-react';
-import { TextInput, Select } from 'flowbite-react';
-import { getAllTransactions, searchTransactions } from '../lib/transactions';
+import React, { useState, useEffect } from 'react';
+import { ArrowLeft, ArrowRightLeft } from 'lucide-react';
+import { useUser  } from '../context/UserProvider';
+import DBService from '../data/db.service';
 import AppHeader from "../components/AppHeader";
 import AppFooter from "../components/AppFooter";
 import SectionTitle from "../components/SectionTitle";
-import { useUser  } from '../context/UserProvider';
 
 const Transactions = () => {
     const { userData } = useUser ();
@@ -13,16 +12,55 @@ const Transactions = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [statusFilter, setStatusFilter] = useState('all');
     const [typeFilter, setTypeFilter] = useState('all');
+    const [transactions, setTransactions] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [transactionsPerPage] = useState(25); // Limit to 25 transactions per page
+    const [loading, setLoading] = useState(true);
 
-    const allTransactions = getAllTransactions();
+    useEffect(() => {
+        const fetchTransactions = async () => {
+            setLoading(true);
+            try {
+                // Fetch received transactions
+                const received = await DBService.getItemByKeyValue('address_to', userData.web3_address, 'transactions') || [];
+                // Fetch sent transactions
+                const sent = await DBService.getItemByKeyValue('address_from', userData.web3_address, 'transactions') || [];
 
-    const filteredTransactions = allTransactions.filter(tx => {
+                // Combine transactions
+                const combinedTransactions = [...received, ...sent].map(tx => ({
+                    ...tx,
+                    created_at: new Date(tx.created_at).toISOString() // Ensure created_at is in ISO format
+                }));
+
+                setTransactions(combinedTransactions);
+            } catch (error) {
+                console.error("Error fetching transactions:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchTransactions();
+    }, [userData.web3_address]);
+
+    // Filter transactions based on search term, status, and type
+    const filteredTransactions = transactions.filter(tx => {
         const matchesSearch = searchTerm === '' ||
-            searchTransactions(searchTerm).some(t => t.id === tx.id); // Check if the transaction ID is in the search results
+            tx.description.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesStatus = statusFilter === 'all' || tx.status === statusFilter;
         const matchesType = typeFilter === 'all' || tx.type === typeFilter;
         return matchesSearch && matchesStatus && matchesType;
     });
+
+    // Pagination logic
+    const indexOfLastTransaction = currentPage * transactionsPerPage;
+    const indexOfFirstTransaction = indexOfLastTransaction - transactionsPerPage;
+    const currentTransactions = filteredTransactions.slice(indexOfFirstTransaction, indexOfLastTransaction);
+    const totalPages = Math.ceil(filteredTransactions.length / transactionsPerPage);
+
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
 
     const getTransactionIcon = (type) => {
         switch (type) {
@@ -42,13 +80,16 @@ const Transactions = () => {
             new Date(timestamp).toLocaleTimeString();
     };
 
+    if (loading) {
+        return <div>Loading...</div>; // You can replace this with a loading spinner if desired
+    }
+
     return (
         <>
             <AppHeader backUrl="/dashboard" />
             <SectionTitle title="Transactions" />
 
             <section className="w-full max-w-screen-lg mx-auto premium-panel p-4 md:p-6 rounded-xl mb-10">
-                <h1 className="text-2xl font-medium neon-text mb-6">Transaction History</h1>
 
                 <div className="flex flex-col md:flex-row gap-4 mb-6">
                     <div className="flex-1">
@@ -87,7 +128,7 @@ const Transactions = () => {
                 </div>
 
                 <div className="space-y-4">
-                    {filteredTransactions.map((tx) => (
+                    {currentTransactions.map((tx) => (
                         <div key={tx.id} className="premium-panel p-4 rounded-lg hover:bg-cyan-500/5 transition-colors">
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center space-x-4">
@@ -96,7 +137,7 @@ const Transactions = () => {
                                     </div>
                                     <div>
                                         <p className="font-medium text-gray-200">{tx.description}</p>
-                                        <p className="text-sm text-gray-400">{formatDate(tx.timestamp)}</p>
+                                        <p className="text-sm text-gray-400">{formatDate(tx.created_at)}</p>
                                     </div>
                                 </div>
                                 <div className="text-right">
@@ -140,6 +181,31 @@ const Transactions = () => {
                             </div>
                         </div>
                     ))}
+
+                    {currentTransactions.length === 0 && (
+                        <div className="text-center py-8">
+                            <p className="text-gray-400">No transactions found</p>
+                        </div>
+                    )}
+                </div>
+
+                {/* Pagination */}
+                <div className="flex justify-between mt-4">
+                    <button
+                        onClick={() => handlePageChange(currentPage - 1)}
+                        disabled={currentPage === 1}
+                        className="cyber-button"
+                    >
+                        Previous
+                    </button>
+                    <span>Page {currentPage} of {totalPages}</span>
+                    <button
+                        onClick={() => handlePageChange(currentPage + 1)}
+                        disabled={currentPage === totalPages}
+                        className="cyber-button"
+                    >
+                        Next
+                    </button>
                 </div>
             </section>
 

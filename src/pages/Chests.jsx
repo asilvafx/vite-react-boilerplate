@@ -37,7 +37,7 @@ const Chests = () => {
             <section className="w-full max-w-screen-lg mx-auto my-10">
                 <AppHeader backUrl="/dashboard" />
                 <SectionTitle title="Chests" />
-                <div className="premium-panel p-4 md:p-6 rounded-xl">
+                <div className="premium-panel p-4 md:p-6 rounded-xl mb-6">
                     {/* Tabs */}
                     <div className="w-full grid grid-cols-1 md:grid-cols-2 items-center gap-4 mb-6">
                         <button
@@ -85,7 +85,7 @@ const Chests = () => {
                         </div>
                     </div>
 
-                    <div className="flex flex-col md:flex-row gap-4 mb-6">
+                    <div className="flex flex-col md:flex-row gap-4">
                         <div className="flex-1">
                             <input
                                 className="bg-neutral-900/50 premium-border shadow-sm w-full rounded-lg"
@@ -108,6 +108,7 @@ const Chests = () => {
                             </select>
                         </div>
                     </div>
+                </div>
 
                     <div className="space-y-4">
                         {filteredChests.map(chest => {
@@ -173,7 +174,7 @@ const Chests = () => {
                                                             <div key={index} className="flex items-center justify-between text-sm">
                                                                 <span className="text-gray-400">#{index + 1}</span>
                                                                 <span className="font-mono text-gray-300">{winner.address}</span>
-                                                                <span className="text-yellow-400">{winner.reward} TOKENS</span>
+                                                                <span className="text-yellow-400">{winner.reward} {loadConfig.WEB3_CONTRACT_SYMBOL}</span>
                                                             </div>
                                                         ))}
                                                     </div>
@@ -207,7 +208,6 @@ const Chests = () => {
                             </div>
                         )}
                     </div>
-                </div>
             </section>
             <AppFooter />
         </>
