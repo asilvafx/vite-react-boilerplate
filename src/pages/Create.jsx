@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { ArrowLeft, Shield, Zap, Rocket, Check, Wallet, X, AlertCircle, ArrowRight, Loader2, Trophy, Users, Timer } from 'lucide-react';
+import { Check, Wallet, X, AlertCircle, ArrowRight, Loader2, Trophy, Users, Timer } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { chestPlans, calculateRewards } from '../lib/chests';
+import { chestPlans } from '../lib/chests';
 import AppHeader from '../components/AppHeader';
 import AppFooter from '../components/AppFooter';
 import SectionTitle from '../components/SectionTitle';
-import {useUser} from '../context/UserProvider';
+import { useUser  } from '../context/UserProvider';
+import PrizeDistribution from '../components/PrizeDistribution';
 
 const PaymentStatus = {
     NONE: 'none',
@@ -15,8 +16,7 @@ const PaymentStatus = {
 };
 
 const Create = () => {
-
-    const {userData} = useUser();
+    const { userData } = useUser ();
     const [selectedPlan, setSelectedPlan] = useState(null);
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [paymentStatus, setPaymentStatus] = useState(PaymentStatus.NONE);
@@ -26,7 +26,6 @@ const Create = () => {
 
         // Simulate payment process
         setTimeout(() => {
-            // Randomly succeed or fail for demonstration
             setPaymentStatus(Math.random() > 0.5 ? PaymentStatus.SUCCESS : PaymentStatus.FAILED);
         }, 2000);
     };
@@ -114,8 +113,8 @@ const Create = () => {
     return (
         <>
             <section className="w-full max-w-screen-lg mx-auto my-10">
-            <AppHeader backUrl="/dashboard"/>
-            <SectionTitle title="Chests"/>
+                <AppHeader backUrl="/chests" />
+                <SectionTitle title="Create Chest" />
 
                 {showConfirmation && selectedChestPlan ? (
                     <div className="premium-panel p-6 md:p-8 rounded-xl">
@@ -135,7 +134,7 @@ const Create = () => {
 
                                 <div className="premium-divider my-4" />
 
-                                <div className="grid grid-cols-2 gap-4">
+                                <div className="grid grid-cols-2 gap-4 mb-6">
                                     <div className="premium-panel p-3 rounded-lg">
                                         <p className="text-sm text-gray-400 mb-1">Total Tickets</p>
                                         <p className="font-medium flex items-center">
@@ -147,22 +146,12 @@ const Create = () => {
                                         <p className="text-sm text-gray-400 mb-1">Max Per User</p>
                                         <p className="font-medium flex items-center">
                                             <Users className="w-4 h-4 mr-2 premium-icon" />
-                                            {selectedChestPlan.maxTicketsPerUser }
+                                            {selectedChestPlan.maxTicketsPerUser  }
                                         </p>
                                     </div>
                                 </div>
 
-                                <div className="mt-4">
-                                    <h4 className="text-lg font-medium mb-2">Prize Distribution</h4>
-                                    <div className="space-y-2">
-                                        {calculateRewards(selectedChestPlan.id).map((reward, index) => (
-                                            <div key={index} className="flex items-center justify-between text-sm">
-                                                <span className="text-gray-400">{index + 1}st Place</span>
-                                                <span className="font-medium text-cyan-400">{reward} TOKENS</span>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
+                                <PrizeDistribution planName={selectedChestPlan.name} />
                             </div>
 
                             <div className="premium-panel p-6 rounded-lg">
@@ -198,7 +187,7 @@ const Create = () => {
                     </div>
                 ) : (
                     <div className="premium-panel p-6 md:p-8 rounded-xl">
-                        <h1 className="text-3xl font-bold neon-text mb-8">Create a New Chest</h1>
+                        <h1 className="text-3xl font-bold neon-text mb-8">Choose One</h1>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                             {chestPlans.map((plan) => {
@@ -226,7 +215,7 @@ const Create = () => {
                                         <p className="text-2xl font-bold mb-4 neon-text">{plan.price} TOKENS</p>
                                         <div className="space-y-3 text-sm text-gray-400">
                                             <p>• {plan.maxTickets} total tickets available</p>
-                                            <p>• Up to {plan.maxTicketsPerUser } tickets per user</p>
+                                            <p>• Up to {plan.maxTicketsPerUser  } tickets per user</p>
                                             <p>• {plan.winnerPlaces} winner places</p>
                                             <p>• 10 TOKENS per ticket for participants</p>
                                         </div>
@@ -249,11 +238,10 @@ const Create = () => {
                 )}
 
                 {renderPaymentStatus()}
-                
             </section>
-            <AppFooter/>
+            <AppFooter />
         </>
-    )
-}
+    );
+};
 
 export default Create;
