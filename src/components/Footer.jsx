@@ -44,10 +44,10 @@ const footerMenuItems = [
 const Footer = () => {
     return (
         <footer className="text-gray-300">
-            <div className="max-w-screen-lg mx-auto px-6 lg:px-8">
+            <div className="w-full max-w-screen-lg mx-auto">
 
                 {/* Main Footer Content */}
-                <div className="py-16 grid grid-cols-2 md:grid-cols-4 gap-12 lg:gap-8">
+                <div className="py-16 px-4 md:px-6 grid grid-cols-2 md:grid-cols-4 gap-12 lg:gap-8">
                     {footerMenuItems.map((section, index) => (
                         <div key={index} className="space-y-6">
                             <h3 className="text-white text-lg font-semibold tracking-wide">{section.title}</h3>

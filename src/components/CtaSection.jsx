@@ -26,26 +26,20 @@ const CtaSection = () => {
           <div className="relative max-w-7xl mx-auto px-6 lg:px-8 py-12 md:py-20">
               <div className="max-w-3xl mx-auto text-center space-y-8">
                   <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight">
-                      Join the Future of DeFi with $BOLT
+                     Claim Your Free $BOLT Today!
                   </h2>
                   <p className="text-xl text-gray-200">
-                      Be part of the revolution. Start trading $BOLT today and experience the next generation of
-                      decentralized finance.
+                      Be part of the revolution. Start using $BOLT today and experience the next generation of
+                      decentralized marketplace.
                   </p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mx-auto">
+                  <div className="grid grid-cols-1 gap-4 mx-auto">
                       <Link to="/dashboard">
-                      <button className="w-full cyber-button group backdrop-blur-lg !px-8 !py-4 rounded-xl font-semibold
+                      <button className="w-full cyber-button group backdrop-blur-lg !px-8 !py-4 rounded-xl !font-bold
                                transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-blue-500/25">
                           <Rocket className="group-hover:translate-x-1 transition-transform duration-300 text-blue-600" size={20}/>
-                          Launch App
+                          Claim free $BOLT
                       </button>
                       </Link>
-                      <button className="w-full bg-gray-900/30 hover:bg-gray-900/40 backdrop-blur-sm text-white !px-8 !py-4 rounded-xl font-semibold
-                               transition-all duration-300 flex items-center justify-center gap-2 border border-white/10">
-                          Join Community
-                          <ArrowRight className="group-hover:translate-x-1 transition-transform duration-300"
-                                      size={20}/>
-                      </button>
                   </div>
               </div>
           </div>

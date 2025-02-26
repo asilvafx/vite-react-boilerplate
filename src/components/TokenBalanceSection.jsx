@@ -1,6 +1,6 @@
 import React from 'react';
-import polygonIcon from '../assets/polygon.jpg';
-import tokenIcon from '../assets/ned.jpg';
+import polygonIcon from '../assets/polygon.svg';
+import tokenIcon from '../assets/ned.svg';
 import { useUser  } from '../context/UserProvider';
 import { loadConfig, getSiteData } from '../lib/site';
 
@@ -31,7 +31,7 @@ const TokenBalanceSection = () => {
                 <div className="premium-panel p-4 rounded-lg">
                     <div className="flex items-center space-x-3">
                         <div className="p-2 bg-blue-500/10 rounded-full">
-                            <img className="rounded-full h-8 w-8" width="40" height="40" alt={loadConfig.WEB3_CHAIN_NAME} src={polygonIcon} />
+                            <img className="rounded-full h-8 w-8 filter invert" width="40" height="40" alt={loadConfig.WEB3_CHAIN_NAME} src={polygonIcon} />
                         </div>
                         <div className="w-full flex flex-col">
                             <p className="text-sm text-gray-400">{loadConfig.WEB3_CHAIN_SYMBOL} Balance</p>
@@ -50,7 +50,7 @@ const TokenBalanceSection = () => {
                     <div className="premium-panel p-4 rounded-lg">
                     <div className="flex items-center space-x-3">
                         <div className="p-2 bg-purple-500/10 rounded-full">
-                            <img className="rounded-full h-8 w-8" width="40" height="40" alt={loadConfig.WEB3_CONTRACT_NAME} src={tokenIcon} />
+                            <img className="rounded-full h-8 w-8 filter invert" width="40" height="40" alt={loadConfig.WEB3_CONTRACT_NAME} src={tokenIcon} />
                         </div>
                         <div className="w-full flex flex-col">
                             <p className="text-sm text-gray-400">{loadConfig.WEB3_CONTRACT_SYMBOL} Balance</p>

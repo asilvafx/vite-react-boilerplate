@@ -6,13 +6,11 @@ import AppHeader from '../components/AppHeader';
 import AppFooter from '../components/AppFooter';
 import UserStats from '../components/UserStats';
 import QuickActions from '../components/QuickActions';
-import ContactList from '../components/ContactList';
 import WorldIDVerification from '../components/WorldIDVerification';
 import DailyReward from '../components/DailyReward';
 import Loading from '../components/Loading';
 import SectionTitle from "../components/SectionTitle";
 import ProfileInfo from "../components/ProfileInfo";
-import LastTransactions from '../components/LastTransactions';
 
 const Dashboard = () => {
     const { userData } = useUser ();
@@ -38,10 +36,6 @@ const Dashboard = () => {
             <ProfileInfo />
             <UserStats/>
             <QuickActions/>
-            <ContactList
-                contacts={userData?.contacts || []}
-            />
-            <LastTransactions />
             <AppFooter/>
         </>
     );

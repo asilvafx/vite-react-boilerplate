@@ -39,7 +39,7 @@ const Navigation = () => {
     return (
         <>
         <PreFooter />
-        <div className="w-full min-h-24"></div>
+        <div className="w-full min-h-20"></div>
         <nav className={navClasses}>
             <div className="container mx-auto">
                 <div className="flex items-center justify-between">

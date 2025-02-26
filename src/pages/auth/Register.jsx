@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Box } from 'lucide-react';
 import PasswordStrengthBar from 'react-password-strength-bar';
 import Cookies from "js-cookie";
-import { TextInput, Label } from 'flowbite-react';
+import { Label } from 'flowbite-react';
 import { useAuth } from '../../context/AuthProvider';
 import Loading from '../../components/Loading';
-
+import logo_icon from '../../assets/ned_icon.svg'
+import GoBack from '../../components/GoBack';
 const Register = () => {
     const isLoggedIn = Cookies.get('isLoggedIn');
 
@@ -63,11 +63,16 @@ const Register = () => {
     }
 
     return (
-        <section className="min-h-screen my-10 flex items-center justify-center px-4">
-            <div className="premium-panel p-8 rounded-xl w-full max-w-md">
+        <section className="w-full max-w-lg mx-auto min-h-screen my-10 flex flex-col items-center justify-center">
+
+            <div className="w-full flex justify-start mb-6">
+                <GoBack url="/" text="Go Back" />
+            </div>
+
+            <div className="w-full premium-panel p-4 md:p-8 rounded-xl">
                 <div className="text-center mb-8">
                     <div className="flex justify-center mb-4">
-                        <Box className="w-12 h-12 premium-icon" />
+                        <img className="h-12 w-auto filter !invert" alt="Logo" width={80} height={80} src={logo_icon} />
                     </div>
                     <h1 className="text-2xl font-bold neon-text mb-2">Create Account</h1>
                     <p className="text-gray-400">Join the CyberChest community</p>
@@ -78,9 +83,11 @@ const Register = () => {
                 <form onSubmit={handleRegister} className="space-y-6">
                     <div>
                         <Label className="text-neutral-100" htmlFor="fullName" value="Full Name" />
-                        <TextInput
+                        <input
+                            className="bg-neutral-900/50 premium-border shadow-sm w-full rounded-lg"
                             id="fullName"
                             name="fullName"
+                            type="text"
                             placeholder="John Doe"
                             required
                             value={input.fullName}
@@ -89,7 +96,8 @@ const Register = () => {
                     </div>
                     <div>
                         <Label className="text-neutral-100" htmlFor="username" value="Email" />
-                        <TextInput
+                        <input
+                            className="bg-neutral-900/50 premium-border shadow-sm w-full rounded-lg"
                             id="username"
                             name="username"
                             type="email"
@@ -101,8 +109,8 @@ const Register = () => {
                     </div>
                     <div>
                         <Label className="text-neutral-100" htmlFor="password" value="Password" />
-                        <TextInput
-                            className="mb-4"
+                        <input
+                            className="bg-neutral-900/50 premium-border shadow-sm w-full rounded-lg mb-4"
                             id="password"
                             name="password"
                             type="password"
@@ -115,7 +123,8 @@ const Register = () => {
                     </div>
                     <div>
                         <Label className="text-neutral-100" htmlFor="confirmPassword" value="Confirm Password" />
-                        <TextInput
+                        <input
+                            className="bg-neutral-900/50 premium-border shadow-sm w-full rounded-lg"
                             id="confirmPassword"
                             name="confirmPassword"
                             type="password"

@@ -4,6 +4,12 @@
     --clr-dark: #111111;
     --clr-light: #f4f4f4;
 }
+* {
+    color: var(--clr-light);
+}
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Orbitron', sans-serif;
+}
 body {
     font-family: 'Roboto', sans-serif;
     background-color: var(--clr-dark);
@@ -19,13 +25,19 @@ body::before {
     width: 100%;
     height: 100vh;
 }
-* {
-    color: var(--clr-light);
+.canvas-container canvas {
+    width: 100%;
 }
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'Orbitron', sans-serif;
+.bg-extra {
+    width: 100%;
+    min-height: 100vh;
+    position: fixed;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: .9;
+    z-index: -1;
 }
-
 #loading {
     position: fixed;
     top: 0;

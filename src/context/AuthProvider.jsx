@@ -77,7 +77,7 @@ const AuthProvider = ({ children }) => {
                 uid: userKey, // Add the userKey here
             };
 
-            setUser (fetchedData);
+            setUser(fetchedData);
             const udata = encryptHash(JSON.stringify(fetchedData));
             const token = encryptHash(fetchedData.email);
             setToken(token);

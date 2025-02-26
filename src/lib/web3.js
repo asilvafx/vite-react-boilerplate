@@ -104,6 +104,7 @@ export const sendTransaction = async (amountToSend, destinationAddress, tokenHol
 
     try {
         const amountInWei = web3.utils.toWei(amountToSend, "ether");
+
         //const signer = web3.eth.accounts.privateKeyToAccount(holderSecretKey);
         //web3.eth.accounts.wallet.add(signer);
 

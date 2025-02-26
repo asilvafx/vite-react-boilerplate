@@ -7,6 +7,8 @@ import { shortenAddress } from '../lib/utils';
 import { useUser } from '../context/UserProvider';
 import QRModal from '../components/QRModal';
 import GoBack from '../components/GoBack';
+import logo_badge from '../assets/ned_icon.svg';
+
 const Header = ({backUrl}) => {
 
     const [url, setUrl] = useState(null);
@@ -26,16 +28,17 @@ const Header = ({backUrl}) => {
             <Navbar className="top-nav h-14 fixed w-full p-0" fluid>
 
                     {!url ? (
-                        <Navbar.Brand href="/" className="flex items-center gap-4">
-                            <img className="mr-3 h-6 sm:h-8 w-auto transition-all animate-in pointer-events-none" src="https://flowbite.com/docs/images/logo.svg" alt="Logo" />
+                        <Navbar.Brand href="/" className="cyber-button">
+                            <img className="h-5 w-auto filter invert" src={logo_badge} width={100}
+                                 height={100} alt="Logo"/>
                         </Navbar.Brand>
                     ) : (
-                        <GoBack url={url} />
+                        <GoBack url={url}/>
                     )}
 
 
                 <div className="flex items-center gap-2 md:order-2">
-                    {/* <DarkThemeToggle className="!bg-transparent border-0 focus:ring-0 m-0" />  */}
+                    <DarkThemeToggle className="!bg-transparent border-0 focus:ring-0 m-0" />
 
                     {/* Conditionally render the Connect button or user email */}
                     {!userData  ? (

@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import HeroSection from '../components/HeroSection';
 import StatsSection from '../components/StatsSection';
 import CtaSection from '../components/CtaSection';
 
@@ -19,8 +20,8 @@ const Home = () => {
             {/* Header */}
             <Header />
 
-            {/* Stats Section */}
-            <StatsSection />
+            {/* Hero Section */}
+            <HeroSection /> 
 
             {/* CTA Banner */}
             <CtaSection />

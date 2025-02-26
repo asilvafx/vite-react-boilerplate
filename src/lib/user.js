@@ -13,6 +13,23 @@ export const getUserData = () => {
     }
 }
 
+export const fetchUserData = async () => {
+    const loggedIn = Cookies.get('isLoggedIn') === 'true';
+    const uData = Cookies.get('uData');
+
+    if (!loggedIn) {
+        return;
+    }
+
+    const data = JSON.parse(decryptHash(uData));
+    let userid = data?.email || null;
+
+    if (userid) {
+        return await DBService.getItemByKeyValue('email', data.email, 'users');
+    }
+
+}
+
 export const checkLoginStatus = async () => {
     const loggedIn = Cookies.get('isLoggedIn') === 'true';
     const uData = Cookies.get('uData');
@@ -56,6 +73,7 @@ export const updateData = async (userData) => {
     const totalUserBalance = userActualData?.lockedBalance ? (parseFloat(fetchTokenBalance) - parseFloat(userActualData.lockedBalance)) : parseFloat(fetchTokenBalance);
     const data = {
         ...userActualData,
+        uid: userKey,
         web3_custom_token_balance: fetchTokenBalance,
         web3_network_token_balance: fetchChainBalance,
         web3_available_balance: totalUserBalance

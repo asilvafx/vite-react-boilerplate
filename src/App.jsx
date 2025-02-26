@@ -7,7 +7,7 @@ import AuthProvider from "./context/AuthProvider";
 import { UserProvider } from './context/UserProvider';
 import UserUpdater from './context/UserUpdater';
 import SiteUpdater from './context/SiteUpdater';
-
+import grid_bg from './assets/bg/grid1.png';
 /*
     Import Pages
 */
@@ -69,41 +69,42 @@ const App = () => {
                         },
                     }} />
                     <UserProvider>
-                    <AuthProvider>
-                    <UserUpdater />
-                    <SiteUpdater />
-                    <CookiesGDPR />
+                        <AuthProvider>
+                            <UserUpdater/>
+                            <SiteUpdater/>
+                            <CookiesGDPR/>
 
-                        <div className="aurora"></div>
-                        <div className="aurora"></div>
-                        <div className="aurora"></div>
-                        <div className="aurora"></div>
+                            <div className="bg-extra" style={{backgroundImage: `url(${grid_bg})`}}></div>
+                            <div className="aurora"></div>
+                            <div className="aurora"></div>
+                            <div className="aurora"></div>
+                            <div className="aurora"></div>
 
-                        <Routes>
-                            <Route path="/" element={<Home />} />
-                            <Route element={<PrivateRoute />}>
+                            <Routes>
+                                <Route path="/" element={<Home/>}/>
+                                <Route element={<PrivateRoute/>}>
 
-                                <Route path="/join/:id" element={<Join />} />
-                                <Route path="/create" element={<Create />} />
-                                <Route path="/chests" element={<Chests />} />
-                                <Route path="/transactions" element={<Transactions />} />
-                                <Route path="/account" element={<Account />} />
-                                <Route path="/contacts" element={<Contacts />} />
-                                <Route path="/receive" element={<Receive />} />
-                                <Route path="/exchange" element={<Exchange />} />
-                                <Route path="/send" element={<Send />} />
-                                <Route path="/send/:address" element={<Send />} />
-                                <Route path="/dashboard" element={<Dashboard />} />
-                                <Route path="/logout" element={<Logout />} />
-                            </Route>
-                            <Route path="/login" element={<Login />} />
-                            <Route path="/register" element={<Register />} />
-                            <Route path="/forgot-password" element={<ForgotPassword />} />
-                            <Route path="/reset-password" element={<ResetPassword />} />
-                            <Route path="*" element={<Home />} />
-                        </Routes>
+                                    <Route path="/join/:id" element={<Join/>}/>
+                                    <Route path="/create" element={<Create/>}/>
+                                    <Route path="/chests" element={<Chests/>}/>
+                                    <Route path="/transactions" element={<Transactions/>}/>
+                                    <Route path="/account" element={<Account/>}/>
+                                    <Route path="/contacts" element={<Contacts/>}/>
+                                    <Route path="/receive" element={<Receive/>}/>
+                                    <Route path="/exchange" element={<Exchange/>}/>
+                                    <Route path="/send" element={<Send/>}/>
+                                    <Route path="/send/:address" element={<Send/>}/>
+                                    <Route path="/dashboard" element={<Dashboard/>}/>
+                                    <Route path="/logout" element={<Logout/>}/>
+                                </Route>
+                                <Route path="/login" element={<Login/>}/>
+                                <Route path="/register" element={<Register/>}/>
+                                <Route path="/forgot-password" element={<ForgotPassword/>}/>
+                                <Route path="/reset-password" element={<ResetPassword/>}/>
+                                <Route path="*" element={<Home/>}/>
+                            </Routes>
 
-                    </AuthProvider>
+                        </AuthProvider>
                     </UserProvider>
                 </Router>
             </Suspense>

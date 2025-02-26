@@ -12,7 +12,8 @@ import { useUser  } from '../context/UserProvider';
 import { sendTransaction} from '../lib/web3';
 import { decryptHash } from '../lib/crypto';
 import { loadConfig, getSiteData } from '../lib/site';
-import SectionTitle from "../components/SectionTitle.jsx";
+import SectionTitle from "../components/SectionTitle";
+import ContactList from "../components/ContactList";
 
 const PaymentStatus = {
     NONE: 'none',
@@ -205,12 +206,12 @@ const Send = () => {
     return (
         <>
             <section className="w-full max-w-screen-lg mx-auto my-10">
-                <AppHeader backUrl='/dashboard' />
+                <AppHeader backUrl='/dashboard'/>
 
-                <SectionTitle title='Send Crypto' />
+                <SectionTitle title='Send Crypto'/>
 
-                <div className="premium-panel p-4 md:p-8 rounded-xl">
-                    <TokenBalanceSection walletData={walletData} />
+                <div className="premium-panel p-4 md:p-8 rounded-xl mb-10">
+                    <TokenBalanceSection walletData={walletData}/>
 
                     <form onSubmit={handleSubmit} className="space-y-6 mt-6">
                         <div>
@@ -270,7 +271,7 @@ const Send = () => {
 
                         <div className="space-y-4">
                             <div className="premium-panel p-4 rounded-lg bg-cyan-500/5">
-                            <div className="flex items-start space-x-3">
+                                <div className="flex items-start space-x-3">
                                     <AlertCircle className="w-5 h-5 text-cyan-400 mt-0.5"/>
                                     <div className="space-y-2">
                                         <p className="text-sm text-gray-300">
@@ -316,9 +317,17 @@ const Send = () => {
                             <span>Send Tokens</span>
                         </button>
                     </form>
-                    </div>
-                    </section>
-                    <AppFooter/>
+                </div>
+
+                <div className="premium-panel p-4 md:p-8 rounded-xl">
+
+                    <ContactList
+                        contacts={userData?.contacts || []}
+                    />
+
+                </div>
+            </section>
+            <AppFooter/>
 
             {/* QR Code Scanner Modal */}
             {isScannerOpen && (

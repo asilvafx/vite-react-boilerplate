@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { QRCodeSVG } from 'qrcode.react';
-import { Html5QrcodeScanner } from 'html5-qrcode';
+import { Html5QrcodeScanner, Html5QrcodeSupportedFormats, Html5QrcodeScanType } from 'html5-qrcode';
 import { X, Copy } from 'lucide-react';
 import { shortenAddress } from "../lib/utils";
-import copyToClipboard from '../components/CopyToClipboard';
+import copyToClipboard from './CopyToClipboard';
+import DBService from '../data/db.service';
+import {toast} from 'react-hot-toast';
+import {updateData} from '../lib/user';
+import {useUser} from '../context/UserProvider';
 
 const QRModal = ({ isOpen, onClose, walletAddress }) => {
+    const {userData} = useUser();
     const [activeTab, setActiveTab] = useState('code');
     const [scannedResult, setScannedResult] = useState(null);
     const [scanner, setScanner] = useState(null);
@@ -15,12 +20,18 @@ const QRModal = ({ isOpen, onClose, walletAddress }) => {
 
     useEffect(() => {
         if (isOpen && activeTab === 'scan') {
+
+            const formatsToSupport = [
+                Html5QrcodeSupportedFormats.QR_CODE,
+            ];
             const newScanner = new Html5QrcodeScanner(
                 "qr-reader",
                 {
                     fps: 10,
                     qrbox: { width: 200, height: 200 },
                     rememberLastUsedCamera: true,
+                    supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
+                    formatsToSupport: formatsToSupport
                 },
                 false
             );
@@ -36,7 +47,7 @@ const QRModal = ({ isOpen, onClose, walletAddress }) => {
                     newScanner.pause();
                 },
                 (error) => {
-                    console.error('QR Scan error:', error);
+                   return;
                 }
             );
 
@@ -87,9 +98,44 @@ const QRModal = ({ isOpen, onClose, walletAddress }) => {
         setActiveTab(tab);
     };
 
-    const handleAddContact = () => {
-        // Here you would implement the logic to add the contact to the database
-        setContactAdded(true); // Update the button state to indicate contact has been added
+    const handleAddContact = async () => {
+        if (scannedResult) {
+            // Check if the scanned address is valid
+            if (!scannedResult.startsWith('0x') || scannedResult.length !== 42) {
+                toast.error('Please enter a valid wallet address');
+                return;
+            }
+
+            // Check if the contact already exists
+            const exists = userData.contacts.some(contact =>
+                contact.address.toLowerCase() === scannedResult.toLowerCase()
+            );
+
+            if (exists) {
+                toast.error('This contact already exists');
+                return;
+            }
+
+            // Create a new contact object
+            const newContact = {
+                id: Date.now().toString(),
+                name: `${shortenAddress(scannedResult)}`,
+                address: scannedResult
+            };
+
+            // Update the local contacts state
+            const updatedContacts = [...userData.contacts, newContact];
+
+            // Update the user data in the context
+            await DBService.update(userData.uid, { contacts: updatedContacts }, 'users'); // Update the user's contacts in the database
+
+            // Optionally, you can call updateData() if you want to refresh the user data
+            await updateData();
+
+            // Show success message
+            toast.success('Contact added successfully');
+            setContactAdded(true); // Set the state to indicate the contact was added
+        }
     };
 
     const handleSendCrypto = () => {

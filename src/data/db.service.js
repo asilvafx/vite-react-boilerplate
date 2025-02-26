@@ -1,6 +1,6 @@
-import { getDatabase, ref, push, update, remove, get, query, orderByChild, equalTo } from "firebase/database";
-import { initializeApp } from "firebase/app";
-import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "firebase/storage";
+import {equalTo, get, getDatabase, orderByChild, push, query, ref, remove, update} from "firebase/database";
+import {initializeApp} from "firebase/app";
+import {getDownloadURL, getStorage, ref as storageRef, uploadBytes} from "firebase/storage";
 
 const firebaseConfig = {
     apiKey: process.env.FIREBASE_API_KEY,
@@ -17,6 +17,20 @@ const db = getDatabase(app);
 const storage = getStorage(app);
 
 class DBService {
+
+    // New method to get multiple items by a specific key-value pair
+    getItemsByKeyValue(key, value, table) {
+        const itemsRef = ref(db, `/${table}`);
+        const q = query(itemsRef, orderByChild(key), equalTo(value));
+
+        return get(q).then((snapshot) => {
+            if (snapshot.exists()) {
+                return snapshot.val(); // Return the data for the specific item(s)
+            } else {
+                return null; // Return null if no items match the query
+            }
+        });
+    }
 
     // New method to get an item by a specific key-value pair
     getItemByKeyValue(key, value, table) {

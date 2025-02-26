@@ -1,6 +1,5 @@
 import React from 'react';
-import {Wallet} from 'lucide-react';
-import { useUser } from '../context/UserProvider';
+import {Wallet} from 'lucide-react'; 
 import TokenBalanceSection from "../components/TokenBalanceSection";
 
 const UserStats = () => {

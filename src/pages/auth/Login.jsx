@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Box } from 'lucide-react';
-import { TextInput, Label } from 'flowbite-react';
+import { Label } from 'flowbite-react';
 import Cookies from 'js-cookie';
 import { useAuth } from '../../context/AuthProvider';
-import Loading from "../../components/Loading.jsx";
+import Loading from "../../components/Loading";
+import logo_icon from "../../assets/ned_icon.svg";
+import GoBack from "../../components/GoBack";
 
 const Login = () => {
     const isLoggedIn = Cookies.get('isLoggedIn');
@@ -45,11 +46,16 @@ const Login = () => {
     }
 
     return (
-        <section className="min-h-screen flex items-center justify-center my-10 px-4">
-            <div className="premium-panel p-8 rounded-xl w-full max-w-md">
+        <section className="w-full max-w-lg min-h-screen mx-auto flex flex-col items-center justify-center my-10">
+
+            <div className="w-full flex justify-start mb-6">
+                <GoBack url="/" text="Go Back"/>
+            </div>
+
+            <div className="w-full premium-panel p-4 md:p-8 rounded-xl">
                 <div className="text-center mb-8">
                     <div className="flex justify-center mb-4">
-                        <Box className="w-12 h-12 premium-icon" />
+                        <img className="h-12 w-auto filter !invert" alt="Logo" width={80} height={80} src={logo_icon}/>
                     </div>
                     <h1 className="text-2xl font-bold neon-text mb-2">Welcome Back</h1>
                     <p className="text-gray-400">Sign in to your CyberChest account</p>
@@ -59,25 +65,27 @@ const Login = () => {
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
-                        <Label htmlFor="username" value="Email" className="text-gray-300 mb-2" />
-                        <TextInput
+                        <Label htmlFor="username" value="Email" className="text-gray-300 mb-2"/>
+                        <input
+                            className="bg-neutral-900/50 premium-border shadow-sm w-full rounded-lg"
                             id="username"
                             type="email"
                             placeholder="example@yahoo.com"
                             value={formData.username}
-                            onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+                            onChange={(e) => setFormData({...formData, username: e.target.value})}
                             required
                         />
                     </div>
 
                     <div>
-                        <Label htmlFor="password" value="Password" className="text-gray-300 mb-2" />
-                        <TextInput
+                        <Label htmlFor="password" value="Password" className="text-gray-300 mb-2"/>
+                        <input
+                            className="bg-neutral-900/50 premium-border shadow-sm w-full rounded-lg"
                             id="password"
                             type="password"
                             placeholder="********"
                             value={formData.password}
-                            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                            onChange={(e) => setFormData({...formData, password: e.target.value})}
                             required
                         />
                     </div>
