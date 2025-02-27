@@ -12,14 +12,10 @@ const StatsSection  = () => {
 
     return (
         <section className="w-full max-w-screen-lg mx-auto">
-            <div className="p-0 md:p-4 rounded-lg grid grid-cols-1 gap-12">
-                <div className="space-y-6 pt-12 md:pt-0">
-                    <h2 className="text-4xl font-bold mb-4 p-2 neon-text-intense bg-clip-text">$BOLT
-                        Token</h2>
-                    <p className="text-gray-400 text-lg p-2 max-w-md">
-                        The native token powering the next generation of decentralized applications.
-                    </p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-12 md:pt-4">
+            <div className="p-0 grid grid-cols-1 gap-12">
+                <div className="space-y-6 pt-10 md:pt-8">
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-12 md:pt-8">
                         <div className="premium-panel p-4 rounded-xl">
                             <div className="flex justify-between items-center">
                                 <div className="flex flex-col">
@@ -48,7 +44,7 @@ const StatsSection  = () => {
                         <button className="cyber-button !py-4 w-full bg-opacity-95
                                transition-all duration-300 flex justify-center items-center gap-2 backdrop-blur-lg">
                             <Rocket size={20}/>
-                            <span className="neon-text-intense !font-bold">Launch App</span>
+                            <span className="neon-text">Launch App</span>
                         </button>
                         </Link>
                         <button className="cyber-button !py-4 w-full bg-opacity-95 bg-gray-800 hover:bg-gray-700 bg-opacity-90 backdrop-blur-lg text-white

@@ -2,10 +2,10 @@ import React, {useEffect, useState} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Label } from 'flowbite-react';
 import Cookies from 'js-cookie';
-import { useAuth } from '../../context/AuthProvider';
-import Loading from "../../components/Loading";
-import logo_icon from "../../assets/ned_icon.svg";
-import GoBack from "../../components/GoBack";
+import { useAuth } from '@/context/AuthProvider';
+import Loading from "@/components/Loading";
+import GoBack from "@/components/GoBack";
+import logo_icon from "@/assets/ned_icon.svg";
 
 const Login = () => {
     const isLoggedIn = Cookies.get('isLoggedIn');
@@ -49,7 +49,7 @@ const Login = () => {
         <section className="w-full max-w-lg min-h-screen mx-auto flex flex-col items-center justify-center my-10">
 
             <div className="w-full flex justify-start mb-6">
-                <GoBack url="/" text="Go Back"/>
+                <GoBack url="/" text="Go Back" noStyle={true}/>
             </div>
 
             <div className="w-full premium-panel p-4 md:p-8 rounded-xl">

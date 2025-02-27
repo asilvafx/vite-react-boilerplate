@@ -12,7 +12,7 @@
   "dependencies": {
     "@chakra-ui/react": "^3.8.0",
     "@splinetool/react-spline": "^4.0.0",
-    "@worldcoin/idkit": "^1.4.0",
+    "@worldcoin/idkit": "^1.4.3",
     "axios": "^1.7.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

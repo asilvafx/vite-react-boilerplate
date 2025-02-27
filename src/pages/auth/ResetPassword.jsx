@@ -3,7 +3,7 @@ import {Link, useNavigate} from 'react-router-dom';
 import { Lock, Box } from 'lucide-react';
 import { TextInput, Label } from 'flowbite-react';
 import Cookies from "js-cookie";
-import Loading from "../../components/Loading.jsx";
+import Loading from "@/components/Loading";
 
 const ResetPassword = () => {
     const isLoggedIn = Cookies.get('isLoggedIn');

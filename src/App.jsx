@@ -7,7 +7,17 @@ import AuthProvider from "./context/AuthProvider";
 import { UserProvider } from './context/UserProvider';
 import UserUpdater from './context/UserUpdater';
 import SiteUpdater from './context/SiteUpdater';
-import grid_bg from './assets/bg/grid1.png';
+
+/*
+    Import Components
+*/
+const Loading = lazy(() => import('./components/Loading'));
+const BackgroundVideo = lazy(() => import('./components/BackgroundVideo'));
+const ScrollToTop = lazy(() => import('./components/ScrollToTop'));
+const CookiesGDPR = lazy(() => import('./components/Cookies'));
+const PrivateRoute = lazy(() => import('./components/PrivateRoute'));
+
+
 /*
     Import Pages
 */
@@ -27,14 +37,6 @@ const Register = lazy(() => import('./pages/auth/Register'));
 const ForgotPassword = lazy(() => import('./pages/auth/ForgotPassword'));
 const ResetPassword = lazy(() => import('./pages/auth/ResetPassword'));
 const Logout = lazy(() => import('./pages/auth/Logout'));
-
-/*
-    Import Components
-*/
-const Loading = lazy(() => import('./components/Loading'));
-const ScrollToTop = lazy(() => import('./components/ScrollToTop'));
-const CookiesGDPR = lazy(() => import('./components/Cookies'));
-const PrivateRoute = lazy(() => import('./components/PrivateRoute'));
 
 /*
     Load App Router
@@ -74,7 +76,8 @@ const App = () => {
                             <SiteUpdater/>
                             <CookiesGDPR/>
 
-                            <div className="bg-extra" style={{backgroundImage: `url(${grid_bg})`}}></div>
+
+                            <BackgroundVideo />
                             <div className="aurora"></div>
                             <div className="aurora"></div>
                             <div className="aurora"></div>

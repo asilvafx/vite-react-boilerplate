@@ -8,6 +8,7 @@ import { useUser } from '../context/UserProvider';
 import QRModal from '../components/QRModal';
 import GoBack from '../components/GoBack';
 import logo_badge from '../assets/ned_icon.svg';
+import AnnouncementBar from "./AnnouncementBar";
 
 const Header = ({backUrl}) => {
 
@@ -25,7 +26,9 @@ const Header = ({backUrl}) => {
 
     return (
         <>
-            <Navbar className="top-nav h-14 fixed w-full p-0" fluid>
+            <AnnouncementBar />
+
+            <Navbar className="top-nav h-14 relative w-full !p-0 mt-4" fluid>
 
                     {!url ? (
                         <Navbar.Brand href="/" className="cyber-button">
@@ -85,8 +88,6 @@ const Header = ({backUrl}) => {
 
                 </div>
             </Navbar>
-
-            <div className="h-14 w-full"></div>
 
             {/* QR Modal */}
             <QRModal

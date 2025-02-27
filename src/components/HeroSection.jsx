@@ -1,16 +1,17 @@
 import React, { useEffect, useRef } from 'react';
 import { Vector } from "p5";
 import StatsSection from "./StatsSection";
+import canvas_video from "../assets/bg/canvas.mp4";
 
 const HeroSection = () => {
     const sourceCanvasRef = useRef(null);
     const targetCanvasRef = useRef(null);
-    const dots = [];
-    const imageSrc = 'https://cdn.rawgit.com/TheoGil/codepen-assets/5880eb52/portrait.jpg?raw=true';
+    const videoRef = useRef(null); // Reference for the video element
+    const dots = useRef([]); // Use useRef to persist dots across renders
     const detailLevel = 8;
     const minDotRadius = 0.5;
-    const maxDotRadius = 4;
-    const dotColor = '#7CDFFF';
+    const maxDotRadius = 5;
+    const dotColor = '#859293';
 
     function map_range(value, low1, high1, low2, high2) {
         return low2 + (high2 - low2) * (value - low1) / (high1 - low1);
@@ -37,46 +38,13 @@ const HeroSection = () => {
             this.ctx = options.context;
             this.maxforce = 0.1;
             this.maxspeed = 4;
-            this.comfortZone = 100;
-        }
-
-        addPredator(predator) {
-            this.predator = predator;
         }
 
         update() {
-            if (this.predator) {
-                const distanceFromPredator = this.pos.dist(this.predator.pos);
-                if (distanceFromPredator < this.comfortZone) {
-                    this.color = this.hoverColor;
-                    this.target = this.predator.pos;
-                } else {
-                    this.target = this.originalPos;
-                    this.color = this.originalColor;
-                }
-            }
             this.vel.add(this.acc);
             this.vel.limit(this.maxspeed);
             this.pos.add(this.vel);
             this.acc.mult(0);
-        }
-
-        applyForce(force) {
-            this.acc.add(force);
-        }
-
-        seek(target) {
-            const desired = Vector.sub(target, this.pos);
-            const d = desired.mag();
-            if (d < 100) {
-                const m = map_range(d, 0, 100, 0, this.maxspeed);
-                desired.setMag(m);
-            } else {
-                desired.setMag(this.maxspeed);
-            }
-            const steer = Vector.sub(desired, this.vel);
-            steer.limit(this.maxforce);
-            this.applyForce(steer);
         }
 
         draw() {
@@ -87,28 +55,31 @@ const HeroSection = () => {
     useEffect(() => {
         const sourceCanvas = sourceCanvasRef.current;
         const targetCanvas = targetCanvasRef.current;
-        const sourceCtx = sourceCanvas.getContext('2d');
-        const targetCtx = targetCanvas.getContext('2d');
-        const imageObj = new Image();
+        const sourceCtx = sourceCanvas.getContext('2d', { willReadFrequently: true });
+        const targetCtx = targetCanvas.getContext('2d', { willReadFrequently: true });
+        const videoElement = videoRef.current;
 
-        imageObj.crossOrigin = "Anonymous";
-        imageObj.src = imageSrc;
-        imageObj.onload = initializeDots;
-
-        function initializeDots() {
+        const initializeDots = () => {
             sourceCanvas.width = window.innerWidth;
             sourceCanvas.height = window.innerHeight;
             targetCanvas.width = window.innerWidth;
             targetCanvas.height = window.innerHeight;
+        };
 
-            sourceCtx.drawImage(
-                imageObj,
-                targetCanvas.width / 2 - imageObj.width / 2,
-                targetCanvas.height / 2 - imageObj.height / 2
-            );
+        const loop = () => {
+            requestAnimationFrame(loop);
+            targetCtx.clearRect(0, 0, targetCanvas.width, targetCanvas.height);
 
+            // Draw the current video frame onto the source canvas
+            sourceCtx.drawImage(videoElement, 0, 0, sourceCanvas.width, sourceCanvas.height);
+
+            // Clear previous dots
+            dots.current = []; // Clear previous frame dots
+
+            // Get the image data from the source canvas
             const imageData = sourceCtx.getImageData(0, 0, sourceCanvas.width, sourceCanvas.height);
 
+            // Reinitialize dots based on the current video frame
             for (let y = 0; y < sourceCanvas.height; y += detailLevel) {
                 const row = sourceCanvas.width * y;
                 for (let x = 0; x < sourceCanvas.width; x += detailLevel) {
@@ -124,36 +95,57 @@ const HeroSection = () => {
                             color: dotColor,
                             context: targetCtx,
                         });
-                        dots.push(dot);
+                        dots.current.push(dot);
                     }
                 }
             }
 
-            loop();
-        }
-
-
-        function loop() {
-            requestAnimationFrame(loop);
-            targetCtx.clearRect(0, 0, targetCanvas.width, targetCanvas.height);
-            dots.forEach((dot) => {
-                dot.seek(dot.target);
+            // Update and draw the dots
+            dots.current.forEach((dot) => {
                 dot.update();
                 dot.draw();
             });
-        }
+        };
+
+        videoElement.crossOrigin = "anonymous"; // Set crossOrigin attribute
+        videoElement.src = canvas_video; // Set the video source
+        videoElement.onloadeddata = () => {
+            videoElement.play().catch(error => {
+                console.error("Error attempting to play the video:", error);
+            });
+            initializeDots(); // Initialize dots when video is loaded
+            loop(); // Start the animation loop
+        };
+
+        // Initialize dots on window resize
+        const handleResize = () => {
+            initializeDots();
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
     }, []);
 
     return (
-        <section className="w-full h-full max-w-screen-lg mx-auto my-16 relative">
-
-            <div className="canvas-container w-full pointer-events-none absolute top-0">
-                <canvas ref={sourceCanvasRef} style={{display: 'none'}}></canvas>
-                <canvas ref={targetCanvasRef}></canvas>
+        <section className="w-full h-full max-w-screen-lg mx-auto mb-16 relative">
+            <div className="canvas-container pointer-events-none">
+                <div className="relative w-full h-auto">
+                    <canvas ref={sourceCanvasRef} style={{ display: 'none' }}></canvas>
+                    <canvas ref={targetCanvasRef}></canvas>
+                    <video ref={videoRef} autoPlay playsInline loop muted style={{ display: 'none' }}></video>
+                </div>
             </div>
-
-            <StatsSection/>
-
+            <div className="flex flex-col">
+                <h2 className="text-4xl font-bold mb-4 p-2 neon-text-intense bg-clip-text">$BOLT
+                    Token</h2>
+                <p className="text-gray-400 text-lg p-2 max-w-md neon-text bg-clip-text">
+                    The native token powering the next generation of decentralized applications.
+                </p>
+            </div>
+            <StatsSection />
         </section>
     );
 };
