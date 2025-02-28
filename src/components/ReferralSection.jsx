@@ -77,13 +77,23 @@ const ReferralSection = () => {
                                 </div>
                             </div>
 
-                            <button
-                                onClick={shareReferral}
-                                className="cyber-button w-full flex items-center justify-center space-x-2"
-                            >
-                                <Share2 className="w-5 h-5"/>
-                                <span>Share with Friends</span>
-                            </button>
+                            <div className="grid grid-cols-2 gap-4">
+                                <button
+                                    onClick={shareReferral}
+                                    className="cyber-button w-full flex items-center justify-center space-x-2"
+                                >
+                                    <Share2 className="w-5 h-5"/>
+                                    <span>Share with Friends</span>
+                                </button>
+                                <Link
+                                    to="/invites"
+                                    className="cyber-button bg-neutral-800 flex-1 flex items-center justify-center space-x-2"
+                                >
+                                    <History className="w-5 h-5"/>
+                                    <span>Previous Invites</span>
+                                </Link>
+                            </div>
+
                         </div>
 
                         <div
@@ -123,15 +133,6 @@ const ReferralSection = () => {
                                         referrals so far!
                                     </p>
                                 </div>
-                            </div>
-                            <div className="grid mt-6">
-                                <Link
-                                    to="/invites"
-                                    className="cyber-button flex-1 flex items-center justify-center space-x-2"
-                                >
-                                    <History className="w-5 h-5"/>
-                                    <span>Previous Invites</span>
-                                </Link>
                             </div>
                         </div>
                     </div>

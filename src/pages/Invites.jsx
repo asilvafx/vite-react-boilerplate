@@ -147,28 +147,6 @@ const Invites = () => {
         }
     };
 
-    const sendNewInvite = (e) => {
-        e.preventDefault();
-        const form = e.target;
-        const emailInput = form.elements.namedItem('email');
-        const nameInput = form.elements.namedItem('name');
-
-        if (emailInput && nameInput) {
-            const newInvite = {
-                id: Date.now().toString(),
-                email: emailInput.value,
-                name: nameInput.value,
-                status: 'pending',
-                date: new Date().toISOString(),
-                rewardClaimed: false
-            };
-
-            setInvites([newInvite, ...invites]);
-            toast.success(`Invitation sent to ${nameInput.value}!`);
-            form.reset();
-        }
-    };
-
     return (
         <>
         <section className="w-full max-w-screen-lg mx-auto mb-10">
@@ -176,9 +154,9 @@ const Invites = () => {
             <AppHeader backUrl="/dashboard" />
             <SectionTitle title={`Past Invitations`} />
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="flex flex-wrap md:flex-nowrap gap-8">
                 {/* Invite Management Panel */}
-                <div className="lg:col-span-2 space-y-6">
+                <div className="w-full md:w-2/3 space-y-6">
                     <div className="premium-panel p-6 rounded-xl">
                         <div className="flex items-center justify-between mb-6">
                             <div className="flex items-center space-x-3">
@@ -347,11 +325,11 @@ const Invites = () => {
                 </div>
 
                 {/* Sidebar */}
-                <div className="space-y-6">
+                <div className="w-full md:w-1/3 space-y-6">
                     {/* Referral Stats */}
                     <div className="premium-panel p-6 rounded-xl">
                         <h2 className="text-xl font-medium mb-6 neon-text">Referral Stats</h2>
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 gap-4">
                             <div className="premium-panel p-4 rounded-lg">
                                 <p className="text-sm text-gray-400 mb-1">Total Invites</p>
                                 <p className="text-2xl font-medium neon-text">{invites.length}</p>

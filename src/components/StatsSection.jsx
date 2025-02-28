@@ -1,5 +1,5 @@
 import React from 'react';
-import {File, Shield, Rocket, Copy} from "lucide-react";
+import {File, Shield, Rocket, Copy, ExternalLink} from "lucide-react";
 import {Link} from 'react-router-dom';
 import {loadConfig} from '../lib/site';
 import {shortenAddress, formatNumber} from '../lib/utils';
@@ -47,7 +47,7 @@ const StatsSection  = () => {
                             <span className="neon-text">Launch App</span>
                         </button>
                         </Link>
-                        <button className="cyber-button !py-4 w-full bg-gray-800 hover:bg-gray-700 backdrop-blur-lg text-white
+                        <button className="cyber-button !py-4 w-full bg-neutral-800 hover:bg-neutral-700 backdrop-blur-lg text-white
                                transition-all duration-300 flex justify-center items-center gap-2">
                             <File size={20}/>
                             <span>Whitepaper</span>
@@ -76,18 +76,19 @@ const StatsSection  = () => {
                             </div>
                             <div className="flex flex-wrap justify-between items-center gap-4">
 
-                                <div className="flex items-center gap-2 text-blue-400">
-                                    <Shield size={16}/>
-                                    <span className="text-sm">Audited by Certik</span>
-                                </div>
+
                                 <div>
                                     <Link
-                                        className="premium-gradient-text font-semibold"
+                                        className="premium-gradient-text font-semibold flex items-center gap-2"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         to={`https://polygonscan.com/address/${loadConfig.WEB3_CONTRACT_ADDRESS}`}>
-                                        View on Polygonscan
+                                        <ExternalLink color="lightBlue" className="w-4 h-4"/> View on Polygonscan
                                     </Link>
+                                </div>
+                                <div className="flex items-center gap-2 text-blue-400">
+                                    <Shield size={16}/>
+                                    <span className="text-sm">Audited by Certik</span>
                                 </div>
                             </div>
                         </div>
