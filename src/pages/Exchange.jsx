@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { Wallet, ArrowRightLeft, Loader2, Check, X, ArrowRight } from 'lucide-react';
+import { Loader2, Check, X, ArrowRight } from 'lucide-react';
 import { Label } from 'flowbite-react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import { useUser  } from '../context/UserProvider';
 import AppHeader from "../components/AppHeader";
-import GoBack from "../components/GoBack";
 import AppFooter from "../components/AppFooter";
 import TokenBalanceSection from '../components/TokenBalanceSection';
 import { decryptHash } from "../lib/crypto.js";
@@ -213,7 +212,7 @@ const Exchange = () => {
 
     return (
         <>
-        <section className="w-full max-w-screen-lg mx-auto my-10">
+        <section className="w-full max-w-screen-lg mx-auto mb-10">
             <AppHeader backUrl='/dashboard' />
  
             <SectionTitle title='Token Exchange' />

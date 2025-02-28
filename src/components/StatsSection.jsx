@@ -41,13 +41,13 @@ const StatsSection  = () => {
                     </div>
                     <div className="w-full md:max-w-lg grid grid-cols-1 md:grid-cols-2 gap-4">
                         <Link to="/dashboard">
-                        <button className="cyber-button !py-4 w-full bg-opacity-95
+                        <button className="cyber-button !font-semibold !py-4 w-full bg-opacity-95
                                transition-all duration-300 flex justify-center items-center gap-2 backdrop-blur-lg">
                             <Rocket size={20}/>
                             <span className="neon-text">Launch App</span>
                         </button>
                         </Link>
-                        <button className="cyber-button !py-4 w-full bg-opacity-95 bg-gray-800 hover:bg-gray-700 bg-opacity-90 backdrop-blur-lg text-white
+                        <button className="cyber-button !py-4 w-full bg-gray-800 hover:bg-gray-700 backdrop-blur-lg text-white
                                transition-all duration-300 flex justify-center items-center gap-2">
                             <File size={20}/>
                             <span>Whitepaper</span>
@@ -84,6 +84,7 @@ const StatsSection  = () => {
                                     <Link
                                         className="premium-gradient-text font-semibold"
                                         target="_blank"
+                                        rel="noopener noreferrer"
                                         to={`https://polygonscan.com/address/${loadConfig.WEB3_CONTRACT_ADDRESS}`}>
                                         View on Polygonscan
                                     </Link>

@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IDKitWidget, VerificationLevel } from '@worldcoin/idkit';
+import { useNavigate } from 'react-router-dom';
 import { Shield } from "lucide-react";
 import toast from 'react-hot-toast';
 import axios from 'axios';
+import { useAuth } from '../context/AuthProvider';
 import { useUser  } from '../context/UserProvider';
 import DBService from '../data/db.service';
 import { updateData } from '../lib/user';
+import worldid_icon from '../assets/worldcoin.svg';
 
-const IDKit = ({ setIsVerified }) => { // Accept setIsVerified as a prop
+const IDKit = ({ setIsVerified, intern=true,  text='Verify with WorldID'}) => { // Accept setIsVerified as a prop
+    const navigate = useNavigate();
+    const auth = useAuth();
     const { userData } = useUser ();
     const { t } = useTranslation();
     const [verified, setVerified] = useState(false);
@@ -42,7 +47,6 @@ const IDKit = ({ setIsVerified }) => { // Accept setIsVerified as a prop
             const nullifierHash = res.data.data.nullifier_hash; // Accessing nullifier_hash
 
             // If verification is successful, update the verified state
-            setVerified(true);
             await handleVerification(nullifierHash);
 
         } catch (error) {
@@ -56,21 +60,36 @@ const IDKit = ({ setIsVerified }) => { // Accept setIsVerified as a prop
 
         const checkIfAlreadyExists = await DBService.getItemByKeyValue('world_id', proof, 'users');
 
-        if(checkIfAlreadyExists){
-            toast.error("Verification failed! World ID already associated to a different account.");
-            return;
+        if(intern){
+
+            if(checkIfAlreadyExists){
+                toast.error("Verification failed! World ID already associated to a different account.");
+                return;
+            }
+
+            const data = {
+                is_verified: true,
+                world_id: proof
+            };
+
+            await DBService.update(userKey, data, 'users');
+            await updateData();
+
+            toast.success("Verification successful!");
+        } else {
+            if(!checkIfAlreadyExists){
+                toast.error("Login failed! World ID not found in our records.");
+                return;
+            }
+            const loginPass = await auth.loginWorldId(checkIfAlreadyExists);
+            if(loginPass){
+                navigate('/dashboard');
+            } else {
+                toast.error("Login failed. Please try again.");
+            }
         }
 
-        const data = {
-            is_verified: true,
-            world_id: proof
-        };
-
-        await DBService.update(userKey, data, 'users');
-        await updateData();
-
-        toast.success("Verification successful!");
-        setIsVerified(true); // Update the verification state in the parent component
+        setIsVerified(true);
     };
 
     const onSuccess = () => {
@@ -83,33 +102,25 @@ const IDKit = ({ setIsVerified }) => { // Accept setIsVerified as a prop
     };
 
     return (
-        <>
-            {!verified ? (
-                <IDKitWidget
-                    app_id={WLD_AppId}
-                    action={WLD_Action}
-                    false
-                    verification_level={VerificationLevel.Orb}
-                    handleVerify={handleVerify}
-                    onSuccess={onSuccess}
-                    onError={onError}
-                >
-                    {({ open }) => (
-                        <button
-                            className="cyber-button flex items-center space-x-2 group"
-                            onClick={open}
-                        >
-                            <Shield className="w-5 h-5 group-hover:scale-110 transition-transform duration-500" />
-                            <span>Verify with WorldID</span>
-                        </button>
-                    )}
-                </IDKitWidget>
-            ) : (
-                <div className="flex flex-col">
-                    <p>🎉 Successfully verified!</p>
-                </div>
-            )}
-        </>
+            <IDKitWidget
+                app_id={WLD_AppId}
+                action={WLD_Action}
+                false
+                verification_level={VerificationLevel.Orb}
+                handleVerify={handleVerify}
+                onSuccess={onSuccess}
+                onError={onError}
+            >
+                {({ open }) => (
+                    <button
+                        className="cyber-button bg-neutral-800 flex items-center justify-center gap-2 group"
+                        onClick={open}
+                    >
+                        <img className="pointer-events-none w-auto h-5 filter invert" src={worldid_icon} width={30} height={30} alt="WorldID" />
+                        <span>{text}</span>
+                    </button>
+                )}
+            </IDKitWidget>
     );
 };
 

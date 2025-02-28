@@ -28,7 +28,7 @@ const Header = ({backUrl}) => {
         <>
             <AnnouncementBar />
 
-            <Navbar className="top-nav h-14 relative w-full !p-0 mt-4" fluid>
+            <Navbar className="top-nav h-14 w-full !p-0 mt-4 mb-6" fluid>
 
                     {!url ? (
                         <Navbar.Brand href="/" className="cyber-button">
@@ -52,31 +52,11 @@ const Header = ({backUrl}) => {
                         </Link>
                     ) : (
                         <>
-                            <Dropdown
-                                className="premium-panel"
-                                label=""
-                                dismissOnClick={false}
-                                renderTrigger={() => (
-                                    <button className="cyber-button flex items-center backdrop-blur-lg">
-                                        <span>
-                                            {parseFloat(userData?.web3_available_balance).toFixed(3)}
-                                            {' '}
-                                            ${loadConfig.WEB3_CONTRACT_SYMBOL}
-                                        </span>
-                                    </button>
-                                )
-                                }
-                            >
-                                <Link to="/dashboard"><Dropdown.Item
-                                    className="premium-panel flex flex-col items-start rounded-sm w-[95%] mx-auto">
-
-                                    <span>{shortenAddress(userData.web3_address)}</span>
-                                    <span className="text-xs uppercase text-blue-500 font-semibold">Manage</span>
-                                </Dropdown.Item></Link>
-                                <Link to="/logout"><Dropdown.Item className="text-neutral-100 flex items-center gap-2">
-                                    <LogOut size="16"/> Sign out
-                                </Dropdown.Item></Link>
-                            </Dropdown>
+                            <Link to="/dashboard">
+                                <button className="cyber-button flex items-center backdrop-blur-lg">
+                                    {shortenAddress(userData.web3_address)}
+                                </button>
+                            </Link>
                             <button
                                 onClick={() => setIsQRModalOpen(true)}
                                 className="cyber-button !px-4 flex items-center backdrop-blur-lg"

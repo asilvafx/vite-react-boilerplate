@@ -5,27 +5,6 @@ import { Gauge, HandCoins, SendToBack, Send, Box, ArrowRightLeft, Users } from "
 // Define the action links as a JSON array
 const actionLinks = [
     {
-        path: "/receive",
-        icon: <HandCoins className="w-5 h-5 text-emerald-400" />,
-        title: "Receive",
-        description: "Receive BOLT tokens",
-        bgColor: "bg-emerald-500/10"
-    },
-    {
-        path: "/exchange",
-        icon: <SendToBack className="w-5 h-5 text-blue-400" />,
-        title: "Exchange",
-        description: "Swap between POL and BOLT",
-        bgColor: "bg-blue-500/10"
-    },
-    {
-        path: "/send",
-        icon: <Send className="w-5 h-5 text-purple-400" />,
-        title: "Send",
-        description: "Transfer tokens to another wallet",
-        bgColor: "bg-purple-500/10"
-    },
-    {
         path: "/transactions",
         icon: <ArrowRightLeft className="w-5 h-5 text-emerald-400" />,
         title: "Transactions",
@@ -44,6 +23,13 @@ const actionLinks = [
         icon: <Box className="w-5 h-5 text-emerald-400" />,
         title: "Chests",
         description: "Create, join & earn!",
+        bgColor: "bg-emerald-500/10"
+    },
+    {
+        path: "/games/aviator",
+        icon: <Box className="w-5 h-5 text-emerald-400" />,
+        title: "Aviator Bet",
+        description: "Bet and win crypto!",
         bgColor: "bg-emerald-500/10"
     },
 ];

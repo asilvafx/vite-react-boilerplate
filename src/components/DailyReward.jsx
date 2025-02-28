@@ -109,11 +109,13 @@ const DailyReward = () => {
     return (
         <section className="w-full max-w-screen-lg mx-auto mb-10">
             <div className="premium-panel p-4 md:p-6 rounded-xl relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-64 h-64 bg-purple-500/5 rounded-full blur-3xl" />
+                <div
+                    className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-neutral-500/10 via-blue-800/10 to-cyan-500/10 rounded-full blur-3xl"/>
+
                 <div className="relative z-10">
                     <div className="flex items-center space-x-3 mb-4">
                         <div className="p-2 bg-purple-500/10 rounded-lg">
-                            <Trophy className="w-6 h-6 text-purple-400" />
+                            <Trophy className="w-6 h-6 text-purple-400"/>
                         </div>
                         <h2 className="text-xl font-medium">Daily Reward</h2>
                     </div>
@@ -129,7 +131,7 @@ const DailyReward = () => {
                             disabled={!canClaimReward || loading}
                             className={`cyber-button flex items-center space-x-2 group ${(!canClaimReward || loading) ? 'opacity-50 cursor-not-allowed' : ''}`}
                         >
-                            <Trophy className="w-5 h-5 group-hover:scale-110 transition-transform duration-500" />
+                            <Trophy className="w-5 h-5 group-hover:scale-110 transition-transform duration-500"/>
                             <span>{loading ? 'Processing...' : (canClaimReward ? 'Claim Reward' : timeUntilNextReward)}</span>
                         </button>
                     </div>

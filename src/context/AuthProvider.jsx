@@ -77,23 +77,46 @@ const AuthProvider = ({ children }) => {
                 uid: userKey, // Add the userKey here
             };
 
-            setUser(fetchedData);
-            const udata = encryptHash(JSON.stringify(fetchedData));
-            const token = encryptHash(fetchedData.email);
-            setToken(token);
-            setUserData(fetchedData);
-            Cookies.set('isLoggedIn', true, { path: '', secure: true, sameSite: 'strict', expires: 7 });
-            Cookies.set('tkn', token, { path: '', secure: true, sameSite: 'strict', expires: 7 });
-            Cookies.set('uData', udata, { path: '', secure: true, sameSite: 'strict', expires: 7 });
-
-            toast.success('Login Successfully!');
-
-            return true; // Return true for successful login
+            if(setData(fetchedData)){
+                toast.success('Login Successfully!');
+                return true;
+            } else {
+                toast.error('Login Failed! Please, try again later.');
+                return false;
+            }
         } catch (err) {
             console.error(err);
             return 'Error: An unexpected error occurred.'; // Return a generic error message
         }
     };
+
+    const loginWorldId = async (data) => {
+        if(!data){
+            return false;
+        }
+        if(setData(data)){
+            toast.success('Login Successfully!');
+            return true;
+        } else {
+            toast.error('Login Failed! Please, try again later.');
+            return false;
+        }
+    }
+
+    function setData(data) {
+        if(!data){
+            return false;
+        }
+        const udata = encryptHash(JSON.stringify(data));
+        const token = encryptHash(data.email);
+        setUser(data);
+        setToken(token);
+        setUserData(data);
+        Cookies.set('isLoggedIn', true, { path: '', secure: true, sameSite: 'strict', expires: 7 });
+        Cookies.set('tkn', token, { path: '', secure: true, sameSite: 'strict', expires: 7 });
+        Cookies.set('uData', udata, { path: '', secure: true, sameSite: 'strict', expires: 7 });
+        return true;
+    }
 
     const logOut = () => {
         setUser (null);
@@ -101,7 +124,7 @@ const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ token, user, registerAction, loginAction, logOut }}>
+        <AuthContext.Provider value={{ token, user, registerAction, loginAction, loginWorldId, logOut }}>
             {children}
         </AuthContext.Provider>
     );

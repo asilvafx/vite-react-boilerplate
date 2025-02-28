@@ -115,7 +115,7 @@ const Create = () => {
 
     return (
         <>
-            <section className="w-full max-w-screen-lg mx-auto my-10">
+            <section className="w-full max-w-screen-lg mx-auto mb-10">
                 <AppHeader backUrl="/chests" />
                 <SectionTitle title={showConfirmation && selectedChestPlan ? 'Confirm Chest Creation' : 'Create New Chest'} />
 

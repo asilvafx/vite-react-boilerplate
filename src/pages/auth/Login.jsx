@@ -5,11 +5,11 @@ import Cookies from 'js-cookie';
 import { useAuth } from '@/context/AuthProvider';
 import Loading from "@/components/Loading";
 import GoBack from "@/components/GoBack";
+import IDKit from '@/components/IDKit';
 import logo_icon from "@/assets/ned_icon.svg";
 
 const Login = () => {
     const isLoggedIn = Cookies.get('isLoggedIn');
-
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -18,6 +18,7 @@ const Login = () => {
         }
     }, [navigate, isLoggedIn]);
 
+    const [isVerified, setIsVerified] = useState(false); // Manage verification state here
     const [formData, setFormData] = useState({
         username: '',
         password: '',
@@ -112,6 +113,10 @@ const Login = () => {
                         Sign in
                     </button>
                 </form>
+                <div className="grid mt-6">
+                    <IDKit setIsVerified={setIsVerified} intern={false} text="Sign in with WorldID" />
+                </div>
+
 
                 <p className="mt-6 text-center text-gray-400">
                     Don't have an account?{' '}

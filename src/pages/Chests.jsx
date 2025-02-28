@@ -34,7 +34,7 @@ const Chests = () => {
 
     return (
         <>
-            <section className="w-full max-w-screen-lg mx-auto my-10">
+            <section className="w-full max-w-screen-lg mx-auto mb-10">
                 <AppHeader backUrl="/dashboard" />
                 <SectionTitle title="Chests" />
                 <div className="premium-panel p-4 md:p-6 rounded-xl mb-6">

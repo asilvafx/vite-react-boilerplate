@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Volume2, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Sparkles, X, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const AnnouncementBar = () => {
     const [announcements, setAnnouncements] = useState([
-        { id: 1, text: "🚀 New feature: Horse Racing game now available! Try your luck today.", type: 'info' },
-        { id: 2, text: "⚡ Flash sale: Get 20% extra BOLT tokens on all purchases this weekend!", type: 'success' },
-        { id: 3, text: "🔥 Hot drop: New premium treasure chests just added with 2x rewards", type: 'info' },
-        { id: 4, text: "🛠️ Scheduled maintenance: April 30th, 2-4 AM UTC. Some services may be unavailable.", type: 'warning' },
+        { id: 1, text: "New feature: Horse Racing game now available! Try your luck today.", type: 'info' },
+        { id: 2, text: "Flash sale: Get 20% extra BOLT tokens on all purchases this weekend!", type: 'info' },
+        { id: 3, text: "Hot drop: New premium treasure chests just added with 2x rewards", type: 'info' },
+        { id: 4, text: "Scheduled maintenance: April 30th, 2-4 AM UTC. Some services may be unavailable.", type: 'info' },
     ]);
 
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -59,7 +59,7 @@ const AnnouncementBar = () => {
                 <div className="flex text-truncate items-center space-x-2 mr-2 md:mr-4 !p-0">
                     <div
                         className={`flex items-center gap-1 rounded-full`}>
-                        <Volume2 className="w-4 h-4"/>
+                        <Sparkles className="w-4 h-4"/>
                         <span className="text-xs hidden md:inline-block uppercase font-semibold tracking-wider text-gray-400">
                             Announcement
                         </span>

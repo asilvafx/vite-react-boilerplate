@@ -23,12 +23,15 @@ const PrivateRoute = lazy(() => import('./components/PrivateRoute'));
 */
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
+const AviatorGame = lazy(() => import('./pages/AviatorGame'));
+const Invites = lazy(() => import('./pages/Invites'));
 const Join = lazy(() => import('./pages/Join'));
 const Create = lazy(() => import('./pages/Create'));
 const Chests = lazy(() => import('./pages/Chests'));
 const Transactions = lazy(() => import('./pages/Transactions'));
 const Account = lazy(() => import('./pages/Account'));
 const Contacts = lazy(() => import('./pages/Contacts'));
+const Buy = lazy(() => import('./pages/Buy'));
 const Receive = lazy(() => import('./pages/Receive'));
 const Exchange = lazy(() => import('./pages/Exchange'));
 const Send = lazy(() => import('./pages/Send'));
@@ -87,12 +90,15 @@ const App = () => {
                                 <Route path="/" element={<Home/>}/>
                                 <Route element={<PrivateRoute/>}>
 
+                                    <Route path="/games/aviator" element={<AviatorGame/>}/>
                                     <Route path="/join/:id" element={<Join/>}/>
                                     <Route path="/create" element={<Create/>}/>
                                     <Route path="/chests" element={<Chests/>}/>
+                                    <Route path="/invites" element={<Invites/>}/>
                                     <Route path="/transactions" element={<Transactions/>}/>
                                     <Route path="/account" element={<Account/>}/>
                                     <Route path="/contacts" element={<Contacts/>}/>
+                                    <Route path="/buy" element={<Buy/>}/>
                                     <Route path="/receive" element={<Receive/>}/>
                                     <Route path="/exchange" element={<Exchange/>}/>
                                     <Route path="/send" element={<Send/>}/>

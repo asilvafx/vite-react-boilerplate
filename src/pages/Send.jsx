@@ -205,7 +205,7 @@ const Send = () => {
 
     return (
         <>
-            <section className="w-full max-w-screen-lg mx-auto my-10">
+            <section className="w-full max-w-screen-lg mx-auto mb-10">
                 <AppHeader backUrl='/dashboard'/>
 
                 <SectionTitle title='Send Crypto'/>

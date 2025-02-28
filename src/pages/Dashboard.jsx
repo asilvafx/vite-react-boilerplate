@@ -11,6 +11,8 @@ import DailyReward from '../components/DailyReward';
 import Loading from '../components/Loading';
 import SectionTitle from "../components/SectionTitle";
 import ProfileInfo from "../components/ProfileInfo";
+import ReferralSection from "../components/ReferralSection";
+import BuySection from "../components/BuySection";
 
 const Dashboard = () => {
     const { userData } = useUser ();
@@ -31,11 +33,16 @@ const Dashboard = () => {
 
             <AppHeader/>
             <SectionTitle title='My Account' />
-            <WorldIDVerification isVerified={userData?.is_verified}/>
+            {!userData?.is_verified && (
+                <WorldIDVerification />
+            ) }
+
             <DailyReward/>
             <ProfileInfo />
             <UserStats/>
             <QuickActions/>
+            <BuySection />
+            <ReferralSection />
             <AppFooter/>
         </>
     );
