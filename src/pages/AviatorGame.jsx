@@ -5,10 +5,11 @@ import AppHeader from '../components/AppHeader';
 import AppFooter from '../components/AppFooter';
 import SectionTitle from '../components/SectionTitle';
 import { useUser  } from '../context/UserProvider';
+import aviator_img from '../assets/aviator.png';
 
 const FIXED_BET_AMOUNT = 10; // Fixed bet amount
 const FEE_PERCENTAGE = 0.1; // 10% fee
-const COUNTER_INCREMENT = 0.015; // Increased from 0.005 to make the counter faster
+const COUNTER_INCREMENT = 0.0015; // Increased from 0.005 to make the counter faster
 
 const AviatorGame = () => {
     const { userData } = useUser ();
@@ -62,7 +63,7 @@ const AviatorGame = () => {
 
         // Preload the airplane image
         const image = new Image();
-        image.src = 'https://i.imgur.com/JRDw8l7.png';
+        image.src = aviator_img;
         image.onload = () => {
             imageRef.current = image;
         };
@@ -104,7 +105,6 @@ const AviatorGame = () => {
 
         const animate = () => {
             // Update counter locally first to avoid state updates in animation loop
-            // Increased increment rate for faster counter
             localCounter += COUNTER_INCREMENT;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             x += speedX;
@@ -113,18 +113,16 @@ const AviatorGame = () => {
                 y -= speedY;
                 y = canvas.height / 2 + 50 * Math.cos(x / 100);
 
-                // Only update React state occasionally to avoid excessive renders
-                if (Math.floor(localCounter * 100) % 5 === 0) {
-                    setCounter(localCounter);
-                }
-
+                // Update React state for counter
+                setCounter(localCounter);
                 setIsFlying(true);
             } else {
                 // Stop the animation when the counter reaches the random stop
                 cancelAnimationFrame(animationIdRef.current);
                 setCounter(localCounter);
+                setPlacedBet(false);
                 setIsFlying(false);
-                setMessage('Game Over! Click "Bet" to start a new round.');
+                setMessage('You lost! Click "Bet" to start a new round.');
                 setCounterDepo(prev => [localCounter.toFixed(2), ...prev.slice(0, 25)]);
 
                 return; // Stop the animation loop
@@ -160,7 +158,7 @@ const AviatorGame = () => {
             if (dotPathRef.current.length > 1) {
                 for (let i = 1; i < dotPathRef.current.length; i++) {
                     const gradient = ctx.createLinearGradient(
-                        dotPathRef.current[i-1].x, dotPathRef.current[i-1].y,
+                        dotPathRef.current[i - 1].x, dotPathRef.current[i - 1].y,
                         dotPathRef.current[i].x, dotPathRef.current[i].y
                     );
                     gradient.addColorStop(0, 'rgba(139, 92, 246, 0.7)');
@@ -194,12 +192,27 @@ const AviatorGame = () => {
         animationIdRef.current = requestAnimationFrame(animate);
     }, [randomStop]);
 
-    // Function to generate a random stop value with weighted chances
+    // Function to generate a random stop value with weighted chances based on risk levels
     const generateRandomStop = useCallback(() => {
         const randomValue = Math.random();
-        // Higher multipliers have lower chances
-        const weightedMultiplier = Math.pow(randomValue, 3) * 10; // Cubing the random value to weight it more heavily
-        return Math.min(10, Math.max(1, Math.floor(weightedMultiplier)));
+        let multiplier;
+
+        // Define weighted chances for each risk level
+        if (randomValue < 0.5) {
+            // Low Risk: 1.00x - 2.00x
+            multiplier = Math.random() * 1 + 1; // 1.00x to 2.00x
+        } else if (randomValue < 0.8) {
+            // Medium Risk: 2.00x - 5.00x
+            multiplier = Math.random() * 3 + 2; // 2.00x to 5.00x
+        } else if (randomValue < 0.95) {
+            // High Risk: 5.00x - 10.00x
+            multiplier = Math.random() * 5 + 5; // 5.00x to 10.00x
+        } else {
+            // Extreme Risk: 10.00x+
+            multiplier = Math.random() * 10 + 10; // 10.00x to 20.00x
+        }
+
+        return multiplier;
     }, []);
 
     // Handle bet button click
@@ -209,11 +222,7 @@ const AviatorGame = () => {
         } else {
             placeBet();
         }
-
-        if (!placedBet && !isFlying) {
-            setMessage('Place your bet');
-        }
-    }, [placedBet, isFlying]);
+    }, [placedBet]);
 
     // Place bet function
     const placeBet = useCallback(() => {
@@ -222,8 +231,7 @@ const AviatorGame = () => {
             return;
         }
 
-        // Deduct the fee from the balance
-        const fee = FIXED_BET_AMOUNT * FEE_PERCENTAGE;
+        // Deduct the credits from the balance
         const newBalance = balanceRef.current - FIXED_BET_AMOUNT;
 
         setBalance(newBalance);
@@ -246,6 +254,7 @@ const AviatorGame = () => {
         cancelAnimationFrame(animationIdRef.current);
         setCashedOut(true);
         setPlacedBet(false);
+        setIsFlying(false);
 
         // Calculate winnings based on current counter value
         const winnings = (FIXED_BET_AMOUNT - (FIXED_BET_AMOUNT * FEE_PERCENTAGE)) * counterRef.current;
@@ -291,13 +300,9 @@ const AviatorGame = () => {
     }, []);
 
     return (
-            <>
+        <>
             <section className="w-full max-w-screen-lg mx-auto px-4 mb-10 pt-6">
-                <AppHeader backUrl="/" />
-                <div className="mb-8">
-                    <h2 className="text-3xl font-bold mb-2 neon-purple-text">Aviator Bet</h2>
-                    <p className="text-gray-400">Place your bets and cash out before the plane flies away!</p>
-                </div>
+                <AppHeader backUrl="/" /> 
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     <div className="lg:col-span-2 space-y-6">
@@ -333,7 +338,7 @@ const AviatorGame = () => {
                                 {/* Game Area */}
                                 <div className="relative gaming-panel p-4 bg-gray-900/80 mb-6 h-[280px]">
                                     <div className="absolute inset-0 bg-gradient-to-br from-purple-900/10 to-blue-900/10 rounded-xl gaming-grid-overlay"></div>
-                                    <canvas ref={canvasRef} className="relative  w-full h-full"></canvas>
+                                    <canvas ref={canvasRef} className="relative w-full h-full"></canvas>
                                     <div className={`gaming-multiplier-display ${getMultiplierColor(counter)}`}>
                                         {counter.toFixed(2)}x
                                     </div>
@@ -365,7 +370,7 @@ const AviatorGame = () => {
                                 {/* Message */}
                                 {message && (
                                     <div className="mt-4 p-3 rounded-lg bg-purple-500/5">
-                                        <p className="text-center text-gray-300 relative ">{message}</p>
+                                        <p className="text-center text-gray-300 relative">{message}</p>
                                     </div>
                                 )}
                             </div>
@@ -465,7 +470,7 @@ const AviatorGame = () => {
                 <Toaster position="top-center" />
             </section>
             <AppFooter />
-            </>
+        </>
     );
 };
 
