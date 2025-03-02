@@ -524,3 +524,16 @@ ul li {
     background-size: 20px 20px;
     background-position: center center;
 }
+
+.marquee {
+    animation: marquee 10s linear infinite;
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
