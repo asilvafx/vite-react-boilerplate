@@ -2,8 +2,7 @@ import React from 'react';
 import { Navbar, DarkThemeToggle } from "flowbite-react";
 import {Link} from "react-router-dom";
 import { useUser } from '../context/UserProvider';
-import logo_img from '../assets/ned_full.svg';
-import AnnouncementBar from './AnnouncementBar';
+import logo_img from '../assets/vite.svg';
 
 const Header = () => {
 
@@ -11,8 +10,6 @@ const Header = () => {
 
     return (
         <>
-            <AnnouncementBar />
-
             <Navbar className="top-nav h-14 w-full !p-0 mt-4" fluid>
 
                 <Navbar.Brand href="/" className="flex items-center gap-4 p-0">
@@ -25,16 +22,24 @@ const Header = () => {
                     {/* Conditionally render the Connect button or user email */}
                     {!userData  ? (
                         <Link to="/login">
-                        <button className="cyber-button flex items-center backdrop-blur-lg">
+                        <button className="flex items-center backdrop-blur-lg">
                             Connect
                         </button>
                         </Link>
                     ) : (
+                        <div className="flex items-center gap-2">
                         <Link to="/dashboard">
-                            <button className="cyber-button flex items-center backdrop-blur-lg">
+                            <button className="flex items-center backdrop-blur-lg">
                                 Dashboard
                             </button>
                         </Link>
+
+                        <Link to="/logout">
+                        <button className="flex items-center backdrop-blur-lg">
+                        Logout
+                        </button>
+                        </Link>
+                        </div>
                     )}
 
                 </div>

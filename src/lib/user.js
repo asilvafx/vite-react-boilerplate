@@ -1,15 +1,31 @@
-
 import Cookies from 'js-cookie';
-import { encryptHash, decryptHash } from './crypto.js';
+import {decryptHash, encryptHash} from './crypto.js';
 import DBService from "../data/db.service.js";
-import { getTokenBalance } from "./web3.js"; 
+import {getTokenBalance} from "./web3.js";
 
 export const getUserData = () => {
     const loggedIn = Cookies.get('isLoggedIn') === 'true';
     const uData = Cookies.get('uData');
 
     if (loggedIn) {
-        return JSON.parse(decryptHash(uData));
+        // Check if uData exists and is not null
+        if (uData) {
+            try {
+                // Attempt to parse the decrypted uData
+                const decryptedData = decryptHash(uData);
+                return JSON.parse(decryptedData); // Return the parsed data if successful
+            } catch (error) {
+                // If parsing fails, remove the cookies
+                Cookies.remove('isLoggedIn');
+                Cookies.remove('uData');
+                Cookies.remove('tkn');
+            }
+        } else {
+            // If uData does not exist or is null, remove the cookies
+            Cookies.remove('isLoggedIn');
+            Cookies.remove('uData');
+            Cookies.remove('tkn');
+        }
     }
 }
 

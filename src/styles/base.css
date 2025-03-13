@@ -1,12 +1,4 @@
 
-:root {
-    --background: var(--pico-background-color);
-    --foreground: var(--pico-color);
-    --primary: var(--pico-primary);
-    --secondary: var(--pico-secondary);
-    --border: var(--pico-border-color);
-}
-
 html, body {
     width: 100%;
     max-width: 100%;
@@ -52,7 +44,7 @@ body {
     text-overflow: ellipsis;
 }
 .text-truncate, .text-truncate-2,.text-truncate-3,.text-truncate-4,.text-truncate-5 {
-    max-width: auto;
+    max-width: 100%;
     overflow: hidden;
     text-overflow: clip;
     -webkit-box-orient: vertical;

@@ -1,8 +1,5 @@
 import React from 'react';
-import { Mail, Heart } from 'lucide-react';
-import { FaXTwitter, FaDiscord, FaGithubAlt } from "react-icons/fa6";
-import { FaTelegramPlane } from "react-icons/fa";
-import PreFooter from '../components/PreFooter';
+
 const footerMenuItems = [
     {
         title: "Protocol",
@@ -62,12 +59,6 @@ const Footer = () => {
                             </ul>
                         </div>
                     ))}
-                </div>
-                {/* Bottom Section */}
-                <div className="py-10 border-t border-gray-800">
-
-                    <PreFooter hideDisclaimer={true} />
-
                 </div>
             </div>
         </footer>

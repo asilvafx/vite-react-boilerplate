@@ -12,7 +12,6 @@ import SiteUpdater from './context/SiteUpdater';
     Import Components
 */
 const Loading = lazy(() => import('./components/Loading'));
-const BackgroundVideo = lazy(() => import('./components/BackgroundVideo'));
 const ScrollToTop = lazy(() => import('./components/ScrollToTop'));
 const CookiesGDPR = lazy(() => import('./components/Cookies'));
 const PrivateRoute = lazy(() => import('./components/PrivateRoute'));
@@ -22,19 +21,9 @@ const PrivateRoute = lazy(() => import('./components/PrivateRoute'));
     Import Pages
 */
 import Home from './pages/Home';
-import Dashboard from './pages/Dashboard';
-const AviatorGame = lazy(() => import('./pages/AviatorGame'));
-const Invites = lazy(() => import('./pages/Invites'));
-const Join = lazy(() => import('./pages/Join'));
-const Create = lazy(() => import('./pages/Create'));
-const Chests = lazy(() => import('./pages/Chests'));
-const Transactions = lazy(() => import('./pages/Transactions'));
-const Account = lazy(() => import('./pages/Account'));
-const Contacts = lazy(() => import('./pages/Contacts'));
-const Buy = lazy(() => import('./pages/Buy'));
-const Receive = lazy(() => import('./pages/Receive'));
-const Exchange = lazy(() => import('./pages/Exchange'));
-const Send = lazy(() => import('./pages/Send'));
+
+const Dashboard = lazy(() => import('./pages/Dashboard'));
+
 const Login = lazy(() => import('./pages/auth/Login'));
 const Register = lazy(() => import('./pages/auth/Register'));
 const ForgotPassword = lazy(() => import('./pages/auth/ForgotPassword'));
@@ -79,30 +68,10 @@ const App = () => {
                             <SiteUpdater/>
                             <CookiesGDPR/>
 
-
-                            <BackgroundVideo />
-                            <div className="aurora"></div>
-                            <div className="aurora"></div>
-                            <div className="aurora"></div>
-                            <div className="aurora"></div>
-
                             <Routes>
                                 <Route path="/" element={<Home/>}/>
                                 <Route element={<PrivateRoute/>}>
 
-                                    <Route path="/games/aviator" element={<AviatorGame/>}/>
-                                    <Route path="/join/:id" element={<Join/>}/>
-                                    <Route path="/create" element={<Create/>}/>
-                                    <Route path="/chests" element={<Chests/>}/>
-                                    <Route path="/invites" element={<Invites/>}/>
-                                    <Route path="/transactions" element={<Transactions/>}/>
-                                    <Route path="/account" element={<Account/>}/>
-                                    <Route path="/contacts" element={<Contacts/>}/>
-                                    <Route path="/buy" element={<Buy/>}/>
-                                    <Route path="/receive" element={<Receive/>}/>
-                                    <Route path="/exchange" element={<Exchange/>}/>
-                                    <Route path="/send" element={<Send/>}/>
-                                    <Route path="/send/:address" element={<Send/>}/>
                                     <Route path="/dashboard" element={<Dashboard/>}/>
                                     <Route path="/logout" element={<Logout/>}/>
                                 </Route>

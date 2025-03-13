@@ -35,8 +35,6 @@ const AuthProvider = ({ children }) => {
                 displayName: data.fullName,
                 web3_address: web3_account_address,
                 web3_pk: encryptHash(web3_account_pk),
-                web3_custom_token_balance: "0.000",
-                web3_network_token_balance: "0.000",
                 world_id: null,
                 is_admin: false,
             };

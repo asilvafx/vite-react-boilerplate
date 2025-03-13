@@ -6,7 +6,7 @@ import { useAuth } from '@/context/AuthProvider';
 import Loading from "@/components/Loading";
 import GoBack from "@/components/GoBack";
 import IDKit from '@/components/IDKit';
-import logo_icon from "@/assets/ned_icon.svg";
+import logo_icon from "@/assets/vite.svg";
 
 const Login = () => {
     const isLoggedIn = Cookies.get('isLoggedIn');

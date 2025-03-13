@@ -2,17 +2,11 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useUser  } from '../context/UserProvider';
-import AppHeader from '../components/AppHeader';
-import AppFooter from '../components/AppFooter';
-import UserStats from '../components/UserStats';
-import QuickActions from '../components/QuickActions';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 import WorldIDVerification from '../components/WorldIDVerification';
-import DailyReward from '../components/DailyReward';
 import Loading from '../components/Loading';
 import SectionTitle from "../components/SectionTitle";
-import ProfileInfo from "../components/ProfileInfo";
-import ReferralSection from "../components/ReferralSection";
-import BuySection from "../components/BuySection";
 
 const Dashboard = () => {
     const { userData } = useUser ();
@@ -31,19 +25,15 @@ const Dashboard = () => {
                 <meta name='description' content={t('seo_description')}/>
             </Helmet>
 
-            <AppHeader/>
-            <SectionTitle title='My Account' />
-            {!userData?.is_verified && (
-                <WorldIDVerification />
-            ) }
+            <Header/>
+            
+            <SectionTitle title='Dashboard'/>
 
-            <DailyReward/>
-            <ProfileInfo />
-            <UserStats/>
-            <QuickActions/>
-            <BuySection />
-            <ReferralSection />
-            <AppFooter/>
+            {!userData?.is_verified && (
+                <WorldIDVerification/>
+            )}
+
+            <Footer/>
         </>
     );
 };

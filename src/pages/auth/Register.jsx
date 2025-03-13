@@ -6,7 +6,7 @@ import { Label } from 'flowbite-react';
 import { useAuth } from '@/context/AuthProvider';
 import Loading from '@/components/Loading';
 import GoBack from '@/components/GoBack';
-import logo_icon from '@/assets/ned_icon.svg'
+import logo_icon from '@/assets/vite.svg'
 const Register = () => {
     const isLoggedIn = Cookies.get('isLoggedIn');
 
