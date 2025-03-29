@@ -1,16 +1,9 @@
 import React from 'react';
-// import ThreeBackground from './ThreeBackground';
 
 const SectionTitle = ({ title }) => {
     return (
-        <section className="w-full max-w-screen-lg mx-auto mb-10 relative">
-            {/*
-            <div id="canvas-3d" className="-top-64 -right-56 md:left-0 absolute">
-                <ThreeBackground />
-            </div>
-            */}
-
-            <div className="p-2 flex relative"> {/* Ensure title is above the background */}
+        <section className="w-full max-w-screen-lg mx-auto mb-10 relative">  
+            <div className="p-2 flex relative">
                 <h1 className="text-3xl font-bold neon-text mb-8">{title ?? ''}</h1>
             </div>
         </section>

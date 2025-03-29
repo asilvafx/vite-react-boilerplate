@@ -1,12 +1,8 @@
 import React from 'react';
-import { DarkThemeToggle } from "flowbite-react";
-import {Link} from "react-router-dom";
-import { useUser } from '../context/UserProvider';
+import { DarkThemeToggle } from "flowbite-react"; 
 import logo_img from '../assets/vite.svg';
 
 const Header = () => {
-
-    const { userData } = useUser();
 
     return (
         <>
@@ -90,30 +86,6 @@ const Header = () => {
                     </div>
                     <div className="flex items-center gap-2 md:order-2 p-0">
                         <DarkThemeToggle className="!bg-transparent border-0 focus:ring-0 m-0"/>
-
-                        {/* Conditionally render the Connect button or user email */}
-                        {!userData ? (
-                            <Link to="/login">
-                                <button className="flex items-center backdrop-blur-lg">
-                                    Connect
-                                </button>
-                            </Link>
-                        ) : (
-                            <div className="flex items-center gap-2">
-                                <Link to="/dashboard">
-                                    <button className="flex items-center backdrop-blur-lg">
-                                        Dashboard
-                                    </button>
-                                </Link>
-
-                                <Link to="/logout">
-                                    <button className="flex items-center backdrop-blur-lg">
-                                        Logout
-                                    </button>
-                                </Link>
-                            </div>
-                        )}
-
                     </div>
                 </div>
             </nav>
