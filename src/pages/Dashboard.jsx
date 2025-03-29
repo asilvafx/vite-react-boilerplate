@@ -26,7 +26,7 @@ const Dashboard = () => {
             </Helmet>
 
             <Header/>
-            
+
             <SectionTitle title='Dashboard'/>
 
             {!userData?.is_verified && (

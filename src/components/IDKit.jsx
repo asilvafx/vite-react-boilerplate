@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IDKitWidget, VerificationLevel } from '@worldcoin/idkit';
-import { useNavigate } from 'react-router-dom';
-import { Shield } from "lucide-react";
+import { useNavigate } from 'react-router-dom'; 
 import toast from 'react-hot-toast';
 import axios from 'axios';
 import { useAuth } from '../context/AuthProvider';

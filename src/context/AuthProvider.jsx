@@ -3,7 +3,6 @@ import Cookies from 'js-cookie';
 import DBService from '../data/db.service';
 import { decryptHash, encryptHash } from "../lib/crypto.js";
 import toast from 'react-hot-toast';
-import { createWallet } from '../lib/web3';
 import { useUser } from './UserProvider';
 
 const AuthContext = createContext();
@@ -24,17 +23,11 @@ const AuthProvider = ({ children }) => {
                 return false;
             }
 
-            const web3_account = await createWallet();
-
-            const web3_account_address = web3_account.address;
-            const web3_account_pk = web3_account.privateKey;
 
             const userData = {
                 email: data.username,
                 password: encryptHash(data.password),
                 displayName: data.fullName,
-                web3_address: web3_account_address,
-                web3_pk: encryptHash(web3_account_pk),
                 world_id: null,
                 is_admin: false,
             };

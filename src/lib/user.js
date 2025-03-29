@@ -1,7 +1,6 @@
 import Cookies from 'js-cookie';
 import {decryptHash, encryptHash} from './crypto.js';
 import DBService from "../data/db.service.js";
-import {getTokenBalance} from "./web3.js";
 
 export const getUserData = () => {
     const loggedIn = Cookies.get('isLoggedIn') === 'true';
@@ -79,20 +78,13 @@ export const updateData = async (userData) => {
         userData = await getUserData();
     }
 
-    const fetchTokenBalance = await getTokenBalance(userData.web3_address);
-    const fetchChainBalance = await getTokenBalance(userData.web3_address, true);
-
     // Prepare the updated data
     const userActualData = await DBService.getItemByKeyValue('email', userData.email, 'users');
     const userKey = await DBService.getItemKey('email', userData.email, 'users');
 
-    const totalUserBalance = userActualData?.lockedBalance ? (parseFloat(fetchTokenBalance) - parseFloat(userActualData.lockedBalance)) : parseFloat(fetchTokenBalance);
     const data = {
         ...userActualData,
-        uid: userKey,
-        web3_custom_token_balance: fetchTokenBalance,
-        web3_network_token_balance: fetchChainBalance,
-        web3_available_balance: totalUserBalance
+        uid: userKey
     };
 
     // Update the user data in the database

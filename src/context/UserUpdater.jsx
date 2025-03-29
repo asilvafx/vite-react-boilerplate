@@ -5,7 +5,7 @@ import { useUser  } from './UserProvider';
 import Cookies from "js-cookie";
 import Loading from '../components/Loading';
 
-const UserUpdater = (forceLoading=true) => {
+const UserUpdater = (forceLoading= true) => {
     const { setUserData } = useUser ();
     const [loading, setLoading] = useState(true);
 

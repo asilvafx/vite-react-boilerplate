@@ -6,7 +6,6 @@ import { checkLoginStatus, getUserData, updateData } from './lib/user';
 import AuthProvider from "./context/AuthProvider";
 import { UserProvider } from './context/UserProvider';
 import UserUpdater from './context/UserUpdater';
-import SiteUpdater from './context/SiteUpdater';
 
 /*
     Import Components
@@ -65,7 +64,6 @@ const App = () => {
                     <UserProvider>
                         <AuthProvider>
                             <UserUpdater/>
-                            <SiteUpdater/>
                             <CookiesGDPR/>
 
                             <Routes>
