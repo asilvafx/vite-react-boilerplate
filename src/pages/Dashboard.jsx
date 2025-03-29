@@ -21,7 +21,7 @@ const Dashboard = () => {
     return (
         <>
             <Helmet>
-                <title>PIGMIL – Web Solutions for a Digital Future</title>
+                <title>Dashboard</title>
                 <meta name='description' content={t('seo_description')}/>
             </Helmet>
 
