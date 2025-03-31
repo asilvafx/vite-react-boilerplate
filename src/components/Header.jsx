@@ -1,5 +1,5 @@
 import React from 'react';
-import { DarkThemeToggle } from "flowbite-react"; 
+import { DarkThemeToggle } from "flowbite-react";
 import logo_img from '../assets/vite.svg';
 
 const Header = () => {
