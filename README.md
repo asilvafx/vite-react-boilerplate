@@ -4,7 +4,7 @@ A lightweight, production-ready boilerplate for React projects built on Vite. Th
 
 ## Features
 - **React 18** with **Vite** for fast development
-- **Redux** + **Toolkit** for global state management
+- **Redux** + **Toolkit** + **Persist** for efficient state management
 - **Axios** for easy HTTP requests
 - **CryptoJS** encryption standards
 - **Cookies-js** for handling cookies
