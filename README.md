@@ -4,6 +4,7 @@ A lightweight, production-ready boilerplate for React projects built on Vite. Th
 
 ## Features
 - **React 18** with **Vite** for fast development
+- **Redux** + **Toolkit** for global state management
 - **Axios** for easy HTTP requests
 - **CryptoJS** encryption standards
 - **Cookies-js** for handling cookies
@@ -11,12 +12,12 @@ A lightweight, production-ready boilerplate for React projects built on Vite. Th
 - **i18n** with i18next for multi-language support
 - **React Use Cart** for managing shopping cart state hook
 - **React Router** for route management
-- **Tailwind CSS** with Tailwind Merge for custom styling 
+- **Tailwind CSS** with Tailwind Merge for custom styling
+- **FlowBite** Set of design components for Tailwind CSS
 - **Framer-Motion** UI animation library
-- **Flowbite** set of design components for Tailwind CSS
 - **User Authentication** with login status checks and cookie management
 - **Environment configuration** via loadEnv
-- **Firebase** for Realtime database & Hosting
+- **Firebase** for Realtime Database & Hosting
 
 ## Installation
 
