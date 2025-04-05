@@ -1,6 +1,6 @@
 # Vite React Boilerplate
 
-A lightweight, production-ready boilerplate for React projects built on Vite. This setup includes essential dependencies for modern web development, such as Axios for API requests, i18n for internationalization, React Use Cart for cart hook state and React Router for route management. Includes Tailwind CSS and Flowbite for styling, also includes Framer Motion for a animated, dynamic and elegant UI/UX. Includes ESLint for code quality, and support for environment variables.
+A lightweight, production-ready boilerplate for React projects built on Vite. This setup includes essential dependencies for modern frontend web development, such as Axios for API requests, i18n for internationalization, React Use Cart for cart hook state, Redux for global state management and React Router for route management. Includes Tailwind CSS and Flowbite for styling, also includes Framer Motion for animation effects, dynamic and elegant UI/UX. Includes ESLint for code quality, and support for environment variables. Includes SEO references, enhanced security and ServiceWorker for offline views.
 
 ## Features
 - **React 18** with **Vite** for fast development
@@ -31,5 +31,5 @@ A lightweight, production-ready boilerplate for React projects built on Vite. Th
 
 
 2. **Setup Firebase**
-3. ```bash
+   ```bash
    https://console.firebase.google.com/
