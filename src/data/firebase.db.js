@@ -115,7 +115,7 @@ class DBService {
     }
 
     // Method to upload an image and return the download URL
-    async uploadImage(image, path) {
+    async upload(image, path) {
         const imageRef = storageRef(storage, path); // Renamed variable to avoid conflict
         const snapshot = await uploadBytes(imageRef, image);
         const downloadURL = await getDownloadURL(snapshot.ref);

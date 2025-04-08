@@ -197,12 +197,12 @@ class DBService {
 
     // Upload an image
     // Note: This would require a multipart/form-data request
-    async uploadImage(image, path) {
+    async upload(image, custom) {
         try {
             // Create a FormData object to send the file
             const formData = new FormData();
             formData.append('file', image);
-            formData.append('path', path);
+            formData.append('filename', custom);
 
             // Special axios request for file upload
             const response = await axios.post(
@@ -217,12 +217,12 @@ class DBService {
             );
 
             if (response.data.status === 'success') {
-                return response.data.message.url;
+                return response.data.message;
             }
 
             throw new Error(response.data.message || 'Failed to upload image');
         } catch (error) {
-            console.error(`Error in uploadImage: ${error}`);
+            console.error(`Error in upload: ${error}`);
             throw error;
         }
     }
