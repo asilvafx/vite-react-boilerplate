@@ -1,10 +1,16 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import DBService from '../../data/rest.db';
 
-// Sample users data with isAdmin flag
-const sampleUsers = [
-    { id: 1, email: 'user@example.com', password: 'password123', name: 'John Doe', isAdmin: false },
-    { id: 2, email: 'admin@example.com', password: 'admin123', name: 'Admin User', isAdmin: true }
-];
+// Get users from database
+const getUsers = async () => {
+    try {
+        const users = await DBService.getAll('users');
+        return users || {};
+    } catch (error) {
+        console.error('Error fetching users:', error);
+        return {};
+    }
+};
 
 const initialState = {
     user: null,
@@ -13,6 +19,41 @@ const initialState = {
     loading: false,
     error: null
 };
+
+// Create async thunk for registration
+export const registerUser = createAsyncThunk(
+    'auth/registerUser',
+    async (userData, { rejectWithValue }) => {
+        try {
+            // Check if user already exists
+            const existingUser = await DBService.getItemByKeyValue('email', userData.email, 'users');
+
+            if (existingUser) {
+                throw new Error('User with this email already exists');
+            }
+
+            // Create new user object
+            const newUser = {
+                name: userData.name,
+                email: userData.email,
+                password: userData.password, // In a real app, hash this password
+                isAdmin: false,
+                createdAt: new Date().toISOString()
+            };
+
+            // Create user in database
+            const result = await DBService.create(newUser, 'users');
+
+            if (!result || !result.key) {
+                throw new Error('Failed to create user account');
+            }
+
+            return result;
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
+    }
+);
 
 const authSlice = createSlice({
     name: 'auth',
@@ -49,6 +90,21 @@ const authSlice = createSlice({
         setLoading: (state, action) => {
             state.loading = action.payload;
         }
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(registerUser.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(registerUser.fulfilled, (state) => {
+                state.loading = false;
+                state.error = null;
+            })
+            .addCase(registerUser.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            });
     }
 });
 
@@ -57,11 +113,12 @@ export const loginUser = (credentials) => async (dispatch) => {
     try {
         dispatch(loginStart());
 
-        // Simulate API call delay
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        // Get users from database
+        const users = await getUsers();
+        const usersList = Object.values(users);
 
-        // Find user in sample data
-        const user = sampleUsers.find(u =>
+        // Find user in database
+        const user = usersList.find(u =>
             u.email === credentials.email && u.password === credentials.password
         );
 
@@ -138,5 +195,4 @@ export const {
     setLoading
 } = authSlice.actions;
 
-// Export reducer
 export default authSlice.reducer;

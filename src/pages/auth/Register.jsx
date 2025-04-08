@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { useAuth } from '../../hooks/useAuth';
+import { registerUser } from '../../store/slices/authSlice';
 import toast from 'react-hot-toast';
 
 const Register = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const { isAuthenticated } = useAuth();
+    const loading = useSelector((state) => state.auth.loading);
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -15,7 +19,7 @@ const Register = () => {
     });
 
     // Redirect if already authenticated
-    React.useEffect(() => {
+    useEffect(() => {
         if (isAuthenticated) {
             navigate('/');
         }
@@ -29,9 +33,27 @@ const Register = () => {
             return;
         }
 
-        // For now, just redirect to login since we don't have register functionality
-        toast.success('Registration successful! Please login.');
-        navigate('/login');
+        try {
+            const resultAction = await dispatch(registerUser({
+                name: formData.name,
+                email: formData.email,
+                password: formData.password
+            })).unwrap();
+
+            // If we get here, registration was successful
+            if (resultAction && resultAction.key) {
+                toast.success('Registration successful! Please login.');
+                navigate('/login');
+            } else {
+                // This shouldn't happen due to error handling in the thunk,
+                // but just in case
+                toast.error('Registration failed. Please try again.');
+            }
+        } catch (error) {
+            // Handle specific error messages
+            const errorMessage = error?.message || 'Registration failed. Please try again.';
+            toast.error(errorMessage);
+        }
     };
 
     const handleChange = (e) => {
@@ -67,6 +89,7 @@ const Register = () => {
                                     placeholder="Full Name"
                                     value={formData.name}
                                     onChange={handleChange}
+                                    disabled={loading}
                                 />
                             </div>
                             <div>
@@ -80,6 +103,7 @@ const Register = () => {
                                     placeholder="Email address"
                                     value={formData.email}
                                     onChange={handleChange}
+                                    disabled={loading}
                                 />
                             </div>
                             <div>
@@ -93,6 +117,7 @@ const Register = () => {
                                     placeholder="Password"
                                     value={formData.password}
                                     onChange={handleChange}
+                                    disabled={loading}
                                 />
                             </div>
                             <div>
@@ -106,6 +131,7 @@ const Register = () => {
                                     placeholder="Confirm Password"
                                     value={formData.confirmPassword}
                                     onChange={handleChange}
+                                    disabled={loading}
                                 />
                             </div>
                         </div>
@@ -113,9 +139,14 @@ const Register = () => {
                         <div>
                             <button
                                 type="submit"
-                                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-cyan-600 hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500"
+                                disabled={loading}
+                                className={`group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white ${
+                                    loading
+                                        ? 'bg-cyan-400 cursor-not-allowed'
+                                        : 'bg-cyan-600 hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500'
+                                }`}
                             >
-                                Register
+                                {loading ? 'Registering...' : 'Register'}
                             </button>
                         </div>
 
