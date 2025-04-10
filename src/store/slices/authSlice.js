@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import DBService from '../../data/rest.db';
+import {encryptHash, decryptHash} from '../../lib/crypto';
 
 // Get users from database
 const getUsers = async () => {
@@ -36,7 +37,7 @@ export const registerUser = createAsyncThunk(
             const newUser = {
                 name: userData.name,
                 email: userData.email,
-                password: userData.password, // In a real app, hash this password
+                password: encryptHash(userData.password),
                 isAdmin: false,
                 createdAt: new Date().toISOString()
             };
@@ -113,28 +114,26 @@ export const loginUser = (credentials) => async (dispatch) => {
     try {
         dispatch(loginStart());
 
-        // Get users from database
-        const users = await getUsers();
-        const usersList = Object.values(users);
+        // Get user from database
+        const existingUser = await DBService.getItemByKeyValue('email', credentials.email, 'users');
 
-        // Find user in database
-        const user = usersList.find(u =>
-            u.email === credentials.email && u.password === credentials.password
-        );
+        if (!existingUser) {
+            throw new Error('Invalid credentials');
+        }
 
-        if (!user) {
+        if ( decryptHash(existingUser.password) !== credentials.password) {
             throw new Error('Invalid credentials');
         }
 
         // Create a sample token
-        const token = btoa(`${user.email}:${Date.now()}`);
+        const token = btoa(`${credentials.email}:${Date.now()}`);
 
         // Remove sensitive data before storing in state
         const userWithoutPassword = {
-            id: user.id,
-            email: user.email,
-            name: user.name,
-            isAdmin: user.isAdmin
+            id: existingUser.id,
+            email: existingUser.email,
+            name: existingUser.name,
+            isAdmin: existingUser.isAdmin
         };
 
         dispatch(loginSuccess({ user: userWithoutPassword, token }));
