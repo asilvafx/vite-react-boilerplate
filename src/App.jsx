@@ -5,7 +5,6 @@ import { Toaster } from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { checkAuthStatus } from './store/slices/authSlice';
 import Cookies from 'js-cookie';
-import {decryptHash} from './lib/crypto';
 
 const Loading = lazy(() => import('./components/Loading'));
 const ScrollToTop = lazy(() => import('./components/ScrollToTop'));
@@ -31,7 +30,7 @@ const ProtectedRoute = ({ children }) => {
         const verifyAuth = async () => {
             try {
                 const authStatus = await dispatch(checkAuthStatus());
-             
+
 
                 setIsAuthenticated(authStatus);
             } catch (error) {
