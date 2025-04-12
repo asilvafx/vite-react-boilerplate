@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import DBService from '../../data/rest.db';
-import {encryptHash, decryptHash} from '../../lib/crypto';
+import {decryptHash} from '../../lib/crypto';
 
 // Get users from database
 const getUsers = async () => {
@@ -33,17 +33,8 @@ export const registerUser = createAsyncThunk(
                 throw new Error('User with this email already exists');
             }
 
-            // Create new user object
-            const newUser = {
-                name: userData.name,
-                email: userData.email,
-                password: encryptHash(userData.password),
-                isAdmin: false,
-                createdAt: new Date().toISOString()
-            };
-
             // Create user in database
-            const result = await DBService.create(newUser, 'users');
+            const result = await DBService.create(userData, 'users');
 
             if (!result || !result.key) {
                 throw new Error('Failed to create user account');
@@ -55,59 +46,6 @@ export const registerUser = createAsyncThunk(
         }
     }
 );
-
-const authSlice = createSlice({
-    name: 'auth',
-    initialState,
-    reducers: {
-        loginStart: (state) => {
-            state.loading = true;
-            state.error = null;
-        },
-        loginSuccess: (state, action) => {
-            state.loading = false;
-            state.isAuthenticated = true;
-            state.user = action.payload.user;
-            state.token = action.payload.token;
-            state.error = null;
-        },
-        loginFailure: (state, action) => {
-            state.loading = false;
-            state.isAuthenticated = false;
-            state.user = null;
-            state.token = null;
-            state.error = action.payload;
-        },
-        logout: (state) => {
-            state.user = null;
-            state.token = null;
-            state.isAuthenticated = false;
-            state.error = null;
-            state.loading = false;
-        },
-        clearError: (state) => {
-            state.error = null;
-        },
-        setLoading: (state, action) => {
-            state.loading = action.payload;
-        }
-    },
-    extraReducers: (builder) => {
-        builder
-            .addCase(registerUser.pending, (state) => {
-                state.loading = true;
-                state.error = null;
-            })
-            .addCase(registerUser.fulfilled, (state) => {
-                state.loading = false;
-                state.error = null;
-            })
-            .addCase(registerUser.rejected, (state, action) => {
-                state.loading = false;
-                state.error = action.payload;
-            });
-    }
-});
 
 // Async thunk for login
 export const loginUser = (credentials) => async (dispatch) => {
@@ -175,6 +113,59 @@ export const checkAuthStatus = () => async (dispatch, getState) => {
         return false;
     }
 };
+
+const authSlice = createSlice({
+    name: 'auth',
+    initialState,
+    reducers: {
+        loginStart: (state) => {
+            state.loading = true;
+            state.error = null;
+        },
+        loginSuccess: (state, action) => {
+            state.loading = false;
+            state.isAuthenticated = true;
+            state.user = action.payload.user;
+            state.token = action.payload.token;
+            state.error = null;
+        },
+        loginFailure: (state, action) => {
+            state.loading = false;
+            state.isAuthenticated = false;
+            state.user = null;
+            state.token = null;
+            state.error = action.payload;
+        },
+        logout: (state) => {
+            state.user = null;
+            state.token = null;
+            state.isAuthenticated = false;
+            state.error = null;
+            state.loading = false;
+        },
+        clearError: (state) => {
+            state.error = null;
+        },
+        setLoading: (state, action) => {
+            state.loading = action.payload;
+        }
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(registerUser.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(registerUser.fulfilled, (state) => {
+                state.loading = false;
+                state.error = null;
+            })
+            .addCase(registerUser.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            });
+    }
+});
 
 // Selectors
 export const selectAuth = (state) => state.auth;

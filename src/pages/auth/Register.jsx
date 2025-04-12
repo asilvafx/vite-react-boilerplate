@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useAuth } from '../../hooks/useAuth';
 import { registerUser } from '../../store/slices/authSlice';
 import toast from 'react-hot-toast';
+import {encryptHash} from "../../lib/crypto.js";
 
 const Register = () => {
     const navigate = useNavigate();
@@ -37,7 +38,9 @@ const Register = () => {
             const resultAction = await dispatch(registerUser({
                 name: formData.name,
                 email: formData.email,
-                password: formData.password
+                password: encryptHash(formData.password),
+                isAdmin: false,
+                createdAt: new Date().toISOString()
             })).unwrap();
 
             // If we get here, registration was successful
