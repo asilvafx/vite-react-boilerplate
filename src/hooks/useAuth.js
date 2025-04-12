@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { loginUser, logout } from '../store/slices/authSlice';
+import { loginUser, logoutUser as logoutAction } from '../store/slices/authSlice';
 
 export const useAuth = () => {
     const dispatch = useDispatch();
@@ -9,8 +9,8 @@ export const useAuth = () => {
         await dispatch(loginUser(credentials));
     };
 
-    const logoutUser = () => {
-        dispatch(logout());
+    const logout = async () => {
+        await dispatch(logoutAction());
     };
 
     return {
@@ -20,7 +20,7 @@ export const useAuth = () => {
         loading: auth.loading,
         error: auth.error,
         login,
-        logout: logoutUser
+        logout
     };
 };
 

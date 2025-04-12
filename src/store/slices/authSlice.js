@@ -1,17 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import Cookies from 'js-cookie';
 import DBService from '../../data/rest.db';
-import {decryptHash} from '../../lib/crypto';
+import {decryptHash, encryptHash} from '../../lib/crypto';
 
-// Get users from database
-const getUsers = async () => {
-    try {
-        const users = await DBService.getAll('users');
-        return users || {};
-    } catch (error) {
-        console.error('Error fetching users:', error);
-        return {};
-    }
-};
 
 const initialState = {
     user: null,
@@ -19,6 +10,29 @@ const initialState = {
     isAuthenticated: false,
     loading: false,
     error: null
+};
+
+// Get user data from cookies
+export const getUserData = async () => {
+    try {
+        const userData = Cookies.get('userData') || null;
+        const isLoggedIn = Cookies.get('isLoggedIn');
+
+        if (userData && isLoggedIn) {
+
+            if(userData){
+                const parsedUserData = JSON.parse(decryptHash(userData));
+
+                return parsedUserData.user || {};
+
+            }
+        }
+        console.error('Error fetching user');
+        return {};
+    } catch (error) {
+        console.error('Error fetching user:', error);
+        return {};
+    }
 };
 
 // Create async thunk for registration
@@ -47,6 +61,7 @@ export const registerUser = createAsyncThunk(
     }
 );
 
+
 // Async thunk for login
 export const loginUser = (credentials) => async (dispatch) => {
     try {
@@ -59,20 +74,34 @@ export const loginUser = (credentials) => async (dispatch) => {
             throw new Error('Invalid credentials');
         }
 
-        if ( decryptHash(existingUser.password) !== credentials.password) {
+        if (decryptHash(existingUser.password) !== credentials.password) {
             throw new Error('Invalid credentials');
         }
 
-        // Create a sample token
-        const token = btoa(`${credentials.email}:${Date.now()}`);
+        // Create a token
+        const token = btoa(`${existingUser.id}`);
 
-        // Remove sensitive data before storing in state
+        // Remove sensitive data before storing in state and cookies
         const userWithoutPassword = {
-            id: existingUser.id,
-            email: existingUser.email,
-            name: existingUser.name,
-            isAdmin: existingUser.isAdmin
+            user: existingUser,
+            token: token
         };
+
+        const userEncrypted = encryptHash(JSON.stringify(userWithoutPassword));
+
+        // Set user data in cookies
+        Cookies.set('userData', userEncrypted, {
+            expires: 7,  // 7 days
+            secure: true,
+            sameSite: 'strict'
+        });
+
+        // Set authentication status in cookies
+        Cookies.set('isLoggedIn', 'true', {
+            expires: 7,  // 7 days
+            secure: true,
+            sameSite: 'strict'
+        });
 
         dispatch(loginSuccess({ user: userWithoutPassword, token }));
         return { success: true };
@@ -85,10 +114,20 @@ export const loginUser = (credentials) => async (dispatch) => {
 // Async thunk for logout
 export const logoutUser = () => async (dispatch) => {
     try {
-        // Simulate API call delay
-        await new Promise(resolve => setTimeout(resolve, 500));
+        // Remove all auth-related cookies with the same options used when setting them
+        Cookies.remove('userData', {
+            secure: true,
+            sameSite: 'strict'
+        });
 
+        Cookies.remove('isLoggedIn', {
+            secure: true,
+            sameSite: 'strict'
+        });
+
+        // Clear redux state
         dispatch(logout());
+
         return { success: true };
     } catch (error) {
         console.error('Logout error:', error);
@@ -97,13 +136,33 @@ export const logoutUser = () => async (dispatch) => {
 };
 
 // Async thunk for checking auth status
-export const checkAuthStatus = () => async (dispatch, getState) => {
+export const checkAuthStatus = () => async (dispatch) => {
     try {
-        const { auth } = getState();
+        const userData = Cookies.get('userData') || null;
+        const isLoggedIn = Cookies.get('isLoggedIn');
 
-        if (auth.token && auth.user) {
-            // Validate token here if needed
-            return true;
+        if (userData && isLoggedIn) {
+
+            if(userData){
+                const parsedUserData = JSON.parse(decryptHash(userData));
+
+                const userToken = parsedUserData.token;
+                const validToken = Number(atob(userToken)) === parsedUserData.user.id;
+
+                if(validToken){
+                    dispatch(loginSuccess({
+                        user: parsedUserData,
+                        token: userToken
+                    }));
+                    return true;
+                } else {
+                    dispatch(logout());
+                    return false;
+                }
+            } else {
+                dispatch(logout());
+                return false;
+            }
         }
 
         dispatch(logout());

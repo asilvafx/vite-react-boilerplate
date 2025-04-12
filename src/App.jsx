@@ -1,8 +1,11 @@
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { Toaster } from 'react-hot-toast';
-import useAuth from './hooks/useAuth';
+import { useDispatch } from 'react-redux';
+import { checkAuthStatus } from './store/slices/authSlice';
+import Cookies from 'js-cookie';
+import {decryptHash} from './lib/crypto';
 
 const Loading = lazy(() => import('./components/Loading'));
 const ScrollToTop = lazy(() => import('./components/ScrollToTop'));
@@ -20,22 +23,81 @@ import Checkout from './pages/shop/Checkout';
 
 // Protected Route Components
 const ProtectedRoute = ({ children }) => {
-    const { isAuthenticated } = useAuth();
-    if (!isAuthenticated) return <Navigate to="/login" />;
+    const dispatch = useDispatch();
+    const [isLoading, setIsLoading] = React.useState(true);
+    const [isAuthenticated, setIsAuthenticated] = React.useState(false);
+
+    useEffect(() => {
+        const verifyAuth = async () => {
+            try {
+                const authStatus = await dispatch(checkAuthStatus());
+             
+
+                setIsAuthenticated(authStatus);
+            } catch (error) {
+                setIsAuthenticated(false);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        verifyAuth();
+    }, [dispatch]);
+
+    if (isLoading) {
+        return <Loading />;
+    }
+
+    if (!isAuthenticated) {
+        return <Navigate to="/login" />;
+    }
+
     return children;
 };
 
 const AdminRoute = ({ children }) => {
-    const { isAuthenticated, user } = useAuth();
-    if (!isAuthenticated) return <Navigate to="/login" />;
-    if (!user?.isAdmin) {
-        toast.error('Access denied. Admin privileges required.');
+    const dispatch = useDispatch();
+    const [isLoading, setIsLoading] = React.useState(true);
+    const [isAdmin, setIsAdmin] = React.useState(false);
+
+    useEffect(() => {
+        const verifyAuth = async () => {
+            try {
+                const authStatus = await dispatch(checkAuthStatus());
+
+                // Get user data from cookies
+                const userData = JSON.parse(Cookies.get('userData') || '{}');
+
+                setIsAdmin(authStatus && userData.isAdmin);
+            } catch (error) {
+                setIsAdmin(false);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        verifyAuth();
+    }, [dispatch]);
+
+    if (isLoading) {
+        return <Loading />;
+    }
+
+    if (!isAdmin) {
         return <Navigate to="/" />;
     }
+
     return children;
 };
 
 const App = () => {
+    const dispatch = useDispatch();
+
+    // Check authentication status on app initialization
+    useEffect(() => {
+        dispatch(checkAuthStatus());
+    }, [dispatch]);
+
     return (
         <HelmetProvider>
             <Suspense fallback={<Loading />}>
@@ -61,18 +123,26 @@ const App = () => {
                         <Route path="/checkout" element={<Checkout />} />
 
                         {/* Protected Routes */}
-                        <Route path="/" element={
-                            <ProtectedRoute>
-                                <Home />
-                            </ProtectedRoute>
-                        } />
+                        <Route
+                            path="/"
+                            element={
+                                <ProtectedRoute>
+                                    <Home />
+                                </ProtectedRoute>
+                            }
+                        />
 
                         {/* Admin Routes */}
-                        <Route path="/admin" element={
-                            <AdminRoute>
-                                <AdminDashboard />
-                            </AdminRoute>
-                        } />
+                        <Route
+                            path="/admin"
+                            element={
+                                <ProtectedRoute>
+                                    <AdminRoute>
+                                        <AdminDashboard />
+                                    </AdminRoute>
+                                </ProtectedRoute>
+                            }
+                        />
 
                         <Route path="*" element={<Navigate to="/" />} />
                     </Routes>

@@ -5,23 +5,29 @@ import toast from 'react-hot-toast';
 
 const Logout = () => {
     const navigate = useNavigate();
-    const { logout } = useAuth();
+    const { logout, isAuthenticated } = useAuth();
 
     useEffect(() => {
         const performLogout = async () => {
             try {
-                await logout();
-                toast.success('Logged out successfully');
-                navigate('/login');
+                // Only attempt logout if user is authenticated
+                if (isAuthenticated) {
+                    await logout();
+                    toast.success('Logged out successfully');
+                }
+                // Always redirect to login page
+                navigate('/login', { replace: true });
             } catch (error) {
+                console.error('Logout error:', error);
                 toast.error('Error logging out');
                 navigate('/');
             }
         };
 
         performLogout();
-    }, [logout, navigate]);
+    }, [logout, navigate, isAuthenticated]);
 
+    // Show nothing while logging out
     return null;
 };
 
