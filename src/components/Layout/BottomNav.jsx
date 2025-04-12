@@ -38,14 +38,15 @@ const NavItem = styled.button`
 const BottomNav = () => {
 
     const navigate = useNavigate()
-    const [activeTab, setActiveTab] = useState('tags')
     const handleNavigation = (path) => {
         switch(path) {
             case 'home':
                 navigate('/')
                 break
-            case 'store':
-                navigate('/products')
+            case 'products':
+            case 'add-tag':
+            case 'dashboard':
+                navigate(`/${path}`)
                 break
             default:
                 // Stay on current page
@@ -58,20 +59,19 @@ const BottomNav = () => {
         <BottomSpace />
         <BottomNavigation>
             <NavItem
-                className={activeTab === 'tags' ? 'active' : ''}
-                onClick={() => setActiveTab('tags')}
+                onClick={() => handleNavigation('dashboard')}
             >
                 <FaTags />
                 Tags
             </NavItem>
             <NavItem
-                onClick={() => {/* TODO: Implement QR Scan */}}
+                onClick={() => handleNavigation('add-tag')}
             >
                 <FaQrcode />
-                Scan
+                Add Tag
             </NavItem>
             <NavItem
-                onClick={() => handleNavigation('store')}
+                onClick={() => handleNavigation('products')}
             >
                 <FaStore />
                 Store

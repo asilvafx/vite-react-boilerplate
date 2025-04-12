@@ -13,9 +13,15 @@ import {
 import { Link } from 'react-router-dom'
 
 const PageContainer = styled.div`
-  max-width: 1200px;
-  margin: 120px auto;
-  padding: ${props => props.theme.space.md};
+    width: 100%;
+    max-width: 1200px;
+    margin: 120px auto;
+    padding: ${props => props.theme.space.xl};
+    position: relative;
+
+    @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+        padding: 0 ${props => props.theme.space.lg};
+    }
 `
 
 const SectionHeader = styled(motion.div)`

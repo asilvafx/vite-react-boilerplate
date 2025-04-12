@@ -14,25 +14,37 @@ import BottomNav from '../components/Layout/BottomNav'
 
 // Reuse styled components from DashboardPage
 const DashboardContainer = styled.div`
-  min-height: 100vh;
+  width: 100%;
+  max-width: 1200px;
+  min-height: 100%;
   background: ${props => props.theme.colors.background};
   display: flex;
   flex-direction: column;
+  position: relative;
 `
 
 const ProfileContainer = styled.div`
   flex-grow: 1;
   padding: ${props => props.theme.space.xl};
-  max-width: 800px;
+  max-width: 100%;
   margin: 0 auto;
+
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    padding: ${props => props.theme.space.lg};
+  }
 `
 
 const ProfileSection = styled(motion.div)`
+  width: 100%;
   background: white;
   border-radius: ${props => props.theme.radii.lg};
   box-shadow: ${props => props.theme.shadows.md};
   padding: ${props => props.theme.space.xl};
   margin-bottom: ${props => props.theme.space.lg};
+
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    padding: ${props => props.theme.space.lg};
+  }
 `
 
 const SectionTitle = styled.h2`

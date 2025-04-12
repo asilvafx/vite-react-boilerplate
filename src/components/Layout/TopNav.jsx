@@ -7,7 +7,10 @@ const Header = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: ${props => props.theme.space.lg};
+  padding-left: ${props => props.theme.space.lg};
+  padding-right: ${props => props.theme.space.lg};
+  padding-top: ${props => props.theme.space.md};
+  padding-bottom: ${props => props.theme.space.md};
   background: white;
   box-shadow: ${props => props.theme.shadows.sm};
 `
