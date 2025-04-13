@@ -2,28 +2,58 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
 import { useParams } from 'react-router-dom'
-import { FaCreditCard, FaShippingFast, FaBox } from 'react-icons/fa'
+import { FaBox } from 'react-icons/fa'
+import useCatalog from '../hooks/useCatalog' // Adjust the path if needed
 
 const PageContainer = styled.div`
-  max-width: 1000px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 1200px;
+  margin: 120px auto;
   padding: ${props => props.theme.space.xl};
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: ${props => props.theme.space.xl};
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: ${props => props.theme.space.lg};
 
   @media (max-width: ${props => props.theme.breakpoints.tablet}) {
-    grid-template-columns: 1fr;
+    padding: 0 ${props => props.theme.space.lg};  
   }
 `
 
-const ProductImage = styled.div`
-  background: ${props => props.theme.colors.backgroundAlt};
-  border-radius: ${props => props.theme.radii.lg};
+const ProductContainer = styled.div`
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: ${props => props.theme.space.xl};
+  gap: ${props => props.theme.space.md};
+
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    flex-direction: column;
+  }
+`
+
+const ProductImage = styled.div` 
+  width: 100%; 
+  border-radius: ${props => props.theme.radii.lg};
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  padding: ${props => props.theme.space.lg};  
+  border-radius: ${props => props.theme.radii.lg};
+  margin-bottom: ${props => props.theme.space.lg};
+  
+  @media (max-width: ${props => props.theme.breakpoints.tablet}) {
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+  }
+`
+
+const ProductIconImg = styled.img` 
+  width: 100%; 
+  max-width: 600px;
+  height: auto;
+  border-radius: ${props => props.theme.radii.md};
 `
 
 const ProductDetails = styled.div`
@@ -38,6 +68,11 @@ const ProductTitle = styled.h1`
 `
 
 const ProductDescription = styled.p`
+  color: ${props => props.theme.colors.textLight};
+  line-height: 1.6;
+`
+
+const ProductMore = styled.p`
   color: ${props => props.theme.colors.textLight};
   line-height: 1.6;
 `
@@ -67,6 +102,7 @@ const QuantityButton = styled.button`
 `
 
 const OrderSection = styled.div`
+  width: 100%;
   background: ${props => props.theme.colors.backgroundAlt};
   padding: ${props => props.theme.space.lg};
   border-radius: ${props => props.theme.radii.lg};
@@ -98,44 +134,6 @@ const SubmitButton = styled(motion.button)`
   font-weight: ${props => props.theme.fontWeights.bold};
 `
 
-const products = [
-  {
-    id: 1,
-    icon: <FaBox size={200} />,
-    title: 'QRCode Pet Tag',
-    description: 'Durable, waterproof, and easy to use. Perfect for tracking pets and loved ones with memory conditions.',
-    price: 29.99
-  },
-  {
-    id: 2,
-    icon: <FaBox size={200} />,
-    title: 'Pet Tag + Collar',
-    description: 'Secure and stylish collar with a built-in tag. Ensures your pet is always identifiable.',
-    price: 49.99
-  },
-  {
-    id: 3,
-    icon: <FaBox size={200} />,
-    title: 'Pet Tag + NFC',
-    description: 'Tap-to-scan technology for instant access. Quick and easy identification.',
-    price: 39.99
-  },
-  {
-    id: 4,
-    icon: <FaBox size={200} />,
-    title: 'Pet Tag + AirTag',
-    description: 'Ultimate tracking with Apple AirTag compatibility. Advanced location tracking.',
-    price: 59.99
-  },
-  {
-    id: 5,
-    icon: <FaBox size={200} />,
-    title: 'Full Kit',
-    description: 'All-in-one solution for maximum safety. Includes multiple tags and accessories.',
-    price: 99.99
-  }
-]
-
 const ProductDetailPage = () => {
   const { id } = useParams()
   const [quantity, setQuantity] = useState(1)
@@ -148,7 +146,11 @@ const ProductDetailPage = () => {
     cvv: ''
   })
 
-  const product = products.find(p => p.id === parseInt(id))
+  const { allProducts, loading, error } = useCatalog()
+
+  // Convert id to number for lookup
+  const productId = parseInt(id)
+  const product = allProducts.find(p => p.id === productId)
 
   const handleQuantityChange = (change) => {
     setQuantity(Math.max(1, quantity + change))
@@ -169,106 +171,111 @@ const ProductDetailPage = () => {
     alert('Order placed successfully!')
   }
 
+  if (loading) return <div>Loading product...</div>
+  if (error) return <div>Error: {error}</div>
   if (!product) return <div>Product not found</div>
 
   return (
-    <PageContainer>
-      <ProductImage>
-        {product.icon}
-      </ProductImage>
-      <ProductDetails>
-        <ProductTitle>{product.title}</ProductTitle>
-        <ProductDescription>{product.description}</ProductDescription>
-        
-        <PriceSection>
-          <Price>${product.price.toFixed(2)}</Price>
-          <QuantityControl>
-            <QuantityButton type="button" onClick={() => handleQuantityChange(-1)}>-</QuantityButton>
-            <span>{quantity}</span>
-            <QuantityButton type="button" onClick={() => handleQuantityChange(1)}>+</QuantityButton>
-          </QuantityControl>
-        </PriceSection>
+      <PageContainer>
+        <ProductContainer>
+        <ProductImage>
+          {product.cover ? <ProductIconImg src={product.cover} /> : <FaBox />}
+        </ProductImage>
+        <ProductDetails>
+          <ProductTitle>{product.title}</ProductTitle>
+          <ProductDescription>{product.description}</ProductDescription>
+          <ProductMore>{product.details}</ProductMore>
 
+          <PriceSection>
+            <Price>${parseFloat(product.price).toFixed(2)}</Price>
+            <QuantityControl>
+              <QuantityButton type="button" onClick={() => handleQuantityChange(-1)}>-</QuantityButton>
+              <span>{quantity}</span>
+              <QuantityButton type="button" onClick={() => handleQuantityChange(1)}>+</QuantityButton>
+            </QuantityControl>
+          </PriceSection>
+        </ProductDetails>
+        </ProductContainer>
+        <ProductContainer />
         <OrderSection>
           <PaymentForm onSubmit={handleSubmit}>
             <h3>Billing & Shipping Details</h3>
             <FormGroup>
               <label>Full Name</label>
-              <Input 
-                type="text" 
-                name="name" 
-                value={formData.name}
-                onChange={handleInputChange}
-                required 
+              <Input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  required
               />
             </FormGroup>
             <FormGroup>
               <label>Email Address</label>
-              <Input 
-                type="email" 
-                name="email" 
-                value={formData.email}
-                onChange={handleInputChange}
-                required 
+              <Input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required
               />
             </FormGroup>
             <FormGroup>
               <label>Shipping Address</label>
-              <Input 
-                type="text" 
-                name="address" 
-                value={formData.address}
-                onChange={handleInputChange}
-                required 
+              <Input
+                  type="text"
+                  name="address"
+                  value={formData.address}
+                  onChange={handleInputChange}
+                  required
               />
             </FormGroup>
 
             <h3>Payment Details</h3>
             <FormGroup>
               <label>Card Number</label>
-              <Input 
-                type="text" 
-                name="cardNumber" 
-                value={formData.cardNumber}
-                onChange={handleInputChange}
-                placeholder="1234 5678 9012 3456"
-                required 
+              <Input
+                  type="text"
+                  name="cardNumber"
+                  value={formData.cardNumber}
+                  onChange={handleInputChange}
+                  placeholder="1234 5678 9012 3456"
+                  required
               />
             </FormGroup>
             <FormGroup>
               <label>Expiry Date</label>
-              <Input 
-                type="text" 
-                name="expiryDate" 
-                value={formData.expiryDate}
-                onChange={handleInputChange}
-                placeholder="MM/YY"
-                required 
+              <Input
+                  type="text"
+                  name="expiryDate"
+                  value={formData.expiryDate}
+                  onChange={handleInputChange}
+                  placeholder="MM/YY"
+                  required
               />
             </FormGroup>
             <FormGroup>
               <label>CVV</label>
-              <Input 
-                type="text" 
-                name="cvv" 
-                value={formData.cvv}
-                onChange={handleInputChange}
-                placeholder="123"
-                required 
+              <Input
+                  type="text"
+                  name="cvv"
+                  value={formData.cvv}
+                  onChange={handleInputChange}
+                  placeholder="123"
+                  required
               />
             </FormGroup>
 
             <SubmitButton
-              type="submit"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+                type="submit"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
             >
               Place Order (${(product.price * quantity).toFixed(2)})
             </SubmitButton>
           </PaymentForm>
         </OrderSection>
-      </ProductDetails>
-    </PageContainer>
+      </PageContainer>
   )
 }
 

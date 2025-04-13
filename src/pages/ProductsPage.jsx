@@ -2,7 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
-import { FaQrcode, FaTag, FaMobile, FaApple, FaBox } from 'react-icons/fa'
+import { FaBox } from 'react-icons/fa'
+import useCatalog from '../hooks/useCatalog' // Adjust the import path if needed
 
 const PageContainer = styled.div`
   width: 100%;
@@ -36,17 +37,33 @@ const ProductCard = styled(motion.div)`
   box-shadow: ${props => props.theme.shadows.md};
   text-align: center;
   transition: all ${props => props.theme.transitions.medium};
-
+  display: flex;
+  flex-direction: column;
   &:hover {
     transform: translateY(-10px);
     box-shadow: ${props => props.theme.shadows.xl};
   }
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    padding: ${props => props.theme.space.lg};
+  }
 `
 
 const ProductIcon = styled.div`
+  width: 100%;
+  height: auto;
+  max-width: 400px;
+  max-height: 400px;
+  position: relative;
+  margin: 0 auto 2rem auto;
   font-size: 3rem;
+  padding: 1rem 1.5rem;
+  border: 3px solid ${props => props.theme.colors.backgroundAlt};
+  border-radius: ${props => props.theme.radii.lg};
   color: ${props => props.theme.colors.primary};
-  margin-bottom: ${props => props.theme.space.md};
+`
+
+const ProductIconImg = styled.img` 
+  border-radius: ${props => props.theme.radii.md};
 `
 
 const ProductTitle = styled.h2`
@@ -78,76 +95,57 @@ const ViewDetailsButton = styled(motion.button)`
   }
 `
 
-const products = [
-  {
-    id: 1,
-    icon: <FaQrcode />,
-    title: 'QRCode Pet Tag',
-    description: 'Durable, waterproof, and easy to use.',
-    price: 29.99
-  },
-  {
-    id: 2,
-    icon: <FaTag />,
-    title: 'Pet Tag + Collar',
-    description: 'Secure and stylish collar with a built-in tag.',
-    price: 49.99
-  },
-  {
-    id: 3,
-    icon: <FaMobile />,
-    title: 'Pet Tag + NFC',
-    description: 'Tap-to-scan technology for instant access.',
-    price: 39.99
-  },
-  {
-    id: 4,
-    icon: <FaApple />,
-    title: 'Pet Tag + AirTag',
-    description: 'Ultimate tracking with Apple AirTag compatibility.',
-    price: 59.99
-  },
-  {
-    id: 5,
-    icon: <FaBox />,
-    title: 'Full Kit',
-    description: 'All-in-one solution for maximum safety.',
-    price: 99.99
-  }
-]
-
 const ProductsPage = () => {
   const navigate = useNavigate()
+  const { products, loading, error } = useCatalog()
 
   const handleViewDetails = (productId) => {
     navigate(`/product/${productId}`)
   }
 
+  if (loading) {
+    return (
+        <PageContainer>
+          <p>Loading products...</p>
+        </PageContainer>
+    )
+  }
+
+  if (error) {
+    return (
+        <PageContainer>
+          <p>Error: {error}</p>
+        </PageContainer>
+    )
+  }
+
   return (
-    <PageContainer>
-      <PageTitle>Our Products</PageTitle>
-      <ProductGrid>
-        {products.map((product) => (
-          <ProductCard
-            key={product.id}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <ProductIcon>{product.icon}</ProductIcon>
-            <ProductTitle>{product.title}</ProductTitle>
-            <ProductDescription>{product.description}</ProductDescription>
-            <ProductPrice>${product.price.toFixed(2)}</ProductPrice>
-            <ViewDetailsButton 
-              onClick={() => handleViewDetails(product.id)}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              View Details
-            </ViewDetailsButton>
-          </ProductCard>
-        ))}
-      </ProductGrid>
-    </PageContainer>
+      <PageContainer>
+        <PageTitle>Our Products</PageTitle>
+        <ProductGrid>
+          {products.map((product) => (
+              <ProductCard
+                  key={product.id}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+              >
+                <ProductIcon>
+                  {product.cover ? <ProductIconImg src={product.cover} /> : <FaBox />}
+                </ProductIcon>
+                <ProductTitle>{product.title}</ProductTitle>
+                <ProductDescription>{product.description}</ProductDescription>
+                <ProductPrice>${parseFloat(product.price).toFixed(2)}</ProductPrice>
+                <ViewDetailsButton
+                    onClick={() => handleViewDetails(product.id)}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                >
+                  View Details
+                </ViewDetailsButton>
+              </ProductCard>
+          ))}
+        </ProductGrid>
+      </PageContainer>
   )
 }
 

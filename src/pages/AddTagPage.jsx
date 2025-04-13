@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
@@ -12,19 +12,22 @@ import {
     FaCloudUploadAlt,
     FaTimes,
     FaQrcode,
-    FaHome,
-    FaStore
+    FaKey,
+    FaExclamationTriangle
 } from 'react-icons/fa'
 
 import TopNav from '../components/Layout/TopNav'
 import BottomNav from '../components/Layout/BottomNav'
+import DBService from '../data/rest.db'
 
 // Reuse styled components from Dashboard for header and footer
 const DashboardContainer = styled.div`
-  min-height: 100vh;
+  min-height: 100%;
   background: ${props => props.theme.colors.background};
   display: flex;
   flex-direction: column;
+
+    padding: ${props => props.theme.space.md};
 `
 
 const ChangeTagTypeLink = styled.button`
@@ -180,10 +183,72 @@ const SubmitButton = styled(motion.button)`
   margin-top: ${props => props.theme.space.lg};
 `
 
+const ActivationCodeForm = styled(motion.form)`
+  background: white;
+  border-radius: ${props => props.theme.radii.lg};
+  padding: ${props => props.theme.space.xl};
+  box-shadow: ${props => props.theme.shadows.md};
+  max-width: 500px;
+  width: 100%;
+  margin: 0 auto;
+
+@media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    padding: ${props => props.theme.space.lg};
+}
+`
+
+const ActivationCodeContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`
+
+const ErrorMessage = styled.div`
+  color: ${props => props.theme.colors.error || 'red'};
+  background: ${props => props.theme.colors.errorBg || '#fff2f2'};
+  padding: ${props => props.theme.space.md};
+  border-radius: ${props => props.theme.radii.md};
+  margin-bottom: ${props => props.theme.space.md};
+  display: flex;
+  align-items: center;
+  gap: ${props => props.theme.space.sm};
+`
+
+const LoadingSpinner = styled.div`
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border-left-color: ${props => props.theme.colors.primary};
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+`
+
+const InfoText = styled.p`
+  color: ${props => props.theme.colors.textLight};
+  text-align: center;
+  margin-bottom: ${props => props.theme.space.lg};
+`
+
 const AddTagPage = () => {
     const navigate = useNavigate()
     const [selectedType, setSelectedType] = useState(null)
     const [file, setFile] = useState(null)
+    const [currentStep, setCurrentStep] = useState('activation') // 'activation', 'type', 'details'
+    const [activationCode, setActivationCode] = useState('')
+    const [tagData, setTagData] = useState(null)
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState(null)
 
     const [formData, setFormData] = useState({
         name: '',
@@ -238,6 +303,62 @@ const AddTagPage = () => {
         }
     ]
 
+    const verifyActivationCode = async (code) => {
+        setLoading(true)
+        setError(null)
+
+        try {
+            // Call the DBService to check if the activation code exists
+            const result = await DBService.getItemsByKeyValue('code', code, 'codes')
+
+            if (!result) {
+                // No tag found with this activation code
+                setError("Invalid activation code. Please check and try again.")
+                setLoading(false)
+                return false
+            }
+
+            // Check if tag is already activated
+            const tag = Object.values(result)[0]
+
+            if (tag.isActivated) {
+                setError("This tag has already been activated. Please use a different tag.")
+                setLoading(false)
+                return false
+            }
+
+            // Store tag data for later use
+            setTagData({
+                ...tag,
+                id: tag.id // Make sure to keep the ID
+            })
+
+            setLoading(false)
+            return true
+        } catch (error) {
+            console.error("Error verifying activation code:", error)
+            setError("An error occurred while verifying the activation code. Please try again.")
+            setLoading(false)
+            return false
+        }
+    }
+
+    const handleActivationSubmit = async (e) => {
+        e.preventDefault()
+
+        if (!activationCode.trim()) {
+            setError("Please enter an activation code")
+            return
+        }
+
+        const isValid = await verifyActivationCode(activationCode.trim().toUpperCase())
+
+        if (isValid) {
+            // Move to the next step - Tag Type Selection
+            setCurrentStep('type')
+        }
+    }
+
     const onDrop = useCallback(acceptedFiles => {
         const uploadedFile = acceptedFiles[0]
         setFile(Object.assign(uploadedFile, {
@@ -259,6 +380,7 @@ const AddTagPage = () => {
 
     const handleTypeSelect = (type) => {
         setSelectedType(type)
+        setCurrentStep('details')
     }
 
     const handleInputChange = (e) => {
@@ -272,37 +394,115 @@ const AddTagPage = () => {
         }))
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        // TODO: Implement tag creation logic
-        console.log('Tag Created:', { type: selectedType, ...formData })
-        navigate('/dashboard')
+        setLoading(true)
+
+        try {
+            // Prepare tag data for update
+            const updatedTagData = {
+                ...tagData,
+                isActivated: true,
+                userEmail: 'user@test.com', // Set the user email
+                type: selectedType.type,
+                name: formData.details[selectedType.type === 'pet' ? 'petName' :
+                    selectedType.type === 'human' ? 'fullName' :
+                        selectedType.type === 'belongings' ? 'itemName' : 'boxNumber'],
+                details: formData.details,
+                updatedAt: new Date().toISOString()
+            }
+
+            // If there's a file, upload it first
+            if (file) {
+                const filename = `${tagData.id}_${Date.now()}.${file.name.split('.').pop()}`
+                const uploadResult = await DBService.upload(file, filename)
+
+                if (uploadResult) {
+                    updatedTagData.imageUrl = uploadResult // Save the image URL
+                }
+            }
+
+            // Update the tag in the database
+            await DBService.update(tagData.id, updatedTagData, 'tags')
+
+            // Navigate back to dashboard
+            navigate('/dashboard')
+        } catch (error) {
+            console.error("Error creating tag:", error)
+            setError("An error occurred while creating the tag. Please try again.")
+        } finally {
+            setLoading(false)
+        }
     }
 
-    return (
-        <DashboardContainer>
-            <TopNav />
+    // Render the appropriate step UI
+    const renderCurrentStep = () => {
+        switch (currentStep) {
+            case 'activation':
+                return (
+                    <ActivationCodeContainer>
+                        <PageTitle>Enter Activation Code</PageTitle>
+                        <InfoText>
+                            Please enter the activation code found on your tag or by scanning the QR code.
+                        </InfoText>
 
-            <PageContainer>
+                        <ActivationCodeForm
+                            onSubmit={handleActivationSubmit}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                        >
+                            {error && (
+                                <ErrorMessage>
+                                    <FaExclamationTriangle /> {error}
+                                </ErrorMessage>
+                            )}
 
-                <PageTitle>Select Tag Type</PageTitle>
+                            <FormGroup>
+                                <FormLabel>Activation Code</FormLabel>
+                                <FormInput
+                                    type="text"
+                                    value={activationCode}
+                                    onChange={(e) => setActivationCode(e.target.value)}
+                                    placeholder="Enter your activation code"
+                                    required
+                                />
+                            </FormGroup>
 
-                {!selectedType ? (
-                    <TagTypeGrid>
-                        {tagTypes.map((tagType) => (
-                            <TagTypeCard
-                                key={tagType.type}
-                                onClick={() => handleTypeSelect(tagType)}
+                            <SubmitButton
+                                type="submit"
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
+                                disabled={loading}
                             >
-                                <TagTypeIcon>{tagType.icon}</TagTypeIcon>
-                                <TagTypeTitle>{tagType.title}</TagTypeTitle>
-                                <TagTypeDescription>{tagType.description}</TagTypeDescription>
-                            </TagTypeCard>
-                        ))}
-                    </TagTypeGrid>
-                ) : (
+                                {loading ? <LoadingSpinner /> : "Verify Code"}
+                            </SubmitButton>
+                        </ActivationCodeForm>
+                    </ActivationCodeContainer>
+                )
+
+            case 'type':
+                return (
+                    <>
+                        <PageTitle>Select Tag Type</PageTitle>
+                        <TagTypeGrid>
+                            {tagTypes.map((tagType) => (
+                                <TagTypeCard
+                                    key={tagType.type}
+                                    onClick={() => handleTypeSelect(tagType)}
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                >
+                                    <TagTypeIcon>{tagType.icon}</TagTypeIcon>
+                                    <TagTypeTitle>{tagType.title}</TagTypeTitle>
+                                    <TagTypeDescription>{tagType.description}</TagTypeDescription>
+                                </TagTypeCard>
+                            ))}
+                        </TagTypeGrid>
+                    </>
+                )
+
+            case 'details':
+                return (
                     <TagForm
                         onSubmit={handleSubmit}
                         initial={{ opacity: 0, y: 20 }}
@@ -312,7 +512,7 @@ const AddTagPage = () => {
                             <ChangeTagTypeLink
                                 type="button"
                                 onClick={() => {
-                                    setSelectedType(null)
+                                    setCurrentStep('type')
                                     setFile(null) // Reset file if changing tag type
                                 }}
                             >
@@ -320,6 +520,13 @@ const AddTagPage = () => {
                             </ChangeTagTypeLink>
                             <PageTitle>{selectedType.title} Details</PageTitle>
                         </TagFormHeader>
+
+                        {error && (
+                            <ErrorMessage>
+                                <FaExclamationTriangle /> {error}
+                            </ErrorMessage>
+                        )}
+
                         <DropzoneContainer {...getRootProps()}>
                             <input {...getInputProps()} />
                             <FaCloudUploadAlt
@@ -350,6 +557,7 @@ const AddTagPage = () => {
                                 </div>
                             </PreviewContainer>
                         )}
+
                         {selectedType.fields.map((field) => (
                             <FormGroup key={field.name}>
                                 <FormLabel>{field.label}</FormLabel>
@@ -361,18 +569,33 @@ const AddTagPage = () => {
                                 />
                             </FormGroup>
                         ))}
+
                         <SubmitButton
                             type="submit"
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
+                            disabled={loading}
                         >
-                            Create Tag
+                            {loading ? <LoadingSpinner /> : "Create Tag"}
                         </SubmitButton>
                     </TagForm>
-                )}
+                )
+
+            default:
+                return <div>Unknown step</div>
+        }
+    }
+
+    return (
+    <>
+        <TopNav />
+        <DashboardContainer>
+            <PageContainer>
+                {renderCurrentStep()}
             </PageContainer>
-            <BottomNav />
         </DashboardContainer>
+        <BottomNav />
+    </>
     )
 }
 

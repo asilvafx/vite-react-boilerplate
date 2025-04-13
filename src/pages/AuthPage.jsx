@@ -61,6 +61,7 @@ const BackButton = styled(motion.button)`
   align-items: center;
   gap: ${props => props.theme.space.sm};
   color: ${props => props.theme.colors.primary};
+  font-size:  ${props => props.theme.fontSizes.sm};
   font-weight: ${props => props.theme.fontWeights.semibold};
   z-index: 10;
 
@@ -72,6 +73,7 @@ const BackButton = styled(motion.button)`
 
 const HeaderSection = styled.div`
   text-align: center;
+  margin-top: ${props => props.theme.space.lg};
   margin-bottom: ${props => props.theme.space.xl};
   width: 100%;
 `
@@ -485,7 +487,6 @@ const AuthPage = () => {
                   placeholder="Email Address"
                   value={formData.email}
                   onChange={handleInputChange}
-                  error={!!error}
                   required
                   disabled={loading}
               />
@@ -499,7 +500,6 @@ const AuthPage = () => {
                   placeholder="Password"
                   value={formData.password}
                   onChange={handleInputChange}
-                  error={!!error}
                   required
                   disabled={loading}
               />
@@ -514,7 +514,7 @@ const AuthPage = () => {
                       placeholder="Confirm Password"
                       value={formData.confirmPassword}
                       onChange={handleInputChange}
-                      error={!!error}
+                      
                       required
                       disabled={loading}
                   />

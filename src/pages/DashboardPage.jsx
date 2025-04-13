@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
@@ -11,9 +11,10 @@ import {
 
 import TopNav from '../components/Layout/TopNav'
 import BottomNav from '../components/Layout/BottomNav'
+import DBService from '../data/rest.db'  // Import the DBService
 
 const DashboardContainer = styled.div`
-  min-height: 100vh;
+  min-height: 100%;
   background: ${props => props.theme.colors.background};
   display: flex;
   flex-direction: column;
@@ -116,56 +117,52 @@ const EmptyState = styled.div`
   color: ${props => props.theme.colors.textLight};
 `
 
-const mockTags = [
-  {
-    id: 'WT001',
-    name: 'Buddy',
-    type: 'Pet',
-    isLost: false,
-    details: {
-      species: 'Dog',
-      breed: 'Labrador',
-      age: '3 years'
-    }
-  },
-  {
-    id: 'WT002',
-    name: 'Grandpa John',
-    type: 'Person',
-    isLost: true,
-    details: {
-      condition: 'Alzheimer\'s',
-      lastKnownLocation: 'Home'
-    }
-  },
-  {
-    id: 'WT003',
-    name: 'Whiskers',
-    type: 'Pet',
-    isLost: false,
-    details: {
-      species: 'Cat',
-      breed: 'Siamese',
-      age: '5 years'
-    }
-  },
-  {
-    id: 'WT004',
-    name: 'Emma',
-    type: 'Person',
-    isLost: false,
-    details: {
-      condition: 'Dementia',
-      lastKnownLocation: 'Care Home'
-    }
-  }
-]
+const LoadingState = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: ${props => props.theme.space.xl};
+  color: ${props => props.theme.colors.textLight};
+`
 
 const DashboardPage = () => {
   const navigate = useNavigate()
-  const [tags, setTags] = useState(mockTags)
+  const [tags, setTags] = useState([])
+  const [filteredTags, setFilteredTags] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
-  const [filteredTags, setFilteredTags] = useState(mockTags)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+
+  // Fetch tags from database on component mount
+  useEffect(() => {
+    const fetchTags = async () => {
+      try {
+        setLoading(true)
+        // Get tags where owner
+        const fetchedTags = await DBService.getItemsByKeyValue('owner', 'user@test.com', 'tags')
+
+        if (fetchedTags) {
+          // Convert object of tags to array
+          const tagsArray = Object.values(fetchedTags)
+          setTags(tagsArray)
+          setFilteredTags(tagsArray)
+        } else {
+          // No tags found
+          setTags([])
+          setFilteredTags([])
+        }
+      } catch (err) {
+        console.error('Error fetching tags:', err)
+        setError('Failed to load tags. Please try again later.')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchTags()
+  }, [])
 
   const handleSearch = (query) => {
     setSearchTerm(query)
@@ -180,84 +177,118 @@ const DashboardPage = () => {
         tag.name.toLowerCase().includes(query.toLowerCase()) ||
         tag.id.toLowerCase().includes(query.toLowerCase())
     )
-
     setFilteredTags(results)
   }
 
-  const handleAddTag = () => {
-    // TODO: Implement add tag modal/functionality
-    alert('Add Tag Functionality (To be implemented)')
+  if (loading) {
+    return (
+        <DashboardContainer>
+          <TopNav />
+          <LoadingState>
+            <h3>Loading Tags...</h3>
+            <p>Please wait while we fetch your data</p>
+          </LoadingState>
+          <BottomNav />
+        </DashboardContainer>
+    )
+  }
+
+  if (error) {
+    return (
+        <DashboardContainer>
+          <TopNav />
+          <EmptyState>
+            <h3>Error</h3>
+            <p>{error}</p>
+          </EmptyState>
+          <BottomNav />
+        </DashboardContainer>
+    )
   }
 
   return (
-    <DashboardContainer>
+      <DashboardContainer>
+        <TopNav />
+        <SearchContainer>
+          <FaSearch />
+          <SearchInput
+              placeholder="Search by Tag Name or Tag ID"
+              value={searchTerm}
+              onChange={(e) => handleSearch(e.target.value)}
+          />
+        </SearchContainer>
 
-      <TopNav />
-      <SearchContainer>
-        <FaSearch />
-        <SearchInput
-            placeholder="Search by Tag Name or Tag ID"
-            value={searchTerm}
-            onChange={(e) => handleSearch(e.target.value)}
-        />
-      </SearchContainer>
+          {filteredTags.length > 0 ? (
+              <TagGrid>
+                  {filteredTags.map(tag => {
+                      const isPet = tag.type === 'Pet';
+                      const isPerson = tag.type === 'Person';
+                      const details = tag.details;
 
-      {filteredTags.length > 0 ? (
-          <TagGrid>
-            {filteredTags.map(tag => (
-                <TagCard
-                    key={tag.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3 }}
-                >
-                  {tag.isLost && <LostTag>LOST</LostTag>}
-                  <TagHeader>
-                    <h3>{tag.name}</h3>
-                    <TagActions>
-                      <ActionButton><FaUser /></ActionButton>
-                      <ActionButton><FaQrcode /></ActionButton>
-                    </TagActions>
-                  </TagHeader>
-                  <p>Tag ID: {tag.id}</p>
-                  <p>Type: {tag.type}</p>
+                      let parsedDetails = null;
+                      if (isPet && typeof details === 'string') {
+                          try {
+                              const fixedDetails = tag.details.replace(/\\"/g, '"');
+                              const fixedData = fixedDetails.replace(/([{,])\s*([^":]+)\s*:/g, '$1"$2":');
+                              parsedDetails = JSON.parse(fixedData);
+                          } catch (e) {
+                              console.error('Invalid JSON in tag.details:', e);
+                          }
+                      }
 
-                  {/* Conditionally render details based on tag type */}
-                  {tag.type === 'Pet' && (
-                      <>
-                        <p>Species: {tag.details.species}</p>
-                        <p>Breed: {tag.details.breed}</p>
-                        <p>Age: {tag.details.age}</p>
-                      </>
-                  )}
+                      return (
+                          <TagCard
+                              key={tag.id}
+                              initial={{ opacity: 0, y: 20 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ duration: 0.3 }}
+                          >
+                              {tag.isLost && <LostTag>LOST</LostTag>}
+                              <TagHeader>
+                                  <h3>{tag.name}</h3>
+                                  <TagActions>
+                                      <ActionButton><FaUser /></ActionButton>
+                                      <ActionButton><FaQrcode /></ActionButton>
+                                  </TagActions>
+                              </TagHeader>
+                              <p>Tag ID: {tag.code}</p>
+                              <p>Type: {tag.type}</p>
 
-                  {tag.type === 'Person' && (
-                      <>
-                        <p>Condition: {tag.details.condition}</p>
-                        <p>Last Known Location: {tag.details.lastKnownLocation}</p>
-                      </>
-                  )}
-                </TagCard>
-            ))}
-          </TagGrid>
-      ) : (
-          <EmptyState>
-            <h3>No Tags Found</h3>
-            <p>Try a different search term or add a new tag</p>
-          </EmptyState>
-      )}
+                              {isPet && parsedDetails && (
+                                  <>
+                                      <p>Species: {parsedDetails.species}</p>
+                                      <p>Breed: {parsedDetails.breed}</p>
+                                      <p>Age: {parsedDetails.age}</p>
+                                  </>
+                              )}
 
+                              {isPerson && details && typeof details === 'object' && (
+                                  <>
+                                      <p>Condition: {details.condition}</p>
+                                      <p>Last Known Location: {details.lastKnownLocation}</p>
+                                  </>
+                              )}
+                          </TagCard>
+                      );
+                  })}
+              </TagGrid>
+          ) : (
+              <EmptyState>
+                  <h3>No Tags Found</h3>
+                  <p>Try a different search term or add a new tag</p>
+              </EmptyState>
+          )}
 
-      <AddTagButton
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={() => navigate('/add-tag')}
-      >
-        <FaPlus size={24} />
-      </AddTagButton>
+          <AddTagButton
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={() => navigate('/add-tag')}
+        >
+          <FaPlus size={24} />
+        </AddTagButton>
 
-      <BottomNav />
-    </DashboardContainer>
+        <BottomNav />
+      </DashboardContainer>
   )
 }
 

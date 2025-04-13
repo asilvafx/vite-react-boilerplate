@@ -1,19 +1,18 @@
 import { useSelector, useDispatch } from 'react-redux';
-import {
-    selectAllProducts,
-    selectLoading,
-    selectError,
-    selectFilters,
-    setFilters,
-    clearFilters
-} from '../store/slices/catalogSlice';
+import { useEffect } from 'react';
+import { setFilters, clearFilters, fetchCatalog } from '../store/slices/catalogSlice';
 
 export const useCatalog = () => {
     const dispatch = useDispatch();
-    const products = useSelector(selectAllProducts);
-    const loading = useSelector(selectLoading);
-    const error = useSelector(selectError);
-    const filters = useSelector(selectFilters);
+    const products = useSelector((state) => state.catalog.products);
+    const loading = useSelector((state) => state.catalog.loading);
+    const error = useSelector((state) => state.catalog.error);
+    const filters = useSelector((state) => state.catalog.filters);
+
+    // Fetch catalog items on component mount.
+    useEffect(() => {
+        dispatch(fetchCatalog());
+    }, [dispatch]);
 
     const filterProducts = () => {
         return products.filter(product => {

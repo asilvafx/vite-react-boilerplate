@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FaSearch, FaBars, FaTimes } from 'react-icons/fa'
+import { FaSearch, FaBars, FaTimes, FaUser } from 'react-icons/fa'
 import { Link, useNavigate } from 'react-router-dom'
 import { useCart } from 'react-use-cart';
 import { useAuth } from '../../hooks/useAuth';
@@ -25,12 +25,18 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  @media (max-width: ${props => props.theme.breakpoints.desktop}) {
+    justify-content: end;
+    gap: ${props => props.theme.space.md};
+  }
 `
 
 const Logo = styled.a`
   font-size: ${props => props.theme.fontSizes['2xl']};
   font-weight: ${props => props.theme.fontWeights.bold};
   color: ${props => props.theme.colors.primary};
+  margin-right: auto;
 `
 
 const NavLinks = styled.div`
@@ -38,7 +44,7 @@ const NavLinks = styled.div`
   align-items: center;
   gap: .5rem;
 
-  @media (max-width: ${props => props.theme.breakpoints.tablet}) {
+  @media (max-width: ${props => props.theme.breakpoints.desktop}) {
     display: none;
   }
 `
@@ -46,7 +52,7 @@ const NavLinks = styled.div`
 const MobileNavLinks = styled(motion.div)`
   display: none;
   
-  @media (max-width: ${props => props.theme.breakpoints.tablet}) {
+  @media (max-width: ${props => props.theme.breakpoints.desktop}) {
     display: flex;
     flex-direction: column;
     position: fixed;
@@ -104,6 +110,7 @@ const NavLink = styled.a`
   transition: color ${props => props.theme.transitions.fast};
   padding: ${props => props.theme.space.sm} ${props => props.theme.space.md};
   border-radius: ${props => props.theme.radii.md};
+  display: flex;
 
   &:hover {
     color: ${props => props.theme.colors.accent};
@@ -118,17 +125,43 @@ const NavLink = styled.a`
   }
 `
 
-const SearchBar = styled.div`
+const NavLinkBtn = styled.a`
+  background-color: white;
+  color: ${props => props.theme.colors.primary};
+  font-weight: ${props => props.theme.fontWeights.medium};
+  transition: color ${props => props.theme.transitions.fast};
+  padding: ${props => props.theme.space.sm} ${props => props.theme.space.md};
+  border-radius: ${props => props.theme.radii.lg};
   display: flex;
+
+  &:hover {
+    color: ${props => props.theme.colors.accent};
+    background: ${props => props.theme.colors.backgroundAlt};
+  }
+  
+  &>svg {
+    fill: #0A2540
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.tablet}) {
+    font-size: ${props => props.theme.fontSizes.lg};
+    padding: ${props => props.theme.space.md};
+    width: 100%;
+    text-align: left;
+  }
+`
+
+const SearchBar = styled.div`
+  display: none;
   align-items: center;
   background: white;
   border-radius: ${props => props.theme.radii.full};
   padding: ${props => props.theme.space.sm} ${props => props.theme.space.lg};
   box-shadow: ${props => props.theme.shadows.sm};
+  margin: ${props => props.theme.space.md} 0;
 
-  @media (max-width: ${props => props.theme.breakpoints.tablet}) {
-    width: 100%;
-    margin: ${props => props.theme.space.md} 0;
+  @media (min-width: ${props => props.theme.breakpoints.tablet}) {
+    display: flex;
   }
 
   input {
@@ -168,6 +201,27 @@ const JoinButton = styled.button`
   }
 
   @media (max-width: ${props => props.theme.breakpoints.tablet}) {
+    display: none;
+    width: 100%;
+    padding: ${props => props.theme.space.md};
+    text-align: center;
+  }
+`
+
+const JoinMenuButton = styled.button`
+  background: ${props => props.theme.colors.primary};
+  color: white;
+  padding: ${props => props.theme.space.sm} ${props => props.theme.space.lg};
+  border-radius: ${props => props.theme.radii.full};
+  font-weight: ${props => props.theme.fontWeights.semibold};
+  transition: all ${props => props.theme.transitions.fast};
+
+  &:hover {
+    background: ${props => props.theme.colors.primaryLight};
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.tablet}) { 
     width: 100%;
     padding: ${props => props.theme.space.md};
     text-align: center;
@@ -179,7 +233,7 @@ const MenuButton = styled.button`
   color: ${props => props.theme.colors.primary};
   font-size: ${props => props.theme.fontSizes.xl};
   
-  @media (max-width: ${props => props.theme.breakpoints.tablet}) {
+  @media (max-width: ${props => props.theme.breakpoints.desktop}) {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -197,6 +251,7 @@ const MenuButton = styled.button`
 
 const Overlay = styled(motion.div)`
   position: fixed;
+  height: 100vh;
   top: 0;
   left: 0;
   right: 0;
@@ -315,23 +370,23 @@ const Navbar = () => {
       transition={{ duration: 0.5 }}
     >
       <Container>
-        <Logo href="/">World Tag</Logo>
+        <Logo as={Link} to="/">World Tag</Logo>
         
         <NavLinks>
           <NavLink as={Link} to="/">Explore</NavLink>
           <NavLink as={Link} to="/products">Shop</NavLink>
           <NavLink as={Link} to="/faq">FAQ</NavLink>
           <NavLink as={Link} to="/support">Support</NavLink>
+        </NavLinks>
           {SearchBarComponent}
           {isAuthenticated ? (
               <>
-                <NavLink as={Link} to="/profile">Profile</NavLink>
+                <NavLinkBtn as={Link} to="/dashboard"><FaUser size={20} /></NavLinkBtn>
                 <JoinButton onClick={handleLogout}>Logout</JoinButton>
               </>
           ) : (
               <JoinButton onClick={handleSignIn}>Sign in / Register</JoinButton>
           )}
-        </NavLinks>
 
         <MenuButton onClick={toggleMenu}>
           {isMenuOpen ? <FaTimes /> : <FaBars />}
@@ -371,11 +426,11 @@ const Navbar = () => {
                        {user?.user.isAdmin === "true" && (
                          <NavLink as={Link} to="/admin" onClick={closeMenu}>Administration</NavLink>
                        )}
-                       <NavLink as={Link} to="/profile" onClick={closeMenu}>Profile</NavLink>
-                       <JoinButton onClick={handleLogout}>Logout</JoinButton>
+                       <NavLink as={Link} to="/dashboard" onClick={closeMenu}>My Tags</NavLink>
+                       <JoinMenuButton onClick={handleLogout}>Logout</JoinMenuButton>
                      </>
                  ) : (
-                     <JoinButton onClick={handleSignIn}>Sign in / Register</JoinButton>
+                     <JoinMenuButton onClick={handleSignIn}>Sign in / Register</JoinMenuButton>
                  )}
 
                 </ScrollContainer>

@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import React, {useState} from "react";
+import React from "react";
 import {useNavigate} from "react-router-dom";
 import {FaHome, FaQrcode, FaStore, FaTags} from "react-icons/fa";
 
@@ -62,7 +62,7 @@ const BottomNav = () => {
                 onClick={() => handleNavigation('dashboard')}
             >
                 <FaTags />
-                Tags
+                My Tags
             </NavItem>
             <NavItem
                 onClick={() => handleNavigation('add-tag')}
