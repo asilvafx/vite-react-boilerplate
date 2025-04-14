@@ -216,9 +216,9 @@ const ErrorMessage = styled.div`
 `
 
 const LoadingSpinner = styled.div`
-  border: 4px solid rgba(0, 0, 0, 0.1);
-  width: 36px;
-  height: 36px;
+  border: 4px solid rgba(255, 255, 255, 1);
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
   border-left-color: ${props => props.theme.colors.primary};
   animation: spin 1s linear infinite;
@@ -308,6 +308,15 @@ const AddTagPage = () => {
         setError(null)
 
         try {
+
+            // Call the DBService to check if the activation code exists
+            const checkCode = await DBService.getItemsByKeyValue('code', code, 'tags')
+
+            if(checkCode){
+                setError("Activation code already in use. Please check and try again.")
+                setLoading(false)
+                return false
+            }
             // Call the DBService to check if the activation code exists
             const result = await DBService.getItemsByKeyValue('code', code, 'codes')
 
@@ -407,7 +416,7 @@ const AddTagPage = () => {
                         selectedType.type === 'belongings' ? 'itemName' : 'boxNumber'],
                 type: selectedType.type,
                 isLost: "false",
-                details: JSON.stringify(formData.details), 
+                details: JSON.stringify(formData.details),
                 owner: 'user@test.com',
             };
 

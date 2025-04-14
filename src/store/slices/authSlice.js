@@ -103,7 +103,7 @@ export const loginUser = (credentials) => async (dispatch) => {
             sameSite: 'strict'
         });
 
-        dispatch(loginSuccess({ user: userWithoutPassword, token }));
+        dispatch(loginSuccess({ userWithoutPassword, token }));
         return { success: true };
     } catch (error) {
         dispatch(loginFailure(error.message));

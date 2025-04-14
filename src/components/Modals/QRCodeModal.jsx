@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import {QRCodeCanvas} from 'qrcode.react';
 import { motion } from 'framer-motion';
-import toast from 'react-hot-toast';
 
 const QRModalOverlay = styled.div`
   position: fixed;
@@ -47,18 +46,20 @@ const ShareButton = styled.button`
   }
 `;
 
-const QRCodeModal = ({ tagId, onClose }) => {
-    const link = `https://mysite.com/scan/${tagId}`;
+const QRCodeModal = ({ tag, onClose }) => {
+    if(!tag) return;
+
+    const link = `https://mysite.com/scan/${tag.code}`;
 
     const copyToClipboard = () => {
         navigator.clipboard.writeText(link);
-        toast.success('Link copied to clipboard!');
+        alert('Link copied to clipboard!');
     };
 
     return (
         <QRModalOverlay>
             <QRModalContainer>
-                <h3>QR Code</h3>
+                <h3>QR Code - {tag.name}</h3>
                 <QRCodeCanvasBox as={QRCodeCanvas} value={link} />
                 <ShareButton onClick={copyToClipboard}>Share Link</ShareButton>
                 <button onClick={onClose}>Close</button>

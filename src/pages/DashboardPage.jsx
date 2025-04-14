@@ -14,6 +14,7 @@ import EditTagModal from '../components/Modals/EditTagModal';
 import QRCodeModal from '../components/Modals/QRCodeModal';
 
 import DBService from '../data/rest.db';
+import useAuth from '../hooks/useAuth';
 
 const DashboardContainer = styled.div`
     min-height: 100%;
@@ -28,7 +29,7 @@ const SearchContainer = styled.div`
   background: ${props => props.theme.colors.backgroundAlt};
   border-radius: ${props => props.theme.radii.full};
   padding: ${props => props.theme.space.sm} ${props => props.theme.space.md};
-  margin: ${props => props.theme.space.lg};
+  margin: ${props => props.theme.space.md} ${props => props.theme.space.lg};
 `
 
 const SearchInput = styled.input`
@@ -142,8 +143,25 @@ const LoadingState = styled.div`
   color: ${props => props.theme.colors.textLight};
 `
 
+const TagsTotal = styled.div`
+  display: flex;
+  align-items: center; 
+  gap: ${props => props.theme.space.sm};
+  border-radius: ${props => props.theme.radii.full};
+  padding: ${props => props.theme.space.sm} ${props => props.theme.space.md};
+  margin: 0 ${props => props.theme.space.lg};
+    
+    &>h1 {
+        font-size: ${props => props.theme.fontSizes.lg};
+    }
+    &>span {
+        font-size: ${props => props.theme.fontSizes.lg};
+    }
+`
+
 const DashboardPage = () => {
     const navigate = useNavigate();
+    const { user, isAuthenticated } = useAuth();
     const [tags, setTags] = useState([]);
     const [filteredTags, setFilteredTags] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
@@ -155,9 +173,17 @@ const DashboardPage = () => {
 
     // Fetch tags from database
     const fetchTags = async () => {
+
+        if (!isAuthenticated) {
+            setError('User  is not authenticated.');
+            setLoading(false);
+            return;
+        }
+
         try {
             setLoading(true);
-            const fetchedTags = await DBService.getItemsByKeyValue('owner', 'user@test.com', 'tags');
+            const fetchUser = user.user;
+            const fetchedTags = await DBService.getItemsByKeyValue('owner', fetchUser.email, 'tags');
 
             if (fetchedTags) {
                 const tagsArray = Object.values(fetchedTags);
@@ -199,8 +225,8 @@ const DashboardPage = () => {
         setEditModalOpen(true);
     };
 
-    const openQRCodeModal = (tagId) => {
-        setSelectedTag(tagId);
+    const openQRCodeModal = (tag) => {
+        setSelectedTag(tag);
         setQRCodeModalOpen(true);
     };
 
@@ -251,6 +277,9 @@ const DashboardPage = () => {
                     onChange={(e) => handleSearch(e.target.value)}
                 />
             </SearchContainer>
+            <TagsTotal>
+                <h1>Total:</h1> <span>{tags.length}</span>
+            </TagsTotal>
 
             {filteredTags.length > 0 ? (
                 <TagGrid>
@@ -301,7 +330,7 @@ const DashboardPage = () => {
 
                                 <TagActions>
                                     <ActionButton className="primary" onClick={() => openEditModal(tag)}><span>Edit</span> <FaEdit  /></ActionButton>
-                                    <ActionButton onClick={() => openQRCodeModal(tag.id)}><FaQrcode /></ActionButton>
+                                    <ActionButton onClick={() => openQRCodeModal(tag)}><FaQrcode /></ActionButton>
                                 </TagActions>
 
                             </TagCard>
@@ -339,7 +368,7 @@ const DashboardPage = () => {
 
 {isQRCodeModalOpen && (
     <QRCodeModal
-        tagId={selectedTag}
+        tag={selectedTag}
         onClose={closeQRCodeModal}
     />
 )}
