@@ -3,8 +3,6 @@ import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from 'react-use-cart';
 import { useCatalog } from '../../hooks/useCatalog';
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
 import toast from 'react-hot-toast';
 
 const Shop = () => {

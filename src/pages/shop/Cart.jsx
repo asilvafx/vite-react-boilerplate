@@ -2,8 +2,6 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useCart } from 'react-use-cart';
 import { useNavigate } from 'react-router-dom';
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
 import toast from 'react-hot-toast';
 
 const Cart = () => {

@@ -16,7 +16,7 @@ import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 
 // Pages
-import Logout from './pages/auth/Logout';
+import LogoutPage from './pages/LogoutPage';
 import Cart from './pages/shop/Cart';
 import Checkout from './pages/shop/Checkout';
 import HomePage from './pages/HomePage';
@@ -179,7 +179,7 @@ const routeConfig = [
     },
     {
         path: '/logout',
-        element: <Logout />,
+        element: <LogoutPage />,
         showNavAndFooter: false
     },
     {

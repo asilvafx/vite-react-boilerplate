@@ -15,6 +15,8 @@ export const theme = {
     background: '#FFF9F2',
     backgroundAlt: '#FFFFFF',
     backgroundDark: '#FFE4C8',
+    error: '#FF2626',
+    success: '#8E9E00',
     border: '#E2E8F0',
     borderDark: '#CBD5E1',
     gradient: {

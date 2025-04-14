@@ -14,8 +14,9 @@ import BottomNav from '../components/Layout/BottomNav'
 
 // Reuse styled components from DashboardPage
 const DashboardContainer = styled.div`
-  width: 100%;
-  max-width: 1200px;
+  width: 100%; 
+  max-width: ${props => props.theme.breakpoints.tablet};
+    margin: 0 auto;
   min-height: 100%;
   background: ${props => props.theme.colors.background};
   display: flex;
@@ -24,6 +25,7 @@ const DashboardContainer = styled.div`
 `
 
 const ProfileContainer = styled.div`
+    width: 100%;
   flex-grow: 1;
   padding: ${props => props.theme.space.xl};
   max-width: 100%;
@@ -76,6 +78,7 @@ const InputContainer = styled.div`
 
 const Input = styled.input`
   flex-grow: 1;
+  width: 100%;
   padding: ${props => props.theme.space.md};
   border: 1px solid ${props => props.theme.colors.border};
   border-radius: ${props => props.theme.radii.md};
@@ -93,7 +96,20 @@ const EditButton = styled.button`
   display: flex;
   align-items: center;
   gap: ${props => props.theme.space.sm};
-    font-size: small;
+    font-size:  ${props => props.theme.fontSizes.sm};
+`
+
+const EditSection = styled.div`
+    width: 100%;
+    display: flex;
+    gap: .3rem;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    
+    &>button {
+        width: 100%;
+    }
 `
 
 const ToggleSwitch = styled.label`
@@ -103,6 +119,7 @@ const ToggleSwitch = styled.label`
   height: 34px;
 
   input {
+    width: 100%;
     opacity: 0;
     width: 0;
     height: 0;
@@ -139,6 +156,7 @@ const ToggleSwitch = styled.label`
   input:checked + .slider:before {
     transform: translateX(26px);
   }
+  
 `
 
 const ProfilePage = () => {
@@ -217,24 +235,26 @@ const ProfilePage = () => {
                                 onChange={handleInputChange}
                                 disabled={!isEditingProfile}
                             />
-                            {isEditingProfile && (
-                                <>
-                                    <EditButton onClick={handleSaveProfile}>
-                                        <FaSave /> Save
-                                    </EditButton>
-                                    <EditButton
-                                        onClick={() => setIsEditingProfile(false)}
-                                        style={{
-                                            background: 'transparent',
-                                            color: 'red',
-                                            border: '1px solid red'
-                                        }}
-                                    >
-                                        <FaTimes /> Cancel
-                                    </EditButton>
-                                </>
-                            )}
                         </InputContainer>
+                        {isEditingProfile && (
+                            <>
+                                <EditSection>
+                                <EditButton onClick={handleSaveProfile}>
+                                    <FaSave /> Save
+                                </EditButton>
+                                <EditButton
+                                    onClick={() => setIsEditingProfile(false)}
+                                    style={{
+                                        background: 'transparent',
+                                        color: 'red',
+                                        border: '1px solid red'
+                                    }}
+                                >
+                                    <FaTimes /> Cancel
+                                </EditButton>
+                                </EditSection>
+                            </>
+                        )}
                     </FormGroup>
 
                     <FormGroup>

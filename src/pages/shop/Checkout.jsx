@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from 'react-use-cart';
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
 import toast from 'react-hot-toast';
 
 const Checkout = () => {

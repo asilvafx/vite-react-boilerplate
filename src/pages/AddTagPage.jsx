@@ -11,8 +11,6 @@ import {
     FaArrowLeft,
     FaCloudUploadAlt,
     FaTimes,
-    FaQrcode,
-    FaKey,
     FaExclamationTriangle
 } from 'react-icons/fa'
 
@@ -22,11 +20,14 @@ import DBService from '../data/rest.db'
 
 // Reuse styled components from Dashboard for header and footer
 const DashboardContainer = styled.div`
-  min-height: 100%;
-  background: ${props => props.theme.colors.background};
-  display: flex;
-  flex-direction: column;
-
+    width: 100%;
+    max-width: ${props => props.theme.breakpoints.tablet};
+    margin: 0 auto;
+    min-height: 100%;
+    background: ${props => props.theme.colors.background};
+    display: flex;
+    flex-direction: column;
+    position: relative;  
     padding: ${props => props.theme.space.md};
 `
 
@@ -95,9 +96,8 @@ const RemoveImageButton = styled.button`
   justify-content: center;
 `
 
-const PageContainer = styled.div`
-  min-height: 100vh;
-  margin: 120px auto;
+const PageContainer = styled.div` 
+  margin: 60px auto;
   background: ${props => props.theme.colors.background};
   display: flex;
   flex-direction: column;
@@ -107,7 +107,7 @@ const PageContainer = styled.div`
 const PageTitle = styled.h1`
   text-align: center;
   color: ${props => props.theme.colors.primary};
-  margin-bottom: ${props => props.theme.space.xl};
+  margin-bottom: ${props => props.theme.space.lg};
 `
 
 const TagTypeGrid = styled.div`
@@ -201,7 +201,7 @@ const ActivationCodeContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
 `
 
 const ErrorMessage = styled.div`
@@ -395,45 +395,34 @@ const AddTagPage = () => {
     }
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
-        setLoading(true)
+        e.preventDefault();
+        setLoading(true);
 
         try {
-            // Prepare tag data for update
-            const updatedTagData = {
-                ...tagData,
-                isActivated: true,
-                userEmail: 'user@test.com', // Set the user email
-                type: selectedType.type,
+            // Prepare tag data for insertion
+            const newTagData = {
+                code: tagData.code,
                 name: formData.details[selectedType.type === 'pet' ? 'petName' :
                     selectedType.type === 'human' ? 'fullName' :
                         selectedType.type === 'belongings' ? 'itemName' : 'boxNumber'],
-                details: formData.details,
-                updatedAt: new Date().toISOString()
-            }
+                type: selectedType.type,
+                isLost: "false",
+                details: JSON.stringify(formData.details), 
+                owner: 'user@test.com',
+            };
 
-            // If there's a file, upload it first
-            if (file) {
-                const filename = `${tagData.id}_${Date.now()}.${file.name.split('.').pop()}`
-                const uploadResult = await DBService.upload(file, filename)
-
-                if (uploadResult) {
-                    updatedTagData.imageUrl = uploadResult // Save the image URL
-                }
-            }
-
-            // Update the tag in the database
-            await DBService.update(tagData.id, updatedTagData, 'tags')
+            // Insert the new tag into the database
+            await DBService.create(newTagData, 'tags');
 
             // Navigate back to dashboard
-            navigate('/dashboard')
+            navigate('/dashboard');
         } catch (error) {
-            console.error("Error creating tag:", error)
-            setError("An error occurred while creating the tag. Please try again.")
+            console.error("Error creating tag:", error);
+            setError("An error occurred while creating the tag. Please try again.");
         } finally {
-            setLoading(false)
+            setLoading(false);
         }
-    }
+    };
 
     // Render the appropriate step UI
     const renderCurrentStep = () => {

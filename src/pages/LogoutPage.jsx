@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '../hooks/useAuth';
 import toast from 'react-hot-toast';
 
-const Logout = () => {
+const LogoutPage = () => {
     const navigate = useNavigate();
     const { logout, isAuthenticated } = useAuth();
 
@@ -31,4 +31,4 @@ const Logout = () => {
     return null;
 };
 
-export default Logout;
+export default LogoutPage;

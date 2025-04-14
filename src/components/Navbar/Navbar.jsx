@@ -25,6 +25,7 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: ${props => props.theme.space.sm};
 
   @media (max-width: ${props => props.theme.breakpoints.desktop}) {
     justify-content: end;
@@ -128,11 +129,13 @@ const NavLink = styled.a`
 const NavLinkBtn = styled.a`
   background-color: white;
   color: ${props => props.theme.colors.primary};
-  font-weight: ${props => props.theme.fontWeights.medium};
-  transition: color ${props => props.theme.transitions.fast};
+  border-radius: ${props => props.theme.radii.full};
   padding: ${props => props.theme.space.sm} ${props => props.theme.space.md};
-  border-radius: ${props => props.theme.radii.lg};
   display: flex;
+  align-items: center;
+  gap: ${props => props.theme.space.sm};
+  font-size:  ${props => props.theme.fontSizes.md};
+  font-weight: bolder;
 
   &:hover {
     color: ${props => props.theme.colors.accent};
@@ -142,13 +145,13 @@ const NavLinkBtn = styled.a`
   &>svg {
     fill: #0A2540
   }
-
-  @media (max-width: ${props => props.theme.breakpoints.tablet}) {
-    font-size: ${props => props.theme.fontSizes.lg};
-    padding: ${props => props.theme.space.md};
-    width: 100%;
-    text-align: left;
+  &>span {
+    display: none;
+    @media (max-width: ${props => props.theme.breakpoints.tablet}) {
+      display: flex;
+    }
   }
+
 `
 
 const SearchBar = styled.div`
@@ -187,11 +190,40 @@ const SearchBar = styled.div`
   }
 `
 
+const SearchBarMobile = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: ${props => props.theme.radii.full};
+  padding: ${props => props.theme.space.sm} ${props => props.theme.space.lg};
+  box-shadow: ${props => props.theme.shadows.sm};
+  margin: ${props => props.theme.space.md} 0;
+ 
+  input {
+    border: none;
+    outline: none;
+    background: none;
+    font-size: ${props => props.theme.fontSizes.md};
+    width: 200px;
+    color: ${props => props.theme.colors.text};
+
+    &::placeholder {
+      color: ${props => props.theme.colors.textLight};
+    } 
+  }
+
+  svg {
+    color: ${props => props.theme.colors.textLight};
+    margin-right: ${props => props.theme.space.sm};
+  }
+`
+
 const JoinButton = styled.button`
   background: ${props => props.theme.colors.primary};
   color: white;
   padding: ${props => props.theme.space.sm} ${props => props.theme.space.lg};
-  border-radius: ${props => props.theme.radii.full};
+  border-radius: ${props => props.theme.radii.md};
   font-weight: ${props => props.theme.fontWeights.semibold};
   transition: all ${props => props.theme.transitions.fast};
 
@@ -237,8 +269,7 @@ const MenuButton = styled.button`
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 44px;
-    height: 44px;
+    padding: ${props => props.theme.space.sm} ${props => props.theme.space.md};
     border-radius: ${props => props.theme.radii.md};
     background: white;
     box-shadow: ${props => props.theme.shadows.sm};
@@ -320,7 +351,20 @@ const Navbar = () => {
     }
   }
 
-  // Update the SearchBar in both desktop and mobile sections
+  // Update the SearchBar in mobile section
+  const SearchBarMobileComponent = (
+      <SearchBarMobile as="form" onSubmit={handleSearch}>
+        <FaSearch />
+        <input
+            type="text"
+            placeholder="Search by Tag ID"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+        />
+      </SearchBarMobile>
+  )
+
+  // Update the SearchBar in desktop section
   const SearchBarComponent = (
       <SearchBar as="form" onSubmit={handleSearch}>
         <FaSearch />
@@ -381,7 +425,7 @@ const Navbar = () => {
           {SearchBarComponent}
           {isAuthenticated ? (
               <>
-                <NavLinkBtn as={Link} to="/dashboard"><FaUser size={20} /></NavLinkBtn>
+                <NavLinkBtn as={Link} to="/dashboard"><FaUser size={20} /><span>My Account</span></NavLinkBtn>
                 <JoinButton onClick={handleLogout}>Logout</JoinButton>
               </>
           ) : (
@@ -420,7 +464,7 @@ const Navbar = () => {
                    <NavLink as={Link} to="/faq" onClick={closeMenu}>FAQ</NavLink>
                    <NavLink as={Link} to="/support" onClick={closeMenu}>Support</NavLink>
 
-                 {SearchBarComponent}
+                 {SearchBarMobileComponent}
                  {isAuthenticated ? (
                      <>
                        {user?.user.isAdmin === "true" && (
