@@ -308,6 +308,14 @@ const AuthPage = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [registrationSuccess, setRegistrationSuccess] = useState(false)
 
+  // Check URL parameters for 'register'
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.has('register')) {
+      setActiveTab('register');
+    }
+  }, []);
+
   // Redirect if already authenticated
   useEffect(() => {
     if (isAuthenticated) {

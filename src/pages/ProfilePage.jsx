@@ -48,14 +48,17 @@ const ProfileSection = styled(motion.div)`
 `
 
 const SectionTitle = styled.h2`
+    width: 100%;
   color: ${props => props.theme.colors.primary};
   margin-bottom: ${props => props.theme.space.lg};
   display: flex;
+    flex-wrap: wrap;
   align-items: center;
   gap: ${props => props.theme.space.md};
 `
 
 const FormGroup = styled.div`
+    width: 100%;
   margin-bottom: ${props => props.theme.space.md};
 `
 
@@ -90,6 +93,7 @@ const EditButton = styled.button`
   display: flex;
   align-items: center;
   gap: ${props => props.theme.space.sm};
+    font-size: small;
 `
 
 const ToggleSwitch = styled.label`
