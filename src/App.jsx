@@ -5,6 +5,7 @@ import { Toaster } from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { checkAuthStatus } from './store/slices/authSlice';
 
+// Private routes components
 import ProtectedRoute from './components/ProtectedRoute';
 import AdminRoute from './components/AdminRoute';
 
@@ -17,8 +18,9 @@ const CookiesGDPR = lazy(() => import('./components/Cookies'));
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import Admin from './pages/Admin';
-import Logout from './pages/Logout';
-import Auth from './pages/Auth';
+import Login from './pages/auth/Login';
+import Register from './pages/auth/Register';
+import Logout from './pages/auth/Logout';
 
 // Route Configuration
 const routeConfig = [
@@ -32,7 +34,12 @@ const routeConfig = [
     // Auth Routes without Navbar and Footer
     {
         path: '/auth',
-        element: <Auth />,
+        element: <Login />,
+        showNavAndFooter: false
+    },
+    {
+        path: '/register',
+        element: <Register />,
         showNavAndFooter: false
     },
     {

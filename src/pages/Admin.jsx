@@ -11,6 +11,8 @@ const Admin = () => {
                 <title>{t('seo_title')}</title>
                 <meta name='description' content={t('seo_description')}/>
             </Helmet>
+
+            <h1>Administration Page</h1>
         </>
     )
 }

@@ -1,8 +1,9 @@
 import React, {useEffect} from 'react';
-import {checkAuthStatus} from "../store/slices/authSlice.js";
+import { useDispatch } from 'react-redux';
 import {Navigate} from 'react-router-dom';
 import Cookies from 'js-cookie';
-import { useDispatch } from 'react-redux';
+import {checkAuthStatus} from "../store/slices/authSlice.js";
+import Loading from '../components/Loading';
 
 // Admin Route Component
 const AdminRoute = ({ children }) => {

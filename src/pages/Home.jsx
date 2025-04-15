@@ -28,13 +28,13 @@ const Home = () => {
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
                             <Link
-                                to="/shop"
+                                to="/auth"
                                 className="px-8 py-3 bg-cyan-500 hover:bg-cyan-600 text-black rounded-lg font-semibold transition-colors duration-200"
                             >
                                 Login / Register
                             </Link>
                             <Link
-                                to="/about"
+                                to="/"
                                 className="px-8 py-3 bg-transparent hover:bg-white/10 border border-white/20 rounded-lg font-semibold transition-colors duration-200"
                             >
                                Github

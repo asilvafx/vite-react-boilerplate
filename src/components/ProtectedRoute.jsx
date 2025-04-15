@@ -1,7 +1,8 @@
-import React, {useEffect} from 'react';
+import React, {lazy, useEffect} from 'react';
 import { useDispatch } from 'react-redux';
 import {Navigate} from 'react-router-dom';
 import { checkAuthStatus } from '../store/slices/authSlice';
+import Loading from '../components/Loading';
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
