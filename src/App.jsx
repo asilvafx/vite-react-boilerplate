@@ -33,7 +33,7 @@ const routeConfig = [
 
     // Auth Routes without Navbar and Footer
     {
-        path: '/auth',
+        path: '/login',
         element: <Login />,
         showNavAndFooter: false
     },

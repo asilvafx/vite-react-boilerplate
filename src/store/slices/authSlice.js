@@ -3,7 +3,6 @@ import Cookies from 'js-cookie';
 import DBService from '../../data/rest.db';
 import {decryptHash, encryptHash} from '../../lib/crypto';
 
-
 const initialState = {
     user: null,
     token: null,
