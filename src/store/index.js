@@ -3,7 +3,6 @@ import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, 
 import { CookieStorage } from 'redux-persist-cookie-storage';
 import Cookies from 'js-cookie';
 import authReducer from './slices/authSlice';
-import catalogReducer from './slices/catalogSlice';
 
 const cookieOptions = {
     expiration: {
@@ -28,7 +27,6 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
     auth: authReducer,
-    catalog: catalogReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -1,23 +1,21 @@
 import React, {useEffect} from 'react';
-import {checkAuthStatus} from "../store/slices/authSlice.js";
-import {Navigate} from 'react-router-dom';
-import Cookies from 'js-cookie';
 import { useDispatch } from 'react-redux';
+import {Navigate} from 'react-router-dom';
+import { checkAuthStatus } from '../store/slices/authSlice';
 
-// Admin Route Component
-const AdminRoute = ({ children }) => {
+// Protected Route Component
+const ProtectedRoute = ({ children }) => {
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = React.useState(true);
-    const [isAdmin, setIsAdmin] = React.useState(false);
+    const [isAuthenticated, setIsAuthenticated] = React.useState(false);
 
     useEffect(() => {
         const verifyAuth = async () => {
             try {
                 const authStatus = await dispatch(checkAuthStatus());
-                const userData = JSON.parse(Cookies.get('userData') || '{}');
-                setIsAdmin(authStatus && userData.isAdmin);
+                setIsAuthenticated(authStatus);
             } catch (error) {
-                setIsAdmin(false);
+                setIsAuthenticated(false);
             } finally {
                 setIsLoading(false);
             }
@@ -30,11 +28,11 @@ const AdminRoute = ({ children }) => {
         return <Loading />;
     }
 
-    if (!isAdmin) {
-        return <Navigate to="/" />;
+    if (!isAuthenticated) {
+        return <Navigate to="/auth" />;
     }
 
     return children;
 };
 
-export default AdminRoute
+export default ProtectedRoute
