@@ -41,9 +41,6 @@ export default defineConfig(({ mode }) => {
       alias: {
         "@": path.resolve("./src"),
       },
-    },
-    define: {
-      'process.env': env, // Make env variables available in your app
-    },
+    }, 
   };
 });
