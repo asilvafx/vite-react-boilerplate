@@ -1,7 +1,6 @@
 
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import LanguageDetector from 'i18next-browser-languagedetector';
 
 // Import your translation resources
 import enTranslation from '../locale/en.json';
@@ -9,8 +8,23 @@ import frTranslation from '../locale/fr.json';
 import esTranslation from '../locale/es.json';
 import ptTranslation from '../locale/pt.json';
 
+const customLanguageDetector = {
+    type: 'languageDetector',
+    async: false,
+    detect: () => {
+        let lang = localStorage.getItem('i18nextLng') || navigator.language || 'en';
+        if (lang.startsWith('pt')) return 'pt';
+        if (lang.startsWith('en')) return 'en';
+        if (lang.startsWith('es')) return 'es';
+        if (lang.startsWith('fr')) return 'fr';
+        return 'en';
+    },
+    init: () => {},
+    cacheUserLanguage: () => {},
+};
+
 i18n
-    .use(LanguageDetector)
+    .use(customLanguageDetector)
     .use(initReactI18next)
     .init({
         // For more options, check the documentation
