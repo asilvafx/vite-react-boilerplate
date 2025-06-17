@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import {Helmet} from "react-helmet-async";
 import { useTranslation } from 'react-i18next';
 
 import reactLogo from '../../assets/react.svg'
@@ -11,11 +10,9 @@ function Home() {
 
     return (
         <>
-            <Helmet>
-                <title>{t('seo_title')}</title>
-                <meta name='description' content={t('seo_description')}/>
-                <link rel="canonical" href="http://mysite.com/example" />
-            </Helmet>
+            <title>{t('seo_title')}</title>
+            <meta name='description' content={t('seo_description')}/>
+            
             <section className="p-8">
                 <div className="flex gap-4 mb-4">
                     <a href="https://vite.dev" target="_blank">
