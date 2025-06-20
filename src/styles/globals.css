@@ -14,7 +14,7 @@
 }
 
 a {
-  font-weight: 500;
+  font-weight: bolder;
   color: #646cff;
   text-decoration: inherit;
 }
@@ -30,6 +30,12 @@ body {
   min-height: 100vh;
 }
 
+#root {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
@@ -37,10 +43,10 @@ h1 {
 
 button {
   border-radius: 8px;
-  border: 1px solid transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 0.6em 1.2em;
   font-size: 1em;
-  font-weight: 500;
+  font-weight: bolder;
   font-family: inherit;
   background-color: #1a1a1a;
   cursor: pointer;
@@ -65,4 +71,8 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+input {
+  background: white;
+  color: black;
 }

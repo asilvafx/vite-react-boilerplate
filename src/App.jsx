@@ -1,6 +1,7 @@
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
+import { HelmetProvider } from 'react-helmet-async';
 import routeConfig from '/routeConfig';
 
 // Import Components
@@ -43,11 +44,13 @@ const AppContent = () => {
 function App() {
 
     return (
+        <HelmetProvider>
         <Suspense fallback={<Loading />}>
             <Router>
                 <AppContent />
             </Router>
         </Suspense>
+        </HelmetProvider>
     )
 }
 
