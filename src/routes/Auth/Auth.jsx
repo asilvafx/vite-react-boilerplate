@@ -21,6 +21,7 @@ const Auth = () => {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [showPwd, setShowPwd] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [rememberMe, setRememberMe] = useState(false);
     const { isAuthenticated } = useSelector((state) => state.auth);
     const location = useLocation();
 
@@ -36,12 +37,26 @@ const Auth = () => {
 
     const showPassword = () => setShowPwd((prev) => !prev);
 
+    const passwordValid = (pwd) => {
+        return (
+            pwd.length >= 8 &&
+            pwd.length <= 32 &&
+            /[a-z]/.test(pwd) &&
+            /[A-Z0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(pwd)
+        );
+    };
+
     const handleRegister = async (e) => {
         e.preventDefault();
         setLoading(true);
         if (!email || !password) return toast.error("Email and Password are required."), setLoading(false);
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return toast.error("Invalid email format."), setLoading(false);
         if (!confirmPassword || confirmPassword !== password) return toast.error("Passwords don't match."), setLoading(false);
+
+        if (!passwordValid(password)) {
+            toast.error("Password must be at least 8 characters with lowercase and one uppercase or number.");
+            return setLoading(false);
+        }
 
         try {
             const existingUser = await DBService.readBy("email", email, "users");
@@ -71,7 +86,9 @@ const Auth = () => {
                 return toast.error("Invalid credentials."), setLoading(false);
 
             login(user);
-            Cookies.set("authUser", encryptHash(JSON.stringify(user)), { expires: 7 });
+            Cookies.set("authUser", encryptHash(JSON.stringify(user)), {
+                expires: rememberMe ? 30 : 7 // 30 days if checked, 7 otherwise
+            });
             toast.success("Login successful!");
             navigate("/");
         } catch (error) {
@@ -145,6 +162,17 @@ const Auth = () => {
 
                     {mode === "register" && (
                         <>
+                            <ul className="text-sm text-gray-500 list-disc ml-6 space-y-1">
+                                <li className={password.length >= 8 && password.length <= 32 ? "text-green-600" : "text-red-500"}>
+                                    8–32 characters
+                                </li>
+                                <li className={/[a-z]/.test(password) ? "text-green-600" : "text-red-500"}>
+                                    Includes lowercase letter
+                                </li>
+                                <li className={/[A-Z0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(password) ? "text-green-600" : "text-red-500"}>
+                                    Includes uppercase, number, or symbol
+                                </li>
+                            </ul>
                             <label className="block font-semibold text-gray-800">Confirm Password</label>
                             <div className="flex items-center border rounded-xl px-3 h-12 focus-within:border-blue-500">
                                 <input
@@ -159,12 +187,14 @@ const Auth = () => {
                         </>
                     )}
 
-                    {mode === "login" && (
-                        <div className="flex justify-between items-center text-sm text-gray-600 mt-2">
-                            <label className="flex items-center space-x-2">
-                                <input type="checkbox" />
-                                <span>Remember me</span>
+                        {mode === "login" && (
+                            <div className="flex justify-between items-center text-sm text-gray-600 mt-2">
+                                <label className="flex items-center space-x-2">
+                                    <input type="checkbox" checked={rememberMe}
+                                           onChange={() => setRememberMe(!rememberMe)}/>
+                                    <span>Remember me</span>
                             </label>
+
                             <Link to="/forgot" className="text-blue-500 hover:underline">Forgot password?</Link>
                         </div>
                     )}

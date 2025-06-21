@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { motion, AnimatePresence } from "framer-motion";
 import DBService from "../../data/rest.db";
+import { encryptHash } from "../../lib/crypto";
 
 const ForgotPassword = () => {
     const navigate = useNavigate();
@@ -63,7 +64,7 @@ const ForgotPassword = () => {
 
             const updated = {
                 ...user,
-                password: newPwd // You can hash this before saving
+                password: encryptHash(newPwd)  
             };
 
             await DBService.update(user.id, updated, "users");
@@ -113,7 +114,7 @@ const ForgotPassword = () => {
                                 className="w-full bg-black text-white py-2 rounded-xl hover:bg-gray-800 disabled:opacity-50"
                             >
                                 {loading ? "Sending..." : "Send Code"}
-                            </motion.button> 
+                            </motion.button>
                         </motion.form>
                     )}
 
