@@ -41,9 +41,8 @@ function Shop() {
                 </motion.h1>
 
                 <div className="flex w-full justify-between mb-4">
-                    <p>🛒 Items in Cart: <strong>{totalItems}</strong></p>
                     <Link to="/cart">
-                        <p className="text-blue-500 hover:underline">View all</p>
+                    <button className="bg-blue-600 text-white">Cart (<strong>{totalItems}</strong>)</button>
                     </Link>
                 </div>
 

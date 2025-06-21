@@ -6,6 +6,7 @@ const Shop = lazy(() => import('./routes/Shop/Shop'));
 const Cart = lazy(() => import('./routes/Shop/Cart'));
 const Checkout = lazy(() => import('./routes/Shop/Checkout'));
 const Auth = lazy(() => import('./routes/Auth/Auth'));
+const ForgotPassword = lazy(() => import('./routes/Auth/ForgotPassword'));
 const Logout = lazy(() => import('./routes/Auth/Logout'));
 
 // App Router Configuration
@@ -29,6 +30,10 @@ const routeConfig = [
     {
         path: '/auth',
         element: <Auth />
+    },
+    {
+        path: '/forgot',
+        element: <ForgotPassword />
     },
     {
         path: '/logout',

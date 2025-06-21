@@ -1,12 +1,12 @@
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import { Toaster } from 'react-hot-toast';
 import { HelmetProvider } from 'react-helmet-async';
 import routeConfig from '/routeConfig';
 
 // Import Components
 const Loading = lazy(() => import('./components/Loading'));
 const ScrollToTop = lazy(() => import('./components/ScrollToTop'));
+const AnimatedToaster = lazy(() => import('./components/AnimatedToaster'));
 
 // App Content Component
 const AppContent = () => {
@@ -15,15 +15,7 @@ const AppContent = () => {
         <>
             <Suspense fallback={<Loading />}>
                 <ScrollToTop />
-                <Toaster toastOptions={{
-                    className: '',
-                    success: {
-                        className: '',
-                    },
-                    error: {
-                        className: '',
-                    },
-                }} />
+                <AnimatedToaster />
 
                 <Routes>
                     {routeConfig.map(route => (

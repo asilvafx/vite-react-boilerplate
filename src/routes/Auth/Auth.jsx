@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import DBService from "../../data/rest.db";
 import { Helmet } from "react-helmet-async";
 import { toast } from "react-hot-toast";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "../../hooks/useAuth";
@@ -22,6 +22,13 @@ const Auth = () => {
     const [showPwd, setShowPwd] = useState(false);
     const [loading, setLoading] = useState(false);
     const { isAuthenticated } = useSelector((state) => state.auth);
+    const location = useLocation();
+
+    useEffect(() => {
+        if (location.state?.email) {
+            setEmail(location.state.email);
+        }
+    }, [location]);
 
     useEffect(() => {
         if (isAuthenticated) navigate("/dashboard");
@@ -158,7 +165,7 @@ const Auth = () => {
                                 <input type="checkbox" />
                                 <span>Remember me</span>
                             </label>
-                            <Link to="/auth" className="text-blue-500 hover:underline">Forgot password?</Link>
+                            <Link to="/forgot" className="text-blue-500 hover:underline">Forgot password?</Link>
                         </div>
                     )}
 

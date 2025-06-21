@@ -41,7 +41,7 @@ function Checkout() {
             </Helmet>
 
             <div className="p-4 w-full max-w-2xl m-auto">
-                <h1 className="font-bold mb-6 text-center">🧾 Checkout</h1>
+                <h1 className="font-bold mb-6 text-center">Checkout</h1>
 
                 <AnimatePresence>
                     {status === 'success' && (

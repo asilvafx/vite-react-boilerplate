@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { useCart } from 'react-use-cart';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from "framer-motion";
+import { FaTrash } from "react-icons/fa";
 
 function Cart() {
     const navigate = useNavigate();
@@ -19,7 +20,7 @@ function Cart() {
             </Helmet>
 
             <div className="p-4 w-screen max-w-2xl m-auto">
-                <h1 className="font-bold mb-4 text-center">🛒 Your Cart</h1>
+                <h1 className="font-bold mb-4 text-center">Your Cart</h1>
                 {totalItems === 0 ? (
                         <motion.p
                             initial={{opacity: 0.3}}
@@ -41,7 +42,7 @@ function Cart() {
                                         animate={{opacity: 1, y: 0}}
                                         exit={{opacity: 0, scale: 0.9}}
                                         transition={{duration: 0.3}}
-                                        className="border p-4 flex items-center justify-between"
+                                        className="border border-neutral-500 rounded p-4 flex items-center justify-between"
                                     >
                                         <div>
                                             <p className="font-medium">{item.name}</p>
@@ -49,7 +50,7 @@ function Cart() {
                                         </div>
                                         <div className="text-sm text-gray-400 flex items-center gap-2 ms-auto me-4">
                                             <button
-                                                className="px-2 py-1 bg-gray-200 rounded"
+                                                className="px-3 py-2 focus:bg-white focus:text-black"
                                                 onClick={() => updateItemQuantity(item.id, item.quantity - 1)}
                                                 disabled={item.quantity <= 1}
                                             >
@@ -57,7 +58,7 @@ function Cart() {
                                             </button>
                                             <span>{item.quantity}</span>
                                             <button
-                                                className="px-2 py-1 bg-gray-200 rounded"
+                                                className="px-3 py-2 focus:bg-white focus:text-black"
                                                 onClick={() => updateItemQuantity(item.id, item.quantity + 1)}
                                             >
                                                 +
@@ -65,9 +66,9 @@ function Cart() {
                                         </div>
                                         <button
                                             onClick={() => removeItem(item.id)}
-                                            className="text-red-500 hover:underline"
+                                            className="text-red-500 hover:underline px-2"
                                         >
-                                            Remove
+                                            <FaTrash />
                                         </button>
                                     </motion.li>
                                 ))}
