@@ -4,6 +4,7 @@ import React, {lazy} from 'react';
 const Home = lazy(() => import('./routes/Home/Home'));
 const Shop = lazy(() => import('./routes/Shop/Shop'));
 const Cart = lazy(() => import('./routes/Shop/Cart'));
+const Checkout = lazy(() => import('./routes/Shop/Checkout'));
 const Auth = lazy(() => import('./routes/Auth/Auth'));
 const Logout = lazy(() => import('./routes/Auth/Logout'));
 
@@ -20,6 +21,10 @@ const routeConfig = [
     {
         path: '/cart',
         element: <Cart />
+    },
+    {
+        path: '/checkout',
+        element: <Checkout />
     },
     {
         path: '/auth',

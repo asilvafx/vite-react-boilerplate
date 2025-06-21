@@ -4,9 +4,11 @@ import { Helmet } from "react-helmet-async";
 import { toast } from "react-hot-toast";
 import { useNavigate, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "../../hooks/useAuth";
 import { decryptHash, encryptHash } from "../../lib/crypto";
 import Cookies from "js-cookie";
+import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 
 const Auth = () => {
     const navigate = useNavigate();
@@ -81,7 +83,16 @@ const Auth = () => {
             <div className="w-screen max-w-2xl m-auto px-4 py-8">
                 <h1 className="text-center font-bold mb-8">{mode === "login" ? "Login" : "Register"}</h1>
 
-                <form className="bg-white p-6 rounded-2xl shadow-md space-y-4 max-w-md mx-auto">
+                <AnimatePresence mode="wait">
+                    <motion.form
+                        key={mode}
+                        className="bg-white p-6 rounded-2xl shadow-md space-y-4 max-w-md mx-auto"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        transition={{ duration: 0.4 }}
+                    >
+
                     {mode === "register" && (
                         <>
                             <label className="block font-semibold text-gray-800">Account Name</label>
@@ -120,8 +131,8 @@ const Auth = () => {
                             onChange={(e) => setPassword(e.target.value)}
                             className="w-full border-none outline-none"
                         />
-                        <button type="button" onClick={showPassword} className="text-sm text-blue-500 ml-2">
-                            {showPwd ? "Hide" : "Show"}
+                        <button type="button" onClick={showPassword} className="text-sm bg-transparent border-none text-black ml-2">
+                            {showPwd ? <IoMdEyeOff size={22} /> : <IoMdEye size={22} />}
                         </button>
                     </div>
 
@@ -151,45 +162,59 @@ const Auth = () => {
                         </div>
                     )}
 
-                    <button
-                        disabled={loading}
-                        onClick={mode === "login" ? handleLogin : handleRegister}
-                        className="w-full bg-black text-white py-2 rounded-xl hover:bg-gray-800"
-                    >
-                        {loading ? "Please wait..." : mode === "login" ? "Sign In" : "Create Account"}
-                    </button>
+                        <motion.button
+                            whileHover={{scale: 1.02}}
+                            whileTap={{scale: 0.95}}
+                            disabled={loading}
+                            onClick={mode === "login" ? handleLogin : handleRegister}
+                            className="w-full bg-black text-white py-2 rounded-xl hover:bg-gray-800"
+                        >
+                            {loading ? "Please wait..." : mode === "login" ? "Sign In" : "Create Account"}
+                        </motion.button>
 
-                    <p className="text-center text-sm text-gray-600">
-                        {mode === "login" ? (
-                            <>
-                                Don’t have an account?{" "}
-                                <span className="text-blue-500 font-medium cursor-pointer" onClick={() => setMode("register")}>
-                  Sign Up
-                </span>
+                        <p className="text-center text-sm text-gray-600">
+                            {mode === "login" ? (
+                                <>
+                                    Don’t have an account?{" "}
+                                    <span className="text-blue-500 font-medium cursor-pointer"
+                                          onClick={() => setMode("register")}>
+                                      Sign Up
+                                    </span>
                             </>
                         ) : (
                             <>
                                 Already have an account?{" "}
                                 <span className="text-blue-500 font-medium cursor-pointer" onClick={() => setMode("login")}>
-                  Sign In
-                </span>
+                                  Sign In
+                                </span>
                             </>
                         )}
                     </p>
 
                     <div className="text-center text-gray-400 text-sm">Or With</div>
 
-                    <div className="flex gap-3">
-                        <button className="flex-1 flex items-center justify-center gap-2 border rounded-xl py-2 text-sm font-medium">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="G" className="w-5 h-5" />
-                            Google
-                        </button>
-                        <button className="flex-1 flex items-center justify-center gap-2 border rounded-xl py-2 text-sm font-medium">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple" className="w-5 h-5 invert" />
-                            Apple
-                        </button>
-                    </div>
-                </form>
+                        <div className="flex gap-3">
+                            <motion.button
+                                whileTap={{scale: 0.95}}
+                                whileHover={{scale: 1.02}}
+                                className="flex-1 flex items-center justify-center gap-2 border rounded-xl py-2 text-sm font-medium"
+                            >
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg"
+                                     alt="G" className="w-5 h-5"/>
+                                Google
+                            </motion.button>
+                            <motion.button
+                                whileTap={{scale: 0.95}}
+                                whileHover={{scale: 1.02}}
+                                className="flex-1 flex items-center justify-center gap-2 border rounded-xl py-2 text-sm font-medium"
+                            >
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg"
+                                     alt="Apple" className="w-5 h-5 invert"/>
+                                Apple
+                            </motion.button>
+                        </div>
+                    </motion.form>
+                </AnimatePresence>
 
                 <div className="mt-6 text-center">
                     <Link to="/" className="text-blue-500 hover:underline">← Back to Home</Link>
