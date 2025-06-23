@@ -233,6 +233,27 @@ class DBService {
             throw error;
         }
     }
+
+    async mail(address, subject, content, type){
+
+        try {
+        const data = {
+            address: address,
+            subject: subject,
+            content: content,
+            method: type
+        };
+
+        const response = await api.post(`/mail`, data);
+
+        if (response.data.status === "success") {
+            return true;
+        }
+        } catch (error) {
+            console.error(`Error in sending email: ${error}`);
+            throw error;
+        }
+    }
 }
 
 export default new DBService();

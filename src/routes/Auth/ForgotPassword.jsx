@@ -26,7 +26,8 @@ const ForgotPassword = () => {
         }
 
         try {
-            const user = await DBService.readBy("email", email, "users");
+            const address = email.toLowerCase();
+            const user = await DBService.readBy("email", address, "users");
             if (!user) {
                 toast.error("Email not found in our records.");
                 return setLoading(false);
@@ -34,8 +35,15 @@ const ForgotPassword = () => {
 
             const randomCode = Math.floor(100000 + Math.random() * 900000).toString();
             setGeneratedCode(randomCode);
-            toast.success(`Code sent to ${email} (Demo: ${randomCode})`);
+            toast.success(`Code sent to ${address}. Please, check your email inbox and spam folders. (Demo: ${randomCode})`);
+
             setStep("code");
+
+            try {
+                await DBService.mail(address, 'Password Reset!',randomCode, 'otp');
+            } catch (e){
+                console.log(e);
+            }
         } catch (err) {
             toast.error("Error sending code.");
         }
@@ -64,7 +72,7 @@ const ForgotPassword = () => {
 
             const updated = {
                 ...user,
-                password: encryptHash(newPwd)  
+                password: encryptHash(newPwd)
             };
 
             await DBService.update(user.id, updated, "users");

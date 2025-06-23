@@ -59,12 +59,13 @@ const Auth = () => {
         }
 
         try {
-            const existingUser = await DBService.readBy("email", email, "users");
+            const inpEmail = email.toLowerCase();
+            const existingUser = await DBService.readBy("email", inpEmail, "users");
             if (existingUser) return toast.error("Email already registered."), setLoading(false);
 
             const encryptedPassword = encryptHash(password);
-            const timeNow = new Date().toTimeString();
-            await DBService.create({ displayName: name, email, password: encryptedPassword, created_at: timeNow }, "users");
+            const timeNow = new Date().toLocaleTimeString();
+            await DBService.create({ displayName: name, email: inpEmail, password: encryptedPassword, created_at: timeNow }, "users");
             toast.success("Account created! Log in now.");
             setMode("login");
         } catch (err) {
@@ -81,7 +82,8 @@ const Auth = () => {
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return toast.error("Invalid email format."), setLoading(false);
 
         try {
-            const user = await DBService.readBy("email", email, "users");
+            const inpEmail = email.toLowerCase();
+            const user = await DBService.readBy("email", inpEmail, "users");
             if (!user || decryptHash(user.password) !== password)
                 return toast.error("Invalid credentials."), setLoading(false);
 
@@ -183,6 +185,10 @@ const Auth = () => {
                                     onChange={(e) => setConfirmPassword(e.target.value)}
                                     className="w-full border-none outline-none"
                                 />
+                                <button type="button" onClick={showPassword}
+                                        className="text-sm bg-transparent border-none text-black ml-2">
+                                    {showPwd ? <IoMdEyeOff size={22}/> : <IoMdEye size={22}/>}
+                                </button>
                             </div>
                         </>
                     )}
@@ -236,18 +242,18 @@ const Auth = () => {
                                 whileHover={{scale: 1.02}}
                                 className="flex-1 flex items-center justify-center gap-2 border rounded-xl py-2 text-sm font-medium"
                             >
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg"
-                                     alt="G" className="w-5 h-5"/>
-                                Google
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/GitHub_Invertocat_Logo.svg/640px-GitHub_Invertocat_Logo.svg.png"
+                                     alt="Github" className="w-5 h-5 invert"/>
+                                Github
                             </motion.button>
                             <motion.button
                                 whileTap={{scale: 0.95}}
                                 whileHover={{scale: 1.02}}
                                 className="flex-1 flex items-center justify-center gap-2 border rounded-xl py-2 text-sm font-medium"
                             >
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg"
-                                     alt="Apple" className="w-5 h-5 invert"/>
-                                Apple
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Worldcoin_Logomark.png/1200px-Worldcoin_Logomark.png?20230810200406"
+                                     alt="World App" className="w-6 h-6 invert"/>
+                                World App
                             </motion.button>
                         </div>
                     </motion.form>

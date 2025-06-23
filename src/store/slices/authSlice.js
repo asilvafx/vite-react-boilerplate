@@ -11,6 +11,7 @@ try {
     }
 } catch (e) {
     storedUser = null;
+    Cookies.remove("authUser");
 }
 
 const initialState = {
