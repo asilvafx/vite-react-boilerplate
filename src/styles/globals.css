@@ -52,6 +52,13 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
   outline: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+button[disabled]{
+  opacity: .5;
 }
 button:focus,
 button:focus-visible {
