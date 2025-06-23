@@ -12,7 +12,11 @@ function Home() {
     const [count, setCount] = useState(0);
     const { t } = useTranslation();
     const { user, isAuthenticated } = useAuth();
-    console.log(user);
+
+    if(isAuthenticated){
+        console.log(user);
+    }
+
     return (
         <>
             <Helmet>

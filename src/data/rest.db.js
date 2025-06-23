@@ -234,14 +234,15 @@ class DBService {
         }
     }
 
-    async mail(address, subject, content, type){
+    async mail(address, subject, content, type = 'default', options = null){
 
         try {
         const data = {
             address: address,
             subject: subject,
             content: content,
-            method: type
+            method: type,
+            options: options
         };
 
         const response = await api.post(`/mail`, data);

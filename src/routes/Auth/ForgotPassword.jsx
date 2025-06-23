@@ -4,7 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { motion, AnimatePresence } from "framer-motion";
 import DBService from "../../data/rest.db";
-import { encryptHash } from "../../lib/crypto";
+import {decryptHash, encryptHash} from "../../lib/crypto";
+import {IoMdEye, IoMdEyeOff} from "react-icons/io";
 
 const ForgotPassword = () => {
     const navigate = useNavigate();
@@ -13,9 +14,20 @@ const ForgotPassword = () => {
     const [code, setCode] = useState("");
     const [generatedCode, setGeneratedCode] = useState("");
     const [loading, setLoading] = useState(false);
+    const [showPwd, setShowPwd] = useState(false);
     const [newPwd, setNewPwd] = useState("");
     const [confirmPwd, setConfirmPwd] = useState("");
 
+    const showPassword = () => setShowPwd((prev) => !prev);
+
+    const passwordValid = (pwd) => {
+        return (
+            pwd.length >= 8 &&
+            pwd.length <= 32 &&
+            /[a-z]/.test(pwd) &&
+            /[A-Z0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(pwd)
+        );
+    };
     const handleReset = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -34,13 +46,15 @@ const ForgotPassword = () => {
             }
 
             const randomCode = Math.floor(100000 + Math.random() * 900000).toString();
-            setGeneratedCode(randomCode);
+            const encryptedCode = encryptHash(randomCode);
+            setGeneratedCode(encryptedCode);
+
             toast.success(`Code sent to ${address}. Please, check your email inbox and spam folders. (Demo: ${randomCode})`);
 
             setStep("code");
 
             try {
-                await DBService.mail(address, 'Password Reset!',randomCode, 'otp');
+                await DBService.mail(address, 'Password Reset!',encryptedCode, 'otp', 'crypt');
             } catch (e){
                 console.log(e);
             }
@@ -53,7 +67,7 @@ const ForgotPassword = () => {
 
     const handleCodeValidation = (e) => {
         e.preventDefault();
-        if (code !== generatedCode) return toast.error("Invalid code.");
+        if (code !== decryptHash(generatedCode)) return toast.error("Invalid code.");
         setStep("reset");
     };
 
@@ -63,6 +77,11 @@ const ForgotPassword = () => {
 
         if (!newPwd || newPwd !== confirmPwd) {
             toast.error("Passwords must match.");
+            return setLoading(false);
+        }
+
+        if (!passwordValid(newPwd)) {
+            toast.error("Password must be at least 8 characters with lowercase and one uppercase or number.");
             return setLoading(false);
         }
 
@@ -168,22 +187,48 @@ const ForgotPassword = () => {
                             className="bg-white p-6 rounded-2xl shadow-md space-y-4 max-w-md mx-auto"
                         >
                             <label className="block font-semibold text-gray-800">New Password</label>
-                            <input
-                                type="password"
-                                value={newPwd}
-                                onChange={(e) => setNewPwd(e.target.value)}
-                                placeholder="New password"
-                                className="w-full p-2 border rounded"
-                            />
+                            <div className="flex items-center border rounded-xl px-3 h-12 focus-within:border-blue-500">
+                                <input
+                                    disabled={loading}
+                                    type={showPwd ? "text" : "password"}
+                                    placeholder="Enter your Password"
+                                    value={newPwd}
+                                    onChange={(e) => setNewPwd(e.target.value)}
+                                    className="w-full border-none outline-none"
+                                />
+                                <button type="button" onClick={showPassword}
+                                        className="text-sm bg-transparent border-none text-black ml-2">
+                                    {showPwd ? <IoMdEyeOff size={22}/> : <IoMdEye size={22}/>}
+                                </button>
+                            </div>
+
+                            <ul className="text-sm text-gray-500 list-disc ml-6 space-y-1">
+                                <li className={newPwd.length >= 8 && newPwd.length <= 32 ? "text-green-600" : "text-red-500"}>
+                                    8–32 characters
+                                </li>
+                                <li className={/[a-z]/.test(newPwd) ? "text-green-600" : "text-red-500"}>
+                                    Includes lowercase letter
+                                </li>
+                                <li className={/[A-Z0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(newPwd) ? "text-green-600" : "text-red-500"}>
+                                    Includes uppercase, number, or symbol
+                                </li>
+                            </ul>
 
                             <label className="block font-semibold text-gray-800">Confirm New Password</label>
-                            <input
-                                type="password"
-                                value={confirmPwd}
-                                onChange={(e) => setConfirmPwd(e.target.value)}
-                                placeholder="Confirm password"
-                                className="w-full p-2 border rounded"
-                            />
+                            <div className="flex items-center border rounded-xl px-3 h-12 focus-within:border-blue-500">
+                                <input
+                                    disabled={loading}
+                                    type={showPwd ? "text" : "password"}
+                                    placeholder="Confirm your Password"
+                                    value={confirmPwd}
+                                    onChange={(e) => setConfirmPwd(e.target.value)}
+                                    className="w-full border-none outline-none"
+                                />
+                                <button type="button" onClick={showPassword}
+                                        className="text-sm bg-transparent border-none text-black ml-2">
+                                    {showPwd ? <IoMdEyeOff size={22}/> : <IoMdEye size={22}/>}
+                                </button>
+                            </div>
 
                             <motion.button
                                 type="submit"

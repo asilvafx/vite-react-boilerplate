@@ -9,6 +9,8 @@ import { useAuth } from "../../hooks/useAuth";
 import { decryptHash, encryptHash } from "../../lib/crypto";
 import Cookies from "js-cookie";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
+import IDKit from '../../components/IDKit';
+import GitHubLogin from '../../components/GitHubLogin';
 
 const Auth = () => {
     const navigate = useNavigate();
@@ -64,7 +66,7 @@ const Auth = () => {
             if (existingUser) return toast.error("Email already registered."), setLoading(false);
 
             const encryptedPassword = encryptHash(password);
-            const timeNow = new Date().toLocaleTimeString();
+            const timeNow = new Date().toLocaleString();
             await DBService.create({ displayName: name, email: inpEmail, password: encryptedPassword, created_at: timeNow }, "users");
             toast.success("Account created! Log in now.");
             setMode("login");
@@ -88,7 +90,10 @@ const Auth = () => {
                 return toast.error("Invalid credentials."), setLoading(false);
 
             login(user);
-            Cookies.set("authUser", encryptHash(JSON.stringify(user)), {
+            Cookies.set("authUser", encryptHash(user), {
+                secure: true,
+                sameSite: 'lax',
+                path: '/',
                 expires: rememberMe ? 30 : 7 // 30 days if checked, 7 otherwise
             });
             toast.success("Login successful!");
@@ -237,24 +242,8 @@ const Auth = () => {
                     <div className="text-center text-gray-400 text-sm">Or With</div>
 
                         <div className="flex gap-3">
-                            <motion.button
-                                whileTap={{scale: 0.95}}
-                                whileHover={{scale: 1.02}}
-                                className="flex-1 flex items-center justify-center gap-2 border rounded-xl py-2 text-sm font-medium"
-                            >
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/GitHub_Invertocat_Logo.svg/640px-GitHub_Invertocat_Logo.svg.png"
-                                     alt="Github" className="w-5 h-5 invert"/>
-                                Github
-                            </motion.button>
-                            <motion.button
-                                whileTap={{scale: 0.95}}
-                                whileHover={{scale: 1.02}}
-                                className="flex-1 flex items-center justify-center gap-2 border rounded-xl py-2 text-sm font-medium"
-                            >
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Worldcoin_Logomark.png/1200px-Worldcoin_Logomark.png?20230810200406"
-                                     alt="World App" className="w-6 h-6 invert"/>
-                                World App
-                            </motion.button>
+                            <GitHubLogin />
+                            <IDKit/>
                         </div>
                     </motion.form>
                 </AnimatePresence>

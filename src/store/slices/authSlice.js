@@ -7,7 +7,7 @@ let storedUser = null;
 try {
     const encrypted = Cookies.get("authUser");
     if (encrypted) {
-        storedUser = JSON.parse(decryptHash(encrypted));
+        storedUser = decryptHash(encrypted);
     }
 } catch (e) {
     storedUser = null;

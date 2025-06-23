@@ -8,7 +8,7 @@ const Checkout = lazy(() => import('./routes/Shop/Checkout'));
 const Auth = lazy(() => import('./routes/Auth/Auth'));
 const ForgotPassword = lazy(() => import('./routes/Auth/ForgotPassword'));
 const Logout = lazy(() => import('./routes/Auth/Logout'));
-
+const GitHubCallback = lazy( () => import('./components/GitHubCallback'));
 // App Router Configuration
 const routeConfig = [
     {
@@ -30,6 +30,10 @@ const routeConfig = [
     {
         path: '/auth',
         element: <Auth />
+    },
+    {
+        path: '/auth/github/callback',
+        element: <GitHubCallback />
     },
     {
         path: '/forgot',
