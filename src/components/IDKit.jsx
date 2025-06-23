@@ -14,9 +14,9 @@ const IDKit = () => {
     const navigate = useNavigate();
     const { login } = useAuth();
 
-    const WLD_Action = process.env.WLD_ACTION || "test"; // Action name
-    const WLD_AppId = process.env.WLD_APP_ID || "app_000000000101010101"; // App ID from Developer Portal
-    const WLD_VerificationLevel = process.env.WLD_VERIFICATION_LVL || "device"; // Verification level
+    const WLD_Action = process.env.WLD_ACTION || null; // Action name
+    const WLD_AppId = process.env.WLD_APP_ID || null; // App ID from Developer Portal
+    const WLD_VerificationLevel = process.env.WLD_VERIFICATION_LVL || "device"; // Verification level: device/orb
     const WLD_ServerUrl = process.env.API_BASE_URL || null; // Server URL
 
 
@@ -81,6 +81,9 @@ const IDKit = () => {
         console.error('Error during IDKit verification:', error); 
     };
 
+    if(!WLD_AppId){
+        return null;
+    }
 
     return (
         <>

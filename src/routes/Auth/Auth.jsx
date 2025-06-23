@@ -212,10 +212,10 @@ const Auth = () => {
 
                         <motion.button
                             whileHover={{scale: 1.02}}
-                            whileTap={{scale: 0.95}}
+                            whileTap={{scale: 0.98}}
                             disabled={loading}
                             onClick={mode === "login" ? handleLogin : handleRegister}
-                            className="w-full bg-black text-white py-2 rounded-xl hover:bg-gray-800"
+                            className="w-full"
                         >
                             {loading ? "Please wait..." : mode === "login" ? "Sign In" : "Create Account"}
                         </motion.button>
