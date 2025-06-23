@@ -2,11 +2,17 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IDKitWidget } from '@worldcoin/idkit';
 import worldid_icon from '../assets/worldcoin.svg';
+import DBService from '../data/rest.db';
+import Cookies from "js-cookie";
+import {encryptHash} from "../lib/crypto.js";
+import {useAuth} from "../hooks/useAuth";
+import {useNavigate} from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 const IDKit = () => {
     const { t } = useTranslation();
-    const [verified, setVerified] = useState(false); // Define verified state
-    const [userHash, setUserHash] = useState(null); // Define verified state
+    const navigate = useNavigate();
+    const { login } = useAuth();
 
     const WLD_Action = process.env.WLD_ACTION || "test"; // Action name
     const WLD_AppId = process.env.WLD_APP_ID || "app_000000000101010101"; // App ID from Developer Portal
@@ -20,8 +26,6 @@ const IDKit = () => {
                 ...proof,
                 action: WLD_Action // action name you want to use
             };
-
-            console.log(modifiedProof);
 
             // Call your API route to verify the proof
             const res = await fetch(`${WLD_ServerUrl}/auth/worldId`, { // Update the URL to your backend server
@@ -37,16 +41,29 @@ const IDKit = () => {
                 throw new Error('Verification failed.');
             }
 
-            const response = await res.json();
+            const nullifierHash = modifiedProof.nullifier_hash;
+            const verificationLevel = modifiedProof.verification_level;
 
-            const nullifierHash = response.data.nullifier_hash; // Accessing nullifier_hash
+            let user = await DBService.readBy('world_id', nullifierHash, 'users');
+            if(!user){
+                const userData = {
+                    world_id: nullifierHash,
+                    world_ver: verificationLevel,
+                    created_at: new Date().toLocaleString()
+                };
+                const createUser = await DBService.create(userData, "users");
+                if(createUser){
+                    user = await DBService.readBy('world_id', nullifierHash, 'users');
+                }
+            }
 
-            // If verification is successful, update the verified state
-            setVerified(true);
-
-            console.log('Nullifier Hash:', nullifierHash); // Log the nullifier_hash
-
-            setUserHash(nullifierHash);
+            login(user);
+            Cookies.set("authUser", encryptHash(user), {
+                secure: true,
+                sameSite: 'lax',
+                path: '/',
+                expires: 7
+            });
 
         } catch (error) {
             console.error('Error during verification:', error);
@@ -56,7 +73,8 @@ const IDKit = () => {
 
     const onSuccess = () => {
         // Redirect or perform any action after the modal is closed
-        console.log('Login successfully!')
+        toast.success("Login successful!");
+        navigate('/');
     };
 
     const onError = (error) => {
@@ -66,32 +84,25 @@ const IDKit = () => {
 
     return (
         <>
-            {!verified ? (
-                <IDKitWidget
-                    app_id={WLD_AppId} // obtained from the Developer Portal
-                    action={WLD_Action} // this is your action name from the Developer Portal
-                    false
-                    verification_level={WLD_VerificationLevel}  // Use the verification level
-                    handleVerify={handleVerify}
-                    onSuccess={onSuccess}
-                    onError={onError}
-                >
-                    {({ open }) => (
-                        <button
-                                type="button"
-                                className="flex items-center justify-center gap-2 flex-1"
-                                onClick={open}>
-                                    <img className="pointer-events-none w-auto h-5 filter invert" src={worldid_icon} width={30} height={30} alt="WorldID" />
-                                    World ID
-                        </button>
-                    )}
-                </IDKitWidget>
-            ) : (
-                <div className="flex flex-col">
-                    <p>🎉 Successfully authenticated! </p>
-                    <p>Hash: {userHash}</p>
-                </div>
-            )}
+            <IDKitWidget
+                app_id={WLD_AppId} // obtained from the Developer Portal
+                action={WLD_Action} // this is your action name from the Developer Portal
+                false
+                verification_level={WLD_VerificationLevel}  // Use the verification level
+                handleVerify={handleVerify}
+                onSuccess={onSuccess}
+                onError={onError}
+            >
+                {({ open }) => (
+                    <button
+                            type="button"
+                            className="flex items-center justify-center gap-2 flex-1"
+                            onClick={open}>
+                                <img className="pointer-events-none w-auto h-5 filter invert" src={worldid_icon} width={30} height={30} alt="WorldID" />
+                                World ID
+                    </button>
+                )}
+            </IDKitWidget>
         </>
     );
 };

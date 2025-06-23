@@ -6,6 +6,7 @@ import Cookies from "js-cookie";
 import {encryptHash} from "../lib/crypto.js";
 import {useAuth} from "../hooks/useAuth";
 import { useRef } from 'react';
+import { toast } from "react-hot-toast";
 
 function GitHubCallback() {
     const hasRun = useRef(false);
@@ -62,16 +63,18 @@ function GitHubCallback() {
                     try {
                         // Fetch user data from your database
                         const userId = data.user.id;
-                        console.log(data.user);
                         let user = await DBService.readBy('github', userId, 'users');
                         if(!user){
-                            user = {
+                            const userData = {
                                 displayName: data.user.name,
                                 email: data.user.email,
                                 github: userId,
                                 created_at: new Date().toLocaleString()
                             };
-                            await DBService.create(user, "users");
+                            const createUser = await DBService.create(userData, "users");
+                            if(createUser){
+                                user = await DBService.readBy('github', userId, 'users');
+                            }
                         }
 
                         login(user);
@@ -82,11 +85,9 @@ function GitHubCallback() {
                             expires: 7
                         });
 
-                        // Store authentication data (consider using a context or state management)
-                        // localStorage.setItem('github_token', data.access_token); // If needed
-
                         // Navigate to success page or dashboard
-                        navigate('/dashboard'); // or wherever you want to redirect successful users
+                        toast.success("Login successful!");
+                        navigate('/'); // or wherever you want to redirect successful users
 
                     } catch (dbError) {
                         console.error('Database error:', dbError);
