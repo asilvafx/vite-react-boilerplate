@@ -14,7 +14,6 @@ function Checkout() {
     const { cartTotal, items, totalItems, emptyCart} = useCart();
     const [stripeOptions, setStripeOptions] = useState(null);
     const [shippingCost] = useState(5.99);
-    const [paymentMethod, setPaymentMethod] = useState("credit");
     const [status, setStatus] = useState(null); // null | 'success' | 'failed'
     const [loading, setLoading] = useState(false);
 
@@ -32,7 +31,7 @@ function Checkout() {
                     colorText: '#30313d',
                     colorDanger: '#df1b41',
                     fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
-                    borderRadius: '4px',
+                    borderRadius: '0.6rem',
                 },
             },
             // Make sure we're using automatic payment methods

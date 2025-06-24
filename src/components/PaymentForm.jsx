@@ -10,7 +10,8 @@ import { useCart } from 'react-use-cart';
 import DBService from "../data/rest.db.js";
 import {useAuth} from '../hooks/useAuth';
 import { useTranslation } from 'react-i18next';
-import ReactCountryDropdown from "react-country-dropdown";
+import { COUNTRIES } from '../lib/countries';
+import CountrySelector from './CountrySelector';
 
 const PaymentForm = ({ cartTotal }) => {
 
@@ -19,6 +20,8 @@ const PaymentForm = ({ cartTotal }) => {
     const stripe = useStripe();
     const elements = useElements();
     const { items } = useCart();
+
+    const [isOpen, setIsOpen] = useState(false);
 
     const [errorMessage, setErrorMessage] = useState('');
     const [isProcessing, setIsProcessing] = useState(false);
@@ -67,7 +70,7 @@ const PaymentForm = ({ cartTotal }) => {
             const priceInCents = Math.round(cartTotal * 100);
 
             // Create the PaymentIntent on your backend
-            const response = await fetch(`${backendUrl}/pay/stripe`, {
+            const response = await fetch(`${backendUrl}/pay/gateway/stripe`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -260,10 +263,12 @@ const PaymentForm = ({ cartTotal }) => {
                         className="border rounded-xl px-3 py-2 w-full"
                     />
                     <div className="w-full">
-                        <ReactCountryDropdown
-                            defaultCountry="us"
-                            onSelect={getDefaultCountry}
-                            className="border rounded-xl px-3 py-2 w-full"
+                        <CountrySelector
+                            id={'countries'}
+                            open={isOpen}
+                            onToggle={() => setIsOpen(!isOpen)}
+                            onChange={val => setCountry(val)}
+                            selectedValue={COUNTRIES.find(option => option.value === country)}
                         />
                     </div>
                 </div>
@@ -271,11 +276,11 @@ const PaymentForm = ({ cartTotal }) => {
 
             {/* Delivery Notes */}
             <div>
-                <label className="block text-sm font-medium mb-1 text-gray-600">Delivery Notes (Optional)</label>
+                <h2 className="text-lg font-semibold mb-2">{t('Delivery Notes')}</h2>
                 <textarea
                     value={deliveryNotes}
                     onChange={(e) => setDeliveryNotes(e.target.value)}
-                    placeholder="Leave instructions for the delivery"
+                    placeholder="Leave instructions for the delivery (optional)"
                     className="w-full border rounded-xl px-3 py-2"
                     rows="3"
                 />
