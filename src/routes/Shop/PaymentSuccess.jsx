@@ -52,10 +52,6 @@ const PaymentSuccess = () => {
 
     return (
         <div className="w-full max-w-3xl mx-auto mt-32 p-8 flex flex-col gap-6 bg-neutral-700 rounded-lg shadow-xl text-center">
-            <Helmet>
-                <title>{t('payment_seo_title')}</title>
-                <meta name='description' content={t('seo_description')} />
-            </Helmet>
 
             <motion.div
                 initial={{ scale: 0 }}

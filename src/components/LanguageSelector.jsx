@@ -3,9 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 const LanguageSelector = () => {
-    const { i18n } = useTranslation();
-    const navigate = useNavigate();
-    const location = useLocation();
+    const { t, i18n } = useTranslation(); 
 
     const handleChange = (e) => {
         const newLang = e.target.value;

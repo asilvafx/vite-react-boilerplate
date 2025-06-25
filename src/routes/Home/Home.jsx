@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Helmet } from "react-helmet-async";
-import { useAuth } from '../../hooks/useAuth';
+import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
+
+import { useAuth } from '../../hooks/useAuth';
 
 import reactLogo from '../../assets/react.svg';
 import viteLogo from '../../assets/vite.svg';
@@ -52,7 +52,7 @@ function Home() {
                     transition={{ delay: 0.3 }}
                 >
                     {user?.displayName ? (
-                        <span>Welcome back, {user?.displayName}</span>
+                        <span>{t('Welcome back')}, {user?.displayName}</span>
                     ) : (
                         <span>Vite + React</span>
                     )}
@@ -70,7 +70,7 @@ function Home() {
                             whileTap={{ scale: 0.95 }}
                             className="px-4 py-2 bg-black text-white"
                         >
-                            Shop
+                            {t('Shop')}
                         </motion.button>
                     </Link>
                     {!isAuthenticated ? (
@@ -80,7 +80,7 @@ function Home() {
                                 whileTap={{ scale: 0.95 }}
                                 className="px-4 py-2 bg-blue-600 text-white"
                             >
-                                Click here to login
+                                {t('Click here to login')}
                             </motion.button>
                         </Link>
                     ) : (
@@ -91,7 +91,7 @@ function Home() {
                                     whileTap={{ scale: 0.95 }}
                                     className="px-4 py-2 bg-red-500 text-white"
                                 >
-                                    Logout
+                                    {t('Logout')}
                                 </motion.button>
                             </Link>
                             <Link to='/private'>
@@ -100,7 +100,7 @@ function Home() {
                                     whileTap={{ scale: 0.95 }}
                                     className="px-4 py-2 bg-blue-600 text-white"
                                 >
-                                    Private Route
+                                    {t('Private Route')}
                                 </motion.button>
                             </Link>
                         </>
