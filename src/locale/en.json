@@ -1,4 +1,9 @@
 {
   "seo_title": "Welcome",
-  "seo_description": "Welcome to our application!"
+  "seo_description": "Welcome to our application!",
+  "Welcome back": "Welcome back",
+  "Shop": "Shop",
+  "Click here to login": "Click here to login",
+  "Logout": "Logout",
+  "Private Route": "Private Route"
 }

@@ -26,30 +26,30 @@ function Home() {
             </Helmet>
 
             <motion.section
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: 'easeOut' }}
+                initial={{opacity: 0, y: 20}}
+                animate={{opacity: 1, y: 0}}
+                transition={{duration: 0.6, ease: 'easeOut'}}
                 className="p-8 w-screen max-w-2xl flex flex-col justify-center items-center m-auto"
             >
                 <motion.div
                     className="flex gap-4 mb-4"
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ type: 'spring', stiffness: 120 }}
+                    initial={{scale: 0}}
+                    animate={{scale: 1}}
+                    transition={{type: 'spring', stiffness: 120}}
                 >
-                    <motion.a whileHover={{ scale: 1.1 }} href="https://vite.dev" target="_blank">
-                        <img src={viteLogo} className="logo" alt="Vite logo" />
+                    <motion.a whileHover={{scale: 1.1}} href="https://vite.dev" target="_blank">
+                        <img src={viteLogo} className="logo" alt="Vite logo"/>
                     </motion.a>
-                    <motion.a whileHover={{ scale: 1.1 }} href="https://react.dev" target="_blank">
-                        <img src={reactLogo} className="logo react" alt="React logo" />
+                    <motion.a whileHover={{scale: 1.1}} href="https://react.dev" target="_blank">
+                        <img src={reactLogo} className="logo react" alt="React logo"/>
                     </motion.a>
                 </motion.div>
 
                 <motion.h1
                     className="text-3xl font-bolder mb-4"
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 }}
+                    initial={{opacity: 0, y: -10}}
+                    animate={{opacity: 1, y: 0}}
+                    transition={{delay: 0.3}}
                 >
                     {user?.displayName ? (
                         <span>{t('Welcome back')}, {user?.displayName}</span>
@@ -60,14 +60,14 @@ function Home() {
 
                 <motion.nav
                     className="flex gap-2 items-center"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.6 }}
+                    initial={{opacity: 0}}
+                    animate={{opacity: 1}}
+                    transition={{delay: 0.6}}
                 >
                     <Link to='/shop'>
                         <motion.button
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
+                            whileHover={{scale: 1.05}}
+                            whileTap={{scale: 0.95}}
                             className="px-4 py-2 bg-black text-white"
                         >
                             {t('Shop')}
@@ -76,8 +76,8 @@ function Home() {
                     {!isAuthenticated ? (
                         <Link to='/auth'>
                             <motion.button
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
+                                whileHover={{scale: 1.05}}
+                                whileTap={{scale: 0.95}}
                                 className="px-4 py-2 bg-blue-600 text-white"
                             >
                                 {t('Click here to login')}
@@ -87,8 +87,8 @@ function Home() {
                         <>
                             <Link to='/logout'>
                                 <motion.button
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
+                                    whileHover={{scale: 1.05}}
+                                    whileTap={{scale: 0.95}}
                                     className="px-4 py-2 bg-red-500 text-white"
                                 >
                                     {t('Logout')}
@@ -96,8 +96,8 @@ function Home() {
                             </Link>
                             <Link to='/private'>
                                 <motion.button
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
+                                    whileHover={{scale: 1.05}}
+                                    whileTap={{scale: 0.95}}
                                     className="px-4 py-2 bg-blue-600 text-white"
                                 >
                                     {t('Private Route')}
@@ -108,8 +108,11 @@ function Home() {
                     )}
                 </motion.nav>
                 <div className="absolute top-0 right-0 m-2 md:m-4 xl:m-6">
-                    <LanguageSelector />
+                    <LanguageSelector/>
                 </div>
+                <p className="text-sm text-neutral-300 mt-10">
+                    © {new Date().getFullYear()}
+                </p>
             </motion.section>
         </>
     );
