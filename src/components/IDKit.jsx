@@ -89,8 +89,8 @@ const IDKit = () => {
         <>
             <IDKitWidget
                 app_id={WLD_AppId} // obtained from the Developer Portal
-                action={WLD_Action} // this is your action name from the Developer Portal
-                false
+                action={WLD_Action} // this is your action name from the Developer Portal 
+                disable_default_modal_behavior={true}
                 verification_level={WLD_VerificationLevel}  // Use the verification level
                 handleVerify={handleVerify}
                 onSuccess={onSuccess}

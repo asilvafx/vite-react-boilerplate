@@ -22,8 +22,18 @@ function Home() {
         <>
             <Helmet>
                 <title>{t('seo_title')}</title>
-                <meta name='description' content={t('seo_description')} />
+                <meta name='description' content={t('seo_description')}/>
             </Helmet>
+            <motion.section
+                initial={{opacity: 0, y: 0}}
+                animate={{opacity: 1, y: 0}}
+                transition={{duration: 1.0, ease: 'easeOut'}}
+                className="p-8 w-screen max-w-2xl flex flex-col justify-center items-center m-auto"
+            >
+                <div className="absolute top-0 right-0 m-2 md:m-4 xl:m-6">
+                    <LanguageSelector/>
+                </div>
+            </motion.section>
 
             <motion.section
                 initial={{opacity: 0, y: 20}}
@@ -107,15 +117,12 @@ function Home() {
 
                     )}
                 </motion.nav>
-                <div className="absolute top-0 right-0 m-2 md:m-4 xl:m-6">
-                    <LanguageSelector/>
-                </div>
                 <p className="text-sm text-neutral-300 mt-10">
                     © {new Date().getFullYear()}
                 </p>
             </motion.section>
-        </>
-    );
-}
+            </>
+            );
+            }
 
-export default Home;
+            export default Home;
