@@ -1,4 +1,9 @@
 {
-  "seo_title": "Bonjour",
-  "seo_description": "Welcome to our application!"
+  "seo_title": "Bienvenue",
+  "seo_description": "Bienvenue sur notre application !",
+  "Welcome back": "Bon retour",
+  "Shop": "Boutique",
+  "Click here to login": "Cliquez ici pour vous connecter",
+  "Logout": "Se déconnecter",
+  "Private Route": "Route Privée"
 }
