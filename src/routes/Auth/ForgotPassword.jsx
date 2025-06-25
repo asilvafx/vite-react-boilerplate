@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import Turnstile from "react-turnstile";
 import { motion, AnimatePresence } from "framer-motion";
 import DBService from "../../data/rest.db";
 import {decryptHash, encryptHash} from "../../lib/crypto";
 import {IoMdEye, IoMdEyeOff} from "react-icons/io";
+
+const TurnstileKey = process.env.CF_TURNSTILE_API || null;
 
 const ForgotPassword = () => {
     const navigate = useNavigate();
@@ -17,6 +20,7 @@ const ForgotPassword = () => {
     const [showPwd, setShowPwd] = useState(false);
     const [newPwd, setNewPwd] = useState("");
     const [confirmPwd, setConfirmPwd] = useState("");
+    const [isTurnstileVerified, setIsTurnstileVerified] = useState(false);
 
     const showPassword = () => setShowPwd((prev) => !prev);
 
@@ -30,6 +34,10 @@ const ForgotPassword = () => {
     };
     const handleReset = async (e) => {
         e.preventDefault();
+        if (TurnstileKey && !isTurnstileVerified) {
+            toast.error('Please complete the verification.');
+            return;
+        }
         setLoading(true);
 
         if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -133,11 +141,19 @@ const ForgotPassword = () => {
                                 className="w-full p-2 border rounded"
                                 disabled={loading}
                             />
+                            {TurnstileKey && (
+                                <Turnstile
+                                    sitekey={TurnstileKey}
+                                    theme="light"
+                                    size="flexible"
+                                    onVerify={() => setIsTurnstileVerified(true)}
+                                />
+                            )}
                             <motion.button
                                 type="submit"
                                 whileTap={{scale: 0.95}}
                                 whileHover={{scale: 1.02}}
-                                disabled={loading}
+                                disabled={loading || (TurnstileKey && !isTurnstileVerified)}
                                 className="w-full bg-black text-white py-2 rounded-xl hover:bg-gray-800 disabled:opacity-50"
                             >
                                 {loading ? "Sending..." : "Send Code"}

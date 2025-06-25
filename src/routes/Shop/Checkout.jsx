@@ -15,13 +15,14 @@ function Checkout() {
     const [stripeOptions, setStripeOptions] = useState(null);
     const [shippingCost] = useState(5.99);
     const [status, setStatus] = useState(null); // null | 'success' | 'failed'
-    const [loading, setLoading] = useState(false);
+
+    const totalPrice = (cartTotal + shippingCost).toFixed(2);
 
     useEffect(() => {
         // Set up Stripe options when cart total changes
         setStripeOptions({
             mode: 'payment',
-            amount: Math.round(cartTotal * 100), // Convert to cents
+            amount: Math.round(totalPrice * 100), // Convert to cents
             currency: 'eur',
             appearance: {
                 theme: 'stripe',
@@ -41,29 +42,6 @@ function Checkout() {
             },
         });
     }, [cartTotal]);
-
-    const PaymentSuccess = () => {
-        setStatus('success');
-        emptyCart();
-    }
-    const PaymentFail = () => {
-        setStatus('failed');
-    }
-    const handleOrder = (e) => {
-        e.preventDefault();
-        setLoading(true);
-        setStatus(null);
-
-        setTimeout(() => {
-            const random = Math.random();
-            if (random < 0.8) {
-                PaymentSuccess();
-            } else {
-                PaymentFail();
-            }
-            setLoading(false);
-        }, 2000); // simulate 2s payment process
-    };
 
     return (
         <>
@@ -113,14 +91,13 @@ function Checkout() {
                         {/* Left: Form */}
                         <motion.div
                             className="space-y-6"
-                            onSubmit={handleOrder}
                             initial={{opacity: 0, x: -20}}
                             animate={{opacity: 1, x: 0}}
                             transition={{duration: 0.3}}
                         >
                         {stripeOptions && (
                             <Elements stripe={stripePromise} options={stripeOptions}>
-                                <PaymentForm cartTotal={cartTotal} />
+                                <PaymentForm cartTotal={totalPrice} />
                             </Elements>
                         )}
                         </motion.div>
@@ -153,7 +130,7 @@ function Checkout() {
                                 </div>
                                 <div className="flex justify-between font-semibold border-t pt-2">
                                     <span>Total</span>
-                                    <span>€{(cartTotal + shippingCost).toFixed(2)}</span>
+                                    <span>€{totalPrice}</span>
                                 </div>
                             </div>
                         </motion.div>

@@ -55,8 +55,11 @@ const PaymentForm = ({ cartTotal }) => {
         setErrorMessage('');
 
         try {
-            // Save email to localStorage for the success page
-            localStorage.setItem('checkout_email', emailInput);
+            if(!emailInput){
+                setErrorMessage('Email is required.');
+                setIsProcessing(false);
+                return;
+            }
 
             // Validate the form
             const { error: submitError } = await elements.submit();
@@ -193,6 +196,7 @@ const PaymentForm = ({ cartTotal }) => {
                         className="w-full border rounded-xl px-3 py-2"
                     />
                     <PhoneInput
+                        required
                         country={countryIso.toLowerCase()}
                         value={phone}
                         onChange={setPhone}
@@ -298,7 +302,7 @@ const PaymentForm = ({ cartTotal }) => {
                 type="submit"
                 disabled={!stripe || !elements || isProcessing}
             >
-                {isProcessing ? t('Processing') : `${t('Pay')} €${cartTotal.toFixed(2)}`}
+                {isProcessing ? t('Processing') : `${t('Pay')} €${cartTotal}`}
             </button>
 
             {/* Error Message */}

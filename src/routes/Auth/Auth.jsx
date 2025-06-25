@@ -4,13 +4,16 @@ import { Helmet } from "react-helmet-async";
 import { toast } from "react-hot-toast";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Turnstile from "react-turnstile";
 import { motion, AnimatePresence } from "framer-motion";
-import { useAuth } from "../../hooks/useAuth";
-import { decryptHash, encryptHash } from "../../lib/crypto";
 import Cookies from "js-cookie";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
+import { useAuth } from "../../hooks/useAuth";
+import { decryptHash, encryptHash } from "../../lib/crypto";
 import IDKit from '../../components/IDKit';
 import GitHubLogin from '../../components/GitHubLogin';
+
+const TurnstileKey = process.env.CF_TURNSTILE_API || null;
 
 const Auth = () => {
     const navigate = useNavigate();
@@ -25,6 +28,7 @@ const Auth = () => {
     const [loading, setLoading] = useState(false);
     const [rememberMe, setRememberMe] = useState(false);
     const { isAuthenticated } = useSelector((state) => state.auth);
+    const [isTurnstileVerified, setIsTurnstileVerified] = useState(false);
     const location = useLocation();
 
     useEffect(() => {
@@ -50,6 +54,10 @@ const Auth = () => {
 
     const handleRegister = async (e) => {
         e.preventDefault();
+        if (TurnstileKey && !isTurnstileVerified) {
+            toast.error('Please complete the verification.');
+            return;
+        }
         setLoading(true);
         if (!email || !password) return toast.error("Email and Password are required."), setLoading(false);
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return toast.error("Invalid email format."), setLoading(false);
@@ -79,6 +87,10 @@ const Auth = () => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
+        if (TurnstileKey && !isTurnstileVerified) {
+            toast.error('Please complete the verification.');
+            return;
+        }
         setLoading(true);
         if (!email || !password) return toast.error("Email and Password are required."), setLoading(false);
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return toast.error("Invalid email format."), setLoading(false);
@@ -210,10 +222,19 @@ const Auth = () => {
                         </div>
                     )}
 
+                        {TurnstileKey && (
+                        <Turnstile
+                            sitekey={TurnstileKey}
+                            theme="light"
+                            size="flexible"
+                            onVerify={() => setIsTurnstileVerified(true)}
+                        />
+                        )}
+
                         <motion.button
                             whileHover={{scale: 1.02}}
                             whileTap={{scale: 0.98}}
-                            disabled={loading}
+                            disabled={loading || (TurnstileKey && !isTurnstileVerified)}
                             onClick={mode === "login" ? handleLogin : handleRegister}
                             className="w-full"
                         >

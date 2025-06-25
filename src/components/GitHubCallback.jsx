@@ -67,7 +67,6 @@ function GitHubCallback() {
                         if(!user){
                             const userData = {
                                 displayName: data.user.name,
-                                email: data.user.email,
                                 github: userId,
                                 created_at: new Date().toLocaleString()
                             };

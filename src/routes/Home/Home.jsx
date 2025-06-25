@@ -8,8 +8,9 @@ import { motion } from 'framer-motion';
 import reactLogo from '../../assets/react.svg';
 import viteLogo from '../../assets/vite.svg';
 
+import LanguageSelector from '../../components/LanguageSelector';
+
 function Home() {
-    const [count, setCount] = useState(0);
     const { t } = useTranslation();
     const { user, isAuthenticated } = useAuth();
 
@@ -67,7 +68,7 @@ function Home() {
                         <motion.button
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            className="px-4 py-2 bg-black text-white rounded"
+                            className="px-4 py-2 bg-black text-white"
                         >
                             Shop
                         </motion.button>
@@ -77,23 +78,38 @@ function Home() {
                             <motion.button
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
-                                className="px-4 py-2 bg-blue-600 text-white rounded"
+                                className="px-4 py-2 bg-blue-600 text-white"
                             >
                                 Click here to login
                             </motion.button>
                         </Link>
                     ) : (
-                        <Link to='/logout'>
-                            <motion.button
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                                className="px-4 py-2 bg-red-500 text-white rounded"
-                            >
-                                Logout
-                            </motion.button>
-                        </Link>
+                        <>
+                            <Link to='/logout'>
+                                <motion.button
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    className="px-4 py-2 bg-red-500 text-white"
+                                >
+                                    Logout
+                                </motion.button>
+                            </Link>
+                            <Link to='/private'>
+                                <motion.button
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    className="px-4 py-2 bg-blue-600 text-white"
+                                >
+                                    Private Route
+                                </motion.button>
+                            </Link>
+                        </>
+
                     )}
                 </motion.nav>
+                <div className="absolute top-0 right-0 m-2 md:m-4 xl:m-6">
+                    <LanguageSelector />
+                </div>
             </motion.section>
         </>
     );
