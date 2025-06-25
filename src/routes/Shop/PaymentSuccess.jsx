@@ -3,8 +3,7 @@ import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useCart } from 'react-use-cart';
 import { FaCheck, FaDownload } from 'react-icons/fa';
-import { useTranslation } from 'react-i18next';
-import { Helmet } from "react-helmet-async";
+import { useTranslation } from 'react-i18next'; 
 import DBService from "../../data/rest.db.js";
 import { generatePDF } from '../../utils/generatePDF';
 
