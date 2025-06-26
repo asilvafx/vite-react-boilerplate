@@ -1,5 +1,5 @@
 import React from 'react';
-import github_icon from "../assets/github.svg";
+import github_icon from "../../assets/github.svg";
 
 function GitHubLoginButton() {
 
