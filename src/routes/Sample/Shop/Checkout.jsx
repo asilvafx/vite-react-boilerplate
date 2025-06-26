@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
-import PaymentForm from '../../components/PaymentForm';
+import PaymentForm from '../../../components/Common/PaymentForm.jsx';
 
 // Use Vite environment variables
 const stripePromise = loadStripe(process.env.STRIPE_API);

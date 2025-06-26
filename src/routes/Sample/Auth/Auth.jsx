@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import DBService from "../../data/rest.db";
+import DBService from "../../../data/rest.db.js";
 import { Helmet } from "react-helmet-async";
 import { toast } from "react-hot-toast";
 import { useNavigate, useLocation, Link } from "react-router-dom";
@@ -8,10 +8,10 @@ import Turnstile from "react-turnstile";
 import { motion, AnimatePresence } from "framer-motion";
 import Cookies from "js-cookie";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
-import { useAuth } from "../../hooks/useAuth";
-import { decryptHash, encryptHash } from "../../lib/crypto";
-import IDKit from '../../components/IDKit';
-import GitHubLogin from '../../components/GitHubLogin';
+import { useAuth } from "../../../hooks/useAuth.js";
+import { decryptHash, encryptHash } from "../../../lib/crypto.js";
+import IDKit from '../../../components/Common/IDKit.jsx';
+import GitHubLogin from '../../../components/Common/GitHubLogin.jsx';
 
 const TurnstileKey = process.env.CF_TURNSTILE_API || null;
 

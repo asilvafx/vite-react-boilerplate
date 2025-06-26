@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { COUNTRIES } from "../lib/countries";
+import { COUNTRIES } from "../../lib/countries.js";
 
 export default function CountrySelector({
                                             id,

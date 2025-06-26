@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IDKitWidget } from '@worldcoin/idkit';
-import worldid_icon from '../assets/worldcoin.svg';
-import DBService from '../data/rest.db';
+import worldid_icon from '../../assets/worldcoin.svg';
+import DBService from '../../data/rest.db.js';
 import Cookies from "js-cookie";
-import {encryptHash} from "../lib/crypto.js";
-import {useAuth} from "../hooks/useAuth";
+import {encryptHash} from "../../lib/crypto.js";
+import {useAuth} from "../../hooks/useAuth.js";
 import {useNavigate} from "react-router-dom";
 import { toast } from "react-hot-toast";
 

@@ -3,12 +3,12 @@ import { Helmet } from "react-helmet-async";
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '../../../hooks/useAuth.js';
 
-import reactLogo from '../../assets/react.svg';
-import viteLogo from '../../assets/vite.svg';
+import reactLogo from '../../../assets/react.svg';
+import viteLogo from '../../../assets/vite.svg';
 
-import LanguageSelector from '../../components/LanguageSelector';
+import LanguageSelector from '../../../components/Common/LanguageSelector.jsx';
 
 function Home() {
     const { t } = useTranslation();

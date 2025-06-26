@@ -1,10 +1,10 @@
 import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import Loading from "./Loading";
-import DBService from '../data/rest.db';
+import Loading from "./Loading.jsx";
+import DBService from '../../data/rest.db.js';
 import Cookies from "js-cookie";
-import {encryptHash} from "../lib/crypto.js";
-import {useAuth} from "../hooks/useAuth";
+import {encryptHash} from "../../lib/crypto.js";
+import {useAuth} from "../../hooks/useAuth.js";
 import { useRef } from 'react';
 import { toast } from "react-hot-toast";
 

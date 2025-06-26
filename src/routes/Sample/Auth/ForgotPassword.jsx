@@ -4,8 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import Turnstile from "react-turnstile";
 import { motion, AnimatePresence } from "framer-motion";
-import DBService from "../../data/rest.db";
-import {decryptHash, encryptHash} from "../../lib/crypto";
+import DBService from "../../../data/rest.db.js";
+import {decryptHash, encryptHash} from "../../../lib/crypto.js";
 import {IoMdEye, IoMdEyeOff} from "react-icons/io";
 
 const TurnstileKey = process.env.CF_TURNSTILE_API || null;

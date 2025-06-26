@@ -7,11 +7,11 @@ import {
 import 'react-phone-input-2/lib/style.css'
 import PhoneInput from 'react-phone-input-2'
 import { useCart } from 'react-use-cart';
-import DBService from "../data/rest.db.js";
-import {useAuth} from '../hooks/useAuth';
+import DBService from "../../data/rest.db.js";
+import {useAuth} from '../../hooks/useAuth.js';
 import { useTranslation } from 'react-i18next';
-import { COUNTRIES } from '../lib/countries';
-import CountrySelector from './CountrySelector';
+import { COUNTRIES } from '../../lib/countries.js';
+import CountrySelector from './CountrySelector.jsx';
 
 const PaymentForm = ({ cartTotal }) => {
 

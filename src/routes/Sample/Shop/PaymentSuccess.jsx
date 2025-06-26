@@ -4,8 +4,8 @@ import { motion } from 'framer-motion';
 import { useCart } from 'react-use-cart';
 import { FaCheck, FaDownload } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
-import DBService from "../../data/rest.db.js";
-import { generatePDF } from '../../utils/generatePDF';
+import DBService from "../../../data/rest.db.js";
+import { generatePDF } from '../../../utils/generatePDF.js';
 
 const PaymentSuccess = () => {
     const { id } = useParams();
