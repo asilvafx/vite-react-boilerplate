@@ -6,8 +6,8 @@ import App from './App.jsx'
 import store from "./store/store";
 import * as serviceWorker from './serviceWorker';
 import './lib/i18n';
-import './styles/index.css'
-import './styles/globals.css'
+import './styles/index.css';
+import './styles/globals.css';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -16,7 +16,7 @@ createRoot(document.getElementById('root')).render(
           <App />
       </CartProvider>
       </Provider>
-  </StrictMode>,
+  </StrictMode>
 )
 
 serviceWorker.unregister();
