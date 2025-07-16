@@ -1,27 +1,31 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate, useLocation } from 'react-router-dom';
+import Select from 'react-select';
 
 const LanguageSelector = () => {
-    const { t, i18n } = useTranslation();
+    const { i18n } = useTranslation();
 
-    const handleChange = (e) => {
-        const newLang = e.target.value;
-        localStorage.setItem('i18nextLng', newLang);
-        i18n.changeLanguage(newLang);
+    const LangOptions = [
+        { value: 'en', label: '🇺🇸\u00A0 English' },
+        { value: 'fr', label: '🇫🇷\u00A0 French' },
+        { value: 'pt', label: '🇵🇹\u00A0 Portuguese' },
+        { value: 'es', label: '🇪🇸\u00A0 Spanish' }
+    ];
+
+    const handleChange = (selectedOption) => {
+        const newLang = selectedOption.value;
+        i18n.changeLanguage(newLang).then(() =>
+            localStorage.setItem('i18nextLng', newLang)
+        );
     };
 
     return (
-        <select
-            value={i18n.language}
+        <Select
+            className="bg-white text-gray-800 cursor-pointer"
+            value={LangOptions.find(opt => opt.value === i18n.language)}
             onChange={handleChange}
-            className="mx-auto w-full max-w-[200px] px-3 py-2 font-bold border rounded bg-white text-gray-800 cursor-pointer"
-        >
-            <option value="en">🇺🇸 English</option>
-            <option value="fr">🇫🇷 French</option>
-            <option value="pt">🇵🇹 Portuguese</option>
-            <option value="es">🇪🇸 Spanish</option>
-        </select>
+            options={LangOptions}
+        />
     );
 };
 
