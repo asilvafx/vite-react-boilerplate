@@ -11,7 +11,6 @@ import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { useAuth } from "../../../hooks/useAuth.js";
 import { decryptHash, encryptHash } from "../../../lib/crypto.js";
 import IDKit from '../../../components/Common/IDKit.jsx';
-import GitHubLogin from '../../../components/Common/GitHubLogin.jsx';
 
 const TurnstileKey = process.env.CF_TURNSTILE_API || null;
 
@@ -262,8 +261,7 @@ const Auth = () => {
 
                     <div className="text-center text-gray-400 text-sm">Or With</div>
 
-                        <div className="flex gap-3">
-                            <GitHubLogin />
+                        <div className="flex gap-3"> 
                             <IDKit/>
                         </div>
                     </motion.form>

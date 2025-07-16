@@ -4,8 +4,8 @@ import { HelmetProvider } from 'react-helmet-async';
 import routeConfig from '/routeConfig';
 
 // Import Components
-const Loading = lazy(() => import('./components/Common/Loading.jsx'));
-const ScrollToTop = lazy(() => import('./components/Common/ScrollToTop.jsx'));
+const Loading = lazy(() => import('./components/Loading.jsx'));
+const ScrollToTop = lazy(() => import('./components/ScrollToTop.jsx'));
 const AnimatedToaster = lazy(() => import('./components/Common/AnimatedToaster'));
 
 // App Content Component

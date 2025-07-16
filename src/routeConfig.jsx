@@ -1,6 +1,5 @@
 import React, {lazy} from 'react';
-import ProtectedRoute from './components/Common/ProtectedRoute';
-import GitHubCallback from './components/Common/GitHubCallback';
+import ProtectedRoute from './components/ProtectedRoute.jsx'; 
 
 // Import Routes
 const Home = lazy(() => import('./routes/Sample/Home/Home'));
@@ -47,10 +46,6 @@ const routeConfig = [
     {
         path: '/auth',
         element: <Auth />
-    },
-    {
-        path: '/auth/github/callback',
-        element: <GitHubCallback />
     },
     {
         path: '/forgot',
